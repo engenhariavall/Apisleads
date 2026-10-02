@@ -1674,6 +1674,34 @@
                   </tbody>
                 </table>
               </div>
+
+              <!-- Rodapé de Paginação Integrada ao Radar Sparks -->
+              <div class="table-pagination-footer" id="sparksPaginationFooter">
+                <div class="table-pagination-info">
+                  <span class="range-info">Exibindo <strong id="sparksRangeText">1–10</strong> de <strong id="sparksTotalText">0</strong> sinais</span>
+                  <span class="page-badge" id="sparksPageBadge">Página 1 de 1</span>
+                </div>
+
+                <div class="table-pagination-nav">
+                  <button type="button" class="btn-page-nav first" id="btnSparksPageFirst" title="Primeira Página">«</button>
+                  <button type="button" class="btn-page-nav prev" id="btnSparksPagePrev" title="Página Anterior">‹ Anterior</button>
+                  <div class="table-pagination-pills" id="sparksPaginationPills">
+                    <!-- Botões numéricos [1] [2] [3] etc. -->
+                  </div>
+                  <button type="button" class="btn-page-nav next" id="btnSparksPageNext" title="Próxima Página">Próxima ›</button>
+                  <button type="button" class="btn-page-nav last" id="btnSparksPageLast" title="Última Página">»</button>
+                </div>
+
+                <div class="table-pagination-size">
+                  <label for="selectSparksPageSize">Por página:</label>
+                  <select id="selectSparksPageSize" class="select-page-size">
+                    <option value="5">5 sinais</option>
+                    <option value="10" selected>10 sinais</option>
+                    <option value="20">20 sinais</option>
+                    <option value="50">50 sinais</option>
+                  </select>
+                </div>
+              </div>
             </div>
 
           </div>

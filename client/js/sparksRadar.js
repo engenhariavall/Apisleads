@@ -9,6 +9,8 @@
   'use strict';
 
   let currentSparkFilter = 'ALL';
+  let sparksCurrentPage = 1;
+  let sparksPageSize = 10;
   let sparksData = {
     monitors: [],
     signals: [],
@@ -83,6 +85,7 @@
         filterChips.forEach(c => c.classList.remove('active'));
         chip.classList.add('active');
         currentSparkFilter = chip.getAttribute('data-spark-type') || 'ALL';
+        sparksCurrentPage = 1;
         renderSparksSignalsTable();
       });
     });
@@ -91,6 +94,7 @@
     const searchInput = document.getElementById('sparksSearchInput');
     if (searchInput) {
       searchInput.addEventListener('input', () => {
+        sparksCurrentPage = 1;
         renderSparksSignalsTable();
       });
     }
@@ -100,6 +104,25 @@
     if (btnRefreshAll) {
       btnRefreshAll.addEventListener('click', () => {
         loadSparksData(true);
+      });
+    }
+
+    // Navegação de Paginação do Radar Sparks
+    document.getElementById('btnSparksPageFirst')?.addEventListener('click', () => goToPage(1));
+    document.getElementById('btnSparksPagePrev')?.addEventListener('click', () => goToPage(sparksCurrentPage - 1));
+    document.getElementById('btnSparksPageNext')?.addEventListener('click', () => goToPage(sparksCurrentPage + 1));
+    document.getElementById('btnSparksPageLast')?.addEventListener('click', () => {
+      const filtered = getFilteredSignals();
+      const totalPages = Math.max(1, Math.ceil(filtered.length / sparksPageSize));
+      goToPage(totalPages);
+    });
+
+    const selectSize = document.getElementById('selectSparksPageSize');
+    if (selectSize) {
+      selectSize.addEventListener('change', (e) => {
+        sparksPageSize = Number(e.target.value) || 10;
+        sparksCurrentPage = 1;
+        renderSparksSignalsTable();
       });
     }
 
@@ -148,7 +171,7 @@
       const [statsRes, monitorsRes, signalsRes] = await Promise.all([
         fetch('/api/sparks/stats'),
         fetch('/api/sparks/monitors'),
-        fetch('/api/sparks/signals?limit=60')
+        fetch('/api/sparks/signals?limit=300')
       ]);
 
       if (statsRes.ok) {
@@ -277,15 +300,11 @@
   }
 
   /**
-   * Renderiza a Tabela do Live Intent Feed
+   * Retorna a lista de sinais filtrados por categoria e termo de busca
    */
-  function renderSparksSignalsTable() {
-    const tbody = document.getElementById('sparksSignalsTableBody');
-    if (!tbody) return;
-
+  function getFilteredSignals() {
     const searchTerm = (document.getElementById('sparksSearchInput')?.value || '').toLowerCase().trim();
-
-    let filtered = sparksData.signals;
+    let filtered = sparksData.signals || [];
 
     if (currentSparkFilter !== 'ALL') {
       filtered = filtered.filter(s => s.spark_type === currentSparkFilter);
@@ -301,10 +320,120 @@
       );
     }
 
+    return filtered;
+  }
+
+  /**
+   * Navega para uma página específica na tabela de sinais do Radar Sparks
+   */
+  function goToPage(page) {
+    const filtered = getFilteredSignals();
+    const totalPages = Math.max(1, Math.ceil(filtered.length / sparksPageSize));
+    let p = Number(page) || 1;
+    if (p < 1) p = 1;
+    if (p > totalPages) p = totalPages;
+    sparksCurrentPage = p;
+    renderSparksSignalsTable();
+  }
+
+  /**
+   * Renderiza a paginação integrada (contadores, botões 1, 2, 3... e navegação)
+   */
+  function renderSparksPagination(totalSignals, totalPages, startIndex, endIndex) {
+    const rangeText = document.getElementById('sparksRangeText');
+    const totalText = document.getElementById('sparksTotalText');
+    const pageBadge = document.getElementById('sparksPageBadge');
+    const btnFirst = document.getElementById('btnSparksPageFirst');
+    const btnPrev = document.getElementById('btnSparksPagePrev');
+    const btnNext = document.getElementById('btnSparksPageNext');
+    const btnLast = document.getElementById('btnSparksPageLast');
+    const pillsContainer = document.getElementById('sparksPaginationPills');
+    const selectPageSize = document.getElementById('selectSparksPageSize');
+
+    const start = totalSignals === 0 ? 0 : startIndex + 1;
+    const end = endIndex;
+
+    if (rangeText) rangeText.textContent = `${start}–${end}`;
+    if (totalText) totalText.textContent = String(totalSignals);
+    if (pageBadge) pageBadge.textContent = `Página ${sparksCurrentPage} de ${totalPages}`;
+
+    if (btnFirst) btnFirst.disabled = sparksCurrentPage <= 1;
+    if (btnPrev) btnPrev.disabled = sparksCurrentPage <= 1;
+    if (btnNext) btnNext.disabled = sparksCurrentPage >= totalPages;
+    if (btnLast) btnLast.disabled = sparksCurrentPage >= totalPages;
+
+    if (selectPageSize && selectPageSize.value != sparksPageSize) {
+      selectPageSize.value = String(sparksPageSize);
+    }
+
+    if (!pillsContainer) return;
+
+    if (totalSignals === 0) {
+      pillsContainer.innerHTML = '';
+      return;
+    }
+
+    const pills = [];
+    if (totalPages <= 7) {
+      for (let p = 1; p <= totalPages; p++) {
+        pills.push(p);
+      }
+    } else {
+      pills.push(1);
+      let left = Math.max(2, sparksCurrentPage - 1);
+      let right = Math.min(totalPages - 1, sparksCurrentPage + 1);
+
+      if (sparksCurrentPage <= 3) {
+        right = 4;
+      } else if (sparksCurrentPage >= totalPages - 2) {
+        left = totalPages - 3;
+      }
+
+      if (left > 2) pills.push('...');
+      for (let p = left; p <= right; p++) {
+        pills.push(p);
+      }
+      if (right < totalPages - 1) pills.push('...');
+      pills.push(totalPages);
+    }
+
+    pillsContainer.innerHTML = pills.map(p => {
+      if (p === '...') {
+        return `<span style="padding: 0 0.35rem; color: #64748B; font-weight: 700;">...</span>`;
+      }
+      const isActive = p === sparksCurrentPage;
+      return `
+        <button type="button" class="page-pill-btn ${isActive ? 'active' : ''}" onclick="window.SparksRadar.goToPage(${p})" title="Ir para página ${p}">
+          ${p}
+        </button>
+      `;
+    }).join('');
+  }
+
+  /**
+   * Renderiza a Tabela do Live Intent Feed
+   */
+  function renderSparksSignalsTable() {
+    const tbody = document.getElementById('sparksSignalsTableBody');
+    if (!tbody) return;
+
+    const filtered = getFilteredSignals();
+
     const badgeCounter = document.getElementById('sparksSignalsCounter');
     if (badgeCounter) badgeCounter.textContent = `${filtered.length} sinais`;
 
-    if (!filtered.length) {
+    const totalSignals = filtered.length;
+    const totalPages = Math.max(1, Math.ceil(totalSignals / sparksPageSize));
+    if (sparksCurrentPage > totalPages) sparksCurrentPage = totalPages;
+    if (sparksCurrentPage < 1) sparksCurrentPage = 1;
+
+    const startIndex = (sparksCurrentPage - 1) * sparksPageSize;
+    const endIndex = Math.min(startIndex + sparksPageSize, totalSignals);
+    const pageSignals = filtered.slice(startIndex, endIndex);
+
+    renderSparksPagination(totalSignals, totalPages, startIndex, endIndex);
+
+    if (!pageSignals.length) {
       tbody.innerHTML = `
         <tr>
           <td colspan="7" class="sparks-table-empty">
@@ -315,7 +444,7 @@
       return;
     }
 
-    tbody.innerHTML = filtered.map(s => {
+    tbody.innerHTML = pageSignals.map(s => {
       const badgeType = getSparkTypeTag(s.spark_type);
 
       const valorFormatado = s.valor_monetario > 0 
@@ -990,23 +1119,38 @@
     window.open(url, '_blank');
   }
 
+  /**
+   * Converte strings de data UTC (SQLite/Postgres) em instâncias Date seguras
+   */
+  function parseDateUtc(str) {
+    if (!str) return new Date();
+    if (str instanceof Date) return str;
+    let s = String(str).trim();
+    // Se for formato SQL "YYYY-MM-DD HH:mm:ss" ou "YYYY-MM-DDTHH:mm:ss" sem fuso, adiciona Z para ser tratado como UTC
+    if (/^\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}:\d{2}(\.\d+)?$/.test(s)) {
+      s = s.replace(' ', 'T') + 'Z';
+    }
+    const d = new Date(s);
+    return isNaN(d.getTime()) ? new Date() : d;
+  }
+
   function formatDateTimeSplit(str) {
-    if (!str) return { date: '01/10/2026', time: '11:08:59' };
+    if (!str) return { date: '--/--/----', time: '--:--:--' };
     try {
-      const d = new Date(str);
-      const date = d.toLocaleDateString('pt-BR');
-      const time = d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      const d = parseDateUtc(str);
+      const date = d.toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' });
+      const time = d.toLocaleTimeString('pt-BR', { timeZone: 'America/Sao_Paulo', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
       return { date, time };
     } catch (_) {
-      return { date: '01/10/2026', time: '11:08:59' };
+      return { date: '--/--/----', time: '--:--:--' };
     }
   }
 
   function formatDateTime(str) {
     if (!str) return 'Recente';
     try {
-      const d = new Date(str);
-      return d.toLocaleDateString('pt-BR') + ' ' + d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+      const d = parseDateUtc(str);
+      return d.toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' }) + ' ' + d.toLocaleTimeString('pt-BR', { timeZone: 'America/Sao_Paulo', hour: '2-digit', minute: '2-digit', hour12: false });
     } catch (_) {
       return str;
     }
@@ -1015,8 +1159,8 @@
   function formatTimeOnly(str) {
     if (!str) return 'Hoje';
     try {
-      const d = new Date(str);
-      return d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+      const d = parseDateUtc(str);
+      return d.toLocaleTimeString('pt-BR', { timeZone: 'America/Sao_Paulo', hour: '2-digit', minute: '2-digit', hour12: false });
     } catch (_) {
       return 'Agora';
     }
@@ -1044,6 +1188,7 @@
   window.SparksRadar = {
     init: initSparksRadar,
     loadSparksData,
+    goToPage,
     triggerSpark,
     openWhatsAppForSignal,
     openSignalDossier,
