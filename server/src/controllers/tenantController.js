@@ -24,10 +24,10 @@ export async function listTenants(req, res) {
         SELECT t.id, t.name, t.cnpj, t.plan, t.status, t.max_users,
                t.daily_quota_limit, t.monthly_quota_limit, t.created_at, t.updated_at,
                COUNT(u.id) AS total_users,
-               SUM(CASE WHEN u.is_active = TRUE OR u.is_active = 1 THEN 1 ELSE 0 END) AS active_users
+               COUNT(CASE WHEN u.is_active IS TRUE THEN 1 END) AS active_users
         FROM tenants t
         LEFT JOIN users u ON t.id = u.tenant_id
-        GROUP BY t.id
+        GROUP BY t.id, t.name, t.cnpj, t.plan, t.status, t.max_users, t.daily_quota_limit, t.monthly_quota_limit, t.created_at, t.updated_at
         ORDER BY t.created_at ASC
       `);
       tenants = qRes.rows || [];
