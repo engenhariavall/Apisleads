@@ -5,6 +5,7 @@ loadEnv();
 
 import app from './src/app.js';
 import SparksEngineService from './src/services/sparksEngineService.js';
+import fundiarioCronService from './src/services/fundiarioCronService.js';
 
 const PORT = process.env.PORT || 3000;
 const NODE_ENV = process.env.NODE_ENV || 'development';
@@ -22,4 +23,7 @@ app.listen(PORT, () => {
 
   // Inicialização autônoma dos robôs VERSUS Sparks em nuvem (segundo plano 24/7)
   SparksEngineService.startAutoScheduler();
+
+  // Inicialização do agendador autônomo da malha fundiária e territorial (a cada 6h)
+  fundiarioCronService.startScheduler(360);
 });
