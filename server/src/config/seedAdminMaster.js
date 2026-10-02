@@ -39,6 +39,21 @@ export async function seedSuperAdmin() {
         } else {
           db.prepare("UPDATE users SET role = 'SUPER_ADMIN', password_hash = ?, access_password = ?, is_active = 1 WHERE id = ?").run(passwordHash, adminPass, existingSqlite.id);
         }
+
+        // Garante também o usuário Felipe Corá da Avall no SQLite
+        const existingFelipe = db.prepare("SELECT id FROM users WHERE email = 'felipecostaprodutor@gmail.com'").get();
+        if (!existingFelipe) {
+          const felipePassHash = await hashPassword('123456');
+          db.prepare(`
+            INSERT INTO users (id, tenant_id, email, password_hash, access_password, name, role, is_active, created_at)
+            VALUES ('usr-48779d7ce1', 'tenant-e6094206', 'felipecostaprodutor@gmail.com', ?, '123456', 'Felipe Corá', 'Admin', 1, CURRENT_TIMESTAMP)
+          `).run(felipePassHash);
+
+          db.prepare(`
+            INSERT OR IGNORE INTO export_quotas (user_id, daily_limit, monthly_limit, used_today, used_this_month, last_reset_date)
+            VALUES ('usr-48779d7ce1', 5000, 100000, 0, 0, date('now'))
+          `).run();
+        }
       } catch (errSqlite) {
         console.warn('⚠️ [ADMIN MASTER SEED SQLITE WARNING]:', errSqlite.message);
       }
@@ -63,6 +78,22 @@ export async function seedSuperAdmin() {
           console.log(`👑 [ADMIN MASTER SEED POSTGRES] Super Admin provisionado: ${adminEmail}`);
         } else {
           await db.query("UPDATE users SET role = 'SUPER_ADMIN', password_hash = ?, access_password = ?, is_active = TRUE WHERE id = ?", [passwordHash, adminPass, pRes.rows[0].id]);
+        }
+
+        // Garante também o usuário Felipe Corá da Avall no Postgres
+        const felipePg = await db.query("SELECT id FROM users WHERE email = 'felipecostaprodutor@gmail.com'");
+        if (!felipePg.rows || felipePg.rows.length === 0) {
+          const felipePassHash = await hashPassword('123456');
+          await db.query(`
+            INSERT INTO users (id, tenant_id, email, password_hash, access_password, name, role, is_active, created_at)
+            VALUES ('usr-48779d7ce1', 'tenant-e6094206', 'felipecostaprodutor@gmail.com', ?, '123456', 'Felipe Corá', 'Admin', TRUE, NOW())
+          `, [felipePassHash]);
+
+          await db.query(`
+            INSERT INTO export_quotas (user_id, daily_limit, monthly_limit, used_today, used_this_month, last_reset_date)
+            VALUES ('usr-48779d7ce1', 5000, 100000, 0, 0, CURRENT_DATE)
+            ON CONFLICT (user_id) DO NOTHING
+          `);
         }
       } catch (errPg) {
         console.warn('⚠️ [ADMIN MASTER SEED POSTGRES WARNING]:', errPg.message);

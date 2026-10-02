@@ -1,3 +1,4 @@
+import './env.js';
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
@@ -222,11 +223,14 @@ try {
   console.warn('Verificação de colunas em tenants (SQLite):', err.message);
 }
 
-// Fase 32: Seed do Tenant Raiz Padrão (VERSUS INTELLIGENCE ROOT)
+// Fase 32: Seed do Tenant Raiz Padrão e Tenants Corporativos
 try {
   sqliteDb.exec(`
     INSERT OR IGNORE INTO tenants (id, name, cnpj, plan, status, max_users, daily_quota_limit, monthly_quota_limit)
     VALUES ('tenant-root-default', 'VERSUS INTELLIGENCE (ROOT)', '00.000.000/0001-00', 'ENTERPRISE UNLIMITED', 'ACTIVE', 999, 999999, 9999999);
+
+    INSERT OR IGNORE INTO tenants (id, name, cnpj, plan, status, max_users, daily_quota_limit, monthly_quota_limit)
+    VALUES ('tenant-e6094206', 'Avall Marketing e Vendas', NULL, 'ENTERPRISE UNLIMITED', 'ACTIVE', 5, 5000, 100000);
   `);
   // Atualiza usuários e logs órfãos para o tenant raiz caso tenham ficado com NULL
   sqliteDb.exec(`
@@ -1044,8 +1048,9 @@ const isPostgres = databaseUrl.startsWith('postgres://') || databaseUrl.startsWi
 let pgPool = null;
 if (isPostgres) {
   try {
+    const cleanDbUrl = databaseUrl.replace(/[?&]sslmode=[^&]+/i, '');
     pgPool = new pg.Pool({
-      connectionString: databaseUrl,
+      connectionString: cleanDbUrl,
       ssl: { rejectUnauthorized: false },
       max: 20,
       idleTimeoutMillis: 30000,
