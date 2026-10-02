@@ -101,8 +101,8 @@ CREATE TABLE IF NOT EXISTS segment_cnaes (
 CREATE TABLE IF NOT EXISTS leads (
   id TEXT PRIMARY KEY DEFAULT gen_random_uuid()::text,
   tenant_id TEXT DEFAULT 'tenant-root-default' REFERENCES tenants(id) ON DELETE CASCADE,
-  cnpj VARCHAR(18) NOT NULL UNIQUE,
-  cnpj_raw VARCHAR(14) NOT NULL,
+  cnpj TEXT NOT NULL UNIQUE,
+  cnpj_raw TEXT NOT NULL,
   razao_social TEXT NOT NULL,
   nome_fantasia TEXT,
   cnae_principal_codigo VARCHAR(20) NOT NULL,
