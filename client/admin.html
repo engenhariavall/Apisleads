@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VERSUS MASTER | Cockpit de Administração Global & Governança</title>
+  <meta name="description" content="Ambiente isolado de controle executivo, governança de usuários, cotas de consumo e telemetria de auditoria da plataforma VERSUS.">
+  <meta name="theme-color" content="#050814">
+
+  <!-- Tipografia de Alta Precisão Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Estilos Exclusivos do Cockpit Admin Master -->
+  <link rel="stylesheet" href="/css/admin.css?v=3.6.0">
+  <link rel="stylesheet" href="/css/preload.css?v=2.0.0">
+</head>
+<body class="admin-app-layout">
+
+  <!-- Layout em Duas Colunas: Sidebar Lateral + Viewport de Conteúdo -->
+  <div class="admin-shell">
+    
+    <!-- Sidebar Administrativa Real (VERSUS MASTER) -->
+    <aside class="admin-sidebar" id="adminSidebar">
+      <!-- Topo da Sidebar com Branding -->
+      <div class="sidebar-brand-box">
+        <div class="sidebar-brand-badge">ADMIN MASTER</div>
+        <div class="sidebar-brand-title">API Leads</div>
+        <div class="sidebar-brand-desc">Governança & Segurança B2B</div>
+      </div>
+
+      <!-- Perfil Compacto Super Admin -->
+      <div class="sidebar-profile-card">
+        <div class="sidebar-profile-avatar" id="sidebarAvatar">SA</div>
+        <div class="sidebar-profile-info">
+          <span class="sidebar-profile-role">SUPER ADMIN</span>
+          <span class="sidebar-profile-email" id="sidebarAdminEmail" title="admin@versus.ai">admin@versus.ai</span>
+        </div>
+      </div>
+
+      <!-- Menu de Navegação Administrativo -->
+      <nav class="sidebar-nav">
+        <div class="sidebar-nav-category">PAINEL DE CONTROLE</div>
+        <a href="#sectionOverview" class="sidebar-nav-item active" data-target="sectionOverview" onclick="switchAdminView('sectionOverview'); return false;">
+          <span class="nav-icon">
+            <svg class="nav-icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="20" x2="18" y2="10"></line>
+              <line x1="12" y1="20" x2="12" y2="4"></line>
+              <line x1="6" y1="20" x2="6" y2="14"></line>
+            </svg>
+          </span>
+          <span class="nav-label">Métricas Globais</span>
+        </a>
+        <a href="#sectionUsers" class="sidebar-nav-item" data-target="sectionUsers" onclick="switchAdminView('sectionUsers'); return false;">
+          <span class="nav-icon">
+            <svg class="nav-icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+          </span>
+          <span class="nav-label">Equipe & Operadores Internos</span>
+        </a>
+        <a href="#sectionTenants" class="sidebar-nav-item" data-target="sectionTenants" onclick="switchAdminView('sectionTenants'); return false;">
+          <span class="nav-icon">
+            <svg class="nav-icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+              <line x1="9" y1="22" x2="9" y2="22.01"></line>
+              <line x1="15" y1="22" x2="15" y2="22.01"></line>
+              <line x1="8" y1="6" x2="8" y2="6.01"></line>
+              <line x1="16" y1="6" x2="16" y2="6.01"></line>
+              <line x1="8" y1="10" x2="8" y2="10.01"></line>
+              <line x1="16" y1="10" x2="16" y2="10.01"></line>
+              <line x1="8" y1="14" x2="8" y2="14.01"></line>
+              <line x1="16" y1="14" x2="16" y2="14.01"></line>
+              <line x1="8" y1="18" x2="8" y2="18.01"></line>
+              <line x1="16" y1="18" x2="16" y2="18.01"></line>
+            </svg>
+          </span>
+          <span class="nav-label">Empresas & Tenants</span>
+        </a>
+        <a href="#sectionApiSettings" class="sidebar-nav-item" data-target="sectionApiSettings" onclick="switchAdminView('sectionApiSettings'); return false;">
+          <span class="nav-icon">
+            <svg class="nav-icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path>
+            </svg>
+          </span>
+          <span class="nav-label">Configurações de APIs</span>
+        </a>
+        <a href="#sectionAudit" class="sidebar-nav-item" data-target="sectionAudit" onclick="switchAdminView('sectionAudit'); return false;">
+          <span class="nav-icon">
+            <svg class="nav-icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+          </span>
+          <span class="nav-label">Auditoria & Logs</span>
+        </a>
+
+        <div class="sidebar-nav-category" style="margin-top: 1.5rem;">SISTEMA & ATALHOS</div>
+        <a href="/" class="sidebar-nav-item nav-item-external" title="Acessar Painel API Leads">
+          <span class="nav-icon">
+            <svg class="nav-icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15 3 21 3 21 9"></polyline>
+              <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+          </span>
+          <span class="nav-label">Painel API Leads</span>
+          <span class="nav-external-arrow">→</span>
+        </a>
+      </nav>
+
+      <!-- Rodapé da Sidebar: Sessão & Popover Sair -->
+      <div class="sidebar-footer">
+        <div class="popover-trigger-wrap">
+          <button type="button" class="btn-sidebar-user" id="btnToggleUserPopover">
+            <span class="status-indicator-dot"></span>
+            <span class="btn-sidebar-user-text" id="adminFooterUserName">Super Admin</span>
+            <span class="btn-sidebar-chevron">▴</span>
+          </button>
+
+          <!-- Popover Limpo de Logout (VERSUS Design System) -->
+          <div class="user-popover-menu" id="userPopoverMenu">
+            <div class="popover-header">
+              <strong id="popoverUserEmail">admin@versus.ai</strong>
+              <small>Sessão Segura Ativa</small>
+            </div>
+            <div class="popover-divider"></div>
+            <button type="button" class="popover-action-btn" id="popoverBtnRefresh">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="23 4 23 10 17 10"></polyline>
+                <polyline points="1 20 1 14 7 14"></polyline>
+                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+              </svg>
+              <span>Atualizar Dados</span>
+            </button>
+            <div class="popover-divider"></div>
+            <button type="button" class="popover-action-btn danger" id="popoverBtnLogout">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                <polyline points="16 17 21 12 16 7"></polyline>
+                <line x1="21" y1="12" x2="9" y2="12"></line>
+              </svg>
+              <span>Sair da Conta</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Área Principal de Conteúdo -->
+    <div class="admin-main-viewport">
+      
+      <!-- Topbar com Transição Rápida e Atualização -->
+      <header class="admin-topbar">
+        <div class="topbar-left">
+          <span class="topbar-breadcrumb">Painel de Gestão Global</span>
+          <span class="topbar-separator">/</span>
+          <span class="topbar-current" id="topbarCurrentView">Métricas Globais & Usuários</span>
+        </div>
+        <div class="topbar-right">
+          <a href="/" class="btn-transition-crm" id="btnTransitionCrm" title="Acessar Plataforma API Leads">
+            <span>Acessar API Leads</span>
+            <span class="arrow-sym">→</span>
+          </a>
+          <button type="button" class="btn-topbar-action" id="btnRefreshAdminData" title="Recarregar Métricas e Logs">
+            <span>↻</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Container Central de Conteúdo -->
+      <main class="admin-container">
+        
+        <!-- Bloco 1: Métricas Globais (View 1) -->
+        <div class="admin-view-section admin-view-pane active" id="sectionOverview">
+          <div class="page-header-row">
+            <div class="page-titles">
+              <h1>GOVERNANÇA & MÉTRICAS GLOBAIS</h1>
+              <p>Métricas operacionais agregadas, volumetria de cotas e integridade do cluster de prospecção.</p>
+            </div>
+          </div>
+
+          <!-- Grade de Indicadores de Gestão (KPIs) -->
+          <div class="kpi-grid">
+            <article class="kpi-card">
+              <div class="kpi-title">USUÁRIOS CADASTRADOS</div>
+              <div class="kpi-value" id="adminStatUsers">-</div>
+              <div class="kpi-caption">Total de contas ativas e inativas no cluster</div>
+            </article>
+            <article class="kpi-card">
+              <div class="kpi-title">LEADS EXPORTADOS HOJE</div>
+              <div class="kpi-value" id="adminStatExportsToday">-</div>
+              <div class="kpi-caption">Consumo agregado de cotas diárias</div>
+            </article>
+            <article class="kpi-card">
+              <div class="kpi-title">EVENTOS DE AUDITORIA</div>
+              <div class="kpi-value" id="adminStatAuditEvents">-</div>
+              <div class="kpi-caption">Registros de segurança rastreados na base</div>
+            </article>
+          </div>
+        </div>
+
+        <!-- Bloco 2: Equipe & Operadores Internos (View 2) -->
+        <div class="admin-view-section admin-view-pane" id="sectionUsers">
+          <div class="page-header-row">
+            <div class="page-titles">
+              <h1>EQUIPE & OPERADORES INTERNOS</h1>
+              <p>Governança restrita dos colaboradores da Plataforma VERSUS (Tenant Raiz), privilégios de Super Admin e Suporte Interno.</p>
+            </div>
+            <div class="page-actions-group">
+              <button type="button" class="btn-admin-primary" id="btnOpenInternalUserModal">
+                <span>+</span> Adicionar Operador Interno
+              </button>
+            </div>
+          </div>
+          <div class="admin-card-section">
+            <div class="table-responsive">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Usuário / E-mail</th>
+                    <th>Empresa (Tenant)</th>
+                    <th>Papel (Role)</th>
+                    <th>Status</th>
+                    <th>Senha de Acesso</th>
+                    <th>Cota Diária</th>
+                    <th>Exportado Hoje</th>
+                    <th>Cota Mensal</th>
+                    <th>Último Acesso</th>
+                    <th style="text-align: right;">Ações de Gestão</th>
+                  </tr>
+                </thead>
+                <tbody id="adminUsersTableBody">
+                  <tr>
+                    <td colspan="10" style="text-align: center; color: #94A3B8; padding: 2.5rem;">
+                      Carregando base de usuários...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bloco 3: Gestão de Empresas / Tenants (View 3) -->
+        <div class="admin-view-section admin-view-pane" id="sectionTenants">
+          <div class="page-header-row">
+            <div class="page-titles">
+              <h1>EMPRESAS & TENANTS CORPORATIVOS</h1>
+              <p>Instâncias comerciais ativas, limite contratual de operadores e governança multi-inquilino.</p>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+              <span class="tenant-active-badge" id="tenantHeaderCountBadge">1 INSTÂNCIA MASTER ATIVA</span>
+              <button type="button" class="btn-admin-primary" id="btnOpenNewTenantModal">
+                <span>+</span> Cadastrar Nova Empresa
+              </button>
+            </div>
+          </div>
+          <div class="admin-card-section">
+            <div class="table-responsive">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Organização / Empresa</th>
+                    <th>CNPJ</th>
+                    <th>Plano Contratual</th>
+                    <th>Status</th>
+                    <th>Operadores Ativos</th>
+                    <th>Capacidade Diária</th>
+                    <th>Segurança & Logs</th>
+                    <th style="text-align: right;">Ações de Gestão</th>
+                  </tr>
+                </thead>
+                <tbody id="adminTenantsTableBody">
+                  <!-- Renderizado dinamicamente pelo JavaScript (Tenant Raiz) -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bloco 4: Telemetria de Auditoria e Segurança (View 4) -->
+        <div class="admin-view-section admin-view-pane" id="sectionAudit">
+          <div class="page-header-row">
+            <div class="page-titles">
+              <h1>TELEMETRIA DE AUDITORIA & SEGURANÇA</h1>
+              <p>Logs imutáveis de autenticação, exportações de base e alterações operacionais.</p>
+            </div>
+            <div class="audit-header-controls" style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+              <select id="adminAuditTenantFilter" class="filter-select" style="min-width: 200px;">
+                <option value="">Todas as Empresas (Global)</option>
+              </select>
+              <select id="adminAuditActionFilter" class="filter-select">
+                <option value="">Todas as Ações</option>
+                <option value="LOGIN">Autenticação (Login)</option>
+                <option value="EXPORT">Exportações de Leads</option>
+                <option value="PASSWORD">Redefinições de Senha</option>
+                <option value="USER_CREATED">Criação de Usuários</option>
+              </select>
+              <button type="button" class="btn-export-audit" id="btnExportAuditLogs" title="Exportar logs de auditoria em CSV">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                <span>Exportar Logs (.csv)</span>
+              </button>
+            </div>
+          </div>
+          <div class="admin-card-section">
+            <div class="table-responsive">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Data/Hora</th>
+                    <th>Empresa / Tenant</th>
+                    <th>Ação</th>
+                    <th>Operador</th>
+                    <th>Endpoint</th>
+                    <th>Dispositivo (User-Agent)</th>
+                    <th>Status / Tempo</th>
+                    <th>Registros</th>
+                    <th>Endereço IP</th>
+                    <th>Parâmetros da Consulta</th>
+                  </tr>
+                </thead>
+                <tbody id="adminAuditTableBody">
+                  <tr>
+                    <td colspan="10" style="text-align: center; color: #94A3B8; padding: 2.5rem;">
+                      Carregando telemetria em tempo real...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bloco 5: Configurações de APIs & Test Drive (Fase 59) -->
+        <div class="admin-view-section admin-view-pane" id="sectionApiSettings">
+          <div class="page-header-row">
+            <div class="page-titles">
+              <h1>CONFIGURAÇÕES DE APIS & TEST DRIVE</h1>
+              <p>Governança das Chaves Mestre do Host (OpenAI, Meta Ads, Bureau de Dados) e gestão de Test Drive por Inquilino.</p>
+            </div>
+          </div>
+
+          <!-- Painéis de Credenciais Globais do Host (3 Blocos) -->
+          <div class="admin-card-section" style="margin-bottom: 2rem;">
+            <div class="card-section-title" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem;">
+              <span style="font-weight: 700; font-size: 0.95rem; color: #FFFFFF; letter-spacing: 0.05em; display: flex; align-items: center; gap: 0.5rem;">
+                <span style="color: #00D2FF;">🔑</span> CHAVES MESTRE DO HOST (GLOBAL INFRASTRUCTURE)
+              </span>
+              <span class="badge-host-active" style="background: rgba(0, 210, 255, 0.12); color: #00D2FF; border: 1px solid rgba(0, 210, 255, 0.3); font-size: 0.65rem; padding: 0.2rem 0.6rem; border-radius: 4px; font-weight: 800;">
+                AES-256-GCM ENCRIPTADO
+              </span>
+            </div>
+
+            <form id="formHostApiSettings" class="host-api-grid">
+              <div class="host-api-cards-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.25rem; margin-bottom: 1.5rem;">
+                <!-- Bloco 1: OpenAI -->
+                <div class="host-api-card" style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 1.25rem;">
+                  <div class="host-api-card-header" style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+                    <div style="font-size: 1.35rem; width: 36px; height: 36px; border-radius: 8px; background: rgba(16, 185, 129, 0.15); display: flex; align-items: center; justify-content: center;">🤖</div>
+                    <div>
+                      <h4 style="font-size: 0.88rem; color: #FFFFFF; font-weight: 700;">Host Credentials: OpenAI</h4>
+                      <p style="font-size: 0.72rem; color: #94A3B8;">Copiloto de IA & Function Calling em tempo real</p>
+                    </div>
+                  </div>
+                  <div class="form-group-admin" style="margin-top: 0.75rem;">
+                    <label for="hostMasterOpenaiKey">Master OpenAI API Key</label>
+                    <div class="user-password-container" style="display: flex; align-items: center; gap: 0.4rem; background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 6px; padding: 0.3rem 0.6rem;">
+                      <input type="password" id="hostMasterOpenaiKey" style="background: transparent; border: none; color: #FFFFFF; font-family: monospace; font-size: 0.8rem; flex: 1; outline: none;" placeholder="sk-proj-..." autocomplete="off">
+                      <button type="button" class="btn-pass-action" id="btnToggleHostOpenai" title="Alternar visibilidade">👁️</button>
+                    </div>
+                    <small style="color: #64748B; font-size: 0.7rem; margin-top: 0.35rem; display: block;">Chave mestre usada pelos clientes no modo Test Drive.</small>
+                  </div>
+                </div>
+
+                <!-- Bloco 2: Meta Ads API -->
+                <div class="host-api-card" style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 1.25rem;">
+                  <div class="host-api-card-header" style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+                    <div style="font-size: 1.35rem; width: 36px; height: 36px; border-radius: 8px; background: rgba(0, 85, 255, 0.15); display: flex; align-items: center; justify-content: center;">♾️</div>
+                    <div>
+                      <h4 style="font-size: 0.88rem; color: #FFFFFF; font-weight: 700;">Host Credentials: Meta Ads API</h4>
+                      <p style="font-size: 0.72rem; color: #94A3B8;">Sincronização de Custom Audiences (Graph API)</p>
+                    </div>
+                  </div>
+                  <div class="form-group-admin" style="margin-top: 0.75rem;">
+                    <label for="hostMasterMetaAppId">Master Meta App ID</label>
+                    <input type="text" id="hostMasterMetaAppId" class="admin-input" placeholder="Ex: 123456789012345" autocomplete="off" style="font-family: monospace; font-size: 0.8rem;">
+                  </div>
+                  <div class="form-group-admin" style="margin-top: 0.65rem;">
+                    <label for="hostMasterMetaToken">Master Meta System User Token</label>
+                    <div class="user-password-container" style="display: flex; align-items: center; gap: 0.4rem; background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 6px; padding: 0.3rem 0.6rem;">
+                      <input type="password" id="hostMasterMetaToken" style="background: transparent; border: none; color: #FFFFFF; font-family: monospace; font-size: 0.8rem; flex: 1; outline: none;" placeholder="EAAB..." autocomplete="off">
+                      <button type="button" class="btn-pass-action" id="btnToggleHostMeta" title="Alternar visibilidade">👁️</button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Bloco 3: API Bureau (Enriquecimento) -->
+                <div class="host-api-card" style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 1.25rem;">
+                  <div class="host-api-card-header" style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+                    <div style="font-size: 1.35rem; width: 36px; height: 36px; border-radius: 8px; background: rgba(245, 158, 11, 0.15); display: flex; align-items: center; justify-content: center;">📞</div>
+                    <div>
+                      <h4 style="font-size: 0.88rem; color: #FFFFFF; font-weight: 700;">Host Credentials: API Bureau (Enriquecimento)</h4>
+                      <p style="font-size: 0.72rem; color: #94A3B8;">Revelação de telefones celulares e validação CPF</p>
+                    </div>
+                  </div>
+                  <div class="form-group-admin" style="margin-top: 0.75rem;">
+                    <label for="hostMasterBureauKey">Master Bureau API Key</label>
+                    <div class="user-password-container" style="display: flex; align-items: center; gap: 0.4rem; background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 6px; padding: 0.3rem 0.6rem;">
+                      <input type="password" id="hostMasterBureauKey" style="background: transparent; border: none; color: #FFFFFF; font-family: monospace; font-size: 0.8rem; flex: 1; outline: none;" placeholder="bureau-key-..." autocomplete="off">
+                      <button type="button" class="btn-pass-action" id="btnToggleHostBureau" title="Alternar visibilidade">👁️</button>
+                    </div>
+                    <small style="color: #64748B; font-size: 0.7rem; margin-top: 0.35rem; display: block;">Gateway suportado: Assertiva / Unitfour / Z-API.</small>
+                  </div>
+                </div>
+              </div>
+
+              <div style="display: flex; justify-content: flex-end;">
+                <button type="submit" class="btn-admin-primary" id="btnSaveHostApiSettings">
+                  <span>💾</span> Salvar Credenciais do Host
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Tabela de Inquilinos & Gestão de Test Drive -->
+          <div class="admin-card-section">
+            <div class="card-section-title" style="margin-bottom: 1.25rem;">
+              <span style="font-weight: 700; font-size: 0.95rem; color: #FFFFFF; letter-spacing: 0.05em; display: flex; align-items: center; gap: 0.5rem;">
+                <span>🏢</span> GESTÃO DE INQUILINOS (TENANTS) & TEST DRIVE
+              </span>
+            </div>
+            <div class="table-responsive">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Empresa / Inquilino</th>
+                    <th>CNPJ</th>
+                    <th>Modo de Chave</th>
+                    <th>Expiração do Test Drive</th>
+                    <th>Chaves Próprias</th>
+                    <th>Nichos Autorizados</th>
+                    <th style="text-align: right;">Ações de Gestão</th>
+                  </tr>
+                </thead>
+                <tbody id="tableTenantApiConfigsBody">
+                  <tr>
+                    <td colspan="7" style="text-align: center; color: #94A3B8; padding: 2.5rem;">
+                      Carregando status das chaves dos inquilinos...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+    </div>
+  </div>
+
+  <!-- Modal: Cadastrar Novo Usuário -->
+  <div class="modal-overlay" id="modalAdminNewUser" style="z-index: 1100;">
+    <div class="modal-dialog-box">
+      <div class="modal-head">
+        <h3 id="modalAdminNewUserTitle">Cadastrar Novo Usuário</h3>
+        <button type="button" class="btn-modal-close" id="btnCloseNewUserModal">✕</button>
+      </div>
+      <form id="formAdminNewUser">
+        <input type="hidden" id="inputNewUserTenantId" value="">
+        <div class="modal-body">
+          <div class="form-group-admin">
+            <label for="inputNewUserName">Nome Completo</label>
+            <input type="text" id="inputNewUserName" class="admin-input" required placeholder="Ex: Gestor de Inteligência">
+          </div>
+          <div class="form-group-admin">
+            <label for="inputNewUserEmail">E-mail Corporativo</label>
+            <input type="email" id="inputNewUserEmail" class="admin-input" required placeholder="gestor@empresa.com">
+          </div>
+          <div class="form-group-admin">
+            <label for="inputNewUserPassword">Senha Provisória</label>
+            <input type="password" id="inputNewUserPassword" class="admin-input" required placeholder="Mínimo 6 caracteres">
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+            <div class="form-group-admin">
+              <label for="selectNewUserRole">Nível de Acesso (Papel)</label>
+              <select id="selectNewUserRole" class="admin-select" required>
+                <option value="Admin">Admin</option>
+                <option value="Gestor de Tráfego" selected>Gestor de Tráfego</option>
+                <option value="Analista de Marketing">Analista de Marketing</option>
+                <option value="Coordenador de Marketing">Coordenador de Marketing</option>
+              </select>
+            </div>
+            <div class="form-group-admin">
+              <label for="inputNewUserDailyQuota">Cota Diária (Leads)</label>
+              <input type="number" id="inputNewUserDailyQuota" class="admin-input" value="500" min="0" max="100000">
+            </div>
+          </div>
+        </div>
+        <div class="modal-foot">
+          <button type="button" class="btn-admin-secondary" id="btnCancelNewUserModal">Cancelar</button>
+          <button type="submit" class="btn-admin-primary">Salvar Usuário</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Cadastrar Operador Interno (Equipe VERSUS) -->
+  <div class="modal-overlay" id="modalAdminNewInternalUser" style="z-index: 1100;">
+    <div class="modal-dialog-box">
+      <div class="modal-head">
+        <h3>Adicionar Operador Interno (Equipe VERSUS)</h3>
+        <button type="button" class="btn-modal-close" id="btnCloseInternalUserModal">✕</button>
+      </div>
+      <form id="formAdminNewInternalUser">
+        <input type="hidden" id="inputInternalUserTenantId" value="tenant-root-default">
+        <div class="modal-body">
+          <div class="form-group-admin">
+            <label for="inputInternalUserName">Nome Completo</label>
+            <input type="text" id="inputInternalUserName" class="admin-input" required placeholder="Ex: Engenheiro de Plataforma">
+          </div>
+          <div class="form-group-admin">
+            <label for="inputInternalUserEmail">E-mail Corporativo</label>
+            <input type="email" id="inputInternalUserEmail" class="admin-input" required placeholder="operador@versus.com.br">
+          </div>
+          <div class="form-group-admin">
+            <label for="inputInternalUserPassword">Senha Provisória</label>
+            <input type="password" id="inputInternalUserPassword" class="admin-input" required placeholder="Mínimo 6 caracteres">
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+            <div class="form-group-admin">
+              <label for="selectInternalUserRole">Nível de Acesso (Papel)</label>
+              <select id="selectInternalUserRole" class="admin-select" required>
+                <option value="SUPER_ADMIN" selected>Super Admin</option>
+                <option value="SUPORTE_INTERNO">Suporte Interno</option>
+              </select>
+            </div>
+            <div class="form-group-admin">
+              <label for="inputInternalUserDailyQuota">Cota Diária (Leads)</label>
+              <input type="number" id="inputInternalUserDailyQuota" class="admin-input" value="50000" min="0" max="1000000">
+            </div>
+          </div>
+        </div>
+        <div class="modal-foot">
+          <button type="button" class="btn-admin-secondary" id="btnCancelInternalUserModal">Cancelar</button>
+          <button type="submit" class="btn-admin-primary">Salvar Operador Interno</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Cadastrar Nova Empresa (Tenant) -->
+  <div class="modal-overlay" id="modalAdminNewTenant">
+    <div class="modal-dialog-box">
+      <div class="modal-head">
+        <h3>Cadastrar Nova Empresa (Tenant)</h3>
+        <button type="button" class="btn-modal-close" id="btnCloseNewTenantModal">✕</button>
+      </div>
+      <form id="formAdminNewTenant">
+        <div class="modal-body">
+          <div class="form-group-admin">
+            <label for="inputNewTenantName">Razão Social / Nome da Empresa</label>
+            <input type="text" id="inputNewTenantName" class="admin-input" required placeholder="Ex: Alfa Negócios & Consultoria Ltda">
+          </div>
+          <div class="form-group-admin">
+            <label for="inputNewTenantCnpj">CNPJ (Opcional)</label>
+            <input type="text" id="inputNewTenantCnpj" class="admin-input" placeholder="00.000.000/0001-00">
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+            <div class="form-group-admin">
+              <label for="selectNewTenantPlan">Plano Contratual</label>
+              <select id="selectNewTenantPlan" class="admin-select">
+                <option value="PROFESSIONAL">Professional</option>
+                <option value="ENTERPRISE" selected>Enterprise</option>
+                <option value="BASIC">Basic</option>
+                <option value="CUSTOM">Custom</option>
+              </select>
+            </div>
+            <div class="form-group-admin">
+              <label for="inputNewTenantMaxUsers">Limite de Operadores</label>
+              <input type="number" id="inputNewTenantMaxUsers" class="admin-input" value="5" min="1" max="1000">
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+            <div class="form-group-admin">
+              <label for="inputNewTenantDailyQuota">Cota Diária Global (Leads)</label>
+              <input type="number" id="inputNewTenantDailyQuota" class="admin-input" value="5000" min="0" max="1000000">
+            </div>
+            <div class="form-group-admin">
+              <label for="inputNewTenantMonthlyQuota">Cota Mensal Global (Leads)</label>
+              <input type="number" id="inputNewTenantMonthlyQuota" class="admin-input" value="100000" min="0" max="10000000">
+            </div>
+          </div>
+        </div>
+        <div class="modal-foot">
+          <button type="button" class="btn-admin-secondary" id="btnCancelNewTenantModal">Cancelar</button>
+          <button type="submit" class="btn-admin-primary">Cadastrar Empresa</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 1: Editar Dados da Empresa (Governança Minimalista) -->
+  <div class="modal-overlay" id="modalAdminEditTenant">
+    <div class="modal-dialog-box modal-governance modal-governance-lg">
+      <div class="modal-head">
+        <div class="modal-head-xray">
+          <h3 id="modalEditTenantTitle">Carregando Raio-X...</h3>
+          <span class="modal-badge-status" id="modalEditTenantStatusBadge">
+            <span class="status-dot"></span>
+            <span id="modalEditTenantStatusText">ATIVO</span>
+          </span>
+        </div>
+        <button type="button" class="btn-modal-close" id="btnCloseEditTenantModal">✕</button>
+      </div>
+
+      <!-- Menu de Navegação por Abas (Arquitetura Raio-X) -->
+      <nav class="xray-tabs-nav" id="xrayTabsNav">
+        <button type="button" class="xray-tab-btn active" data-tab="tabXrayCadastral">Dados Cadastrais</button>
+        <button type="button" class="xray-tab-btn" data-tab="tabXrayMetrics">Métricas & Uso</button>
+        <button type="button" class="xray-tab-btn" data-tab="tabXrayConnections">Conexões</button>
+        <button type="button" class="xray-tab-btn" data-tab="tabXrayTickets">Chamados</button>
+      </nav>
+
+      <!-- Aba 1: Dados Cadastrais (Ativa por padrão) -->
+      <div class="xray-tab-pane active" id="tabXrayCadastral">
+        <form id="formAdminEditTenant">
+          <input type="hidden" id="editTenantId">
+          <div class="modal-body">
+            <div class="form-group-admin">
+              <label for="inputEditTenantName">Razão Social / Nome Oficial</label>
+              <input type="text" id="inputEditTenantName" class="admin-input-underline" required placeholder="Nome corporativo">
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;">
+              <div class="form-group-admin">
+                <label for="inputEditTenantCnpj">CNPJ</label>
+                <input type="text" id="inputEditTenantCnpj" class="admin-input-underline" placeholder="00.000.000/0001-00">
+              </div>
+              <div class="form-group-admin">
+                <label for="inputEditTenantPhone">Telefone</label>
+                <input type="text" id="inputEditTenantPhone" class="admin-input-underline" placeholder="(00) 0000-0000">
+              </div>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;">
+              <div class="form-group-admin">
+                <label for="inputEditTenantWhatsapp">WhatsApp Corporativo</label>
+                <input type="text" id="inputEditTenantWhatsapp" class="admin-input-underline" placeholder="(00) 90000-0000">
+              </div>
+              <div class="form-group-admin">
+                <label for="inputEditTenantEmail">E-mail Institucional</label>
+                <input type="email" id="inputEditTenantEmail" class="admin-input-underline" placeholder="contato@empresa.com">
+              </div>
+            </div>
+            <div class="form-group-admin">
+              <label for="inputEditTenantAddress">Endereço Completo</label>
+              <input type="text" id="inputEditTenantAddress" class="admin-input-underline" placeholder="Av. Paulista, 1000 - Sala 501, São Paulo - SP">
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;">
+              <div class="form-group-admin">
+                <label for="selectEditTenantPlan">Plano de Assinatura</label>
+                <select id="selectEditTenantPlan" class="admin-select-underline">
+                  <option value="BASIC">Basic</option>
+                  <option value="PROFESSIONAL">Professional</option>
+                  <option value="ENTERPRISE">Enterprise</option>
+                  <option value="ENTERPRISE UNLIMITED">Enterprise Unlimited</option>
+                  <option value="CUSTOM">Custom</option>
+                </select>
+              </div>
+              <div class="form-group-admin">
+                <label for="selectEditTenantStatus">Status da Conta</label>
+                <select id="selectEditTenantStatus" class="admin-select-underline">
+                  <option value="ACTIVE">Ativa (Acesso Liberado)</option>
+                  <option value="SUSPENDED">Bloqueada (Acesso Suspenso)</option>
+                </select>
+              </div>
+            </div>
+            <!-- Divisor e Seção de Operadores & Usuários do Tenant -->
+            <div class="xray-section-divider"></div>
+            <div class="xray-subheading">
+              <div>
+                <h4>OPERADORES & USUÁRIOS CADASTRADOS</h4>
+                <p>Usuários e operadores vinculados contratualmente a este Tenant.</p>
+              </div>
+              <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <span class="xray-users-count-badge" id="xrayTenantUsersCount">0 operadores</span>
+                <button type="button" class="btn-admin-primary btn-xray-new-user" id="btnOpenXrayNewUserModal" style="padding: 0.35rem 0.75rem; font-size: 0.75rem; display: inline-flex; align-items: center; gap: 0.35rem;">
+                  <span>+</span> Cadastrar Novo Usuário
+                </button>
+              </div>
+            </div>
+
+            <div class="table-responsive xray-table-container">
+              <table class="admin-table xray-operators-table">
+                <thead>
+                  <tr>
+                    <th>NOME</th>
+                    <th>E-MAIL</th>
+                    <th>PAPEL</th>
+                    <th>STATUS</th>
+                    <th>SENHA DE ACESSO</th>
+                    <th style="text-align: right;">AÇÕES</th>
+                  </tr>
+                </thead>
+                <tbody id="xrayTenantUsersTableBody">
+                  <tr>
+                    <td colspan="6" style="text-align: center; color: #94A3B8; padding: 1.5rem;">
+                      Carregando operadores vinculados...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="modal-foot" style="display: flex; justify-content: space-between; align-items: center;">
+            <button type="button" class="btn-modal-delete-user" id="btnDeleteTenantFromEditModal" style="background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.35); color: #F87171; padding: 0.45rem 0.85rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 0.35rem; transition: all 0.15s ease;" title="Excluir esta empresa e todos os seus operadores definitivamente do banco de dados">
+              <span>🗑️</span> Excluir Empresa
+            </button>
+            <div style="display: flex; gap: 0.5rem;">
+              <button type="button" class="btn-admin-secondary" id="btnCancelEditTenantModal">Cancelar</button>
+              <button type="submit" class="btn-modal-save">Salvar Alterações</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Aba 2: Métricas & Uso -->
+      <div class="xray-tab-pane" id="tabXrayMetrics">
+        <div class="modal-body" style="padding: 3rem 1.5rem; text-align: center; color: #94A3B8;">
+          <p style="font-size: 0.85rem; font-weight: 500;">Módulo de telemetria analítica e consumo de cotas em tempo real do Tenant.</p>
+          <small style="color: #64748B; margin-top: 0.35rem; display: block;">Disponível na próxima iteração da arquitetura Raio-X.</small>
+        </div>
+      </div>
+
+      <!-- Aba 3: Conexões -->
+      <div class="xray-tab-pane" id="tabXrayConnections">
+        <div class="modal-body" style="padding: 3rem 1.5rem; text-align: center; color: #94A3B8;">
+          <p style="font-size: 0.85rem; font-weight: 500;">Status das integrações ativas (WhatsApp Gateway, SMTP, Webhooks e CRM).</p>
+          <small style="color: #64748B; margin-top: 0.35rem; display: block;">Disponível na próxima iteração da arquitetura Raio-X.</small>
+        </div>
+      </div>
+
+      <!-- Aba 4: Chamados -->
+      <div class="xray-tab-pane" id="tabXrayTickets">
+        <div class="modal-body" style="padding: 3rem 1.5rem; text-align: center; color: #94A3B8;">
+          <p style="font-size: 0.85rem; font-weight: 500;">Histórico de solicitações de suporte e chamados abertos pelos operadores.</p>
+          <small style="color: #64748B; margin-top: 0.35rem; display: block;">Disponível na próxima iteração da arquitetura Raio-X.</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2: Redefinir Senha do Admin da Empresa (Governança Minimalista) -->
+  <div class="modal-overlay" id="modalAdminResetTenantAdminPassword" style="z-index: 1100;">
+    <div class="modal-dialog-box modal-governance modal-governance-sm">
+      <div class="modal-head">
+        <h3>Redefinir Senha do Administrador</h3>
+        <button type="button" class="btn-modal-close" id="btnCloseResetTenantAdminPasswordModal">✕</button>
+      </div>
+      <form id="formAdminResetTenantAdminPassword">
+        <input type="hidden" id="resetTenantAdminTenantId">
+        <div class="modal-body">
+          <div class="form-group-admin">
+            <label>Administrador Responsável</label>
+            <div id="resetTenantAdminEmailDisplay" style="color: #FFFFFF; font-weight: 600; font-size: 0.85rem; padding: 0.4rem 0.15rem; border-bottom: 1px solid rgba(148, 163, 184, 0.12); font-family: var(--font-mono);">
+              admin@empresa.com
+            </div>
+          </div>
+          <div class="form-group-admin">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <label for="inputResetTenantAdminNewPassword">Nova Senha de Acesso</label>
+              <button type="button" class="btn-admin-aux" id="btnGenerateRandomAdminPass" title="Gerar senha aleatória segura">
+                <span>⚡ Gerar Automática</span>
+              </button>
+            </div>
+            <input type="text" id="inputResetTenantAdminNewPassword" class="admin-input-underline" required placeholder="Mínimo 6 caracteres" style="font-family: var(--font-mono); letter-spacing: 0.05em;">
+          </div>
+        </div>
+        <div class="modal-foot">
+          <button type="button" class="btn-admin-secondary" id="btnCancelResetTenantAdminPasswordModal">Cancelar</button>
+          <button type="submit" class="btn-modal-save">Salvar Nova Senha</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 3: Editar Operador do Tenant (Sub-modal de Governança) -->
+  <div class="modal-overlay" id="modalAdminEditOperator" style="z-index: 1100;">
+    <div class="modal-dialog-box modal-governance modal-governance-sm">
+      <div class="modal-head">
+        <div class="modal-head-xray">
+          <h3 id="modalEditOperatorTitle">Editar Operador</h3>
+          <span class="modal-badge-status" id="modalEditOperatorStatusBadge">
+            <span class="status-dot"></span>
+            <span id="modalEditOperatorStatusText">ATIVO</span>
+          </span>
+        </div>
+        <button type="button" class="btn-modal-close" id="btnCloseEditOperatorModal">✕</button>
+      </div>
+      <form id="formAdminEditOperator">
+        <input type="hidden" id="editOperatorId">
+        <input type="hidden" id="editOperatorTenantId">
+        <div class="modal-body">
+          <div class="form-group-admin">
+            <label for="inputEditOperatorName">Nome do Operador</label>
+            <input type="text" id="inputEditOperatorName" class="admin-input-underline" required placeholder="Nome completo">
+          </div>
+          <div class="form-group-admin">
+            <label for="inputEditOperatorEmail">E-mail Corporativo</label>
+            <input type="email" id="inputEditOperatorEmail" class="admin-input-underline" required placeholder="operador@empresa.com">
+          </div>
+          <div class="form-group-admin" id="groupCurrentOperatorPassword">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <label>Senha Atual Cadastrada</label>
+              <button type="button" class="btn-admin-aux" id="btnCopyCurrentOperatorPassword" title="Copiar senha atual para a área de transferência">
+                <span>📋 Copiar Senha</span>
+              </button>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.75rem; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(148, 163, 184, 0.12); padding: 0.45rem 0.75rem; border-radius: 4px; margin-top: 0.25rem;">
+              <span id="displayEditOperatorCurrentPassword" style="font-family: var(--font-mono, monospace); font-size: 0.85rem; color: #38BDF8; font-weight: 600; letter-spacing: 0.05em; flex: 1;">••••••••</span>
+              <button type="button" id="btnToggleCurrentPassVisibility" class="btn-admin-aux" style="padding: 0.2rem 0.55rem; font-size: 0.72rem;">
+                <span id="textToggleCurrentPass">👁️ Revelar</span>
+              </button>
+            </div>
+          </div>
+          <div class="form-group-admin">
+            <label for="inputEditOperatorPassword">Nova Senha (Deixe em branco para manter a atual)</label>
+            <div style="position: relative; display: flex; align-items: center;">
+              <input type="password" id="inputEditOperatorPassword" class="admin-input-underline" placeholder="Digite uma nova senha se desejar alterar" style="padding-right: 2.5rem; width: 100%;">
+              <button type="button" id="btnToggleEditOperatorPass" style="position: absolute; right: 0.5rem; background: transparent; border: none; color: #94A3B8; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0.25rem;" title="Mostrar / Ocultar Senha">
+                <svg id="iconEyeOpen" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+                <svg id="iconEyeClosed" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+                  <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                  <line x1="1" y1="1" x2="23" y2="23"></line>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;">
+            <div class="form-group-admin">
+              <label for="selectEditOperatorRole">Nível de Acesso (Papel)</label>
+              <select id="selectEditOperatorRole" class="admin-select-underline">
+                <option value="Admin">Admin</option>
+                <option value="Gestor de Tráfego" selected>Gestor de Tráfego</option>
+                <option value="Analista de Marketing">Analista de Marketing</option>
+                <option value="Coordenador de Marketing">Coordenador de Marketing</option>
+              </select>
+            </div>
+            <div class="form-group-admin">
+              <label for="selectEditOperatorStatus">Status da Conta</label>
+              <select id="selectEditOperatorStatus" class="admin-select-underline">
+                <option value="1">Ativo (Liberado)</option>
+                <option value="0">Bloqueado (Inativo)</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group-admin">
+            <label for="inputEditOperatorDailyLimit">Cota Diária de Exportação (Leads)</label>
+            <input type="number" id="inputEditOperatorDailyLimit" class="admin-input-underline" min="0" max="100000" placeholder="500">
+          </div>
+        </div>
+        <div class="modal-foot" style="display: flex; justify-content: space-between; align-items: center;">
+          <button type="button" class="btn-modal-delete-user" id="btnDeleteUserFromEditModal" style="background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.35); color: #F87171; padding: 0.45rem 0.85rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 0.35rem; transition: all 0.15s ease;" title="Excluir este usuário permanentemente do banco de dados">
+            <span>🗑️</span> Excluir Usuário
+          </button>
+          <div style="display: flex; gap: 0.5rem;">
+            <button type="button" class="btn-admin-secondary" id="btnCancelEditOperatorModal">Cancelar</button>
+            <button type="submit" class="btn-modal-save">Salvar Alterações</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Gestão de APIs e Test Drive do Cliente (Fase 59) -->
+  <div class="modal-overlay" id="modalTenantApiConfig" style="z-index: 1200; display: none;">
+    <div class="modal-dialog-box modal-dialog-large" style="max-width: 650px;">
+      <div class="modal-head">
+        <div>
+          <h3 id="modalTenantApiTitle">Gerir Acesso & Chaves de API</h3>
+          <p style="font-size: 0.74rem; color: #94A3B8; margin-top: 0.2rem;" id="modalTenantApiSubtitle">Configuração de torneiras de consumo e Test Drive</p>
+        </div>
+        <button type="button" class="btn-modal-close" id="btnCloseTenantApiModal">✕</button>
+      </div>
+      <form id="formTenantApiConfig">
+        <input type="hidden" id="modalTenantApiTenantId" value="">
+        <div class="modal-body" style="display: flex; flex-direction: column; gap: 1.25rem;">
+          
+          <!-- Seção 1: Controle de Test Drive -->
+          <div class="modal-subcard" style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 1rem 1.25rem;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
+              <div>
+                <strong style="color: #FFFFFF; font-size: 0.88rem; display: block;">Modo Test Drive (Chaves Mestre)</strong>
+                <small style="color: #94A3B8; font-size: 0.74rem;">Permite que o cliente utilize as Chaves Mestre do Host até a data limite</small>
+              </div>
+              <label class="switch-toggle" style="display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                <input type="checkbox" id="modalTenantUseMasterKey" style="cursor: pointer; width: 18px; height: 18px; accent-color: #00D2FF;">
+                <span id="modalTenantUseMasterKeyLabel" style="font-size: 0.75rem; font-weight: 700; color: #38BDF8;">ATIVO</span>
+              </label>
+            </div>
+
+            <div id="modalTestDriveDateSection" style="margin-top: 0.75rem;">
+              <label for="modalTenantExpiresAt" style="font-size: 0.75rem; color: #CBD5E1; font-weight: 600; display: block; margin-bottom: 0.35rem;">Expira em:</label>
+              <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                <input type="datetime-local" id="modalTenantExpiresAt" class="admin-input" style="max-width: 250px;">
+                <button type="button" class="btn-quick-date" id="btnQuick7Days" style="background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.15); color: #CBD5E1; font-size: 0.72rem; padding: 0.35rem 0.65rem; border-radius: 4px; cursor: pointer;">+7 dias</button>
+                <button type="button" class="btn-quick-date" id="btnQuick15Days" style="background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.15); color: #CBD5E1; font-size: 0.72rem; padding: 0.35rem 0.65rem; border-radius: 4px; cursor: pointer;">+15 dias</button>
+                <button type="button" class="btn-quick-date" id="btnQuick30Days" style="background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.15); color: #CBD5E1; font-size: 0.72rem; padding: 0.35rem 0.65rem; border-radius: 4px; cursor: pointer;">+30 dias</button>
+              </div>
+              <div id="modalTestDriveStatusAlert" style="margin-top: 0.5rem; font-size: 0.72rem; color: #38BDF8;"></div>
+            </div>
+          </div>
+
+          <!-- Seção 2: Chaves Próprias do Cliente (Produção) -->
+          <div class="modal-subcard" style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 1rem 1.25rem;">
+            <strong style="color: #FFFFFF; font-size: 0.88rem; display: block; margin-bottom: 0.25rem;">Chaves Definitivas do Cliente (Produção)</strong>
+            <small style="color: #94A3B8; font-size: 0.72rem; display: block; margin-bottom: 0.85rem;">Utilizadas quando o Test Drive for desativado ou expirar.</small>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem;">
+              <div class="form-group-admin">
+                <label for="modalTenantOpenaiKey">OpenAI API Key (Cliente)</label>
+                <div class="user-password-container" style="display: flex; align-items: center; gap: 0.4rem; background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 6px; padding: 0.3rem 0.6rem;">
+                  <input type="password" id="modalTenantOpenaiKey" style="background: transparent; border: none; color: #FFFFFF; font-family: monospace; font-size: 0.8rem; flex: 1; outline: none;" placeholder="sk-...">
+                  <button type="button" class="btn-pass-action" id="btnToggleTenantOpenai" title="Alternar visibilidade">👁️</button>
+                </div>
+              </div>
+
+              <div class="form-group-admin">
+                <label for="modalTenantBureauKey">API Key do Bureau (Cliente)</label>
+                <div class="user-password-container" style="display: flex; align-items: center; gap: 0.4rem; background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 6px; padding: 0.3rem 0.6rem;">
+                  <input type="password" id="modalTenantBureauKey" style="background: transparent; border: none; color: #FFFFFF; font-family: monospace; font-size: 0.8rem; flex: 1; outline: none;" placeholder="bureau-key-...">
+                  <button type="button" class="btn-pass-action" id="btnToggleTenantBureau" title="Alternar visibilidade">👁️</button>
+                </div>
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; margin-top: 0.75rem;">
+              <div class="form-group-admin">
+                <label for="modalTenantMetaAppId">Meta App ID (Cliente)</label>
+                <input type="text" id="modalTenantMetaAppId" class="admin-input" placeholder="Ex: 9876543210" style="font-family: monospace; font-size: 0.8rem;">
+              </div>
+
+              <div class="form-group-admin">
+                <label for="modalTenantMetaToken">Meta Access Token (Cliente)</label>
+                <div class="user-password-container" style="display: flex; align-items: center; gap: 0.4rem; background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 6px; padding: 0.3rem 0.6rem;">
+                  <input type="password" id="modalTenantMetaToken" style="background: transparent; border: none; color: #FFFFFF; font-family: monospace; font-size: 0.8rem; flex: 1; outline: none;" placeholder="EAAB...">
+                  <button type="button" class="btn-pass-action" id="btnToggleTenantMeta" title="Alternar visibilidade">👁️</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Seção 3: Workspaces e Nichos Autorizados -->
+          <div class="modal-subcard" style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 1rem 1.25rem;">
+            <strong style="color: #FFFFFF; font-size: 0.88rem; display: block; margin-bottom: 0.25rem;">Workspaces & Nichos Contratados</strong>
+            <small style="color: #94A3B8; font-size: 0.72rem; display: block; margin-bottom: 0.65rem;">Selecione os módulos liberados para este inquilino.</small>
+            <div style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
+              <label style="display: inline-flex; align-items: center; gap: 0.45rem; font-size: 0.8rem; color: #E2E8F0; cursor: pointer;">
+                <input type="checkbox" name="tenantAllowedNiches" value="agro" checked style="accent-color: #22C55E;"> 🌾 Agro & Fundiário
+              </label>
+              <label style="display: inline-flex; align-items: center; gap: 0.45rem; font-size: 0.8rem; color: #E2E8F0; cursor: pointer;">
+                <input type="checkbox" name="tenantAllowedNiches" value="b2b" checked style="accent-color: #38BDF8;"> 🏢 B2B Geral
+              </label>
+              <label style="display: inline-flex; align-items: center; gap: 0.45rem; font-size: 0.8rem; color: #E2E8F0; cursor: pointer;">
+                <input type="checkbox" name="tenantAllowedNiches" value="saude" checked style="accent-color: #EC4899;"> 🏥 Saúde & Clínicas
+              </label>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-foot" style="display: flex; justify-content: flex-end; gap: 0.5rem;">
+          <button type="button" class="btn-admin-secondary" id="btnCancelTenantApiModal">Cancelar</button>
+          <button type="submit" class="btn-modal-save" id="btnSaveTenantApiModal">Salvar Configurações</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Flutuante -->
+  <div class="admin-toast" id="adminToast"></div>
+
+  <!-- Motor de Pré-Loader e Transição Imersiva -->
+  <script src="/js/preload.js?v=2.1.0"></script>
+  <!-- Script Lógico Isolado do Cockpit Admin -->
+  <script src="/js/admin.js?v=3.8.0"></script>
+</body>
+</html>

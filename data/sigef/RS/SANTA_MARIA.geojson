@@ -1,0 +1,7452 @@
+{
+  "type": "FeatureCollection",
+  "name": "sigef_RS_SANTA_MARIA",
+  "total_features": 50,
+  "updated_at": "2026-09-29T18:02:30.254Z",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "29d7027b-f0b8-4877-a0f0-f82dc19620c9",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.849434,
+              -29.627882
+            ],
+            [
+              -53.848853,
+              -29.627921
+            ],
+            [
+              -53.848996,
+              -29.628376
+            ],
+            [
+              -53.849251,
+              -29.628731
+            ],
+            [
+              -53.849448,
+              -29.628911
+            ],
+            [
+              -53.849567,
+              -29.628939
+            ],
+            [
+              -53.849737,
+              -29.628961
+            ],
+            [
+              -53.849893,
+              -29.628982
+            ],
+            [
+              -53.850224,
+              -29.629026
+            ],
+            [
+              -53.850603,
+              -29.628616
+            ],
+            [
+              -53.850767,
+              -29.62885
+            ],
+            [
+              -53.850826,
+              -29.6289
+            ],
+            [
+              -53.851052,
+              -29.628776
+            ],
+            [
+              -53.850958,
+              -29.62867
+            ],
+            [
+              -53.851081,
+              -29.628496
+            ],
+            [
+              -53.850759,
+              -29.62831
+            ],
+            [
+              -53.850066,
+              -29.627934
+            ],
+            [
+              -53.84975,
+              -29.627893
+            ],
+            [
+              -53.849434,
+              -29.627882
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "29d7027b-f0b8-4877-a0f0-f82dc19620c9",
+        "id_sigef": "29d7027b-f0b8-4877-a0f0-f82dc19620c9",
+        "codigo_imovel": "8590520248308",
+        "nome_imovel": "Imóvel SDE - Matrícula 90.679",
+        "nome_titular": "IMÓVEL SDE .679 LTDA",
+        "cpf_cnpj_titular": "92.040.002/7501-21",
+        "registro_matricula": "Matrícula 90679 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 1.79,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.62856522222222,
+        "centroide_lng": -53.850070277777775,
+        "cnpj_raw": "92040002750121",
+        "razao_social": "IMÓVEL SDE .679 LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Carlos Alberto Fontana",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Mariana Fontana",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533169400",
+        "telefone": "(55) 3316-9400",
+        "email": "contato@imvelsde679.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "a996d4fb-4e92-46f3-94e7-a360afc3a191",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.774666,
+              -29.786121
+            ],
+            [
+              -53.774652,
+              -29.786148
+            ],
+            [
+              -53.77447,
+              -29.786401
+            ],
+            [
+              -53.774372,
+              -29.786406
+            ],
+            [
+              -53.774328,
+              -29.786525
+            ],
+            [
+              -53.774086,
+              -29.786774
+            ],
+            [
+              -53.774015,
+              -29.786896
+            ],
+            [
+              -53.774099,
+              -29.786941
+            ],
+            [
+              -53.775705,
+              -29.786901
+            ],
+            [
+              -53.78207,
+              -29.787242
+            ],
+            [
+              -53.782296,
+              -29.786532
+            ],
+            [
+              -53.774908,
+              -29.786134
+            ],
+            [
+              -53.774666,
+              -29.786121
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "a996d4fb-4e92-46f3-94e7-a360afc3a191",
+        "id_sigef": "a996d4fb-4e92-46f3-94e7-a360afc3a191",
+        "codigo_imovel": "8590520553100",
+        "nome_imovel": "Sítio dos Ipês - I",
+        "nome_titular": "SÍTIO DOS IPÊS I LTDA",
+        "cpf_cnpj_titular": "92.040.002/7638-86",
+        "registro_matricula": "Matrícula 197491 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 6.19,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.786585083333335,
+        "centroide_lng": -53.77580558333333,
+        "cnpj_raw": "92040002763886",
+        "razao_social": "SÍTIO DOS IPÊS I LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Eduardo Grazziotin",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Patrícia Grazziotin",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533169437",
+        "telefone": "(55) 3316-9437",
+        "email": "contato@stiodosipsi.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "c301defc-d831-4a03-a1ee-b3d5f9e417bb",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.657273,
+              -29.649881
+            ],
+            [
+              -53.647269,
+              -29.650079
+            ],
+            [
+              -53.647073,
+              -29.650263
+            ],
+            [
+              -53.647362,
+              -29.650903
+            ],
+            [
+              -53.649265,
+              -29.650856
+            ],
+            [
+              -53.649678,
+              -29.651301
+            ],
+            [
+              -53.648915,
+              -29.651977
+            ],
+            [
+              -53.648488,
+              -29.65236
+            ],
+            [
+              -53.648603,
+              -29.652524
+            ],
+            [
+              -53.648747,
+              -29.65249
+            ],
+            [
+              -53.649211,
+              -29.652482
+            ],
+            [
+              -53.649199,
+              -29.652121
+            ],
+            [
+              -53.655026,
+              -29.651989
+            ],
+            [
+              -53.655014,
+              -29.651847
+            ],
+            [
+              -53.655384,
+              -29.651359
+            ],
+            [
+              -53.657308,
+              -29.650218
+            ],
+            [
+              -53.657273,
+              -29.649881
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "c301defc-d831-4a03-a1ee-b3d5f9e417bb",
+        "id_sigef": "c301defc-d831-4a03-a1ee-b3d5f9e417bb",
+        "codigo_imovel": "9501653306123",
+        "nome_imovel": "Sem denominação - Parcela 1",
+        "nome_titular": "AGROPECUARIA RIO BRANCO LTDA",
+        "cpf_cnpj_titular": "92.040.002/7775-93",
+        "registro_matricula": "Matrícula 186612 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 17.33,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.651415625000002,
+        "centroide_lng": -53.65086343750001,
+        "cnpj_raw": "92040002777593",
+        "razao_social": "AGROPECUARIA RIO BRANCO LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Fernando Silveira",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Roberto Silveira",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533169474",
+        "telefone": "(55) 3316-9474",
+        "email": "contato@agropecuariariobranco.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "fb438d68-7018-4b6d-b032-479e16253f38",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.745534,
+              -29.764391
+            ],
+            [
+              -53.744542,
+              -29.764581
+            ],
+            [
+              -53.744471,
+              -29.764594
+            ],
+            [
+              -53.744464,
+              -29.76463
+            ],
+            [
+              -53.744233,
+              -29.765832
+            ],
+            [
+              -53.74362,
+              -29.768469
+            ],
+            [
+              -53.744246,
+              -29.768566
+            ],
+            [
+              -53.744978,
+              -29.766176
+            ],
+            [
+              -53.745534,
+              -29.764391
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "fb438d68-7018-4b6d-b032-479e16253f38",
+        "id_sigef": "fb438d68-7018-4b6d-b032-479e16253f38",
+        "codigo_imovel": "9501901445097",
+        "nome_imovel": "Sem denominação - Parte 1",
+        "nome_titular": "AGROINDUSTRIAL SÃO PEDRO LTDA",
+        "cpf_cnpj_titular": "92.040.002/7912-35",
+        "registro_matricula": "Matrícula 185643 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 3.51,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.765904875,
+        "centroide_lng": -53.744510999999996,
+        "cnpj_raw": "92040002791235",
+        "razao_social": "AGROINDUSTRIAL SÃO PEDRO LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Gilberto Estrela",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Helena Estrela",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533169511",
+        "telefone": "(55) 3316-9511",
+        "email": "contato@agroindustrialsopedro.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "f3db3542-8c6d-4e32-ab74-c706ec8b51aa",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.704449,
+              -29.642408
+            ],
+            [
+              -53.704348,
+              -29.64242
+            ],
+            [
+              -53.704037,
+              -29.64248
+            ],
+            [
+              -53.705247,
+              -29.648607
+            ],
+            [
+              -53.705858,
+              -29.648488
+            ],
+            [
+              -53.704449,
+              -29.642408
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "f3db3542-8c6d-4e32-ab74-c706ec8b51aa",
+        "id_sigef": "f3db3542-8c6d-4e32-ab74-c706ec8b51aa",
+        "codigo_imovel": "9511375419235",
+        "nome_imovel": "CHÁCARA PUHLE - Gleba C",
+        "nome_titular": "CHÁCARA PUHLE GLEBA C LTDA",
+        "cpf_cnpj_titular": "92.040.002/8049-06",
+        "registro_matricula": "Matrícula 170509 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 3.5,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.6448806,
+        "centroide_lng": -53.7047878,
+        "cnpj_raw": "92040002804906",
+        "razao_social": "CHÁCARA PUHLE GLEBA C LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Paulo Renato Laimer",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Juliana Laimer",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533169548",
+        "telefone": "(55) 3316-9548",
+        "email": "contato@chcarapuhleglebac.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "c547f07e-becc-4616-bfab-f36b2c42a680",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.743667,
+              -29.607165
+            ],
+            [
+              -53.74345,
+              -29.609661
+            ],
+            [
+              -53.749165,
+              -29.609614
+            ],
+            [
+              -53.747722,
+              -29.607492
+            ],
+            [
+              -53.746444,
+              -29.607396
+            ],
+            [
+              -53.743667,
+              -29.607165
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "c547f07e-becc-4616-bfab-f36b2c42a680",
+        "id_sigef": "c547f07e-becc-4616-bfab-f36b2c42a680",
+        "codigo_imovel": "9501305969224",
+        "nome_imovel": "Sitio do Cinamomo - GLEBA 2",
+        "nome_titular": "SITIO DO CINAMOMO LTDA",
+        "cpf_cnpj_titular": "92.040.002/8186-13",
+        "registro_matricula": "Matrícula 195734 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 12.03,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.6082656,
+        "centroide_lng": -53.746089600000005,
+        "cnpj_raw": "92040002818613",
+        "razao_social": "SITIO DO CINAMOMO LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Marcos Vinicius Witte",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Renata Witte",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533169585",
+        "telefone": "(55) 3316-9585",
+        "email": "contato@sitiodocinamomo.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "5ffcb1c3-d096-4458-9b0a-743e4e38a0ab",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.92807,
+              -29.683549
+            ],
+            [
+              -53.927988,
+              -29.683554
+            ],
+            [
+              -53.927139,
+              -29.683712
+            ],
+            [
+              -53.92712,
+              -29.685716
+            ],
+            [
+              -53.92805,
+              -29.68555
+            ],
+            [
+              -53.92807,
+              -29.683549
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "5ffcb1c3-d096-4458-9b0a-743e4e38a0ab",
+        "id_sigef": "5ffcb1c3-d096-4458-9b0a-743e4e38a0ab",
+        "codigo_imovel": "9501730774534",
+        "nome_imovel": "ESTÂNCIA WD - Parte 1",
+        "nome_titular": "ESTÂNCIA WD LTDA",
+        "cpf_cnpj_titular": "92.040.002/8323-65",
+        "registro_matricula": "Matrícula 180586 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 2.01,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.684416199999998,
+        "centroide_lng": -53.92767339999999,
+        "cnpj_raw": "92040002832365",
+        "razao_social": "ESTÂNCIA WD LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "José Francisco Gehn",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Beatriz Gehn",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533169622",
+        "telefone": "(55) 3316-9622",
+        "email": "contato@estnciawd.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "d5d82659-b69e-4926-9245-86e58d406ad0",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.705284,
+              -29.642335
+            ],
+            [
+              -53.705036,
+              -29.642342
+            ],
+            [
+              -53.704865,
+              -29.642361
+            ],
+            [
+              -53.706469,
+              -29.64837
+            ],
+            [
+              -53.707086,
+              -29.648249
+            ],
+            [
+              -53.705921,
+              -29.644351
+            ],
+            [
+              -53.705563,
+              -29.643241
+            ],
+            [
+              -53.705284,
+              -29.642335
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "d5d82659-b69e-4926-9245-86e58d406ad0",
+        "id_sigef": "d5d82659-b69e-4926-9245-86e58d406ad0",
+        "codigo_imovel": "9511375397835",
+        "nome_imovel": "CHÁCARA PUHLE - Gleba A",
+        "nome_titular": "CHÁCARA PUHLE GLEBA A LTDA",
+        "cpf_cnpj_titular": "92.040.002/8460-72",
+        "registro_matricula": "Matrícula 170507 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 3.52,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.644464142857142,
+        "centroide_lng": -53.70574628571428,
+        "cnpj_raw": "92040002846072",
+        "razao_social": "CHÁCARA PUHLE GLEBA A LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Antônio Carlos Sebben",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Clara Sebben",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533169659",
+        "telefone": "(55) 3316-9659",
+        "email": "contato@chcarapuhleglebaa.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "eff4069a-fc80-4553-a92a-80209a2ad2ab",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.950257,
+              -29.609603
+            ],
+            [
+              -53.941882,
+              -29.618496
+            ],
+            [
+              -53.94205,
+              -29.618903
+            ],
+            [
+              -53.942874,
+              -29.619436
+            ],
+            [
+              -53.948192,
+              -29.613509
+            ],
+            [
+              -53.950785,
+              -29.610625
+            ],
+            [
+              -53.951054,
+              -29.610326
+            ],
+            [
+              -53.951024,
+              -29.610303
+            ],
+            [
+              -53.95095,
+              -29.610086
+            ],
+            [
+              -53.950769,
+              -29.609838
+            ],
+            [
+              -53.950257,
+              -29.609603
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "eff4069a-fc80-4553-a92a-80209a2ad2ab",
+        "id_sigef": "eff4069a-fc80-4553-a92a-80209a2ad2ab",
+        "codigo_imovel": "8671520305387",
+        "nome_imovel": "GRANJA SANTA ELENA - Parte 1",
+        "nome_titular": "GRANJA SANTA ELENA LTDA",
+        "cpf_cnpj_titular": "92.040.002/8597-27",
+        "registro_matricula": "Matrícula 194841 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 16.29,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.613112500000007,
+        "centroide_lng": -53.947983699999995,
+        "cnpj_raw": "92040002859727",
+        "razao_social": "GRANJA SANTA ELENA LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Luiz Henrique Biazus",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Camila Biazus",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533169696",
+        "telefone": "(55) 3316-9696",
+        "email": "contato@granjasantaelena.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "f9bdfe38-414b-40a5-b022-9254cc8b9169",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.924913,
+              -29.696418
+            ],
+            [
+              -53.924738,
+              -29.696739
+            ],
+            [
+              -53.924428,
+              -29.697251
+            ],
+            [
+              -53.924087,
+              -29.697887
+            ],
+            [
+              -53.923787,
+              -29.698532
+            ],
+            [
+              -53.923269,
+              -29.699758
+            ],
+            [
+              -53.922864,
+              -29.700762
+            ],
+            [
+              -53.929625,
+              -29.701157
+            ],
+            [
+              -53.930266,
+              -29.701192
+            ],
+            [
+              -53.929767,
+              -29.696873
+            ],
+            [
+              -53.929125,
+              -29.696812
+            ],
+            [
+              -53.928202,
+              -29.696724
+            ],
+            [
+              -53.925159,
+              -29.696436
+            ],
+            [
+              -53.924913,
+              -29.696418
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "f9bdfe38-414b-40a5-b022-9254cc8b9169",
+        "id_sigef": "f9bdfe38-414b-40a5-b022-9254cc8b9169",
+        "codigo_imovel": "9501730774534",
+        "nome_imovel": "ESTÂNCIA ID - Parte 1",
+        "nome_titular": "ESTÂNCIA ID LTDA",
+        "cpf_cnpj_titular": "92.040.002/8734-79",
+        "registro_matricula": "Matrícula 180301 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 29.31,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.698195461538464,
+        "centroide_lng": -53.92617153846153,
+        "cnpj_raw": "92040002873479",
+        "razao_social": "ESTÂNCIA ID LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Sérgio Murilo Trevisan",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Aline Trevisan",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533169733",
+        "telefone": "(55) 3316-9733",
+        "email": "contato@estnciaid.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "35c05c67-d1e1-41e7-acc5-c5df2f8a8527",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.911627,
+              -29.720155
+            ],
+            [
+              -53.908477,
+              -29.725414
+            ],
+            [
+              -53.909613,
+              -29.726648
+            ],
+            [
+              -53.910724,
+              -29.725756
+            ],
+            [
+              -53.910874,
+              -29.725249
+            ],
+            [
+              -53.910846,
+              -29.724933
+            ],
+            [
+              -53.910705,
+              -29.724577
+            ],
+            [
+              -53.910581,
+              -29.724454
+            ],
+            [
+              -53.912098,
+              -29.722076
+            ],
+            [
+              -53.911627,
+              -29.720155
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "35c05c67-d1e1-41e7-acc5-c5df2f8a8527",
+        "id_sigef": "35c05c67-d1e1-41e7-acc5-c5df2f8a8527",
+        "codigo_imovel": "9510999069054",
+        "nome_imovel": "Sem Denominação - Matrícula 125.454 (R.10) e 125.453 (R.1)",
+        "nome_titular": "AGROPECUARIA PLANALTO SUL LTDA",
+        "cpf_cnpj_titular": "92.040.002/8871-86",
+        "registro_matricula": "Matrícula 125454 (R10) e 125453 (R1) - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 9.52,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.72436244444445,
+        "centroide_lng": -53.91061611111111,
+        "cnpj_raw": "92040002887186",
+        "razao_social": "AGROPECUARIA PLANALTO SUL LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Rodrigo Dall Agnol",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Fernanda Dall Agnol",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533169770",
+        "telefone": "(55) 3316-9770",
+        "email": "contato@agropecuariaplanaltosul.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "b9be4a2e-554e-443f-9a23-8949448ca246",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.771663,
+              -29.63797
+            ],
+            [
+              -53.771694,
+              -29.638166
+            ],
+            [
+              -53.77169,
+              -29.638384
+            ],
+            [
+              -53.771682,
+              -29.638562
+            ],
+            [
+              -53.776469,
+              -29.638739
+            ],
+            [
+              -53.776354,
+              -29.638056
+            ],
+            [
+              -53.775369,
+              -29.638057
+            ],
+            [
+              -53.771663,
+              -29.63797
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "b9be4a2e-554e-443f-9a23-8949448ca246",
+        "id_sigef": "b9be4a2e-554e-443f-9a23-8949448ca246",
+        "codigo_imovel": "9500412770965",
+        "nome_imovel": "Sem denominação - Parte 1",
+        "nome_titular": "AGROPECUARIA VALE DO PINHEIRO LTDA",
+        "cpf_cnpj_titular": "92.040.002/9008-91",
+        "registro_matricula": "Matrícula 180796 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 3.19,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.638276285714287,
+        "centroide_lng": -53.77356014285714,
+        "cnpj_raw": "92040002900891",
+        "razao_social": "AGROPECUARIA VALE DO PINHEIRO LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Guilherme Augusto Tedesco",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Tatiana Tedesco",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533169807",
+        "telefone": "(55) 3316-9807",
+        "email": "contato@agropecuariavaledopinheiro.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "18600369-bcbd-4d82-b874-8dace2cd3071",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.785454,
+              -29.59541
+            ],
+            [
+              -53.785377,
+              -29.595483
+            ],
+            [
+              -53.784966,
+              -29.595868
+            ],
+            [
+              -53.784255,
+              -29.59655
+            ],
+            [
+              -53.784082,
+              -29.596708
+            ],
+            [
+              -53.782843,
+              -29.597836
+            ],
+            [
+              -53.78265,
+              -29.59801
+            ],
+            [
+              -53.781125,
+              -29.599389
+            ],
+            [
+              -53.783388,
+              -29.600922
+            ],
+            [
+              -53.784145,
+              -29.601437
+            ],
+            [
+              -53.785338,
+              -29.602246
+            ],
+            [
+              -53.786555,
+              -29.601145
+            ],
+            [
+              -53.787625,
+              -29.60018
+            ],
+            [
+              -53.787706,
+              -29.600107
+            ],
+            [
+              -53.788791,
+              -29.599126
+            ],
+            [
+              -53.789079,
+              -29.598866
+            ],
+            [
+              -53.785454,
+              -29.59541
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "18600369-bcbd-4d82-b874-8dace2cd3071",
+        "id_sigef": "18600369-bcbd-4d82-b874-8dace2cd3071",
+        "codigo_imovel": "9510726925900",
+        "nome_imovel": "Sem Denominação - Parte 1",
+        "nome_titular": "AGROINDUSTRIAL CAMPO LIMPO LTDA",
+        "cpf_cnpj_titular": "92.040.002/9145-07",
+        "registro_matricula": "Matrícula 197823 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 29.14,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.598705187499995,
+        "centroide_lng": -53.7852111875,
+        "cnpj_raw": "92040002914507",
+        "razao_social": "AGROINDUSTRIAL CAMPO LIMPO LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Cláudio Roberto Scortegagna",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Vanessa Scortegagna",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533169844",
+        "telefone": "(55) 3316-9844",
+        "email": "contato@agroindustrialcampolimpo.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "5f9accfa-b1c7-4aec-b11c-c13a7f6078d9",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.944456,
+              -29.765627
+            ],
+            [
+              -53.943961,
+              -29.766485
+            ],
+            [
+              -53.942411,
+              -29.769175
+            ],
+            [
+              -53.941947,
+              -29.77032
+            ],
+            [
+              -53.939757,
+              -29.775702
+            ],
+            [
+              -53.937481,
+              -29.778626
+            ],
+            [
+              -53.941374,
+              -29.782073
+            ],
+            [
+              -53.941523,
+              -29.780815
+            ],
+            [
+              -53.942108,
+              -29.775852
+            ],
+            [
+              -53.942632,
+              -29.773986
+            ],
+            [
+              -53.94331,
+              -29.771605
+            ],
+            [
+              -53.943877,
+              -29.769977
+            ],
+            [
+              -53.94462,
+              -29.768727
+            ],
+            [
+              -53.945851,
+              -29.767431
+            ],
+            [
+              -53.947079,
+              -29.766042
+            ],
+            [
+              -53.944456,
+              -29.765627
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "5f9accfa-b1c7-4aec-b11c-c13a7f6078d9",
+        "id_sigef": "5f9accfa-b1c7-4aec-b11c-c13a7f6078d9",
+        "codigo_imovel": "8682130163907",
+        "nome_imovel": "Matricula 71.282 Lv. 2 RG - Matricula 71282 Lv. 2 RG",
+        "nome_titular": "MATRICULA 71.282 LV. 2 RG MATRICULA 71282 LV. 2 RG LTDA",
+        "cpf_cnpj_titular": "92.040.002/9282-06",
+        "registro_matricula": "Matrícula 179375 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 41.27,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.77216286666667,
+        "centroide_lng": -53.94282580000001,
+        "cnpj_raw": "92040002928206",
+        "razao_social": "MATRICULA 71.282 LV. 2 RG MATRICULA 71282 LV. 2 RG LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Mauro Cézar Zaffari",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Luciana Zaffari",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533169881",
+        "telefone": "(55) 3316-9881",
+        "email": "contato@matricula71282lv2rgmatricula71282lv2rg.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "b1b0f1b2-0583-4170-ab33-f0d8326535fb",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.934611,
+              -29.748995
+            ],
+            [
+              -53.934535,
+              -29.749246
+            ],
+            [
+              -53.934588,
+              -29.749465
+            ],
+            [
+              -53.934749,
+              -29.749931
+            ],
+            [
+              -53.934261,
+              -29.750703
+            ],
+            [
+              -53.934813,
+              -29.753736
+            ],
+            [
+              -53.935934,
+              -29.75375
+            ],
+            [
+              -53.935883,
+              -29.753506
+            ],
+            [
+              -53.935158,
+              -29.749748
+            ],
+            [
+              -53.934714,
+              -29.749037
+            ],
+            [
+              -53.934611,
+              -29.748995
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "b1b0f1b2-0583-4170-ab33-f0d8326535fb",
+        "id_sigef": "b1b0f1b2-0583-4170-ab33-f0d8326535fb",
+        "codigo_imovel": "9500924729649",
+        "nome_imovel": "Sitio da Conquista - Parte 1",
+        "nome_titular": "SITIO DA CONQUISTA LTDA",
+        "cpf_cnpj_titular": "92.040.002/9419-03",
+        "registro_matricula": "Matrícula 53820 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 4.58,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.750811699999996,
+        "centroide_lng": -53.9349246,
+        "cnpj_raw": "92040002941903",
+        "razao_social": "SITIO DA CONQUISTA LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Valter Luiz Rizzardi",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Carla Rizzardi",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533169918",
+        "telefone": "(55) 3316-9918",
+        "email": "contato@sitiodaconquista.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "8f8d75ea-111d-4e7a-974e-47ee8587aa94",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.745223,
+              -29.785452
+            ],
+            [
+              -53.74242,
+              -29.786146
+            ],
+            [
+              -53.742306,
+              -29.786315
+            ],
+            [
+              -53.742653,
+              -29.786855
+            ],
+            [
+              -53.742732,
+              -29.786936
+            ],
+            [
+              -53.742941,
+              -29.787181
+            ],
+            [
+              -53.743197,
+              -29.787467
+            ],
+            [
+              -53.743647,
+              -29.787911
+            ],
+            [
+              -53.744742,
+              -29.788934
+            ],
+            [
+              -53.745676,
+              -29.789815
+            ],
+            [
+              -53.745737,
+              -29.789943
+            ],
+            [
+              -53.745761,
+              -29.790092
+            ],
+            [
+              -53.746682,
+              -29.790112
+            ],
+            [
+              -53.746778,
+              -29.790305
+            ],
+            [
+              -53.746819,
+              -29.79137
+            ],
+            [
+              -53.747062,
+              -29.791571
+            ],
+            [
+              -53.747127,
+              -29.792464
+            ],
+            [
+              -53.747221,
+              -29.793711
+            ],
+            [
+              -53.746664,
+              -29.794215
+            ],
+            [
+              -53.746609,
+              -29.794268
+            ],
+            [
+              -53.747001,
+              -29.794965
+            ],
+            [
+              -53.747112,
+              -29.795489
+            ],
+            [
+              -53.747129,
+              -29.795815
+            ],
+            [
+              -53.747181,
+              -29.79596
+            ],
+            [
+              -53.74721,
+              -29.796028
+            ],
+            [
+              -53.747362,
+              -29.796021
+            ],
+            [
+              -53.747813,
+              -29.796003
+            ],
+            [
+              -53.747803,
+              -29.79749
+            ],
+            [
+              -53.744802,
+              -29.797637
+            ],
+            [
+              -53.744767,
+              -29.797908
+            ],
+            [
+              -53.744634,
+              -29.798056
+            ],
+            [
+              -53.7448,
+              -29.798247
+            ],
+            [
+              -53.74504,
+              -29.798312
+            ],
+            [
+              -53.745103,
+              -29.798353
+            ],
+            [
+              -53.745107,
+              -29.798435
+            ],
+            [
+              -53.745021,
+              -29.798618
+            ],
+            [
+              -53.746816,
+              -29.800519
+            ],
+            [
+              -53.747518,
+              -29.801143
+            ],
+            [
+              -53.747813,
+              -29.801769
+            ],
+            [
+              -53.748621,
+              -29.803412
+            ],
+            [
+              -53.747828,
+              -29.804221
+            ],
+            [
+              -53.741529,
+              -29.81051
+            ],
+            [
+              -53.741094,
+              -29.812756
+            ],
+            [
+              -53.740693,
+              -29.814553
+            ],
+            [
+              -53.740233,
+              -29.816364
+            ],
+            [
+              -53.740124,
+              -29.816904
+            ],
+            [
+              -53.739896,
+              -29.817941
+            ],
+            [
+              -53.739721,
+              -29.819001
+            ],
+            [
+              -53.739135,
+              -29.821792
+            ],
+            [
+              -53.739077,
+              -29.821898
+            ],
+            [
+              -53.738895,
+              -29.822063
+            ],
+            [
+              -53.738063,
+              -29.821988
+            ],
+            [
+              -53.738,
+              -29.821893
+            ],
+            [
+              -53.73721,
+              -29.821818
+            ],
+            [
+              -53.736581,
+              -29.821601
+            ],
+            [
+              -53.736467,
+              -29.82161
+            ],
+            [
+              -53.735955,
+              -29.821668
+            ],
+            [
+              -53.7356,
+              -29.821964
+            ],
+            [
+              -53.735147,
+              -29.822582
+            ],
+            [
+              -53.734962,
+              -29.82305
+            ],
+            [
+              -53.734624,
+              -29.823791
+            ],
+            [
+              -53.734216,
+              -29.825031
+            ],
+            [
+              -53.734236,
+              -29.825287
+            ],
+            [
+              -53.7337,
+              -29.825662
+            ],
+            [
+              -53.733936,
+              -29.826135
+            ],
+            [
+              -53.734262,
+              -29.826904
+            ],
+            [
+              -53.734021,
+              -29.826981
+            ],
+            [
+              -53.733966,
+              -29.827193
+            ],
+            [
+              -53.733855,
+              -29.827403
+            ],
+            [
+              -53.734074,
+              -29.827561
+            ],
+            [
+              -53.734063,
+              -29.827711
+            ],
+            [
+              -53.733802,
+              -29.827917
+            ],
+            [
+              -53.733606,
+              -29.828197
+            ],
+            [
+              -53.732891,
+              -29.828683
+            ],
+            [
+              -53.732643,
+              -29.828889
+            ],
+            [
+              -53.732465,
+              -29.829062
+            ],
+            [
+              -53.732325,
+              -29.829077
+            ],
+            [
+              -53.732452,
+              -29.829515
+            ],
+            [
+              -53.732422,
+              -29.829619
+            ],
+            [
+              -53.732378,
+              -29.829715
+            ],
+            [
+              -53.732449,
+              -29.829754
+            ],
+            [
+              -53.732559,
+              -29.829787
+            ],
+            [
+              -53.732671,
+              -29.82986
+            ],
+            [
+              -53.732722,
+              -29.83004
+            ],
+            [
+              -53.732792,
+              -29.830099
+            ],
+            [
+              -53.732921,
+              -29.830146
+            ],
+            [
+              -53.733089,
+              -29.830188
+            ],
+            [
+              -53.733136,
+              -29.830222
+            ],
+            [
+              -53.733184,
+              -29.830291
+            ],
+            [
+              -53.73317,
+              -29.830402
+            ],
+            [
+              -53.733186,
+              -29.830558
+            ],
+            [
+              -53.733327,
+              -29.83078
+            ],
+            [
+              -53.733422,
+              -29.830888
+            ],
+            [
+              -53.733552,
+              -29.830986
+            ],
+            [
+              -53.733703,
+              -29.831033
+            ],
+            [
+              -53.734068,
+              -29.831086
+            ],
+            [
+              -53.73449,
+              -29.831132
+            ],
+            [
+              -53.734681,
+              -29.831143
+            ],
+            [
+              -53.73485,
+              -29.831225
+            ],
+            [
+              -53.735021,
+              -29.831327
+            ],
+            [
+              -53.735343,
+              -29.831531
+            ],
+            [
+              -53.735564,
+              -29.831587
+            ],
+            [
+              -53.735692,
+              -29.83162
+            ],
+            [
+              -53.735964,
+              -29.831737
+            ],
+            [
+              -53.736105,
+              -29.831815
+            ],
+            [
+              -53.736186,
+              -29.831823
+            ],
+            [
+              -53.736255,
+              -29.831812
+            ],
+            [
+              -53.736294,
+              -29.831786
+            ],
+            [
+              -53.736408,
+              -29.831713
+            ],
+            [
+              -53.736499,
+              -29.831671
+            ],
+            [
+              -53.736568,
+              -29.831675
+            ],
+            [
+              -53.736627,
+              -29.831714
+            ],
+            [
+              -53.736728,
+              -29.831827
+            ],
+            [
+              -53.736853,
+              -29.831965
+            ],
+            [
+              -53.736987,
+              -29.832023
+            ],
+            [
+              -53.737204,
+              -29.832169
+            ],
+            [
+              -53.737381,
+              -29.832286
+            ],
+            [
+              -53.737525,
+              -29.832303
+            ],
+            [
+              -53.737634,
+              -29.83227
+            ],
+            [
+              -53.737742,
+              -29.832213
+            ],
+            [
+              -53.737931,
+              -29.832154
+            ],
+            [
+              -53.738132,
+              -29.832145
+            ],
+            [
+              -53.738553,
+              -29.832116
+            ],
+            [
+              -53.738933,
+              -29.832123
+            ],
+            [
+              -53.739163,
+              -29.832083
+            ],
+            [
+              -53.739289,
+              -29.832035
+            ],
+            [
+              -53.739473,
+              -29.831922
+            ],
+            [
+              -53.739614,
+              -29.831824
+            ],
+            [
+              -53.739754,
+              -29.83166
+            ],
+            [
+              -53.739857,
+              -29.831407
+            ],
+            [
+              -53.739969,
+              -29.831289
+            ],
+            [
+              -53.740127,
+              -29.831155
+            ],
+            [
+              -53.740358,
+              -29.830975
+            ],
+            [
+              -53.740669,
+              -29.830742
+            ],
+            [
+              -53.740901,
+              -29.830473
+            ],
+            [
+              -53.741008,
+              -29.830365
+            ],
+            [
+              -53.741075,
+              -29.830303
+            ],
+            [
+              -53.741144,
+              -29.830302
+            ],
+            [
+              -53.741231,
+              -29.830315
+            ],
+            [
+              -53.741377,
+              -29.830377
+            ],
+            [
+              -53.741482,
+              -29.8304
+            ],
+            [
+              -53.741584,
+              -29.830353
+            ],
+            [
+              -53.741685,
+              -29.83026
+            ],
+            [
+              -53.741818,
+              -29.830052
+            ],
+            [
+              -53.742005,
+              -29.829717
+            ],
+            [
+              -53.742105,
+              -29.829579
+            ],
+            [
+              -53.74216,
+              -29.829482
+            ],
+            [
+              -53.742174,
+              -29.829351
+            ],
+            [
+              -53.742162,
+              -29.829136
+            ],
+            [
+              -53.742133,
+              -29.828921
+            ],
+            [
+              -53.742094,
+              -29.828766
+            ],
+            [
+              -53.742097,
+              -29.828661
+            ],
+            [
+              -53.74218,
+              -29.828333
+            ],
+            [
+              -53.742218,
+              -29.828221
+            ],
+            [
+              -53.742199,
+              -29.828167
+            ],
+            [
+              -53.742118,
+              -29.828173
+            ],
+            [
+              -53.742044,
+              -29.828205
+            ],
+            [
+              -53.741924,
+              -29.828227
+            ],
+            [
+              -53.741808,
+              -29.82821
+            ],
+            [
+              -53.741737,
+              -29.828141
+            ],
+            [
+              -53.741711,
+              -29.828051
+            ],
+            [
+              -53.741582,
+              -29.827963
+            ],
+            [
+              -53.741442,
+              -29.827901
+            ],
+            [
+              -53.741338,
+              -29.827898
+            ],
+            [
+              -53.74129,
+              -29.827839
+            ],
+            [
+              -53.741341,
+              -29.827787
+            ],
+            [
+              -53.741356,
+              -29.827692
+            ],
+            [
+              -53.741339,
+              -29.827526
+            ],
+            [
+              -53.741419,
+              -29.827382
+            ],
+            [
+              -53.741625,
+              -29.827197
+            ],
+            [
+              -53.741771,
+              -29.827088
+            ],
+            [
+              -53.742008,
+              -29.826866
+            ],
+            [
+              -53.742061,
+              -29.826813
+            ],
+            [
+              -53.742108,
+              -29.826747
+            ],
+            [
+              -53.74211,
+              -29.826692
+            ],
+            [
+              -53.742112,
+              -29.826622
+            ],
+            [
+              -53.742161,
+              -29.826558
+            ],
+            [
+              -53.742222,
+              -29.82651
+            ],
+            [
+              -53.742383,
+              -29.826397
+            ],
+            [
+              -53.742648,
+              -29.826241
+            ],
+            [
+              -53.742832,
+              -29.826126
+            ],
+            [
+              -53.74299,
+              -29.825998
+            ],
+            [
+              -53.743033,
+              -29.825921
+            ],
+            [
+              -53.743071,
+              -29.825862
+            ],
+            [
+              -53.743122,
+              -29.825796
+            ],
+            [
+              -53.743174,
+              -29.825758
+            ],
+            [
+              -53.743257,
+              -29.825727
+            ],
+            [
+              -53.743389,
+              -29.825694
+            ],
+            [
+              -53.743484,
+              -29.825652
+            ],
+            [
+              -53.74357,
+              -29.825595
+            ],
+            [
+              -53.743649,
+              -29.825561
+            ],
+            [
+              -53.743752,
+              -29.825548
+            ],
+            [
+              -53.743899,
+              -29.825538
+            ],
+            [
+              -53.743995,
+              -29.82553
+            ],
+            [
+              -53.744071,
+              -29.825516
+            ],
+            [
+              -53.744143,
+              -29.825476
+            ],
+            [
+              -53.744258,
+              -29.825433
+            ],
+            [
+              -53.74435,
+              -29.825402
+            ],
+            [
+              -53.744458,
+              -29.825373
+            ],
+            [
+              -53.744625,
+              -29.825351
+            ],
+            [
+              -53.744718,
+              -29.825346
+            ],
+            [
+              -53.744843,
+              -29.825357
+            ],
+            [
+              -53.745018,
+              -29.825384
+            ],
+            [
+              -53.745279,
+              -29.825407
+            ],
+            [
+              -53.745575,
+              -29.825396
+            ],
+            [
+              -53.74595,
+              -29.825411
+            ],
+            [
+              -53.746101,
+              -29.825419
+            ],
+            [
+              -53.746365,
+              -29.825437
+            ],
+            [
+              -53.746523,
+              -29.825486
+            ],
+            [
+              -53.746609,
+              -29.825497
+            ],
+            [
+              -53.746672,
+              -29.825483
+            ],
+            [
+              -53.746741,
+              -29.825436
+            ],
+            [
+              -53.746749,
+              -29.825398
+            ],
+            [
+              -53.74675,
+              -29.825349
+            ],
+            [
+              -53.746765,
+              -29.825304
+            ],
+            [
+              -53.746797,
+              -29.825275
+            ],
+            [
+              -53.746845,
+              -29.825254
+            ],
+            [
+              -53.746903,
+              -29.825245
+            ],
+            [
+              -53.746986,
+              -29.825227
+            ],
+            [
+              -53.74716,
+              -29.825149
+            ],
+            [
+              -53.747318,
+              -29.825071
+            ],
+            [
+              -53.747428,
+              -29.824989
+            ],
+            [
+              -53.747511,
+              -29.824903
+            ],
+            [
+              -53.747607,
+              -29.824829
+            ],
+            [
+              -53.747729,
+              -29.824817
+            ],
+            [
+              -53.747798,
+              -29.824825
+            ],
+            [
+              -53.74786,
+              -29.824869
+            ],
+            [
+              -53.747891,
+              -29.824962
+            ],
+            [
+              -53.747855,
+              -29.825033
+            ],
+            [
+              -53.747817,
+              -29.825112
+            ],
+            [
+              -53.747839,
+              -29.825134
+            ],
+            [
+              -53.747909,
+              -29.825137
+            ],
+            [
+              -53.747943,
+              -29.825115
+            ],
+            [
+              -53.747981,
+              -29.825065
+            ],
+            [
+              -53.748041,
+              -29.824992
+            ],
+            [
+              -53.748113,
+              -29.824911
+            ],
+            [
+              -53.748176,
+              -29.82481
+            ],
+            [
+              -53.748257,
+              -29.82464
+            ],
+            [
+              -53.74829,
+              -29.824512
+            ],
+            [
+              -53.748324,
+              -29.824429
+            ],
+            [
+              -53.748393,
+              -29.824356
+            ],
+            [
+              -53.748463,
+              -29.824317
+            ],
+            [
+              -53.748543,
+              -29.824311
+            ],
+            [
+              -53.748625,
+              -29.824325
+            ],
+            [
+              -53.748824,
+              -29.824239
+            ],
+            [
+              -53.7489,
+              -29.824209
+            ],
+            [
+              -53.748984,
+              -29.824169
+            ],
+            [
+              -53.74907,
+              -29.824112
+            ],
+            [
+              -53.749117,
+              -29.82403
+            ],
+            [
+              -53.749138,
+              -29.823954
+            ],
+            [
+              -53.749161,
+              -29.823918
+            ],
+            [
+              -53.749249,
+              -29.823877
+            ],
+            [
+              -53.749461,
+              -29.823815
+            ],
+            [
+              -53.749518,
+              -29.823749
+            ],
+            [
+              -53.749538,
+              -29.823688
+            ],
+            [
+              -53.749594,
+              -29.823616
+            ],
+            [
+              -53.749647,
+              -29.82357
+            ],
+            [
+              -53.749706,
+              -29.823529
+            ],
+            [
+              -53.7498,
+              -29.823497
+            ],
+            [
+              -53.749891,
+              -29.823491
+            ],
+            [
+              -53.749991,
+              -29.823511
+            ],
+            [
+              -53.750009,
+              -29.82356
+            ],
+            [
+              -53.749992,
+              -29.823595
+            ],
+            [
+              -53.74998,
+              -29.823639
+            ],
+            [
+              -53.750001,
+              -29.823671
+            ],
+            [
+              -53.75006,
+              -29.823692
+            ],
+            [
+              -53.750129,
+              -29.823687
+            ],
+            [
+              -53.750227,
+              -29.823669
+            ],
+            [
+              -53.750307,
+              -29.823634
+            ],
+            [
+              -53.750599,
+              -29.823534
+            ],
+            [
+              -53.750712,
+              -29.823493
+            ],
+            [
+              -53.750796,
+              -29.823447
+            ],
+            [
+              -53.750851,
+              -29.823378
+            ],
+            [
+              -53.750859,
+              -29.823292
+            ],
+            [
+              -53.750834,
+              -29.823221
+            ],
+            [
+              -53.75085,
+              -29.823162
+            ],
+            [
+              -53.750915,
+              -29.823125
+            ],
+            [
+              -53.750967,
+              -29.823101
+            ],
+            [
+              -53.751044,
+              -29.823088
+            ],
+            [
+              -53.751129,
+              -29.82308
+            ],
+            [
+              -53.751235,
+              -29.823083
+            ],
+            [
+              -53.751376,
+              -29.823077
+            ],
+            [
+              -53.751467,
+              -29.823059
+            ],
+            [
+              -53.751601,
+              -29.823021
+            ],
+            [
+              -53.751684,
+              -29.822998
+            ],
+            [
+              -53.751749,
+              -29.822975
+            ],
+            [
+              -53.75181,
+              -29.822951
+            ],
+            [
+              -53.751901,
+              -29.822935
+            ],
+            [
+              -53.751986,
+              -29.822927
+            ],
+            [
+              -53.752117,
+              -29.822923
+            ],
+            [
+              -53.752199,
+              -29.822889
+            ],
+            [
+              -53.752282,
+              -29.822856
+            ],
+            [
+              -53.752351,
+              -29.82279
+            ],
+            [
+              -53.752448,
+              -29.822701
+            ],
+            [
+              -53.752507,
+              -29.822657
+            ],
+            [
+              -53.752567,
+              -29.822635
+            ],
+            [
+              -53.752643,
+              -29.822631
+            ],
+            [
+              -53.752745,
+              -29.822632
+            ],
+            [
+              -53.752867,
+              -29.822651
+            ],
+            [
+              -53.752947,
+              -29.822642
+            ],
+            [
+              -53.753037,
+              -29.822608
+            ],
+            [
+              -53.753139,
+              -29.822562
+            ],
+            [
+              -53.753209,
+              -29.822508
+            ],
+            [
+              -53.753302,
+              -29.822438
+            ],
+            [
+              -53.75338,
+              -29.822408
+            ],
+            [
+              -53.753474,
+              -29.822395
+            ],
+            [
+              -53.7536,
+              -29.822402
+            ],
+            [
+              -53.753683,
+              -29.822382
+            ],
+            [
+              -53.753828,
+              -29.822319
+            ],
+            [
+              -53.753932,
+              -29.822251
+            ],
+            [
+              -53.754057,
+              -29.822208
+            ],
+            [
+              -53.754146,
+              -29.822198
+            ],
+            [
+              -53.754285,
+              -29.822215
+            ],
+            [
+              -53.754413,
+              -29.822229
+            ],
+            [
+              -53.75449,
+              -29.822209
+            ],
+            [
+              -53.754549,
+              -29.822174
+            ],
+            [
+              -53.75463,
+              -29.822127
+            ],
+            [
+              -53.754713,
+              -29.822071
+            ],
+            [
+              -53.754818,
+              -29.822051
+            ],
+            [
+              -53.754881,
+              -29.822048
+            ],
+            [
+              -53.754988,
+              -29.822102
+            ],
+            [
+              -53.755064,
+              -29.822155
+            ],
+            [
+              -53.755185,
+              -29.822191
+            ],
+            [
+              -53.755264,
+              -29.822196
+            ],
+            [
+              -53.755328,
+              -29.822163
+            ],
+            [
+              -53.755416,
+              -29.822123
+            ],
+            [
+              -53.755527,
+              -29.822057
+            ],
+            [
+              -53.75561,
+              -29.821958
+            ],
+            [
+              -53.755685,
+              -29.821847
+            ],
+            [
+              -53.755697,
+              -29.82172
+            ],
+            [
+              -53.755738,
+              -29.821654
+            ],
+            [
+              -53.755792,
+              -29.821618
+            ],
+            [
+              -53.755815,
+              -29.821551
+            ],
+            [
+              -53.755827,
+              -29.821427
+            ],
+            [
+              -53.755895,
+              -29.821301
+            ],
+            [
+              -53.755984,
+              -29.821237
+            ],
+            [
+              -53.756074,
+              -29.821177
+            ],
+            [
+              -53.756183,
+              -29.821123
+            ],
+            [
+              -53.756277,
+              -29.821111
+            ],
+            [
+              -53.756381,
+              -29.821147
+            ],
+            [
+              -53.756558,
+              -29.821239
+            ],
+            [
+              -53.756826,
+              -29.821372
+            ],
+            [
+              -53.75716,
+              -29.821416
+            ],
+            [
+              -53.757356,
+              -29.821364
+            ],
+            [
+              -53.757461,
+              -29.821307
+            ],
+            [
+              -53.757722,
+              -29.821106
+            ],
+            [
+              -53.757775,
+              -29.821029
+            ],
+            [
+              -53.757823,
+              -29.820911
+            ],
+            [
+              -53.757836,
+              -29.820804
+            ],
+            [
+              -53.757802,
+              -29.820711
+            ],
+            [
+              -53.757744,
+              -29.820637
+            ],
+            [
+              -53.757638,
+              -29.820508
+            ],
+            [
+              -53.757583,
+              -29.820382
+            ],
+            [
+              -53.757628,
+              -29.820295
+            ],
+            [
+              -53.757697,
+              -29.82019
+            ],
+            [
+              -53.757736,
+              -29.820027
+            ],
+            [
+              -53.757762,
+              -29.81989
+            ],
+            [
+              -53.757778,
+              -29.819755
+            ],
+            [
+              -53.757834,
+              -29.819661
+            ],
+            [
+              -53.757867,
+              -29.819567
+            ],
+            [
+              -53.757849,
+              -29.819457
+            ],
+            [
+              -53.757881,
+              -29.819347
+            ],
+            [
+              -53.757958,
+              -29.819252
+            ],
+            [
+              -53.758048,
+              -29.819219
+            ],
+            [
+              -53.758131,
+              -29.819242
+            ],
+            [
+              -53.758315,
+              -29.819307
+            ],
+            [
+              -53.758462,
+              -29.819341
+            ],
+            [
+              -53.758615,
+              -29.819287
+            ],
+            [
+              -53.758731,
+              -29.819174
+            ],
+            [
+              -53.758827,
+              -29.819069
+            ],
+            [
+              -53.758916,
+              -29.819012
+            ],
+            [
+              -53.759071,
+              -29.818951
+            ],
+            [
+              -53.759224,
+              -29.818923
+            ],
+            [
+              -53.759371,
+              -29.818934
+            ],
+            [
+              -53.759637,
+              -29.818956
+            ],
+            [
+              -53.759875,
+              -29.819006
+            ],
+            [
+              -53.76005,
+              -29.81904
+            ],
+            [
+              -53.760137,
+              -29.819015
+            ],
+            [
+              -53.760233,
+              -29.81893
+            ],
+            [
+              -53.760308,
+              -29.818784
+            ],
+            [
+              -53.760281,
+              -29.818664
+            ],
+            [
+              -53.760263,
+              -29.818571
+            ],
+            [
+              -53.760251,
+              -29.818444
+            ],
+            [
+              -53.760289,
+              -29.818364
+            ],
+            [
+              -53.760336,
+              -29.818342
+            ],
+            [
+              -53.760504,
+              -29.818359
+            ],
+            [
+              -53.760642,
+              -29.818339
+            ],
+            [
+              -53.76075,
+              -29.818257
+            ],
+            [
+              -53.760898,
+              -29.818178
+            ],
+            [
+              -53.761008,
+              -29.818138
+            ],
+            [
+              -53.76119,
+              -29.818131
+            ],
+            [
+              -53.761331,
+              -29.818217
+            ],
+            [
+              -53.761656,
+              -29.818565
+            ],
+            [
+              -53.761812,
+              -29.81861
+            ],
+            [
+              -53.761969,
+              -29.818569
+            ],
+            [
+              -53.762073,
+              -29.818484
+            ],
+            [
+              -53.762129,
+              -29.818352
+            ],
+            [
+              -53.762155,
+              -29.818128
+            ],
+            [
+              -53.762166,
+              -29.817976
+            ],
+            [
+              -53.762169,
+              -29.817794
+            ],
+            [
+              -53.762166,
+              -29.817534
+            ],
+            [
+              -53.762186,
+              -29.817386
+            ],
+            [
+              -53.762224,
+              -29.817282
+            ],
+            [
+              -53.762268,
+              -29.817168
+            ],
+            [
+              -53.762391,
+              -29.817014
+            ],
+            [
+              -53.762541,
+              -29.816887
+            ],
+            [
+              -53.762725,
+              -29.816807
+            ],
+            [
+              -53.762911,
+              -29.8168
+            ],
+            [
+              -53.763083,
+              -29.816875
+            ],
+            [
+              -53.763297,
+              -29.817022
+            ],
+            [
+              -53.763576,
+              -29.817165
+            ],
+            [
+              -53.763806,
+              -29.817188
+            ],
+            [
+              -53.763984,
+              -29.817177
+            ],
+            [
+              -53.764129,
+              -29.817139
+            ],
+            [
+              -53.764387,
+              -29.817034
+            ],
+            [
+              -53.764574,
+              -29.816927
+            ],
+            [
+              -53.764783,
+              -29.816775
+            ],
+            [
+              -53.76493,
+              -29.816647
+            ],
+            [
+              -53.764979,
+              -29.816536
+            ],
+            [
+              -53.765,
+              -29.816443
+            ],
+            [
+              -53.764991,
+              -29.816255
+            ],
+            [
+              -53.764994,
+              -29.816072
+            ],
+            [
+              -53.765007,
+              -29.815962
+            ],
+            [
+              -53.765119,
+              -29.815725
+            ],
+            [
+              -53.765166,
+              -29.815566
+            ],
+            [
+              -53.765246,
+              -29.815424
+            ],
+            [
+              -53.765288,
+              -29.815332
+            ],
+            [
+              -53.765338,
+              -29.81524
+            ],
+            [
+              -53.765428,
+              -29.815107
+            ],
+            [
+              -53.765498,
+              -29.815067
+            ],
+            [
+              -53.76558,
+              -29.815039
+            ],
+            [
+              -53.765684,
+              -29.815024
+            ],
+            [
+              -53.765851,
+              -29.815001
+            ],
+            [
+              -53.765941,
+              -29.81498
+            ],
+            [
+              -53.766048,
+              -29.814925
+            ],
+            [
+              -53.766107,
+              -29.814905
+            ],
+            [
+              -53.766196,
+              -29.814899
+            ],
+            [
+              -53.766372,
+              -29.814892
+            ],
+            [
+              -53.766581,
+              -29.814885
+            ],
+            [
+              -53.766708,
+              -29.814876
+            ],
+            [
+              -53.766827,
+              -29.814837
+            ],
+            [
+              -53.766973,
+              -29.814783
+            ],
+            [
+              -53.767036,
+              -29.81476
+            ],
+            [
+              -53.766586,
+              -29.812511
+            ],
+            [
+              -53.765904,
+              -29.809095
+            ],
+            [
+              -53.76543,
+              -29.806513
+            ],
+            [
+              -53.764925,
+              -29.803724
+            ],
+            [
+              -53.764741,
+              -29.802721
+            ],
+            [
+              -53.764664,
+              -29.802295
+            ],
+            [
+              -53.76426,
+              -29.800059
+            ],
+            [
+              -53.765636,
+              -29.799824
+            ],
+            [
+              -53.767596,
+              -29.799492
+            ],
+            [
+              -53.768993,
+              -29.799258
+            ],
+            [
+              -53.769729,
+              -29.799132
+            ],
+            [
+              -53.770266,
+              -29.799042
+            ],
+            [
+              -53.770448,
+              -29.799013
+            ],
+            [
+              -53.770419,
+              -29.798888
+            ],
+            [
+              -53.767021,
+              -29.799471
+            ],
+            [
+              -53.766598,
+              -29.798397
+            ],
+            [
+              -53.766176,
+              -29.797324
+            ],
+            [
+              -53.765754,
+              -29.796247
+            ],
+            [
+              -53.765331,
+              -29.795168
+            ],
+            [
+              -53.765458,
+              -29.795146
+            ],
+            [
+              -53.768529,
+              -29.794626
+            ],
+            [
+              -53.768505,
+              -29.794302
+            ],
+            [
+              -53.768593,
+              -29.793898
+            ],
+            [
+              -53.768426,
+              -29.793788
+            ],
+            [
+              -53.76848,
+              -29.793561
+            ],
+            [
+              -53.764862,
+              -29.794181
+            ],
+            [
+              -53.764099,
+              -29.792293
+            ],
+            [
+              -53.763954,
+              -29.791933
+            ],
+            [
+              -53.763789,
+              -29.791529
+            ],
+            [
+              -53.763625,
+              -29.791126
+            ],
+            [
+              -53.763427,
+              -29.790633
+            ],
+            [
+              -53.763213,
+              -29.790114
+            ],
+            [
+              -53.763092,
+              -29.789807
+            ],
+            [
+              -53.76106,
+              -29.790219
+            ],
+            [
+              -53.760621,
+              -29.789992
+            ],
+            [
+              -53.760195,
+              -29.789763
+            ],
+            [
+              -53.760344,
+              -29.789379
+            ],
+            [
+              -53.760378,
+              -29.789308
+            ],
+            [
+              -53.760326,
+              -29.788951
+            ],
+            [
+              -53.759761,
+              -29.788408
+            ],
+            [
+              -53.759125,
+              -29.787999
+            ],
+            [
+              -53.759058,
+              -29.788137
+            ],
+            [
+              -53.759014,
+              -29.788127
+            ],
+            [
+              -53.758951,
+              -29.788218
+            ],
+            [
+              -53.758696,
+              -29.788214
+            ],
+            [
+              -53.758509,
+              -29.78799
+            ],
+            [
+              -53.758324,
+              -29.787983
+            ],
+            [
+              -53.758205,
+              -29.787874
+            ],
+            [
+              -53.758111,
+              -29.787874
+            ],
+            [
+              -53.757995,
+              -29.787776
+            ],
+            [
+              -53.758046,
+              -29.787565
+            ],
+            [
+              -53.757966,
+              -29.787498
+            ],
+            [
+              -53.757844,
+              -29.787451
+            ],
+            [
+              -53.757801,
+              -29.787412
+            ],
+            [
+              -53.757839,
+              -29.787524
+            ],
+            [
+              -53.757803,
+              -29.787576
+            ],
+            [
+              -53.757653,
+              -29.78757
+            ],
+            [
+              -53.757326,
+              -29.787538
+            ],
+            [
+              -53.757252,
+              -29.78752
+            ],
+            [
+              -53.757011,
+              -29.787554
+            ],
+            [
+              -53.756885,
+              -29.787592
+            ],
+            [
+              -53.756908,
+              -29.787722
+            ],
+            [
+              -53.756753,
+              -29.787742
+            ],
+            [
+              -53.756369,
+              -29.787566
+            ],
+            [
+              -53.756331,
+              -29.787513
+            ],
+            [
+              -53.756004,
+              -29.787242
+            ],
+            [
+              -53.755949,
+              -29.787163
+            ],
+            [
+              -53.755832,
+              -29.787203
+            ],
+            [
+              -53.755848,
+              -29.787368
+            ],
+            [
+              -53.75571,
+              -29.787398
+            ],
+            [
+              -53.755607,
+              -29.787496
+            ],
+            [
+              -53.75556,
+              -29.787582
+            ],
+            [
+              -53.755555,
+              -29.787694
+            ],
+            [
+              -53.755502,
+              -29.78771
+            ],
+            [
+              -53.755381,
+              -29.787719
+            ],
+            [
+              -53.755434,
+              -29.78787
+            ],
+            [
+              -53.755218,
+              -29.787831
+            ],
+            [
+              -53.755133,
+              -29.787767
+            ],
+            [
+              -53.754981,
+              -29.78776
+            ],
+            [
+              -53.754995,
+              -29.787604
+            ],
+            [
+              -53.754655,
+              -29.787686
+            ],
+            [
+              -53.754553,
+              -29.787741
+            ],
+            [
+              -53.754549,
+              -29.787873
+            ],
+            [
+              -53.754445,
+              -29.787965
+            ],
+            [
+              -53.754428,
+              -29.788042
+            ],
+            [
+              -53.754369,
+              -29.78807
+            ],
+            [
+              -53.753429,
+              -29.787879
+            ],
+            [
+              -53.751935,
+              -29.787851
+            ],
+            [
+              -53.751195,
+              -29.787706
+            ],
+            [
+              -53.750942,
+              -29.78768
+            ],
+            [
+              -53.750648,
+              -29.787705
+            ],
+            [
+              -53.750209,
+              -29.787682
+            ],
+            [
+              -53.749931,
+              -29.787742
+            ],
+            [
+              -53.749518,
+              -29.787792
+            ],
+            [
+              -53.74911,
+              -29.78867
+            ],
+            [
+              -53.748306,
+              -29.788669
+            ],
+            [
+              -53.747857,
+              -29.788468
+            ],
+            [
+              -53.747495,
+              -29.787618
+            ],
+            [
+              -53.747517,
+              -29.787438
+            ],
+            [
+              -53.7475,
+              -29.787375
+            ],
+            [
+              -53.747215,
+              -29.786837
+            ],
+            [
+              -53.746489,
+              -29.78642
+            ],
+            [
+              -53.746083,
+              -29.785692
+            ],
+            [
+              -53.745418,
+              -29.785808
+            ],
+            [
+              -53.745223,
+              -29.785452
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "8f8d75ea-111d-4e7a-974e-47ee8587aa94",
+        "id_sigef": "8f8d75ea-111d-4e7a-974e-47ee8587aa94",
+        "codigo_imovel": "8590520411900",
+        "nome_imovel": "Fazenda Santa Maria - Matr. 79322",
+        "nome_titular": "FAZENDA SANTA MARIA MATR. 79322 S.A.",
+        "cpf_cnpj_titular": "92.040.002/9556-02",
+        "registro_matricula": "Matrícula 169320 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 859.34,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.815318446069455,
+        "centroide_lng": -53.75040947166364,
+        "cnpj_raw": "92040002955602",
+        "razao_social": "FAZENDA SANTA MARIA MATR. 79322 S.A.",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 15900000,
+        "qsa": [
+          {
+            "nome": "Otávio Augusto Canabarro",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Letícia Canabarro",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533169955",
+        "telefone": "(55) 3316-9955",
+        "email": "contato@fazendasantamariamatr79322.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "0ba0d2b5-b50b-4df9-a189-d1827261012d",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.79645,
+              -29.774217
+            ],
+            [
+              -53.795468,
+              -29.776082
+            ],
+            [
+              -53.794023,
+              -29.775394
+            ],
+            [
+              -53.794808,
+              -29.781374
+            ],
+            [
+              -53.795029,
+              -29.782449
+            ],
+            [
+              -53.793509,
+              -29.782643
+            ],
+            [
+              -53.793703,
+              -29.783332
+            ],
+            [
+              -53.794186,
+              -29.785634
+            ],
+            [
+              -53.791481,
+              -29.786496
+            ],
+            [
+              -53.791744,
+              -29.787887
+            ],
+            [
+              -53.790957,
+              -29.787868
+            ],
+            [
+              -53.795435,
+              -29.79493
+            ],
+            [
+              -53.795468,
+              -29.794933
+            ],
+            [
+              -53.795519,
+              -29.795019
+            ],
+            [
+              -53.795504,
+              -29.795126
+            ],
+            [
+              -53.795471,
+              -29.795182
+            ],
+            [
+              -53.795459,
+              -29.795269
+            ],
+            [
+              -53.795464,
+              -29.79534
+            ],
+            [
+              -53.795496,
+              -29.795409
+            ],
+            [
+              -53.795583,
+              -29.795488
+            ],
+            [
+              -53.795659,
+              -29.795501
+            ],
+            [
+              -53.79574,
+              -29.795483
+            ],
+            [
+              -53.795797,
+              -29.795438
+            ],
+            [
+              -53.795932,
+              -29.79522
+            ],
+            [
+              -53.795964,
+              -29.794923
+            ],
+            [
+              -53.796005,
+              -29.794769
+            ],
+            [
+              -53.796,
+              -29.794706
+            ],
+            [
+              -53.796094,
+              -29.794636
+            ],
+            [
+              -53.796077,
+              -29.794494
+            ],
+            [
+              -53.796061,
+              -29.794411
+            ],
+            [
+              -53.79608,
+              -29.794355
+            ],
+            [
+              -53.795999,
+              -29.794217
+            ],
+            [
+              -53.795929,
+              -29.793955
+            ],
+            [
+              -53.795966,
+              -29.793779
+            ],
+            [
+              -53.795897,
+              -29.793601
+            ],
+            [
+              -53.795893,
+              -29.793534
+            ],
+            [
+              -53.795946,
+              -29.79349
+            ],
+            [
+              -53.796034,
+              -29.793527
+            ],
+            [
+              -53.796155,
+              -29.793423
+            ],
+            [
+              -53.796262,
+              -29.793433
+            ],
+            [
+              -53.796427,
+              -29.793362
+            ],
+            [
+              -53.796507,
+              -29.793382
+            ],
+            [
+              -53.796623,
+              -29.793371
+            ],
+            [
+              -53.796672,
+              -29.793299
+            ],
+            [
+              -53.796606,
+              -29.793255
+            ],
+            [
+              -53.796353,
+              -29.793135
+            ],
+            [
+              -53.796415,
+              -29.792983
+            ],
+            [
+              -53.796567,
+              -29.792942
+            ],
+            [
+              -53.796638,
+              -29.792749
+            ],
+            [
+              -53.796557,
+              -29.792635
+            ],
+            [
+              -53.796537,
+              -29.792553
+            ],
+            [
+              -53.796439,
+              -29.792356
+            ],
+            [
+              -53.796382,
+              -29.792063
+            ],
+            [
+              -53.796388,
+              -29.791883
+            ],
+            [
+              -53.796562,
+              -29.791826
+            ],
+            [
+              -53.796606,
+              -29.791764
+            ],
+            [
+              -53.796687,
+              -29.791821
+            ],
+            [
+              -53.796821,
+              -29.791712
+            ],
+            [
+              -53.796813,
+              -29.791639
+            ],
+            [
+              -53.79691,
+              -29.791486
+            ],
+            [
+              -53.796891,
+              -29.791373
+            ],
+            [
+              -53.796919,
+              -29.791191
+            ],
+            [
+              -53.796987,
+              -29.791124
+            ],
+            [
+              -53.797008,
+              -29.791004
+            ],
+            [
+              -53.796974,
+              -29.790933
+            ],
+            [
+              -53.797167,
+              -29.790628
+            ],
+            [
+              -53.797289,
+              -29.790775
+            ],
+            [
+              -53.797308,
+              -29.790869
+            ],
+            [
+              -53.797493,
+              -29.790926
+            ],
+            [
+              -53.797656,
+              -29.790827
+            ],
+            [
+              -53.797997,
+              -29.790731
+            ],
+            [
+              -53.798198,
+              -29.790813
+            ],
+            [
+              -53.798318,
+              -29.790809
+            ],
+            [
+              -53.798311,
+              -29.790659
+            ],
+            [
+              -53.798232,
+              -29.790133
+            ],
+            [
+              -53.79757,
+              -29.786315
+            ],
+            [
+              -53.795992,
+              -29.776346
+            ],
+            [
+              -53.795583,
+              -29.776134
+            ],
+            [
+              -53.796525,
+              -29.77427
+            ],
+            [
+              -53.79645,
+              -29.774217
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "0ba0d2b5-b50b-4df9-a189-d1827261012d",
+        "id_sigef": "0ba0d2b5-b50b-4df9-a189-d1827261012d",
+        "codigo_imovel": "9502461759864",
+        "nome_imovel": "CAMPO BELA VISTA - Parte 1",
+        "nome_titular": "CAMPO BELA VISTA LTDA",
+        "cpf_cnpj_titular": "92.040.002/9693-10",
+        "registro_matricula": "Matrícula 60390, 60391, 60392, 3468, 55810 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 68.43,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.79079801265823,
+        "centroide_lng": -53.79607816455697,
+        "cnpj_raw": "92040002969310",
+        "razao_social": "CAMPO BELA VISTA LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1270000,
+        "qsa": [
+          {
+            "nome": "Ricardo Luís Meneguzzi",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Sandra Meneguzzi",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533169992",
+        "telefone": "(55) 3316-9992",
+        "email": "contato@campobelavista.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "0906a7d0-28f2-4353-a64e-519cbc4ff1c9",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.731316,
+              -29.620321
+            ],
+            [
+              -53.731562,
+              -29.623698
+            ],
+            [
+              -53.734807,
+              -29.62379
+            ],
+            [
+              -53.735124,
+              -29.623611
+            ],
+            [
+              -53.734485,
+              -29.620377
+            ],
+            [
+              -53.73301,
+              -29.620355
+            ],
+            [
+              -53.731518,
+              -29.620324
+            ],
+            [
+              -53.731316,
+              -29.620321
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "0906a7d0-28f2-4353-a64e-519cbc4ff1c9",
+        "id_sigef": "0906a7d0-28f2-4353-a64e-519cbc4ff1c9",
+        "codigo_imovel": "8590520347110",
+        "nome_imovel": "SDN - Gleba  1B",
+        "nome_titular": "SDN GLEBA 1B LTDA",
+        "cpf_cnpj_titular": "92.040.002/9830-61",
+        "registro_matricula": "Matrícula 196423 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 12.3,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.621782285714286,
+        "centroide_lng": -53.73311742857142,
+        "cnpj_raw": "92040002983061",
+        "razao_social": "SDN GLEBA 1B LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Bernardo Della Mea",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Giovana Della Mea",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533162029",
+        "telefone": "(55) 3316-2029",
+        "email": "contato@sdngleba1b.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "313ddf83-b023-40b8-96f8-8ceee707e471",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.654473,
+              -29.668539
+            ],
+            [
+              -53.651937,
+              -29.668584
+            ],
+            [
+              -53.652114,
+              -29.669582
+            ],
+            [
+              -53.652151,
+              -29.669563
+            ],
+            [
+              -53.652194,
+              -29.669567
+            ],
+            [
+              -53.653132,
+              -29.669396
+            ],
+            [
+              -53.653136,
+              -29.669248
+            ],
+            [
+              -53.654583,
+              -29.669015
+            ],
+            [
+              -53.654626,
+              -29.668585
+            ],
+            [
+              -53.654473,
+              -29.668539
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "313ddf83-b023-40b8-96f8-8ceee707e471",
+        "id_sigef": "313ddf83-b023-40b8-96f8-8ceee707e471",
+        "codigo_imovel": "8590520708740",
+        "nome_imovel": "COSTA DA MONTANHA - GLEBA ÚNICA",
+        "nome_titular": "COSTA DA MONTANHA GLEBA ÚNICA LTDA",
+        "cpf_cnpj_titular": "92.040.002/9967-16",
+        "registro_matricula": "Matrícula 179701 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 2.02,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.66911988888889,
+        "centroide_lng": -53.653149555555565,
+        "cnpj_raw": "92040002996716",
+        "razao_social": "COSTA DA MONTANHA GLEBA ÚNICA LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Felipe Antônio Rubin",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Larissa Rubin",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533162066",
+        "telefone": "(55) 3316-2066",
+        "email": "contato@costadamontanhaglebanica.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "542d0832-fb45-4faf-827d-d9d5ae563e5d",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.925299,
+              -29.684053
+            ],
+            [
+              -53.924041,
+              -29.684286
+            ],
+            [
+              -53.923673,
+              -29.690143
+            ],
+            [
+              -53.926099,
+              -29.69007
+            ],
+            [
+              -53.926178,
+              -29.691739
+            ],
+            [
+              -53.924039,
+              -29.691851
+            ],
+            [
+              -53.922614,
+              -29.699014
+            ],
+            [
+              -53.923269,
+              -29.699758
+            ],
+            [
+              -53.923787,
+              -29.698532
+            ],
+            [
+              -53.924087,
+              -29.697887
+            ],
+            [
+              -53.924428,
+              -29.697251
+            ],
+            [
+              -53.924738,
+              -29.696739
+            ],
+            [
+              -53.924913,
+              -29.696418
+            ],
+            [
+              -53.925604,
+              -29.692269
+            ],
+            [
+              -53.926771,
+              -29.692016
+            ],
+            [
+              -53.926472,
+              -29.689967
+            ],
+            [
+              -53.926465,
+              -29.689952
+            ],
+            [
+              -53.925149,
+              -29.687238
+            ],
+            [
+              -53.925176,
+              -29.686672
+            ],
+            [
+              -53.925299,
+              -29.684053
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "542d0832-fb45-4faf-827d-d9d5ae563e5d",
+        "id_sigef": "542d0832-fb45-4faf-827d-d9d5ae563e5d",
+        "codigo_imovel": "9501730774534",
+        "nome_imovel": "ESTÂNCIA WD - Parte 2",
+        "nome_titular": "ESTÂNCIA WD LTDA",
+        "cpf_cnpj_titular": "92.040.003/0104-82",
+        "registro_matricula": "Matrícula 188780 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 24.48,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.692413421052635,
+        "centroide_lng": -53.924884315789484,
+        "cnpj_raw": "92040003010482",
+        "razao_social": "ESTÂNCIA WD LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Henrique Dornelles",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Carolina Dornelles",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533162103",
+        "telefone": "(55) 3316-2103",
+        "email": "contato@estnciawd.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "11946b40-29d0-4b7b-ae81-a30fe30ebf2e",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.775031,
+              -29.741705
+            ],
+            [
+              -53.774839,
+              -29.743258
+            ],
+            [
+              -53.774803,
+              -29.743439
+            ],
+            [
+              -53.77423,
+              -29.746199
+            ],
+            [
+              -53.774077,
+              -29.746301
+            ],
+            [
+              -53.773731,
+              -29.748401
+            ],
+            [
+              -53.775541,
+              -29.747686
+            ],
+            [
+              -53.777339,
+              -29.746964
+            ],
+            [
+              -53.778082,
+              -29.746665
+            ],
+            [
+              -53.778952,
+              -29.742951
+            ],
+            [
+              -53.778761,
+              -29.742811
+            ],
+            [
+              -53.778354,
+              -29.743005
+            ],
+            [
+              -53.778052,
+              -29.742933
+            ],
+            [
+              -53.7776,
+              -29.742884
+            ],
+            [
+              -53.777423,
+              -29.742846
+            ],
+            [
+              -53.777521,
+              -29.74253
+            ],
+            [
+              -53.777326,
+              -29.742381
+            ],
+            [
+              -53.776899,
+              -29.742583
+            ],
+            [
+              -53.776778,
+              -29.742443
+            ],
+            [
+              -53.776601,
+              -29.742353
+            ],
+            [
+              -53.776474,
+              -29.742229
+            ],
+            [
+              -53.776322,
+              -29.742167
+            ],
+            [
+              -53.776368,
+              -29.742014
+            ],
+            [
+              -53.776063,
+              -29.741974
+            ],
+            [
+              -53.775984,
+              -29.742028
+            ],
+            [
+              -53.775741,
+              -29.742085
+            ],
+            [
+              -53.775588,
+              -29.742031
+            ],
+            [
+              -53.775523,
+              -29.741933
+            ],
+            [
+              -53.775384,
+              -29.741885
+            ],
+            [
+              -53.775196,
+              -29.741787
+            ],
+            [
+              -53.775031,
+              -29.741705
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "11946b40-29d0-4b7b-ae81-a30fe30ebf2e",
+        "id_sigef": "11946b40-29d0-4b7b-ae81-a30fe30ebf2e",
+        "codigo_imovel": "8641290269304",
+        "nome_imovel": "Chacara do Passo - 1",
+        "nome_titular": "CHACARA DO PASSO 1 LTDA",
+        "cpf_cnpj_titular": "92.040.003/0241-90",
+        "registro_matricula": "Matrícula 186255 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 22.06,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.743349033333335,
+        "centroide_lng": -53.77635276666667,
+        "cnpj_raw": "92040003024190",
+        "razao_social": "CHACARA DO PASSO 1 LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Carlos Alberto Fontana",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Mariana Fontana",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533162140",
+        "telefone": "(55) 3316-2140",
+        "email": "contato@chacaradopasso1.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "f4baf516-492e-42fd-83f1-4c143793d80f",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.813777,
+              -29.608118
+            ],
+            [
+              -53.813713,
+              -29.608141
+            ],
+            [
+              -53.813056,
+              -29.608379
+            ],
+            [
+              -53.812382,
+              -29.608582
+            ],
+            [
+              -53.812393,
+              -29.608607
+            ],
+            [
+              -53.810933,
+              -29.609115
+            ],
+            [
+              -53.809496,
+              -29.609624
+            ],
+            [
+              -53.817226,
+              -29.615136
+            ],
+            [
+              -53.817222,
+              -29.61301
+            ],
+            [
+              -53.813777,
+              -29.608118
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "f4baf516-492e-42fd-83f1-4c143793d80f",
+        "id_sigef": "f4baf516-492e-42fd-83f1-4c143793d80f",
+        "codigo_imovel": "8590520208500",
+        "nome_imovel": "Sem denominação - Gleba B",
+        "nome_titular": "AGROPECUARIA VALE DOS GRAOS LTDA",
+        "cpf_cnpj_titular": "92.040.003/0378-44",
+        "registro_matricula": "Matrícula 30004, 30005, 30006 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 22.91,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.609856888888885,
+        "centroide_lng": -53.813355333333334,
+        "cnpj_raw": "92040003037844",
+        "razao_social": "AGROPECUARIA VALE DOS GRAOS LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Eduardo Grazziotin",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Patrícia Grazziotin",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533162177",
+        "telefone": "(55) 3316-2177",
+        "email": "contato@agropecuariavaledosgraos.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "bc0f6cec-4c79-41ee-b5c4-d4781424c077",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.932118,
+              -29.634164
+            ],
+            [
+              -53.931554,
+              -29.634223
+            ],
+            [
+              -53.931638,
+              -29.634783
+            ],
+            [
+              -53.930986,
+              -29.635221
+            ],
+            [
+              -53.931008,
+              -29.63529
+            ],
+            [
+              -53.931081,
+              -29.635505
+            ],
+            [
+              -53.931124,
+              -29.635661
+            ],
+            [
+              -53.931253,
+              -29.636078
+            ],
+            [
+              -53.932245,
+              -29.635969
+            ],
+            [
+              -53.933031,
+              -29.635825
+            ],
+            [
+              -53.932706,
+              -29.635233
+            ],
+            [
+              -53.932664,
+              -29.635183
+            ],
+            [
+              -53.932632,
+              -29.635149
+            ],
+            [
+              -53.93245,
+              -29.63499
+            ],
+            [
+              -53.932367,
+              -29.634799
+            ],
+            [
+              -53.932118,
+              -29.634164
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "bc0f6cec-4c79-41ee-b5c4-d4781424c077",
+        "id_sigef": "bc0f6cec-4c79-41ee-b5c4-d4781424c077",
+        "codigo_imovel": "8590520121812",
+        "nome_imovel": "SD - Única",
+        "nome_titular": "SD ÚNICA LTDA",
+        "cpf_cnpj_titular": "92.040.003/0515-96",
+        "registro_matricula": "Matrícula 88356 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 2.41,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.635204866666662,
+        "centroide_lng": -53.931923800000014,
+        "cnpj_raw": "92040003051596",
+        "razao_social": "SD ÚNICA LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Fernando Silveira",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Roberto Silveira",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533162214",
+        "telefone": "(55) 3316-2214",
+        "email": "contato@sdnica.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "151439e0-c807-480f-a105-b6050592a807",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.926054,
+              -29.683913
+            ],
+            [
+              -53.925299,
+              -29.684053
+            ],
+            [
+              -53.925176,
+              -29.686672
+            ],
+            [
+              -53.925953,
+              -29.686609
+            ],
+            [
+              -53.926054,
+              -29.683913
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "151439e0-c807-480f-a105-b6050592a807",
+        "id_sigef": "151439e0-c807-480f-a105-b6050592a807",
+        "codigo_imovel": "9502201491604",
+        "nome_imovel": "ESTÂNCIA WD - Parte 1",
+        "nome_titular": "ESTÂNCIA WD LTDA",
+        "cpf_cnpj_titular": "92.040.003/0652-01",
+        "registro_matricula": "Matrícula 191722 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 2.18,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.68531175,
+        "centroide_lng": -53.9256205,
+        "cnpj_raw": "92040003065201",
+        "razao_social": "ESTÂNCIA WD LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Gilberto Estrela",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Helena Estrela",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533162251",
+        "telefone": "(55) 3316-2251",
+        "email": "contato@estnciawd.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "a38e5227-34e3-40b4-b5bc-bfd60ff30f77",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.931284,
+              -29.615588
+            ],
+            [
+              -53.92832,
+              -29.61905
+            ],
+            [
+              -53.928354,
+              -29.619091
+            ],
+            [
+              -53.927548,
+              -29.620184
+            ],
+            [
+              -53.928892,
+              -29.621069
+            ],
+            [
+              -53.929774,
+              -29.619959
+            ],
+            [
+              -53.929464,
+              -29.61977
+            ],
+            [
+              -53.930164,
+              -29.618927
+            ],
+            [
+              -53.930551,
+              -29.618456
+            ],
+            [
+              -53.931151,
+              -29.617772
+            ],
+            [
+              -53.931517,
+              -29.617339
+            ],
+            [
+              -53.933095,
+              -29.616686
+            ],
+            [
+              -53.931284,
+              -29.615588
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "a38e5227-34e3-40b4-b5bc-bfd60ff30f77",
+        "id_sigef": "a38e5227-34e3-40b4-b5bc-bfd60ff30f77",
+        "codigo_imovel": "8590520305115",
+        "nome_imovel": "Jose Altair - Parte 1",
+        "nome_titular": "JOSE ALTAIR LTDA",
+        "cpf_cnpj_titular": "92.040.003/0789-58",
+        "registro_matricula": "Matrícula 22686, 70453 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 9.51,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.61865758333333,
+        "centroide_lng": -53.93000949999999,
+        "cnpj_raw": "92040003078958",
+        "razao_social": "JOSE ALTAIR LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Paulo Renato Laimer",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Juliana Laimer",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533162288",
+        "telefone": "(55) 3316-2288",
+        "email": "contato@josealtair.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "0c6fadfd-4e88-41dd-9e8d-d61832e88cd3",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.958537,
+              -29.658082
+            ],
+            [
+              -53.945989,
+              -29.658811
+            ],
+            [
+              -53.943196,
+              -29.662599
+            ],
+            [
+              -53.941203,
+              -29.665298
+            ],
+            [
+              -53.938856,
+              -29.668453
+            ],
+            [
+              -53.958725,
+              -29.659119
+            ],
+            [
+              -53.958566,
+              -29.658374
+            ],
+            [
+              -53.958537,
+              -29.658082
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "0c6fadfd-4e88-41dd-9e8d-d61832e88cd3",
+        "id_sigef": "0c6fadfd-4e88-41dd-9e8d-d61832e88cd3",
+        "codigo_imovel": "8120721175280",
+        "nome_imovel": "FAZENDA CINAMOMO II - 01",
+        "nome_titular": "FAZENDA CINAMOMO II 01 LTDA",
+        "cpf_cnpj_titular": "92.040.003/0926-08",
+        "registro_matricula": "Matrícula 181056 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 74.23,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.661533714285717,
+        "centroide_lng": -53.949296000000004,
+        "cnpj_raw": "92040003092608",
+        "razao_social": "FAZENDA CINAMOMO II 01 LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1370000,
+        "qsa": [
+          {
+            "nome": "Marcos Vinicius Witte",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Renata Witte",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533162325",
+        "telefone": "(55) 3316-2325",
+        "email": "contato@fazendacinamomoii01.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "937c2f4f-9917-4ccc-a15f-4a2ae7726ee5",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.724655,
+              -29.682579
+            ],
+            [
+              -53.724234,
+              -29.682707
+            ],
+            [
+              -53.723786,
+              -29.682917
+            ],
+            [
+              -53.723764,
+              -29.686766
+            ],
+            [
+              -53.723751,
+              -29.690033
+            ],
+            [
+              -53.72375,
+              -29.690311
+            ],
+            [
+              -53.724391,
+              -29.69064
+            ],
+            [
+              -53.724556,
+              -29.690646
+            ],
+            [
+              -53.724667,
+              -29.690534
+            ],
+            [
+              -53.724628,
+              -29.690373
+            ],
+            [
+              -53.724205,
+              -29.690154
+            ],
+            [
+              -53.724203,
+              -29.689941
+            ],
+            [
+              -53.724814,
+              -29.689216
+            ],
+            [
+              -53.724658,
+              -29.688777
+            ],
+            [
+              -53.724655,
+              -29.682579
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "937c2f4f-9917-4ccc-a15f-4a2ae7726ee5",
+        "id_sigef": "937c2f4f-9917-4ccc-a15f-4a2ae7726ee5",
+        "codigo_imovel": "8590520581570",
+        "nome_imovel": "Gleba Rural - Parte 1",
+        "nome_titular": "GLEBA RURAL LTDA",
+        "cpf_cnpj_titular": "92.040.003/1063-23",
+        "registro_matricula": "Matrícula 197737 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 7.22,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.688256714285718,
+        "centroide_lng": -53.724290142857136,
+        "cnpj_raw": "92040003106323",
+        "razao_social": "GLEBA RURAL LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "José Francisco Gehn",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Beatriz Gehn",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533162362",
+        "telefone": "(55) 3316-2362",
+        "email": "contato@glebarural.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "50cc7a6b-9004-44f8-b688-214678805abb",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.6474,
+              -29.710494
+            ],
+            [
+              -53.647372,
+              -29.710686
+            ],
+            [
+              -53.647517,
+              -29.711042
+            ],
+            [
+              -53.647614,
+              -29.711187
+            ],
+            [
+              -53.64769,
+              -29.711296
+            ],
+            [
+              -53.647441,
+              -29.711531
+            ],
+            [
+              -53.647213,
+              -29.711546
+            ],
+            [
+              -53.646721,
+              -29.711279
+            ],
+            [
+              -53.646522,
+              -29.711179
+            ],
+            [
+              -53.64647,
+              -29.711214
+            ],
+            [
+              -53.646398,
+              -29.711472
+            ],
+            [
+              -53.646322,
+              -29.711752
+            ],
+            [
+              -53.646281,
+              -29.711909
+            ],
+            [
+              -53.646609,
+              -29.712051
+            ],
+            [
+              -53.646732,
+              -29.712266
+            ],
+            [
+              -53.646025,
+              -29.712615
+            ],
+            [
+              -53.646639,
+              -29.712504
+            ],
+            [
+              -53.650691,
+              -29.711773
+            ],
+            [
+              -53.65068,
+              -29.710517
+            ],
+            [
+              -53.647519,
+              -29.710495
+            ],
+            [
+              -53.6474,
+              -29.710494
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "50cc7a6b-9004-44f8-b688-214678805abb",
+        "id_sigef": "50cc7a6b-9004-44f8-b688-214678805abb",
+        "codigo_imovel": "9999383356229",
+        "nome_imovel": "Sem Denominação - Parte 1",
+        "nome_titular": "AGROPECUARIA OURO VERDE LTDA",
+        "cpf_cnpj_titular": "92.040.003/1200-75",
+        "registro_matricula": "Matrícula Mat.145.587 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 6.53,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.711440400000004,
+        "centroide_lng": -53.64729280000002,
+        "cnpj_raw": "92040003120075",
+        "razao_social": "AGROPECUARIA OURO VERDE LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Antônio Carlos Sebben",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Clara Sebben",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533162399",
+        "telefone": "(55) 3316-2399",
+        "email": "contato@agropecuariaouroverde.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "ae0566e9-c76e-4037-a360-fa1f2599b67f",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.92987,
+              -29.687238
+            ],
+            [
+              -53.92851,
+              -29.687238
+            ],
+            [
+              -53.928503,
+              -29.687922
+            ],
+            [
+              -53.928497,
+              -29.688604
+            ],
+            [
+              -53.928491,
+              -29.689291
+            ],
+            [
+              -53.929859,
+              -29.689285
+            ],
+            [
+              -53.92987,
+              -29.687238
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "ae0566e9-c76e-4037-a360-fa1f2599b67f",
+        "id_sigef": "ae0566e9-c76e-4037-a360-fa1f2599b67f",
+        "codigo_imovel": "9500500531040",
+        "nome_imovel": "ESTÂNCIA WD - Parte 3",
+        "nome_titular": "ESTÂNCIA WD LTDA",
+        "cpf_cnpj_titular": "92.040.003/1337-20",
+        "registro_matricula": "Matrícula 198410 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 3.01,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.688263000000003,
+        "centroide_lng": -53.928955,
+        "cnpj_raw": "92040003133720",
+        "razao_social": "ESTÂNCIA WD LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Luiz Henrique Biazus",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Camila Biazus",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533162436",
+        "telefone": "(55) 3316-2436",
+        "email": "contato@estnciawd.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "680efbdc-7a1b-4d9c-bcba-7389823ebc6f",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.75539,
+              -29.655609
+            ],
+            [
+              -53.755318,
+              -29.655613
+            ],
+            [
+              -53.754811,
+              -29.655659
+            ],
+            [
+              -53.754111,
+              -29.655697
+            ],
+            [
+              -53.753719,
+              -29.655771
+            ],
+            [
+              -53.753694,
+              -29.65605
+            ],
+            [
+              -53.753176,
+              -29.656711
+            ],
+            [
+              -53.754188,
+              -29.657344
+            ],
+            [
+              -53.754492,
+              -29.657618
+            ],
+            [
+              -53.755171,
+              -29.656865
+            ],
+            [
+              -53.755358,
+              -29.656392
+            ],
+            [
+              -53.755345,
+              -29.65639
+            ],
+            [
+              -53.755398,
+              -29.656012
+            ],
+            [
+              -53.75539,
+              -29.655609
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "680efbdc-7a1b-4d9c-bcba-7389823ebc6f",
+        "id_sigef": "680efbdc-7a1b-4d9c-bcba-7389823ebc6f",
+        "codigo_imovel": "8590520317121",
+        "nome_imovel": "Sem denominação especial - Parcela 1",
+        "nome_titular": "AGROPECUARIA CAMINHO DAS PEDRAS LTDA",
+        "cpf_cnpj_titular": "92.040.003/1474-37",
+        "registro_matricula": "Matrícula 56547 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 3.02,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.656286999999995,
+        "centroide_lng": -53.754628538461546,
+        "cnpj_raw": "92040003147437",
+        "razao_social": "AGROPECUARIA CAMINHO DAS PEDRAS LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Sérgio Murilo Trevisan",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Aline Trevisan",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533162473",
+        "telefone": "(55) 3316-2473",
+        "email": "contato@agropecuariacaminhodaspedras.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "1f51019e-6d58-47e7-b32a-cd546bbcb6f7",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.913318,
+              -29.694271
+            ],
+            [
+              -53.913014,
+              -29.695795
+            ],
+            [
+              -53.919786,
+              -29.696901
+            ],
+            [
+              -53.920569,
+              -29.696692
+            ],
+            [
+              -53.920714,
+              -29.695448
+            ],
+            [
+              -53.913318,
+              -29.694271
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "1f51019e-6d58-47e7-b32a-cd546bbcb6f7",
+        "id_sigef": "1f51019e-6d58-47e7-b32a-cd546bbcb6f7",
+        "codigo_imovel": "9500337008866",
+        "nome_imovel": "Hundertmarck - Gleba 4",
+        "nome_titular": "HUNDERTMARCK LTDA",
+        "cpf_cnpj_titular": "92.040.003/1611-89",
+        "registro_matricula": "Matrícula 199943 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 12.61,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.6958214,
+        "centroide_lng": -53.9174802,
+        "cnpj_raw": "92040003161189",
+        "razao_social": "HUNDERTMARCK LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Rodrigo Dall Agnol",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Fernanda Dall Agnol",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533162510",
+        "telefone": "(55) 3316-2510",
+        "email": "contato@hundertmarck.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "be01bf12-13d0-4012-aa59-343a7e71f4ae",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.917172,
+              -29.621437
+            ],
+            [
+              -53.916406,
+              -29.621882
+            ],
+            [
+              -53.916036,
+              -29.622099
+            ],
+            [
+              -53.919248,
+              -29.624335
+            ],
+            [
+              -53.921081,
+              -29.625612
+            ],
+            [
+              -53.921834,
+              -29.625529
+            ],
+            [
+              -53.922252,
+              -29.625471
+            ],
+            [
+              -53.922631,
+              -29.625504
+            ],
+            [
+              -53.917172,
+              -29.621437
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "be01bf12-13d0-4012-aa59-343a7e71f4ae",
+        "id_sigef": "be01bf12-13d0-4012-aa59-343a7e71f4ae",
+        "codigo_imovel": "8590520127268",
+        "nome_imovel": "Gleba 05 - Parte 1",
+        "nome_titular": "AGROINDUSTRIAL SÃO PEDRO LTDA",
+        "cpf_cnpj_titular": "92.040.003/1748-33",
+        "registro_matricula": "Matrícula 95848 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 7.61,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.623983625,
+        "centroide_lng": -53.919582500000004,
+        "cnpj_raw": "92040003174833",
+        "razao_social": "AGROINDUSTRIAL SÃO PEDRO LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Guilherme Augusto Tedesco",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Tatiana Tedesco",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533162547",
+        "telefone": "(55) 3316-2547",
+        "email": "contato@agroindustrialsopedro.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "2d2c7b0c-3385-4b71-b0d5-1bc2763c359d",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.746634,
+              -29.773216
+            ],
+            [
+              -53.746075,
+              -29.774483
+            ],
+            [
+              -53.745504,
+              -29.774942
+            ],
+            [
+              -53.745171,
+              -29.775262
+            ],
+            [
+              -53.740932,
+              -29.779323
+            ],
+            [
+              -53.740567,
+              -29.779841
+            ],
+            [
+              -53.740463,
+              -29.779956
+            ],
+            [
+              -53.740399,
+              -29.780087
+            ],
+            [
+              -53.739614,
+              -29.781215
+            ],
+            [
+              -53.739317,
+              -29.781624
+            ],
+            [
+              -53.739344,
+              -29.781631
+            ],
+            [
+              -53.739536,
+              -29.781782
+            ],
+            [
+              -53.739701,
+              -29.781784
+            ],
+            [
+              -53.739831,
+              -29.781839
+            ],
+            [
+              -53.739858,
+              -29.781888
+            ],
+            [
+              -53.739898,
+              -29.781847
+            ],
+            [
+              -53.740701,
+              -29.781049
+            ],
+            [
+              -53.741841,
+              -29.779876
+            ],
+            [
+              -53.747776,
+              -29.773658
+            ],
+            [
+              -53.747929,
+              -29.773496
+            ],
+            [
+              -53.746634,
+              -29.773216
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "2d2c7b0c-3385-4b71-b0d5-1bc2763c359d",
+        "id_sigef": "2d2c7b0c-3385-4b71-b0d5-1bc2763c359d",
+        "codigo_imovel": "8590520696556",
+        "nome_imovel": "CHACARA SÃO PEDRO - Única",
+        "nome_titular": "CHACARA SÃO PEDRO ÚNICA LTDA",
+        "cpf_cnpj_titular": "92.040.003/1885-40",
+        "registro_matricula": "Matrícula 142322 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 10.69,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.77893995,
+        "centroide_lng": -53.74205455,
+        "cnpj_raw": "92040003188540",
+        "razao_social": "CHACARA SÃO PEDRO ÚNICA LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Cláudio Roberto Scortegagna",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Vanessa Scortegagna",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533162584",
+        "telefone": "(55) 3316-2584",
+        "email": "contato@chacarasopedronica.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "e3073426-e7cb-4ffc-8986-818d62137b36",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.682532,
+              -29.735669
+            ],
+            [
+              -53.680682,
+              -29.737332
+            ],
+            [
+              -53.68097,
+              -29.738035
+            ],
+            [
+              -53.679704,
+              -29.73916
+            ],
+            [
+              -53.677589,
+              -29.741911
+            ],
+            [
+              -53.678917,
+              -29.74261
+            ],
+            [
+              -53.680185,
+              -29.741501
+            ],
+            [
+              -53.689389,
+              -29.744172
+            ],
+            [
+              -53.68979,
+              -29.741688
+            ],
+            [
+              -53.685372,
+              -29.739911
+            ],
+            [
+              -53.685345,
+              -29.739927
+            ],
+            [
+              -53.685142,
+              -29.739779
+            ],
+            [
+              -53.683135,
+              -29.736143
+            ],
+            [
+              -53.682532,
+              -29.735669
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "e3073426-e7cb-4ffc-8986-818d62137b36",
+        "id_sigef": "e3073426-e7cb-4ffc-8986-818d62137b36",
+        "codigo_imovel": "8590520308130",
+        "nome_imovel": "Uma Fração de Terras - Parte 1",
+        "nome_titular": "UMA FRAÇÃO DE TERRAS LTDA",
+        "cpf_cnpj_titular": "92.040.003/2022-09",
+        "registro_matricula": "Matrícula 28433 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 45.58,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.73983369230769,
+        "centroide_lng": -53.682980923076926,
+        "cnpj_raw": "92040003202209",
+        "razao_social": "UMA FRAÇÃO DE TERRAS LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Mauro Cézar Zaffari",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Luciana Zaffari",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533162621",
+        "telefone": "(55) 3316-2621",
+        "email": "contato@umafraodeterras.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "7f0af1c1-d424-4b91-a58c-e495e8593fb8",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.748348,
+              -29.69983
+            ],
+            [
+              -53.748024,
+              -29.702418
+            ],
+            [
+              -53.748988,
+              -29.702422
+            ],
+            [
+              -53.749003,
+              -29.702381
+            ],
+            [
+              -53.749032,
+              -29.7023
+            ],
+            [
+              -53.749073,
+              -29.702178
+            ],
+            [
+              -53.749079,
+              -29.701853
+            ],
+            [
+              -53.749064,
+              -29.701682
+            ],
+            [
+              -53.749056,
+              -29.701526
+            ],
+            [
+              -53.749055,
+              -29.701474
+            ],
+            [
+              -53.749057,
+              -29.701192
+            ],
+            [
+              -53.749059,
+              -29.701169
+            ],
+            [
+              -53.749061,
+              -29.701142
+            ],
+            [
+              -53.749063,
+              -29.701113
+            ],
+            [
+              -53.749053,
+              -29.701092
+            ],
+            [
+              -53.749084,
+              -29.700981
+            ],
+            [
+              -53.749095,
+              -29.700891
+            ],
+            [
+              -53.749098,
+              -29.700794
+            ],
+            [
+              -53.748931,
+              -29.700053
+            ],
+            [
+              -53.748348,
+              -29.69983
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "7f0af1c1-d424-4b91-a58c-e495e8593fb8",
+        "id_sigef": "7f0af1c1-d424-4b91-a58c-e495e8593fb8",
+        "codigo_imovel": "8590520100068",
+        "nome_imovel": "VILA MARIA - Parte 1",
+        "nome_titular": "VILA MARIA LTDA",
+        "cpf_cnpj_titular": "92.040.003/2159-63",
+        "registro_matricula": "Matrícula 167800 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 2.3,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.7013942631579,
+        "centroide_lng": -53.74895910526316,
+        "cnpj_raw": "92040003215963",
+        "razao_social": "VILA MARIA LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Valter Luiz Rizzardi",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Carla Rizzardi",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533162658",
+        "telefone": "(55) 3316-2658",
+        "email": "contato@vilamaria.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "ab7be895-7494-41d6-b6f2-01524245719a",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.957223,
+              -29.641887
+            ],
+            [
+              -53.94654,
+              -29.649026
+            ],
+            [
+              -53.94722,
+              -29.649558
+            ],
+            [
+              -53.947752,
+              -29.649855
+            ],
+            [
+              -53.948588,
+              -29.65023
+            ],
+            [
+              -53.94989,
+              -29.65025
+            ],
+            [
+              -53.951215,
+              -29.650162
+            ],
+            [
+              -53.952599,
+              -29.650447
+            ],
+            [
+              -53.953288,
+              -29.6507
+            ],
+            [
+              -53.954409,
+              -29.651198
+            ],
+            [
+              -53.955339,
+              -29.651294
+            ],
+            [
+              -53.962978,
+              -29.643378
+            ],
+            [
+              -53.96233,
+              -29.643273
+            ],
+            [
+              -53.958763,
+              -29.642444
+            ],
+            [
+              -53.957406,
+              -29.641954
+            ],
+            [
+              -53.957223,
+              -29.641887
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "ab7be895-7494-41d6-b6f2-01524245719a",
+        "id_sigef": "ab7be895-7494-41d6-b6f2-01524245719a",
+        "codigo_imovel": "0000435017274",
+        "nome_imovel": "Sem Denominação Especial - Parte 1",
+        "nome_titular": "AGROPECUARIA VALE DOS GRAOS LTDA",
+        "cpf_cnpj_titular": "92.040.003/2296-70",
+        "registro_matricula": "Matrícula R.15-67990, R.16-67990, R.18-67990 ,R.20-67990, R.30-67990 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 78.63,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.647710400000005,
+        "centroide_lng": -53.953702666666665,
+        "cnpj_raw": "92040003229670",
+        "razao_social": "AGROPECUARIA VALE DOS GRAOS LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1450000,
+        "qsa": [
+          {
+            "nome": "Otávio Augusto Canabarro",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Letícia Canabarro",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533162695",
+        "telefone": "(55) 3316-2695",
+        "email": "contato@agropecuariavaledosgraos.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "7b9f1720-9aad-4c0e-9aed-53d88d0be5a9",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.748437,
+              -29.644466
+            ],
+            [
+              -53.748315,
+              -29.644479
+            ],
+            [
+              -53.746829,
+              -29.644816
+            ],
+            [
+              -53.747325,
+              -29.64599
+            ],
+            [
+              -53.748117,
+              -29.645619
+            ],
+            [
+              -53.748636,
+              -29.645227
+            ],
+            [
+              -53.748768,
+              -29.645142
+            ],
+            [
+              -53.748947,
+              -29.645069
+            ],
+            [
+              -53.748832,
+              -29.644787
+            ],
+            [
+              -53.748437,
+              -29.644466
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "7b9f1720-9aad-4c0e-9aed-53d88d0be5a9",
+        "id_sigef": "7b9f1720-9aad-4c0e-9aed-53d88d0be5a9",
+        "codigo_imovel": "8640300131709",
+        "nome_imovel": "Brita Pinhal - Parcela 1",
+        "nome_titular": "BRITA PINHAL LTDA",
+        "cpf_cnpj_titular": "92.040.003/2433-12",
+        "registro_matricula": "Matrícula 20165 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 1.98,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.64506611111111,
+        "centroide_lng": -53.7482451111111,
+        "cnpj_raw": "92040003243312",
+        "razao_social": "BRITA PINHAL LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Ricardo Luís Meneguzzi",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Sandra Meneguzzi",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533162732",
+        "telefone": "(55) 3316-2732",
+        "email": "contato@britapinhal.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "7f1ce12f-a763-433f-9040-7038826e11c7",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.69933,
+              -29.640676
+            ],
+            [
+              -53.699295,
+              -29.642092
+            ],
+            [
+              -53.699764,
+              -29.642117
+            ],
+            [
+              -53.700232,
+              -29.642195
+            ],
+            [
+              -53.700668,
+              -29.642268
+            ],
+            [
+              -53.701104,
+              -29.642394
+            ],
+            [
+              -53.701114,
+              -29.640716
+            ],
+            [
+              -53.700271,
+              -29.640696
+            ],
+            [
+              -53.69933,
+              -29.640676
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "7f1ce12f-a763-433f-9040-7038826e11c7",
+        "id_sigef": "7f1ce12f-a763-433f-9040-7038826e11c7",
+        "codigo_imovel": "9999202721672",
+        "nome_imovel": "SD - Única",
+        "nome_titular": "SD ÚNICA LTDA",
+        "cpf_cnpj_titular": "92.040.003/2570-20",
+        "registro_matricula": "Matrícula 174243 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 2.92,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.64164425,
+        "centroide_lng": -53.700222249999996,
+        "cnpj_raw": "92040003257020",
+        "razao_social": "SD ÚNICA LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Bernardo Della Mea",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Giovana Della Mea",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533162769",
+        "telefone": "(55) 3316-2769",
+        "email": "contato@sdnica.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "fc25fc35-8520-402b-aed6-b0d8276672de",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.752895,
+              -29.635834
+            ],
+            [
+              -53.752256,
+              -29.636047
+            ],
+            [
+              -53.751104,
+              -29.636431
+            ],
+            [
+              -53.750015,
+              -29.636795
+            ],
+            [
+              -53.750252,
+              -29.636899
+            ],
+            [
+              -53.750301,
+              -29.636925
+            ],
+            [
+              -53.750634,
+              -29.636987
+            ],
+            [
+              -53.750881,
+              -29.637089
+            ],
+            [
+              -53.75139,
+              -29.637515
+            ],
+            [
+              -53.752217,
+              -29.637374
+            ],
+            [
+              -53.753089,
+              -29.637225
+            ],
+            [
+              -53.753039,
+              -29.636865
+            ],
+            [
+              -53.752895,
+              -29.635834
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "fc25fc35-8520-402b-aed6-b0d8276672de",
+        "id_sigef": "fc25fc35-8520-402b-aed6-b0d8276672de",
+        "codigo_imovel": "9502545401884",
+        "nome_imovel": "Imovel Milton Santos - Mat. 71009",
+        "nome_titular": "IMOVEL MILTON SANTOS MAT. 71009 LTDA",
+        "cpf_cnpj_titular": "92.040.003/2707-19",
+        "registro_matricula": "Matrícula 71009 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 3.02,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.636832166666668,
+        "centroide_lng": -53.75150608333333,
+        "cnpj_raw": "92040003270719",
+        "razao_social": "IMOVEL MILTON SANTOS MAT. 71009 LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Felipe Antônio Rubin",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Larissa Rubin",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533162806",
+        "telefone": "(55) 3316-2806",
+        "email": "contato@imovelmiltonsantosmat71009.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "0e3a1deb-de19-4f7b-9a76-61f558821ce1",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.884532,
+              -29.687836
+            ],
+            [
+              -53.884987,
+              -29.688438
+            ],
+            [
+              -53.885136,
+              -29.688758
+            ],
+            [
+              -53.88543,
+              -29.691229
+            ],
+            [
+              -53.887581,
+              -29.691229
+            ],
+            [
+              -53.887249,
+              -29.690573
+            ],
+            [
+              -53.886369,
+              -29.688806
+            ],
+            [
+              -53.885959,
+              -29.688962
+            ],
+            [
+              -53.885512,
+              -29.688029
+            ],
+            [
+              -53.884532,
+              -29.687836
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "0e3a1deb-de19-4f7b-9a76-61f558821ce1",
+        "id_sigef": "0e3a1deb-de19-4f7b-9a76-61f558821ce1",
+        "codigo_imovel": "9500252926726",
+        "nome_imovel": "IMOVEL SEM DENOMINAÇÃO - Parte 1",
+        "nome_titular": "AGROPECUARIA VALE DO PINHEIRO LTDA",
+        "cpf_cnpj_titular": "92.040.003/2844-26",
+        "registro_matricula": "Matrícula 197085 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 5.07,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.689317777777774,
+        "centroide_lng": -53.88586166666667,
+        "cnpj_raw": "92040003284426",
+        "razao_social": "AGROPECUARIA VALE DO PINHEIRO LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Henrique Dornelles",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Carolina Dornelles",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533162843",
+        "telefone": "(55) 3316-2843",
+        "email": "contato@agropecuariavaledopinheiro.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "66cfec97-29b1-491e-bd9a-b8148d334a6f",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.682919,
+              -29.635522
+            ],
+            [
+              -53.682756,
+              -29.636062
+            ],
+            [
+              -53.682891,
+              -29.636066
+            ],
+            [
+              -53.689365,
+              -29.636249
+            ],
+            [
+              -53.689588,
+              -29.635771
+            ],
+            [
+              -53.683044,
+              -29.635527
+            ],
+            [
+              -53.682919,
+              -29.635522
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "66cfec97-29b1-491e-bd9a-b8148d334a6f",
+        "id_sigef": "66cfec97-29b1-491e-bd9a-b8148d334a6f",
+        "codigo_imovel": "8590520805517",
+        "nome_imovel": "TRES BARRAS - GLEBA 2",
+        "nome_titular": "TRES BARRAS LTDA",
+        "cpf_cnpj_titular": "92.040.003/2981-33",
+        "registro_matricula": "Matrícula 152971 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 3.68,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.63586616666667,
+        "centroide_lng": -53.68509383333333,
+        "cnpj_raw": "92040003298133",
+        "razao_social": "TRES BARRAS LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Carlos Alberto Fontana",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Mariana Fontana",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533162880",
+        "telefone": "(55) 3316-2880",
+        "email": "contato@tresbarras.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "3d727f7b-40b8-464e-b10b-dd8c04111b36",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.680409,
+              -29.668248
+            ],
+            [
+              -53.6795,
+              -29.668268
+            ],
+            [
+              -53.678372,
+              -29.668301
+            ],
+            [
+              -53.678391,
+              -29.669319
+            ],
+            [
+              -53.678415,
+              -29.670308
+            ],
+            [
+              -53.678833,
+              -29.670202
+            ],
+            [
+              -53.679076,
+              -29.670203
+            ],
+            [
+              -53.680228,
+              -29.670448
+            ],
+            [
+              -53.680343,
+              -29.669001
+            ],
+            [
+              -53.680409,
+              -29.668248
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "3d727f7b-40b8-464e-b10b-dd8c04111b36",
+        "id_sigef": "3d727f7b-40b8-464e-b10b-dd8c04111b36",
+        "codigo_imovel": "8590520299557",
+        "nome_imovel": "Sem denominação - Parte 1",
+        "nome_titular": "AGROPECUARIA OURO VERDE LTDA",
+        "cpf_cnpj_titular": "92.040.003/3118-49",
+        "registro_matricula": "Matrícula 169745 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 4.2,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.669366444444442,
+        "centroide_lng": -53.67928522222222,
+        "cnpj_raw": "92040003311849",
+        "razao_social": "AGROPECUARIA OURO VERDE LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Eduardo Grazziotin",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Patrícia Grazziotin",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533162917",
+        "telefone": "(55) 3316-2917",
+        "email": "contato@agropecuariaouroverde.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "74319302-a33a-4ad9-8e2a-e2553e6025be",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.95944,
+              -29.611834
+            ],
+            [
+              -53.948897,
+              -29.622976
+            ],
+            [
+              -53.948019,
+              -29.623995
+            ],
+            [
+              -53.946375,
+              -29.625765
+            ],
+            [
+              -53.949411,
+              -29.629654
+            ],
+            [
+              -53.948202,
+              -29.631601
+            ],
+            [
+              -53.947032,
+              -29.633478
+            ],
+            [
+              -53.945538,
+              -29.635839
+            ],
+            [
+              -53.945228,
+              -29.63633
+            ],
+            [
+              -53.944839,
+              -29.636944
+            ],
+            [
+              -53.94463,
+              -29.637277
+            ],
+            [
+              -53.943141,
+              -29.639639
+            ],
+            [
+              -53.942953,
+              -29.639933
+            ],
+            [
+              -53.940044,
+              -29.637758
+            ],
+            [
+              -53.93884,
+              -29.639179
+            ],
+            [
+              -53.938449,
+              -29.642365
+            ],
+            [
+              -53.938731,
+              -29.643948
+            ],
+            [
+              -53.940249,
+              -29.644204
+            ],
+            [
+              -53.940335,
+              -29.644199
+            ],
+            [
+              -53.940576,
+              -29.643065
+            ],
+            [
+              -53.940943,
+              -29.642505
+            ],
+            [
+              -53.941771,
+              -29.642638
+            ],
+            [
+              -53.941558,
+              -29.64307
+            ],
+            [
+              -53.942189,
+              -29.643072
+            ],
+            [
+              -53.946068,
+              -29.638631
+            ],
+            [
+              -53.946924,
+              -29.640208
+            ],
+            [
+              -53.950124,
+              -29.637784
+            ],
+            [
+              -53.948951,
+              -29.636647
+            ],
+            [
+              -53.950025,
+              -29.635987
+            ],
+            [
+              -53.952099,
+              -29.63712
+            ],
+            [
+              -53.95451,
+              -29.63607
+            ],
+            [
+              -53.953072,
+              -29.628185
+            ],
+            [
+              -53.954054,
+              -29.627209
+            ],
+            [
+              -53.956885,
+              -29.628284
+            ],
+            [
+              -53.958136,
+              -29.626216
+            ],
+            [
+              -53.957314,
+              -29.625533
+            ],
+            [
+              -53.960517,
+              -29.624196
+            ],
+            [
+              -53.961778,
+              -29.625653
+            ],
+            [
+              -53.962952,
+              -29.625011
+            ],
+            [
+              -53.965214,
+              -29.617882
+            ],
+            [
+              -53.964576,
+              -29.617911
+            ],
+            [
+              -53.964549,
+              -29.61757
+            ],
+            [
+              -53.964451,
+              -29.617403
+            ],
+            [
+              -53.964315,
+              -29.617358
+            ],
+            [
+              -53.963906,
+              -29.617448
+            ],
+            [
+              -53.963639,
+              -29.617358
+            ],
+            [
+              -53.963385,
+              -29.617049
+            ],
+            [
+              -53.963123,
+              -29.616955
+            ],
+            [
+              -53.962882,
+              -29.617097
+            ],
+            [
+              -53.962077,
+              -29.617266
+            ],
+            [
+              -53.961798,
+              -29.617058
+            ],
+            [
+              -53.961733,
+              -29.616865
+            ],
+            [
+              -53.961588,
+              -29.61638
+            ],
+            [
+              -53.962205,
+              -29.616148
+            ],
+            [
+              -53.962392,
+              -29.616081
+            ],
+            [
+              -53.963145,
+              -29.615631
+            ],
+            [
+              -53.963457,
+              -29.615403
+            ],
+            [
+              -53.963533,
+              -29.615271
+            ],
+            [
+              -53.96348,
+              -29.614839
+            ],
+            [
+              -53.962972,
+              -29.614947
+            ],
+            [
+              -53.962624,
+              -29.614796
+            ],
+            [
+              -53.962299,
+              -29.614231
+            ],
+            [
+              -53.961781,
+              -29.613695
+            ],
+            [
+              -53.961225,
+              -29.61322
+            ],
+            [
+              -53.960998,
+              -29.613281
+            ],
+            [
+              -53.961302,
+              -29.61365
+            ],
+            [
+              -53.961265,
+              -29.613853
+            ],
+            [
+              -53.960884,
+              -29.613966
+            ],
+            [
+              -53.960255,
+              -29.613255
+            ],
+            [
+              -53.96026,
+              -29.612831
+            ],
+            [
+              -53.95976,
+              -29.612235
+            ],
+            [
+              -53.959597,
+              -29.611965
+            ],
+            [
+              -53.95944,
+              -29.611834
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "74319302-a33a-4ad9-8e2a-e2553e6025be",
+        "id_sigef": "74319302-a33a-4ad9-8e2a-e2553e6025be",
+        "codigo_imovel": "8590520649710",
+        "nome_imovel": "Granja Ibicuí - Gleba 01",
+        "nome_titular": "GRANJA IBICUÍ S.A.",
+        "cpf_cnpj_titular": "92.040.003/3255-56",
+        "registro_matricula": "Matrícula 180462 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 270.58,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.625762499999993,
+        "centroide_lng": -53.954603736111096,
+        "cnpj_raw": "92040003325556",
+        "razao_social": "GRANJA IBICUÍ S.A.",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 5010000,
+        "qsa": [
+          {
+            "nome": "Fernando Silveira",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Roberto Silveira",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533162954",
+        "telefone": "(55) 3316-2954",
+        "email": "contato@granjaibicu.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "34cef8dd-381c-4d0e-80f5-2e1196e4d8c1",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.752716,
+              -29.675659
+            ],
+            [
+              -53.751784,
+              -29.675846
+            ],
+            [
+              -53.752087,
+              -29.67681
+            ],
+            [
+              -53.752412,
+              -29.677819
+            ],
+            [
+              -53.753253,
+              -29.67765
+            ],
+            [
+              -53.753013,
+              -29.676754
+            ],
+            [
+              -53.752974,
+              -29.676621
+            ],
+            [
+              -53.752716,
+              -29.675659
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "34cef8dd-381c-4d0e-80f5-2e1196e4d8c1",
+        "id_sigef": "34cef8dd-381c-4d0e-80f5-2e1196e4d8c1",
+        "codigo_imovel": "9510649903370",
+        "nome_imovel": "RECANTO DOS MORO - GLEBA ÚNICA",
+        "nome_titular": "RECANTO DOS MORO GLEBA ÚNICA LTDA",
+        "cpf_cnpj_titular": "92.040.003/3392-63",
+        "registro_matricula": "Matrícula 193097 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 2.01,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.676737,
+        "centroide_lng": -53.75260557142857,
+        "cnpj_raw": "92040003339263",
+        "razao_social": "RECANTO DOS MORO GLEBA ÚNICA LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Gilberto Estrela",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Helena Estrela",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533162991",
+        "telefone": "(55) 3316-2991",
+        "email": "contato@recantodosmoroglebanica.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "b48f1851-9ceb-48ed-81e4-0346c2f3fe4c",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.768856,
+              -29.606921
+            ],
+            [
+              -53.765645,
+              -29.608056
+            ],
+            [
+              -53.765653,
+              -29.608198
+            ],
+            [
+              -53.7726,
+              -29.609349
+            ],
+            [
+              -53.772461,
+              -29.609267
+            ],
+            [
+              -53.771448,
+              -29.608668
+            ],
+            [
+              -53.770975,
+              -29.608391
+            ],
+            [
+              -53.769165,
+              -29.607221
+            ],
+            [
+              -53.768856,
+              -29.606921
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "b48f1851-9ceb-48ed-81e4-0346c2f3fe4c",
+        "id_sigef": "b48f1851-9ceb-48ed-81e4-0346c2f3fe4c",
+        "codigo_imovel": "8590520425285",
+        "nome_imovel": "Comercial Champagnat - Única",
+        "nome_titular": "COMERCIAL CHAMPAGNAT ÚNICA LTDA",
+        "cpf_cnpj_titular": "92.040.003/3529-52",
+        "registro_matricula": "Matrícula 188750 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 6.72,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.608258875,
+        "centroide_lng": -53.76960037500001,
+        "cnpj_raw": "92040003352952",
+        "razao_social": "COMERCIAL CHAMPAGNAT ÚNICA LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Paulo Renato Laimer",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Juliana Laimer",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533163028",
+        "telefone": "(55) 3316-3028",
+        "email": "contato@comercialchampagnatnica.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "abad294c-9450-4f3c-927d-c38ac54bfd55",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.699769,
+              -29.627948
+            ],
+            [
+              -53.699742,
+              -29.628381
+            ],
+            [
+              -53.700881,
+              -29.628523
+            ],
+            [
+              -53.700894,
+              -29.628412
+            ],
+            [
+              -53.700528,
+              -29.62815
+            ],
+            [
+              -53.700101,
+              -29.628052
+            ],
+            [
+              -53.699769,
+              -29.627948
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "abad294c-9450-4f3c-927d-c38ac54bfd55",
+        "id_sigef": "abad294c-9450-4f3c-927d-c38ac54bfd55",
+        "codigo_imovel": "8520150110885",
+        "nome_imovel": "S.D.E - Gleba B",
+        "nome_titular": "S.D.E GLEBA B LTDA",
+        "cpf_cnpj_titular": "92.040.003/3666-60",
+        "registro_matricula": "Matrícula 633 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 0.4,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.62824433333333,
+        "centroide_lng": -53.700319166666674,
+        "cnpj_raw": "92040003366660",
+        "razao_social": "S.D.E GLEBA B LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Marcos Vinicius Witte",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Renata Witte",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533163065",
+        "telefone": "(55) 3316-3065",
+        "email": "contato@sdeglebab.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "36b63b44-d581-4590-89e5-9e3ca1f0a934",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.720211,
+              -29.661876
+            ],
+            [
+              -53.718812,
+              -29.662236
+            ],
+            [
+              -53.718873,
+              -29.662311
+            ],
+            [
+              -53.719385,
+              -29.662944
+            ],
+            [
+              -53.720211,
+              -29.661876
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "36b63b44-d581-4590-89e5-9e3ca1f0a934",
+        "id_sigef": "36b63b44-d581-4590-89e5-9e3ca1f0a934",
+        "codigo_imovel": "8590520604023",
+        "nome_imovel": "CANUDOS - GLEBA B",
+        "nome_titular": "CANUDOS GLEBA B LTDA",
+        "cpf_cnpj_titular": "92.040.003/3803-01",
+        "registro_matricula": "Matrícula 35272 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 0.64,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.66234175,
+        "centroide_lng": -53.719320249999996,
+        "cnpj_raw": "92040003380301",
+        "razao_social": "CANUDOS GLEBA B LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "José Francisco Gehn",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Beatriz Gehn",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533163102",
+        "telefone": "(55) 3316-3102",
+        "email": "contato@canudosglebab.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "d70b80c9-5b44-4ff8-b942-77e9f03a6272",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.949668,
+              -29.718385
+            ],
+            [
+              -53.947884,
+              -29.720101
+            ],
+            [
+              -53.946901,
+              -29.721112
+            ],
+            [
+              -53.946054,
+              -29.725816
+            ],
+            [
+              -53.945704,
+              -29.727644
+            ],
+            [
+              -53.945625,
+              -29.727788
+            ],
+            [
+              -53.945954,
+              -29.72795
+            ],
+            [
+              -53.946507,
+              -29.728167
+            ],
+            [
+              -53.946633,
+              -29.728277
+            ],
+            [
+              -53.946723,
+              -29.728319
+            ],
+            [
+              -53.946743,
+              -29.728303
+            ],
+            [
+              -53.946959,
+              -29.728282
+            ],
+            [
+              -53.947049,
+              -29.728414
+            ],
+            [
+              -53.947017,
+              -29.728484
+            ],
+            [
+              -53.947018,
+              -29.728526
+            ],
+            [
+              -53.947069,
+              -29.728563
+            ],
+            [
+              -53.947182,
+              -29.728641
+            ],
+            [
+              -53.94722,
+              -29.728695
+            ],
+            [
+              -53.947384,
+              -29.728692
+            ],
+            [
+              -53.947523,
+              -29.728662
+            ],
+            [
+              -53.947533,
+              -29.728679
+            ],
+            [
+              -53.947795,
+              -29.728695
+            ],
+            [
+              -53.947858,
+              -29.728517
+            ],
+            [
+              -53.949736,
+              -29.723102
+            ],
+            [
+              -53.950533,
+              -29.720802
+            ],
+            [
+              -53.951305,
+              -29.719603
+            ],
+            [
+              -53.951558,
+              -29.718804
+            ],
+            [
+              -53.951232,
+              -29.718721
+            ],
+            [
+              -53.950424,
+              -29.718561
+            ],
+            [
+              -53.949668,
+              -29.718385
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "d70b80c9-5b44-4ff8-b942-77e9f03a6272",
+        "id_sigef": "d70b80c9-5b44-4ff8-b942-77e9f03a6272",
+        "codigo_imovel": "8590520145835",
+        "nome_imovel": "Sem Denominação - Matrícula 35.464",
+        "nome_titular": "AGROPECUARIA SANTO ANTONIO LTDA",
+        "cpf_cnpj_titular": "92.040.003/3940-19",
+        "registro_matricula": "Matrícula 196263 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 30.62,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.725665689655173,
+        "centroide_lng": -53.947820379310336,
+        "cnpj_raw": "92040003394019",
+        "razao_social": "AGROPECUARIA SANTO ANTONIO LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Antônio Carlos Sebben",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Clara Sebben",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533163139",
+        "telefone": "(55) 3316-3139",
+        "email": "contato@agropecuariasantoantonio.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "700e9006-9cfc-4d79-9d0c-b9969dcdf605",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.802778,
+              -29.752834
+            ],
+            [
+              -53.802543,
+              -29.753312
+            ],
+            [
+              -53.801706,
+              -29.756361
+            ],
+            [
+              -53.801679,
+              -29.756461
+            ],
+            [
+              -53.801659,
+              -29.756557
+            ],
+            [
+              -53.801696,
+              -29.757284
+            ],
+            [
+              -53.804293,
+              -29.757796
+            ],
+            [
+              -53.804249,
+              -29.757014
+            ],
+            [
+              -53.803111,
+              -29.756884
+            ],
+            [
+              -53.802999,
+              -29.755679
+            ],
+            [
+              -53.803061,
+              -29.755499
+            ],
+            [
+              -53.803014,
+              -29.754734
+            ],
+            [
+              -53.803168,
+              -29.753919
+            ],
+            [
+              -53.80319,
+              -29.753763
+            ],
+            [
+              -53.803202,
+              -29.753636
+            ],
+            [
+              -53.803232,
+              -29.753446
+            ],
+            [
+              -53.803272,
+              -29.753167
+            ],
+            [
+              -53.803308,
+              -29.752903
+            ],
+            [
+              -53.802778,
+              -29.752834
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "700e9006-9cfc-4d79-9d0c-b9969dcdf605",
+        "id_sigef": "700e9006-9cfc-4d79-9d0c-b9969dcdf605",
+        "codigo_imovel": "8590520360728",
+        "nome_imovel": "Chácara do Rancho - Parcela 1",
+        "nome_titular": "CHÁCARA DO RANCHO LTDA",
+        "cpf_cnpj_titular": "92.040.003/4077-90",
+        "registro_matricula": "Matrícula 36648 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 5.97,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.755069388888884,
+        "centroide_lng": -53.80289777777777,
+        "cnpj_raw": "92040003407790",
+        "razao_social": "CHÁCARA DO RANCHO LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Luiz Henrique Biazus",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Camila Biazus",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533163176",
+        "telefone": "(55) 3316-3176",
+        "email": "contato@chcaradorancho.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "4c4b481a-07bc-4749-bceb-9e7baf19f328",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.791508,
+              -29.748796
+            ],
+            [
+              -53.791393,
+              -29.749105
+            ],
+            [
+              -53.791326,
+              -29.749313
+            ],
+            [
+              -53.791593,
+              -29.749411
+            ],
+            [
+              -53.793085,
+              -29.749912
+            ],
+            [
+              -53.793864,
+              -29.750172
+            ],
+            [
+              -53.794161,
+              -29.75026
+            ],
+            [
+              -53.794357,
+              -29.750259
+            ],
+            [
+              -53.796222,
+              -29.749714
+            ],
+            [
+              -53.796134,
+              -29.748956
+            ],
+            [
+              -53.7938,
+              -29.748842
+            ],
+            [
+              -53.792674,
+              -29.748929
+            ],
+            [
+              -53.791508,
+              -29.748796
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "4c4b481a-07bc-4749-bceb-9e7baf19f328",
+        "id_sigef": "4c4b481a-07bc-4749-bceb-9e7baf19f328",
+        "codigo_imovel": "8590520591029",
+        "nome_imovel": "Gleba 02 - Parte 2",
+        "nome_titular": "AGROPECUARIA VALE DOS GRAOS LTDA",
+        "cpf_cnpj_titular": "92.040.003/4214-31",
+        "registro_matricula": "Matrícula 177568 - CRI",
+        "municipio": "SANTA MARIA",
+        "uf": "RS",
+        "area_hectares": 5.19,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -29.749472416666666,
+        "centroide_lng": -53.79334308333333,
+        "cnpj_raw": "92040003421431",
+        "razao_social": "AGROPECUARIA VALE DOS GRAOS LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Sérgio Murilo Trevisan",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Aline Trevisan",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533163213",
+        "telefone": "(55) 3316-3213",
+        "email": "contato@agropecuariavaledosgraos.agr.br"
+      }
+    }
+  ]
+}

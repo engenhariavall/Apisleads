@@ -1,0 +1,36 @@
+{
+  "name": "projeto-api-leads",
+  "version": "1.0.0",
+  "description": "API Leads — Inteligência Comercial B2B e Plataforma de Extração de Dados para Tráfego Pago",
+  "main": "server/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch=server/src server/index.js",
+    "db:hygiene": "node server/scripts/auditDataHygiene.js",
+    "db:geocode-remaining": "node server/scripts/syncRemainingGeocoding.js",
+    "test:phase25": "node tests/test_phase25.js",
+    "test:phase26": "node tests/test_phase26.js"
+  },
+  "keywords": [
+    "leads",
+    "b2b",
+    "meta-ads",
+    "cnae",
+    "cnpj",
+    "gestao-trafego"
+  ],
+  "author": "Equipe de Engenharia",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "express-rate-limit": "^8.7.0",
+    "h3-js": "^4.5.0",
+    "helmet": "^8.3.0",
+    "multer": "^2.4.0",
+    "openai": "^7.23.0",
+    "pdfkit": "^0.20.2",
+    "pg": "^8.23.0"
+  }
+}

@@ -1,0 +1,799 @@
+/* Design System do Relatório de Gestão em Tempo Real — API Leads (Padrão VERSUS) */
+:root {
+  --bg-main: #050814;
+  --bg-card: #0B1224;
+  --bg-card-inner: #0F172A;
+  --bg-card-hover: #1E293B;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-active: rgba(0, 85, 255, 0.35);
+  --text-primary: #FFFFFF;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+  --blue-primary: #0055FF;
+  --blue-bright: #00D2FF;
+  --emerald-glow: #10B981;
+  --amber-glow: #F59E0B;
+  --purple-glow: #A855F7;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+  --shadow-card: 0 4px 24px -2px rgba(0, 0, 0, 0.45);
+  --scrollbar-thumb: #334155;
+  --scrollbar-thumb-hover: #38bdf8;
+}
+
+/* ==========================================================================
+   Scrollbar Moderno & Minimalista (Slim & Dark - Padrão VERSUS / Top B2B SaaS)
+   ========================================================================== */
+
+/* Padrão W3C / Firefox */
+html, body, * {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) transparent;
+}
+
+/* Estilização para Webkit (Chrome, Edge, Safari, Opera) */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 4px;
+  border: 1px solid transparent;
+  background-clip: padding-box;
+  transition: background-color 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.4);
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Header Superior */
+.topbar {
+  background-color: rgba(11, 18, 36, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-subtle);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  padding: 0.85rem 0;
+}
+
+.topbar-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.brand-section {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.brand-badge {
+  background: linear-gradient(135deg, #0055FF, #00D2FF);
+  color: #fff;
+  font-weight: 900;
+  font-size: 0.85rem;
+  padding: 0.35rem 0.65rem;
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.05em;
+  box-shadow: 0 0 14px rgba(0, 85, 255, 0.4);
+}
+
+.brand-info h1 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.brand-info p {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.btn-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.85rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
+}
+
+.btn-action:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.btn-action.btn-primary {
+  background: linear-gradient(135deg, #0055FF, #0044CC);
+  color: #fff;
+  border: 1px solid rgba(0, 210, 255, 0.4);
+  box-shadow: 0 2px 10px rgba(0, 85, 255, 0.3);
+}
+
+.btn-action.btn-primary:hover {
+  background: linear-gradient(135deg, #0066FF, #0055FF);
+  box-shadow: 0 4px 16px rgba(0, 85, 255, 0.5);
+}
+
+.refresh-spin {
+  animation: spin 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Indicador de Status Dinâmico */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 700;
+  border: 1px solid transparent;
+}
+
+.status-pill.morning {
+  background: rgba(16, 185, 129, 0.12);
+  color: #34D399;
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.status-pill.lunch {
+  background: rgba(245, 158, 11, 0.12);
+  color: #FBBF24;
+  border-color: rgba(245, 158, 11, 0.3);
+}
+
+.status-pill.afternoon {
+  background: rgba(0, 210, 255, 0.12);
+  color: #38BDF8;
+  border-color: rgba(0, 210, 255, 0.3);
+}
+
+.status-pill.completed {
+  background: rgba(168, 85, 247, 0.12);
+  color: #C084FC;
+  border-color: rgba(168, 85, 247, 0.3);
+}
+
+.pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: currentColor;
+  box-shadow: 0 0 8px currentColor;
+  animation: pulseDot 2s infinite ease-in-out;
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+/* Conteúdo Principal */
+.main-content {
+  flex: 1;
+  padding: 1.75rem 0 3rem;
+}
+
+/* Seção de Resumo e Métricas (KPIs) */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.kpi-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.15rem 1.25rem;
+  box-shadow: var(--shadow-card);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.kpi-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.kpi-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  font-weight: 700;
+  margin-bottom: 0.35rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.kpi-value {
+  font-size: 1.85rem;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+}
+
+.kpi-unit {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.progress-bar-bg {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-full);
+  margin-top: 0.75rem;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #0055FF, #00D2FF);
+  border-radius: var(--radius-full);
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 8px rgba(0, 210, 255, 0.5);
+}
+
+/* Painel dos 4 Marcos Diários (Ponto Eletrônico Inviolável) */
+.timeclock-section {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.35rem;
+  margin-bottom: 1.75rem;
+  box-shadow: var(--shadow-card);
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.15rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.section-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.section-subtitle {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-top: 0.2rem;
+}
+
+.timeclock-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.85rem;
+}
+
+.mark-card {
+  background: var(--bg-card-inner);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.15rem;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.mark-card.confirmed {
+  border-color: rgba(16, 185, 129, 0.4);
+  box-shadow: inset 0 0 20px -10px rgba(16, 185, 129, 0.2);
+}
+
+.mark-card.waiting {
+  opacity: 0.7;
+}
+
+.mark-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.mark-badge {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 800;
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-full);
+}
+
+.mark-badge.green {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34D399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.mark-badge.amber {
+  background: rgba(245, 158, 11, 0.15);
+  color: #FBBF24;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.mark-badge.cyan {
+  background: rgba(0, 210, 255, 0.15);
+  color: #38BDF8;
+  border: 1px solid rgba(0, 210, 255, 0.3);
+}
+
+.mark-badge.purple {
+  background: rgba(168, 85, 247, 0.15);
+  color: #C084FC;
+  border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+.mark-badge.gray {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-muted);
+  border: 1px solid var(--border-subtle);
+}
+
+.mark-time {
+  font-size: 1.75rem;
+  font-weight: 900;
+  font-family: 'Courier New', Courier, monospace;
+  letter-spacing: -0.02em;
+}
+
+.mark-card.confirmed .mark-time {
+  color: #34D399;
+}
+
+.mark-card.waiting .mark-time {
+  color: var(--text-muted);
+}
+
+.mark-desc {
+  margin-top: 0.3rem;
+}
+
+.mark-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.mark-sub {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+/* Banner de Governança Inviolável */
+.governance-callout {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 0.85rem 1.15rem;
+  margin-top: 1rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.governance-callout svg {
+  color: var(--blue-bright);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.governance-text {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.governance-text strong {
+  color: #fff;
+}
+
+/* Abas de Navegação */
+.tab-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: 1.5rem;
+  overflow-x: auto;
+}
+
+.tab-btn {
+  padding: 0.65rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.tab-btn:hover {
+  color: #fff;
+}
+
+.tab-btn.active {
+  color: #fff;
+  border-bottom-color: var(--blue-bright);
+}
+
+/* Filtros da Lista de Fases */
+.phases-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: var(--bg-card);
+  padding: 0.25rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+}
+
+.filter-btn {
+  padding: 0.35rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 6px;
+  color: var(--text-secondary);
+  transition: all 0.2s;
+}
+
+.filter-btn.active {
+  background: var(--blue-primary);
+  color: #fff;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0.4rem 0.75rem;
+  width: 100%;
+  max-width: 280px;
+}
+
+.search-box input {
+  background: none;
+  border: none;
+  outline: none;
+  font-size: 0.8rem;
+  color: #fff;
+  width: 100%;
+}
+
+/* Fases do Projeto */
+.phase-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  margin-bottom: 1rem;
+  overflow: hidden;
+  transition: border-color 0.2s ease;
+}
+
+.phase-card.completed {
+  border-color: rgba(16, 185, 129, 0.25);
+}
+
+.phase-header {
+  padding: 1.15rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  background: var(--bg-card);
+  user-select: none;
+  transition: background 0.15s ease;
+}
+
+.phase-header:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.phase-title-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.phase-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.85rem;
+}
+
+.phase-icon.completed {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34D399;
+}
+
+.phase-icon.pending {
+  background: rgba(0, 85, 255, 0.15);
+  color: #38BDF8;
+}
+
+.phase-title-text {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.phase-items-count {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.phase-body {
+  padding: 0 1.25rem 1.25rem;
+  border-top: 1px solid var(--border-subtle);
+  background: var(--bg-card-inner);
+}
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.task-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  padding: 0.35rem 0;
+}
+
+.task-item.checked {
+  color: #E2E8F0;
+}
+
+.checkbox-custom {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.checkbox-custom.checked {
+  background: #10B981;
+  border-color: #10B981;
+  color: #fff;
+}
+
+.subtask-list {
+  margin-left: 1.75rem;
+  margin-top: 0.35rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.subtask-item {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  position: relative;
+  padding-left: 0.85rem;
+}
+
+.subtask-item::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--blue-bright);
+}
+
+/* Timeline do Ponto Eletrônico */
+.timeline-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.timeline-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  transition: border-color 0.2s ease;
+}
+
+.timeline-item:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.timeline-left {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.timeline-icon-box {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+}
+
+.timeline-desc {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.timeline-stamp {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-family: 'Courier New', Courier, monospace;
+}
+
+/* Aba Markdown */
+.markdown-box {
+  background: #02040A;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.75rem;
+  color: #94A3B8;
+  white-space: pre-wrap;
+  line-height: 1.5;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+/* Toast de Notificação */
+.toast-notice {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: #0B1224;
+  border: 1px solid var(--border-active);
+  color: #fff;
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius-md);
+  font-size: 0.8rem;
+  font-weight: 600;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+  z-index: 100;
+  display: none;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from { transform: translateY(15px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .topbar-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .topbar-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .kpi-grid, .timeclock-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Estilos de Impressão (Reporte Executivo) */
+@media print {
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+  .topbar, .tab-nav, .phases-toolbar, .btn-action {
+    display: none !important;
+  }
+  .kpi-card, .timeclock-section, .mark-card, .phase-card {
+    border-color: #ccc !important;
+    background: #fdfdfd !important;
+    color: #000 !important;
+    box-shadow: none !important;
+  }
+  .mark-time, .kpi-value, .phase-title-text {
+    color: #000 !important;
+  }
+}

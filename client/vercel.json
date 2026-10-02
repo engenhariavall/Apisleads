@@ -1,0 +1,8 @@
+{
+  "version": 2,
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/relatorio", "destination": "/relatorio.html" },
+    { "source": "/api/(.*)", "destination": "http://SEU_IP_OU_DOMINIO_VPS:3000/api/$1" }
+  ]
+}

@@ -1,0 +1,423 @@
+/**
+ * VERSUS ENTERPRISE DESIGN SYSTEM
+ * Login Imersivo - Glassmorphism & Partículas 3D
+ * 
+ * Paleta Oficial:
+ * - Espaço Profundo: #050814
+ * - Base Translúcida (Card): #0B1224 (rgba para blur)
+ * - Pontos de Luz & Ações: #0055FF (Cobalto) & #00D2FF (Ciano Elétrico)
+ * - Tipografia: #FFFFFF (Títulos) & #94A3B8 (Apoio / Labels / Placeholders)
+ */
+
+:root {
+  --color-space-deep: #050814;
+  --color-glass-base: rgba(11, 18, 36, 0.72);
+  --color-glass-border: rgba(0, 210, 255, 0.22);
+  --color-glass-border-focus: rgba(0, 85, 255, 0.55);
+  --color-cobalt: #0055FF;
+  --color-electric-cyan: #00D2FF;
+  --color-text-title: #FFFFFF;
+  --color-text-muted: #94A3B8;
+  --color-input-border: rgba(148, 163, 184, 0.28);
+  --color-error: #F87171;
+  --color-error-bg: rgba(239, 68, 68, 0.12);
+  --color-error-border: rgba(239, 68, 68, 0.35);
+  --radius-btn: 4px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--color-space-deep);
+  color: var(--color-text-title);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* --------------------------------------------------------------------------
+   CANVAS BACKGROUND DE PARTÍCULAS / MALHA 3D
+   -------------------------------------------------------------------------- */
+#canvasBackground {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  display: block;
+  pointer-events: none;
+}
+
+/* Gradiente radial de profundidade no fundo para realçar o espaço cósmico */
+.space-gradient-underlay {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(circle at 50% 35%, rgba(11, 18, 36, 0.6) 0%, rgba(5, 8, 20, 0.95) 70%, #050814 100%);
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   CONTAINER DO PRIMEIRO PLANO
+   -------------------------------------------------------------------------- */
+.login-stage {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  perspective: 1200px;
+}
+
+/* --------------------------------------------------------------------------
+   CARTÃO FLUTUANTE GLASSMORPHISM COM GRAVIDADE ZERO
+   -------------------------------------------------------------------------- */
+.glass-login-card {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  background: var(--color-glass-base);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--color-glass-border);
+  border-radius: 12px;
+  padding: 2.75rem 2.25rem 2.25rem;
+  box-shadow: 
+    0 30px 60px -15px rgba(0, 0, 0, 0.85),
+    0 0 50px -10px rgba(0, 85, 255, 0.18),
+    inset 0 1px 0 rgba(0, 210, 255, 0.35);
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  transform-origin: center center;
+  animation: zeroGravity 7s ease-in-out infinite;
+  transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+  will-change: transform;
+}
+
+/* Leve destaque sutil no topo do card */
+.glass-login-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-electric-cyan), var(--color-cobalt), transparent);
+  opacity: 0.8;
+}
+
+/* Animação Contínua de Flutuação no Eixo Y (Gravidade Zero) */
+@keyframes zeroGravity {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-9px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+/* Hover suave acentua sutilmente a aura do vidro */
+.glass-login-card:hover {
+  border-color: rgba(0, 210, 255, 0.35);
+  box-shadow: 
+    0 35px 70px -12px rgba(0, 0, 0, 0.9),
+    0 0 60px -5px rgba(0, 85, 255, 0.24),
+    inset 0 1px 0 rgba(0, 210, 255, 0.5);
+}
+
+/* --------------------------------------------------------------------------
+   BRAND HEADER (MINIMALISMO & TIPOGRAFIA HIGH-END)
+   Sem ícones infantis, raios ou cadeados
+   -------------------------------------------------------------------------- */
+.brand-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.6rem;
+}
+
+.brand-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 4px;
+  background: rgba(0, 85, 255, 0.12);
+  border: 1px solid rgba(0, 210, 255, 0.28);
+}
+
+.brand-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-electric-cyan);
+  box-shadow: 0 0 8px var(--color-electric-cyan);
+  animation: pulseDot 2.4s infinite ease-in-out;
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 0.5; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.3); }
+}
+
+.brand-badge-text {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--color-electric-cyan);
+  text-transform: uppercase;
+}
+
+.brand-title {
+  font-size: 1.55rem;
+  font-weight: 800;
+  color: var(--color-text-title);
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+}
+
+.brand-title .accent-cyan {
+  color: var(--color-electric-cyan);
+  font-weight: 700;
+}
+
+.brand-subtitle {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  font-weight: 400;
+  line-height: 1.45;
+  max-width: 320px;
+}
+
+/* --------------------------------------------------------------------------
+   FORMULÁRIO MINIMALISTA
+   Inputs apenas com borda inferior acendendo para #0055FF
+   -------------------------------------------------------------------------- */
+.minimal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+}
+
+.form-group {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+  transition: color 0.25s ease;
+}
+
+.form-group:focus-within label {
+  color: var(--color-electric-cyan);
+}
+
+.minimal-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--color-input-border);
+  border-radius: 0;
+  color: var(--color-text-title);
+  font-size: 0.95rem;
+  font-weight: 400;
+  padding: 0.55rem 0 0.65rem 0;
+  outline: none;
+  transition: border-color 0.3s ease, color 0.2s ease;
+}
+
+.minimal-input::placeholder {
+  color: rgba(148, 163, 184, 0.45);
+  font-size: 0.88rem;
+}
+
+/* Barra luminosa de foco com animação expansiva */
+.input-accent-line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-cobalt), var(--color-electric-cyan));
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 10px rgba(0, 210, 255, 0.6);
+  pointer-events: none;
+}
+
+.minimal-input:focus {
+  border-bottom-color: transparent;
+}
+
+.minimal-input:focus ~ .input-accent-line {
+  transform: scaleX(1);
+}
+
+/* --------------------------------------------------------------------------
+   CAIXA DE ERRO / FEEDBACK
+   -------------------------------------------------------------------------- */
+.form-feedback {
+  display: none;
+  padding: 0.7rem 0.85rem;
+  background: var(--color-error-bg);
+  border: 1px solid var(--color-error-border);
+  border-radius: 4px;
+  color: var(--color-error);
+  font-size: 0.78rem;
+  line-height: 1.4;
+  text-align: left;
+  animation: feedbackFade 0.3s ease;
+}
+
+@keyframes feedbackFade {
+  0% { opacity: 0; transform: translateY(-4px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* --------------------------------------------------------------------------
+   BOTÃO DE ACESSO (LINHAS RETAS / CANTOS LEVEMENTE ARREDONDADOS: MÁX 4PX)
+   Sem formato de pílula. Gradiente sutil Cobalto / Ciano
+   -------------------------------------------------------------------------- */
+.btn-access {
+  position: relative;
+  width: 100%;
+  padding: 0.88rem 1.4rem;
+  border: none;
+  border-radius: var(--radius-btn);
+  background: linear-gradient(135deg, #0055FF 0%, #0044d6 100%);
+  color: #FFFFFF;
+  font-size: 0.84rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  box-shadow: 0 4px 20px rgba(0, 85, 255, 0.42);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  margin-top: 0.4rem;
+}
+
+.btn-access::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0, 210, 255, 0.25), transparent);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.btn-access:hover {
+  background: linear-gradient(135deg, #0055FF 0%, #0066ff 100%);
+  box-shadow: 
+    0 6px 28px rgba(0, 85, 255, 0.6),
+    0 0 18px rgba(0, 210, 255, 0.4);
+  transform: translateY(-1px);
+}
+
+.btn-access:hover::before {
+  opacity: 1;
+}
+
+.btn-access:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 14px rgba(0, 85, 255, 0.4);
+}
+
+.btn-access:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.btn-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #FFFFFF;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  display: none;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* --------------------------------------------------------------------------
+   FOOTER DO CARD / ACESSO RÁPIDO DISCRETO
+   -------------------------------------------------------------------------- */
+.card-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(148, 163, 184, 0.12);
+}
+
+.btn-quick-fill {
+  background: transparent;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 4px;
+  color: var(--color-text-muted);
+  font-size: 0.74rem;
+  font-weight: 500;
+  padding: 0.42rem 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  letter-spacing: 0.02em;
+}
+
+.btn-quick-fill:hover {
+  border-color: var(--color-electric-cyan);
+  color: #FFFFFF;
+  background: rgba(0, 210, 255, 0.08);
+  box-shadow: 0 0 12px rgba(0, 210, 255, 0.15);
+}
+
+.footer-meta {
+  font-size: 0.68rem;
+  color: rgba(148, 163, 184, 0.5);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* --------------------------------------------------------------------------
+   RESPONSIVIDADE
+   -------------------------------------------------------------------------- */
+@media (max-width: 480px) {
+  .glass-login-card {
+    padding: 2.25rem 1.5rem 1.75rem;
+  }
+  .brand-title {
+    font-size: 1.35rem;
+  }
+}

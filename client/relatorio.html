@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Leads — Relatório de Gestão em Tempo Real</title>
+
+  <!-- PWA & Mobile Viewport -->
+  <meta name="theme-color" content="#0B1224">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" type="image/svg+xml" href="/assets/icons/favicon.svg">
+  <link rel="apple-touch-icon" href="/assets/icons/icon-192.png">
+
+  <!-- OpenGraph / Social Metadata -->
+  <meta property="og:title" content="VERSUS — Relatório de Gestão em Tempo Real">
+  <meta property="og:description" content="Governança Inviolável, Sincronização Contínua e Diário de Bordo Executivo.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="/assets/icons/icon-512.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="VERSUS — Relatório de Gestão em Tempo Real">
+  <meta name="twitter:description" content="Governança Inviolável, Sincronização Contínua e Diário de Bordo Executivo.">
+  <meta name="twitter:image" content="/assets/icons/icon-512.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/reset.css?v=1.0.0">
+  <link rel="stylesheet" href="/css/relatorio.css?v=1.0.0">
+</head>
+<body>
+
+  <!-- Topbar Superior -->
+  <header class="topbar">
+    <div class="container topbar-content">
+      <div class="brand-section">
+        <div class="brand-badge">API LEADS</div>
+        <div class="brand-info">
+          <h1>Relatório de Gestão em Tempo Real</h1>
+          <p>Governança Inviolável &bull; Sincronização Contínua &bull; Padrão Executivo</p>
+        </div>
+      </div>
+
+      <div class="topbar-actions">
+        <div id="statusPill" class="status-pill morning">
+          <span class="pulse-dot"></span>
+          <span id="statusText">Turno da Manhã Ativo</span>
+        </div>
+
+        <button id="btnRefresh" class="btn-action" title="Atualizar agora">
+          <span>⟳</span>
+          <span>Atualizar</span>
+        </button>
+
+        <button id="btnShare" class="btn-action" title="Copiar link do relatório">
+          <span>🔗</span>
+          <span>Compartilhar</span>
+        </button>
+
+        <button id="btnPrint" class="btn-action" title="Imprimir relatório">
+          <span>🖨️</span>
+          <span>Imprimir</span>
+        </button>
+
+        <a href="/" class="btn-action btn-primary" title="Ir para o Painel de Leads">
+          <span>💼</span>
+          <span>Painel ABM</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Conteúdo Principal -->
+  <main class="main-content">
+    <div class="container">
+
+      <!-- Grid de KPIs Executivos -->
+      <section class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-label">
+            <span>Progresso Geral</span>
+            <span>🎯</span>
+          </div>
+          <div class="kpi-value">
+            <span id="kpiProgressVal">0%</span>
+          </div>
+          <div class="progress-bar-bg">
+            <div id="kpiProgressFill" class="progress-bar-fill" style="width: 0%;"></div>
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-label">
+            <span>Fases Concluídas</span>
+            <span>✅</span>
+          </div>
+          <div class="kpi-value">
+            <span id="kpiCompletedPhases">0</span>
+            <span class="kpi-unit">fases</span>
+          </div>
+          <div style="font-size: 0.75rem; color: #94A3B8; margin-top: 0.5rem;">
+            Entrega contínua e auditada
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-label">
+            <span>Fases Restantes</span>
+            <span>⏳</span>
+          </div>
+          <div class="kpi-value">
+            <span id="kpiPendingPhases">5</span>
+            <span class="kpi-unit">fases</span>
+          </div>
+          <div style="font-size: 0.75rem; color: #94A3B8; margin-top: 0.5rem;">
+            Próximos passos mapeados
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-label">
+            <span>Tarefas Entregues</span>
+            <span>📋</span>
+          </div>
+          <div class="kpi-value">
+            <span id="kpiTasksVal">0 / 24</span>
+          </div>
+          <div style="font-size: 0.75rem; color: #94A3B8; margin-top: 0.5rem;">
+            <span id="activePhaseName" style="color: #38BDF8; font-weight: 600;">Carregando fase ativa...</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Painel do Relógio de Ponto Eletrônico Oficial (4 Marcos Diários) -->
+      <section class="timeclock-section">
+        <div class="section-header">
+          <div>
+            <div class="section-title">
+              <span>🕒</span>
+              <span>Relógio de Ponto Eletrônico Oficial</span>
+            </div>
+            <div class="section-subtitle">
+              Governança Inviolável: Jornada de 4 marcos diários com entrada matinal imutável e proteção de histórico.
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.75rem; font-size: 0.75rem; color: #94A3B8;">
+            <span>Sincronizado às: <strong id="syncTime" style="color: #fff; font-family: monospace;">--:--:--</strong></span>
+          </div>
+        </div>
+
+        <div class="timeclock-grid">
+          <!-- 1º Marco: Início do Turno -->
+          <div id="mark1Card" class="mark-card confirmed">
+            <div class="mark-top">
+              <span class="text-slate-400" style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase;">1º Registro &bull; Manhã</span>
+              <span id="mark1Badge" class="mark-badge green">Confirmado</span>
+            </div>
+            <div class="mark-time" id="mark1Time">09:00</div>
+            <div class="mark-desc">
+              <div class="mark-title">Início do Turno</div>
+              <div class="mark-sub" style="color: #34D399;">Imutável & Inviolável</div>
+            </div>
+          </div>
+
+          <!-- 2º Marco: Pausa para Almoço -->
+          <div id="mark2Card" class="mark-card waiting">
+            <div class="mark-top">
+              <span class="text-slate-400" style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase;">2º Registro &bull; Meio-dia</span>
+              <span id="mark2Badge" class="mark-badge gray">Aguardando</span>
+            </div>
+            <div class="mark-time" id="mark2Time">--:--</div>
+            <div class="mark-desc">
+              <div class="mark-title">Pausa para Almoço</div>
+              <div class="mark-sub">Intervalo da Jornada</div>
+            </div>
+          </div>
+
+          <!-- 3º Marco: Retorno do Almoço -->
+          <div id="mark3Card" class="mark-card waiting">
+            <div class="mark-top">
+              <span class="text-slate-400" style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase;">3º Registro &bull; Tarde</span>
+              <span id="mark3Badge" class="mark-badge gray">Aguardando</span>
+            </div>
+            <div class="mark-time" id="mark3Time">--:--</div>
+            <div class="mark-desc">
+              <div class="mark-title">Retorno do Almoço</div>
+              <div class="mark-sub">Turno da Tarde</div>
+            </div>
+          </div>
+
+          <!-- 4º Marco: Fim do Expediente -->
+          <div id="mark4Card" class="mark-card waiting">
+            <div class="mark-top">
+              <span class="text-slate-400" style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase;">4º Registro &bull; Fim do Dia</span>
+              <span id="mark4Badge" class="mark-badge gray">Aguardando</span>
+            </div>
+            <div class="mark-time" id="mark4Time">--:--</div>
+            <div class="mark-desc">
+              <div class="mark-title">Fim de Turno</div>
+              <div class="mark-sub">Saída Consolidada</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Banner de Governança -->
+        <div class="governance-callout">
+          <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+          </svg>
+          <div class="governance-text">
+            <strong>Diretriz de Ponto Eletrônico Inviolável (Padrão VERSUS):</strong> O primeiro ponto de entrada da manhã (<span style="color: #34D399; font-family: monospace; font-weight: bold;">09:00</span>) é travado para o dia corrente. Comandos subsequentes de checklist e entregas técnicas são auditados na timeline como eventos de desenvolvimento, garantindo transparência máxima e rastreabilidade fidedigna das horas trabalhadas perante a gestão.
+          </div>
+        </div>
+      </section>
+
+      <!-- Navegação por Abas -->
+      <nav class="tab-nav">
+        <button class="tab-btn active" data-tab="fases">
+          <span>📋</span> Fases & Checklist
+        </button>
+        <button class="tab-btn" data-tab="ponto">
+          <span>🕒</span> Ponto Eletrônico (Timeline)
+        </button>
+        <button class="tab-btn" data-tab="roadmap">
+          <span>🚀</span> Roadmap Futuro
+        </button>
+        <button class="tab-btn" data-tab="markdown">
+          <span>📄</span> Markdown Bruto
+        </button>
+      </nav>
+
+      <!-- Barra de Filtros das Fases -->
+      <div id="phasesToolbar" class="phases-toolbar">
+        <div class="filter-group">
+          <button class="filter-btn active" data-filter="all">Todas as Fases</button>
+          <button class="filter-btn" data-filter="pending">Em Andamento</button>
+          <button class="filter-btn" data-filter="completed">Concluídas</button>
+        </div>
+
+        <div class="search-box">
+          <span>🔍</span>
+          <input type="text" id="searchInput" placeholder="Pesquisar fases ou tarefas...">
+        </div>
+      </div>
+
+      <!-- Container do Conteúdo das Abas -->
+      <div id="tabContentContainer">
+        <div style="text-align: center; padding: 2rem; color: #64748B;">Carregando checklist...</div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Toast Flutuante -->
+  <div id="toastNotice" class="toast-notice"></div>
+
+  <script src="/js/config.js?v=1.0.0"></script>
+  <script src="/js/relatorio.js?v=1.0.0"></script>
+</body>
+</html>
+
+

@@ -1,0 +1,4404 @@
+{
+  "type": "FeatureCollection",
+  "name": "sigef_RS_IJUI",
+  "total_features": 50,
+  "updated_at": "2026-09-29T18:02:29.419Z",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "ecc9a79c-3e14-4cad-8822-c50bcc214cc3",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.978483,
+              -28.387876
+            ],
+            [
+              -53.97843,
+              -28.390102
+            ],
+            [
+              -53.980114,
+              -28.390141
+            ],
+            [
+              -53.980168,
+              -28.387886
+            ],
+            [
+              -53.978483,
+              -28.387876
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "ecc9a79c-3e14-4cad-8822-c50bcc214cc3",
+        "id_sigef": "ecc9a79c-3e14-4cad-8822-c50bcc214cc3",
+        "codigo_imovel": "8700560341696",
+        "nome_imovel": "Edio Fengler - Parte 1",
+        "nome_titular": "EDIO FENGLER LTDA",
+        "cpf_cnpj_titular": "92.040.001/3801-50",
+        "registro_matricula": null,
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 4.11,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.38900125,
+        "centroide_lng": -53.97929875,
+        "cnpj_raw": "92040001380150",
+        "razao_social": "EDIO FENGLER LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Carlos Alberto Fontana",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Mariana Fontana",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533165700",
+        "telefone": "(55) 3316-5700",
+        "email": "contato@ediofengler.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "991b7afa-710c-4746-93c4-dc0a351b53ed",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.96818,
+              -28.390006
+            ],
+            [
+              -53.968182,
+              -28.391826
+            ],
+            [
+              -53.969409,
+              -28.391848
+            ],
+            [
+              -53.9694,
+              -28.390051
+            ],
+            [
+              -53.96818,
+              -28.390006
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "991b7afa-710c-4746-93c4-dc0a351b53ed",
+        "id_sigef": "991b7afa-710c-4746-93c4-dc0a351b53ed",
+        "codigo_imovel": "9500842212281",
+        "nome_imovel": "Granja Kappaun 44238 - Granja Kappaun 44238",
+        "nome_titular": "GRANJA KAPPAUN 44238 GRANJA KAPPAUN 44238 LTDA",
+        "cpf_cnpj_titular": "92.040.001/3938-05",
+        "registro_matricula": "Matrícula 44238 - CRI",
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 2.41,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.390932749999997,
+        "centroide_lng": -53.968792750000006,
+        "cnpj_raw": "92040001393805",
+        "razao_social": "GRANJA KAPPAUN 44238 GRANJA KAPPAUN 44238 LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Eduardo Grazziotin",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Patrícia Grazziotin",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533165737",
+        "telefone": "(55) 3316-5737",
+        "email": "contato@granjakappaun44238granjakappaun44238.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "6d109f07-9519-4fb2-bf57-ace9f3202514",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.963903,
+              -28.352881
+            ],
+            [
+              -53.963879,
+              -28.355716
+            ],
+            [
+              -53.971439,
+              -28.35584
+            ],
+            [
+              -53.973969,
+              -28.355877
+            ],
+            [
+              -53.974063,
+              -28.353051
+            ],
+            [
+              -53.963903,
+              -28.352881
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "6d109f07-9519-4fb2-bf57-ace9f3202514",
+        "id_sigef": "6d109f07-9519-4fb2-bf57-ace9f3202514",
+        "codigo_imovel": "8700560446013",
+        "nome_imovel": "Granja Polidoro Pinto - Granja Polidoro Pinto",
+        "nome_titular": "GRANJA POLIDORO PINTO GRANJA POLIDORO PINTO LTDA",
+        "cpf_cnpj_titular": "92.040.001/4075-39",
+        "registro_matricula": "Matrícula 63949 - CRI",
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 31.26,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.354673,
+        "centroide_lng": -53.9694506,
+        "cnpj_raw": "92040001407539",
+        "razao_social": "GRANJA POLIDORO PINTO GRANJA POLIDORO PINTO LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Fernando Silveira",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Roberto Silveira",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533165774",
+        "telefone": "(55) 3316-5774",
+        "email": "contato@granjapolidoropintogranjapolidoropinto.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "6a554470-5578-41da-947d-0f90ff6cbba1",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.994633,
+              -28.355444
+            ],
+            [
+              -53.994616,
+              -28.356342
+            ],
+            [
+              -54.004856,
+              -28.356567
+            ],
+            [
+              -54.004877,
+              -28.355669
+            ],
+            [
+              -53.994633,
+              -28.355444
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "6a554470-5578-41da-947d-0f90ff6cbba1",
+        "id_sigef": "6a554470-5578-41da-947d-0f90ff6cbba1",
+        "codigo_imovel": "8700560100060",
+        "nome_imovel": "Sem Denominação - Parcela 1",
+        "nome_titular": "AGROPECUARIA CAMINHO DAS PEDRAS LTDA",
+        "cpf_cnpj_titular": "92.040.001/4212-80",
+        "registro_matricula": "Matrícula 37845 - CRI",
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 10.03,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.356005500000002,
+        "centroide_lng": -53.999745499999996,
+        "cnpj_raw": "92040001421280",
+        "razao_social": "AGROPECUARIA CAMINHO DAS PEDRAS LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Gilberto Estrela",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Helena Estrela",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533165811",
+        "telefone": "(55) 3316-5811",
+        "email": "contato@agropecuariacaminhodaspedras.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "276b1b63-9316-440f-95dc-aec307af3edb",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.978371,
+              -28.392512
+            ],
+            [
+              -53.978324,
+              -28.394678
+            ],
+            [
+              -53.98096,
+              -28.394741
+            ],
+            [
+              -53.983451,
+              -28.394801
+            ],
+            [
+              -53.98347,
+              -28.392466
+            ],
+            [
+              -53.981124,
+              -28.392487
+            ],
+            [
+              -53.978371,
+              -28.392512
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "276b1b63-9316-440f-95dc-aec307af3edb",
+        "id_sigef": "276b1b63-9316-440f-95dc-aec307af3edb",
+        "codigo_imovel": "8700560176393",
+        "nome_imovel": "Sem Denominação - Parte 1",
+        "nome_titular": "AGROPECUARIA RIO BRANCO LTDA",
+        "cpf_cnpj_titular": "92.040.001/4349-35",
+        "registro_matricula": "Matrícula 63.283 - CRI",
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 12.53,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.393614166666666,
+        "centroide_lng": -53.98095000000001,
+        "cnpj_raw": "92040001434935",
+        "razao_social": "AGROPECUARIA RIO BRANCO LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Paulo Renato Laimer",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Juliana Laimer",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533165848",
+        "telefone": "(55) 3316-5848",
+        "email": "contato@agropecuariariobranco.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "2d25d85b-d54c-4498-950f-d8a731ec2148",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.960307,
+              -28.398959
+            ],
+            [
+              -53.960288,
+              -28.399444
+            ],
+            [
+              -53.960955,
+              -28.399442
+            ],
+            [
+              -53.960906,
+              -28.403182
+            ],
+            [
+              -53.960904,
+              -28.403331
+            ],
+            [
+              -53.962697,
+              -28.403369
+            ],
+            [
+              -53.962816,
+              -28.399109
+            ],
+            [
+              -53.962786,
+              -28.399061
+            ],
+            [
+              -53.962733,
+              -28.399031
+            ],
+            [
+              -53.962677,
+              -28.399011
+            ],
+            [
+              -53.962616,
+              -28.398999
+            ],
+            [
+              -53.962552,
+              -28.398992
+            ],
+            [
+              -53.960307,
+              -28.398959
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "2d25d85b-d54c-4498-950f-d8a731ec2148",
+        "id_sigef": "2d25d85b-d54c-4498-950f-d8a731ec2148",
+        "codigo_imovel": "8700560299045",
+        "nome_imovel": "Deposito 01 - Parcela 1",
+        "nome_titular": "DEPOSITO 01 LTDA",
+        "cpf_cnpj_titular": "92.040.001/4486-42",
+        "registro_matricula": "Matrícula 65139 - CRI",
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 9.02,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.400160833333334,
+        "centroide_lng": -53.96185308333333,
+        "cnpj_raw": "92040001448642",
+        "razao_social": "DEPOSITO 01 LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Marcos Vinicius Witte",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Renata Witte",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533165885",
+        "telefone": "(55) 3316-5885",
+        "email": "contato@deposito01.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "96bd29a8-394f-454a-8077-87bb7a722369",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.994616,
+              -28.356342
+            ],
+            [
+              -53.994603,
+              -28.357394
+            ],
+            [
+              -53.994458,
+              -28.357842
+            ],
+            [
+              -53.99439,
+              -28.358268
+            ],
+            [
+              -53.99444,
+              -28.358627
+            ],
+            [
+              -54.004801,
+              -28.358892
+            ],
+            [
+              -54.004856,
+              -28.356567
+            ],
+            [
+              -53.994616,
+              -28.356342
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "96bd29a8-394f-454a-8077-87bb7a722369",
+        "id_sigef": "96bd29a8-394f-454a-8077-87bb7a722369",
+        "codigo_imovel": "8700560071290",
+        "nome_imovel": "SEM DENOMINAÇÃO - Parcela 1",
+        "nome_titular": "AGROPECUARIA BELA VISTA LTDA",
+        "cpf_cnpj_titular": "92.040.001/4623-94",
+        "registro_matricula": "Matrícula 7232 - CRI",
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 25.9,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.357704571428574,
+        "centroide_lng": -53.997452,
+        "cnpj_raw": "92040001462394",
+        "razao_social": "AGROPECUARIA BELA VISTA LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "José Francisco Gehn",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Beatriz Gehn",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533165922",
+        "telefone": "(55) 3316-5922",
+        "email": "contato@agropecuariabelavista.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "94e93975-b59e-40d8-b9d1-94ccd82fe4ef",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.995106,
+              -28.353216
+            ],
+            [
+              -53.994852,
+              -28.353523
+            ],
+            [
+              -53.994722,
+              -28.353756
+            ],
+            [
+              -53.994686,
+              -28.353932
+            ],
+            [
+              -53.994657,
+              -28.35421
+            ],
+            [
+              -53.994624,
+              -28.354645
+            ],
+            [
+              -53.994633,
+              -28.355444
+            ],
+            [
+              -54.004877,
+              -28.355669
+            ],
+            [
+              -54.004911,
+              -28.354226
+            ],
+            [
+              -54.00492,
+              -28.35382
+            ],
+            [
+              -53.995106,
+              -28.353216
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "94e93975-b59e-40d8-b9d1-94ccd82fe4ef",
+        "id_sigef": "94e93975-b59e-40d8-b9d1-94ccd82fe4ef",
+        "codigo_imovel": "8700560100060",
+        "nome_imovel": "SEM DENOMINAÇÃO - Parcela 1",
+        "nome_titular": "AGROPECUARIA SANTO ANTONIO LTDA",
+        "cpf_cnpj_titular": "92.040.001/4760-00",
+        "registro_matricula": "Matrícula 15913 - CRI",
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 22.79,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.354244100000006,
+        "centroide_lng": -53.9977988,
+        "cnpj_raw": "92040001476000",
+        "razao_social": "AGROPECUARIA SANTO ANTONIO LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Antônio Carlos Sebben",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Clara Sebben",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533165959",
+        "telefone": "(55) 3316-5959",
+        "email": "contato@agropecuariasantoantonio.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "040613fb-423a-403a-840f-2f0f0070827f",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.962799,
+              -28.351539
+            ],
+            [
+              -53.962686,
+              -28.351595
+            ],
+            [
+              -53.962791,
+              -28.351922
+            ],
+            [
+              -53.962655,
+              -28.35221
+            ],
+            [
+              -53.962202,
+              -28.352525
+            ],
+            [
+              -53.9618,
+              -28.352582
+            ],
+            [
+              -53.961682,
+              -28.352452
+            ],
+            [
+              -53.961217,
+              -28.352697
+            ],
+            [
+              -53.960923,
+              -28.35289
+            ],
+            [
+              -53.960579,
+              -28.3529
+            ],
+            [
+              -53.960527,
+              -28.353142
+            ],
+            [
+              -53.960369,
+              -28.353203
+            ],
+            [
+              -53.959964,
+              -28.353247
+            ],
+            [
+              -53.959543,
+              -28.353308
+            ],
+            [
+              -53.959526,
+              -28.353466
+            ],
+            [
+              -53.959283,
+              -28.353623
+            ],
+            [
+              -53.95914,
+              -28.353349
+            ],
+            [
+              -53.959084,
+              -28.353714
+            ],
+            [
+              -53.958607,
+              -28.354001
+            ],
+            [
+              -53.958458,
+              -28.354284
+            ],
+            [
+              -53.95847,
+              -28.355913
+            ],
+            [
+              -53.958476,
+              -28.356962
+            ],
+            [
+              -53.96193,
+              -28.356933
+            ],
+            [
+              -53.963792,
+              -28.356918
+            ],
+            [
+              -53.963772,
+              -28.35487
+            ],
+            [
+              -53.963797,
+              -28.354086
+            ],
+            [
+              -53.96383,
+              -28.351744
+            ],
+            [
+              -53.963172,
+              -28.351718
+            ],
+            [
+              -53.962799,
+              -28.351539
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "040613fb-423a-403a-840f-2f0f0070827f",
+        "id_sigef": "040613fb-423a-403a-840f-2f0f0070827f",
+        "codigo_imovel": "8700560076410",
+        "nome_imovel": "Granja Rui PP - Granja Rui PP",
+        "nome_titular": "GRANJA RUI PP GRANJA RUI PP LTDA",
+        "cpf_cnpj_titular": "92.040.001/4897-56",
+        "registro_matricula": "Matrícula 22453 - CRI",
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 24.23,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.35349260714286,
+        "centroide_lng": -53.96110978571429,
+        "cnpj_raw": "92040001489756",
+        "razao_social": "GRANJA RUI PP GRANJA RUI PP LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Luiz Henrique Biazus",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Camila Biazus",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533165996",
+        "telefone": "(55) 3316-5996",
+        "email": "contato@granjaruippgranjaruipp.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "b18a5b38-b213-4b2b-a7db-4a13a223d2cb",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.996564,
+              -28.390491
+            ],
+            [
+              -53.996343,
+              -28.392565
+            ],
+            [
+              -53.997098,
+              -28.3926
+            ],
+            [
+              -53.997319,
+              -28.390514
+            ],
+            [
+              -53.996564,
+              -28.390491
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "b18a5b38-b213-4b2b-a7db-4a13a223d2cb",
+        "id_sigef": "b18a5b38-b213-4b2b-a7db-4a13a223d2cb",
+        "codigo_imovel": "9500179613536",
+        "nome_imovel": "Matriculas 38134 e 49144 - Parte 1",
+        "nome_titular": "MATRICULAS 38134 E 49144 LTDA",
+        "cpf_cnpj_titular": "92.040.001/5034-14",
+        "registro_matricula": "Matrícula 38134 - CRI",
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 1.72,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.3915425,
+        "centroide_lng": -53.996831,
+        "cnpj_raw": "92040001503414",
+        "razao_social": "MATRICULAS 38134 E 49144 LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Sérgio Murilo Trevisan",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Aline Trevisan",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533166033",
+        "telefone": "(55) 3316-6033",
+        "email": "contato@matriculas38134e49144.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "5b3ca6ad-453d-4407-be3c-decc23915a37",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.966529,
+              -28.383299
+            ],
+            [
+              -53.966194,
+              -28.383318
+            ],
+            [
+              -53.965809,
+              -28.383309
+            ],
+            [
+              -53.965783,
+              -28.38375
+            ],
+            [
+              -53.965657,
+              -28.389817
+            ],
+            [
+              -53.966385,
+              -28.389858
+            ],
+            [
+              -53.966528,
+              -28.383354
+            ],
+            [
+              -53.966529,
+              -28.383299
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "5b3ca6ad-453d-4407-be3c-decc23915a37",
+        "id_sigef": "5b3ca6ad-453d-4407-be3c-decc23915a37",
+        "codigo_imovel": "8700560392177",
+        "nome_imovel": "NELI KNAAK - Parte 1",
+        "nome_titular": "NELI KNAAK LTDA",
+        "cpf_cnpj_titular": "92.040.001/5171-21",
+        "registro_matricula": "Matrícula 63.975 - CRI",
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 5.21,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.385243571428568,
+        "centroide_lng": -53.966126428571435,
+        "cnpj_raw": "92040001517121",
+        "razao_social": "NELI KNAAK LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Rodrigo Dall Agnol",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Fernanda Dall Agnol",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533166070",
+        "telefone": "(55) 3316-6070",
+        "email": "contato@neliknaak.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "3cbddbc8-bee4-4f43-b31f-3fdd316f5f1b",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.96411,
+              -28.394306
+            ],
+            [
+              -53.964019,
+              -28.396561
+            ],
+            [
+              -53.965474,
+              -28.396061
+            ],
+            [
+              -53.965493,
+              -28.394347
+            ],
+            [
+              -53.964489,
+              -28.394317
+            ],
+            [
+              -53.96411,
+              -28.394306
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "3cbddbc8-bee4-4f43-b31f-3fdd316f5f1b",
+        "id_sigef": "3cbddbc8-bee4-4f43-b31f-3fdd316f5f1b",
+        "codigo_imovel": "9511293140640",
+        "nome_imovel": "Granja Knaak 61586 - Granja Knaak 61586",
+        "nome_titular": "GRANJA KNAAK 61586 GRANJA KNAAK 61586 LTDA",
+        "cpf_cnpj_titular": "92.040.001/5308-10",
+        "registro_matricula": "Matrícula 63.249 - CRI",
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 3.05,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.3951184,
+        "centroide_lng": -53.96471699999999,
+        "cnpj_raw": "92040001530810",
+        "razao_social": "GRANJA KNAAK 61586 GRANJA KNAAK 61586 LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Guilherme Augusto Tedesco",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Tatiana Tedesco",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533166107",
+        "telefone": "(55) 3316-6107",
+        "email": "contato@granjaknaak61586granjaknaak61586.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "ec6f5ead-31d8-4907-85a9-1d1286b52353",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.968735,
+              -28.366054
+            ],
+            [
+              -53.968695,
+              -28.367142
+            ],
+            [
+              -53.963708,
+              -28.367109
+            ],
+            [
+              -53.963663,
+              -28.369426
+            ],
+            [
+              -53.968071,
+              -28.369458
+            ],
+            [
+              -53.973753,
+              -28.3695
+            ],
+            [
+              -53.973769,
+              -28.367432
+            ],
+            [
+              -53.973763,
+              -28.367406
+            ],
+            [
+              -53.973745,
+              -28.367003
+            ],
+            [
+              -53.973768,
+              -28.36635
+            ],
+            [
+              -53.973774,
+              -28.36619
+            ],
+            [
+              -53.968735,
+              -28.366054
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "ec6f5ead-31d8-4907-85a9-1d1286b52353",
+        "id_sigef": "ec6f5ead-31d8-4907-85a9-1d1286b52353",
+        "codigo_imovel": "8700560398884",
+        "nome_imovel": "Granja Berbaum - Parcela 1",
+        "nome_titular": "GRANJA BERBAUM LTDA",
+        "cpf_cnpj_titular": "92.040.001/5445-28",
+        "registro_matricula": "Matrícula 46843 - CRI",
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 31.17,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.36755181818182,
+        "centroide_lng": -53.97049490909092,
+        "cnpj_raw": "92040001544528",
+        "razao_social": "GRANJA BERBAUM LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Cláudio Roberto Scortegagna",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Vanessa Scortegagna",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533166144",
+        "telefone": "(55) 3316-6144",
+        "email": "contato@granjaberbaum.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "bd5f3041-235c-49c2-93ce-1c9968a69e87",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.987067,
+              -28.383455
+            ],
+            [
+              -53.987038,
+              -28.384996
+            ],
+            [
+              -53.987062,
+              -28.385631
+            ],
+            [
+              -53.987059,
+              -28.386862
+            ],
+            [
+              -53.988223,
+              -28.386883
+            ],
+            [
+              -53.990415,
+              -28.385823
+            ],
+            [
+              -53.990369,
+              -28.38582
+            ],
+            [
+              -53.990023,
+              -28.38582
+            ],
+            [
+              -53.989898,
+              -28.385821
+            ],
+            [
+              -53.989853,
+              -28.385818
+            ],
+            [
+              -53.989822,
+              -28.385814
+            ],
+            [
+              -53.989805,
+              -28.385809
+            ],
+            [
+              -53.989779,
+              -28.385796
+            ],
+            [
+              -53.989766,
+              -28.385786
+            ],
+            [
+              -53.989739,
+              -28.385758
+            ],
+            [
+              -53.989729,
+              -28.385722
+            ],
+            [
+              -53.989724,
+              -28.385709
+            ],
+            [
+              -53.989722,
+              -28.384492
+            ],
+            [
+              -53.98885,
+              -28.384476
+            ],
+            [
+              -53.988839,
+              -28.383485
+            ],
+            [
+              -53.987067,
+              -28.383455
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "bd5f3041-235c-49c2-93ce-1c9968a69e87",
+        "id_sigef": "bd5f3041-235c-49c2-93ce-1c9968a69e87",
+        "codigo_imovel": "8700560051264",
+        "nome_imovel": "UMA FRAÇÃO DE TERRAS DE CULTURAS - Parcela 1",
+        "nome_titular": "UMA FRAÇÃO DE TERRAS DE CULTURAS LTDA",
+        "cpf_cnpj_titular": "92.040.001/5582-35",
+        "registro_matricula": "Matrícula 3387 - CRI",
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 8.48,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.385488799999997,
+        "centroide_lng": -53.98913910000001,
+        "cnpj_raw": "92040001558235",
+        "razao_social": "UMA FRAÇÃO DE TERRAS DE CULTURAS LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Mauro Cézar Zaffari",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Luciana Zaffari",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533166181",
+        "telefone": "(55) 3316-6181",
+        "email": "contato@umafraodeterrasdeculturas.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "f7e25455-2c56-4a36-b718-6852c647e9a1",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.985847,
+              -28.377801
+            ],
+            [
+              -53.985782,
+              -28.379918
+            ],
+            [
+              -53.993938,
+              -28.380079
+            ],
+            [
+              -53.993988,
+              -28.37793
+            ],
+            [
+              -53.985847,
+              -28.377801
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "f7e25455-2c56-4a36-b718-6852c647e9a1",
+        "id_sigef": "f7e25455-2c56-4a36-b718-6852c647e9a1",
+        "codigo_imovel": "8700560061146",
+        "nome_imovel": "NADINE SEIBERT GONZATTO e ORLANDO LEOPOLDO SEIBERT - Parte 1",
+        "nome_titular": "NADINE SEIBERT GONZATTO E ORLANDO LEOPOLDO SEIBERT LTDA",
+        "cpf_cnpj_titular": "92.040.001/5719-24",
+        "registro_matricula": "Matrícula 44834-44835 - CRI",
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 18.94,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.378932,
+        "centroide_lng": -53.989888750000006,
+        "cnpj_raw": "92040001571924",
+        "razao_social": "NADINE SEIBERT GONZATTO E ORLANDO LEOPOLDO SEIBERT LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Valter Luiz Rizzardi",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Carla Rizzardi",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533166218",
+        "telefone": "(55) 3316-6218",
+        "email": "contato@nadineseibertgonzattoeorlandoleopoldoseibert.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "5a501d97-ea3e-47c1-af9a-d140f7d89ff5",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.993778,
+              -28.394061
+            ],
+            [
+              -53.993787,
+              -28.394126
+            ],
+            [
+              -53.993755,
+              -28.394742
+            ],
+            [
+              -53.99374,
+              -28.395142
+            ],
+            [
+              -53.993722,
+              -28.395685
+            ],
+            [
+              -53.993707,
+              -28.396108
+            ],
+            [
+              -53.993691,
+              -28.396541
+            ],
+            [
+              -53.993684,
+              -28.396948
+            ],
+            [
+              -53.993674,
+              -28.397304
+            ],
+            [
+              -53.993669,
+              -28.397955
+            ],
+            [
+              -53.993656,
+              -28.398309
+            ],
+            [
+              -53.993656,
+              -28.398374
+            ],
+            [
+              -53.995203,
+              -28.398224
+            ],
+            [
+              -53.995248,
+              -28.398504
+            ],
+            [
+              -53.994649,
+              -28.399457
+            ],
+            [
+              -53.996179,
+              -28.399473
+            ],
+            [
+              -53.996281,
+              -28.39411
+            ],
+            [
+              -53.993778,
+              -28.394061
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "5a501d97-ea3e-47c1-af9a-d140f7d89ff5",
+        "id_sigef": "5a501d97-ea3e-47c1-af9a-d140f7d89ff5",
+        "codigo_imovel": "9510990268089",
+        "nome_imovel": "Área Wentzel - Parcela 1",
+        "nome_titular": "ÁREA WENTZEL LTDA",
+        "cpf_cnpj_titular": "92.040.001/5856-31",
+        "registro_matricula": "Matrícula 57844 - CRI",
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 13.13,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.396768411764704,
+        "centroide_lng": -53.99423994117646,
+        "cnpj_raw": "92040001585631",
+        "razao_social": "ÁREA WENTZEL LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Otávio Augusto Canabarro",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Letícia Canabarro",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533166255",
+        "telefone": "(55) 3316-6255",
+        "email": "contato@reawentzel.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "39555516-0e92-48ae-91a8-ff2f05596ec5",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.86154,
+              -28.334893
+            ],
+            [
+              -53.861519,
+              -28.336308
+            ],
+            [
+              -53.863172,
+              -28.336337
+            ],
+            [
+              -53.86857,
+              -28.336431
+            ],
+            [
+              -53.869635,
+              -28.336454
+            ],
+            [
+              -53.869643,
+              -28.335027
+            ],
+            [
+              -53.86154,
+              -28.334893
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "39555516-0e92-48ae-91a8-ff2f05596ec5",
+        "id_sigef": "39555516-0e92-48ae-91a8-ff2f05596ec5",
+        "codigo_imovel": "9500848339240",
+        "nome_imovel": "Granja Goi 58848 - Granja Goi 58848",
+        "nome_titular": "GRANJA GOI 58848 GRANJA GOI 58848 LTDA",
+        "cpf_cnpj_titular": "92.040.001/5993-49",
+        "registro_matricula": "Matrícula 58848 - CRI",
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 12.54,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.335908333333332,
+        "centroide_lng": -53.86567983333333,
+        "cnpj_raw": "92040001599349",
+        "razao_social": "GRANJA GOI 58848 GRANJA GOI 58848 LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Ricardo Luís Meneguzzi",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Sandra Meneguzzi",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533166292",
+        "telefone": "(55) 3316-6292",
+        "email": "contato@granjagoi58848granjagoi58848.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "68272370-c62c-44c1-bb45-68880cd707ec",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.881161,
+              -28.487133
+            ],
+            [
+              -53.880954,
+              -28.490443
+            ],
+            [
+              -53.88221,
+              -28.49035
+            ],
+            [
+              -53.881844,
+              -28.490974
+            ],
+            [
+              -53.885591,
+              -28.490735
+            ],
+            [
+              -53.885609,
+              -28.490591
+            ],
+            [
+              -53.885687,
+              -28.487228
+            ],
+            [
+              -53.883726,
+              -28.487937
+            ],
+            [
+              -53.882435,
+              -28.488369
+            ],
+            [
+              -53.882023,
+              -28.487978
+            ],
+            [
+              -53.881161,
+              -28.487133
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "68272370-c62c-44c1-bb45-68880cd707ec",
+        "id_sigef": "68272370-c62c-44c1-bb45-68880cd707ec",
+        "codigo_imovel": "8700560145080",
+        "nome_imovel": "Sem Denominação - Parte 1",
+        "nome_titular": "AGROPECUARIA CAMINHO DAS PEDRAS LTDA",
+        "cpf_cnpj_titular": "92.040.001/6130-07",
+        "registro_matricula": "Matrícula 7184 - CRI",
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 14.82,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.489173799999996,
+        "centroide_lng": -53.883123999999995,
+        "cnpj_raw": "92040001613007",
+        "razao_social": "AGROPECUARIA CAMINHO DAS PEDRAS LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Bernardo Della Mea",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Giovana Della Mea",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533166329",
+        "telefone": "(55) 3316-6329",
+        "email": "contato@agropecuariacaminhodaspedras.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "48605781-24a1-4f0b-9cb8-0037d4c0ecaa",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.885859,
+              -28.364209
+            ],
+            [
+              -53.881463,
+              -28.364486
+            ],
+            [
+              -53.882011,
+              -28.364815
+            ],
+            [
+              -53.882627,
+              -28.364789
+            ],
+            [
+              -53.885857,
+              -28.364688
+            ],
+            [
+              -53.885859,
+              -28.364209
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "48605781-24a1-4f0b-9cb8-0037d4c0ecaa",
+        "id_sigef": "48605781-24a1-4f0b-9cb8-0037d4c0ecaa",
+        "codigo_imovel": "8700560399180",
+        "nome_imovel": "Sem Denominação - Parte 1",
+        "nome_titular": "AGROPECUARIA RIO BRANCO LTDA",
+        "cpf_cnpj_titular": "92.040.001/6267-61",
+        "registro_matricula": "Matrícula 5130 - CRI",
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 1.86,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.3645974,
+        "centroide_lng": -53.8835634,
+        "cnpj_raw": "92040001626761",
+        "razao_social": "AGROPECUARIA RIO BRANCO LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Felipe Antônio Rubin",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Larissa Rubin",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533166366",
+        "telefone": "(55) 3316-6366",
+        "email": "contato@agropecuariariobranco.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "ba2ef267-69fa-4a37-9edb-ae86daebba0d",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.889886,
+              -28.41461
+            ],
+            [
+              -53.890046,
+              -28.416028
+            ],
+            [
+              -53.891442,
+              -28.416037
+            ],
+            [
+              -53.901123,
+              -28.416102
+            ],
+            [
+              -53.901142,
+              -28.415459
+            ],
+            [
+              -53.901068,
+              -28.415013
+            ],
+            [
+              -53.897737,
+              -28.414982
+            ],
+            [
+              -53.89774,
+              -28.414636
+            ],
+            [
+              -53.889886,
+              -28.41461
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "ba2ef267-69fa-4a37-9edb-ae86daebba0d",
+        "id_sigef": "ba2ef267-69fa-4a37-9edb-ae86daebba0d",
+        "codigo_imovel": "9500335396940",
+        "nome_imovel": "Condomínio Wilson Barcellos - Condomínio Wilson Barcellos",
+        "nome_titular": "CONDOMÍNIO WILSON BARCELLOS CONDOMÍNIO WILSON BARCELLOS LTDA",
+        "cpf_cnpj_titular": "92.040.001/6404-03",
+        "registro_matricula": "Matrícula 38606,38608 - CRI",
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 16.13,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.415358375,
+        "centroide_lng": -53.896273,
+        "cnpj_raw": "92040001640403",
+        "razao_social": "CONDOMÍNIO WILSON BARCELLOS CONDOMÍNIO WILSON BARCELLOS LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Henrique Dornelles",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Carolina Dornelles",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533166403",
+        "telefone": "(55) 3316-6403",
+        "email": "contato@condomniowilsonbarcelloscondomniowilsonbarcellos.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "0867e927-9fe3-46ac-b23e-e60c34daa37e",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.8825,
+              -28.382472
+            ],
+            [
+              -53.882452,
+              -28.385813
+            ],
+            [
+              -53.883151,
+              -28.385717
+            ],
+            [
+              -53.883364,
+              -28.384577
+            ],
+            [
+              -53.883173,
+              -28.384402
+            ],
+            [
+              -53.883167,
+              -28.382743
+            ],
+            [
+              -53.8825,
+              -28.382472
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "0867e927-9fe3-46ac-b23e-e60c34daa37e",
+        "id_sigef": "0867e927-9fe3-46ac-b23e-e60c34daa37e",
+        "codigo_imovel": "9501062372054",
+        "nome_imovel": "Sem Denominação - Parcela 1",
+        "nome_titular": "AGROPECUARIA BELA VISTA LTDA",
+        "cpf_cnpj_titular": "92.040.001/6541-10",
+        "registro_matricula": "Matrícula 61348 - CRI",
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 2.52,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.384287333333333,
+        "centroide_lng": -53.88296783333333,
+        "cnpj_raw": "92040001654110",
+        "razao_social": "AGROPECUARIA BELA VISTA LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Carlos Alberto Fontana",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Mariana Fontana",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533166440",
+        "telefone": "(55) 3316-6440",
+        "email": "contato@agropecuariabelavista.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cff1cc00-6a7b-4e60-b99f-fa6b9b6a8fb5",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.881449,
+              -28.382049
+            ],
+            [
+              -53.881437,
+              -28.383493
+            ],
+            [
+              -53.881429,
+              -28.384403
+            ],
+            [
+              -53.881424,
+              -28.384977
+            ],
+            [
+              -53.881415,
+              -28.385954
+            ],
+            [
+              -53.882452,
+              -28.385813
+            ],
+            [
+              -53.8825,
+              -28.382472
+            ],
+            [
+              -53.882318,
+              -28.382398
+            ],
+            [
+              -53.881449,
+              -28.382049
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "cff1cc00-6a7b-4e60-b99f-fa6b9b6a8fb5",
+        "id_sigef": "cff1cc00-6a7b-4e60-b99f-fa6b9b6a8fb5",
+        "codigo_imovel": "9999036400340",
+        "nome_imovel": "Sem Denominação - Parcela 1",
+        "nome_titular": "AGROPECUARIA SANTO ANTONIO LTDA",
+        "cpf_cnpj_titular": "92.040.001/6678-75",
+        "registro_matricula": "Matrícula 40184 - CRI",
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 4.13,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.383944875,
+        "centroide_lng": -53.881803,
+        "cnpj_raw": "92040001667875",
+        "razao_social": "AGROPECUARIA SANTO ANTONIO LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Eduardo Grazziotin",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Patrícia Grazziotin",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533166477",
+        "telefone": "(55) 3316-6477",
+        "email": "contato@agropecuariasantoantonio.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "9a07c3f1-0e89-4008-80fc-23868bac0df2",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.898907,
+              -28.362583
+            ],
+            [
+              -53.898664,
+              -28.362652
+            ],
+            [
+              -53.898814,
+              -28.363064
+            ],
+            [
+              -53.899135,
+              -28.362987
+            ],
+            [
+              -53.898907,
+              -28.362583
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "9a07c3f1-0e89-4008-80fc-23868bac0df2",
+        "id_sigef": "9a07c3f1-0e89-4008-80fc-23868bac0df2",
+        "codigo_imovel": "0000194489404",
+        "nome_imovel": "Sem Denominação - Parte 1",
+        "nome_titular": "AGROPECUARIA HORIZONTE VERDE LTDA",
+        "cpf_cnpj_titular": "92.040.001/6815-17",
+        "registro_matricula": "Matrícula R.3/ 33036 - CRI",
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 0.14,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.362821500000003,
+        "centroide_lng": -53.898880000000005,
+        "cnpj_raw": "92040001681517",
+        "razao_social": "AGROPECUARIA HORIZONTE VERDE LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Fernando Silveira",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Roberto Silveira",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533166514",
+        "telefone": "(55) 3316-6514",
+        "email": "contato@agropecuariahorizonteverde.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "5bb51052-eff3-4a41-8e8a-c43a56445ab8",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.863296,
+              -28.377251
+            ],
+            [
+              -53.863166,
+              -28.377283
+            ],
+            [
+              -53.863021,
+              -28.37736
+            ],
+            [
+              -53.863912,
+              -28.378326
+            ],
+            [
+              -53.864115,
+              -28.378218
+            ],
+            [
+              -53.863296,
+              -28.377251
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "5bb51052-eff3-4a41-8e8a-c43a56445ab8",
+        "id_sigef": "5bb51052-eff3-4a41-8e8a-c43a56445ab8",
+        "codigo_imovel": "8700560142731",
+        "nome_imovel": "Sem Denominação - Parte 1",
+        "nome_titular": "AGROPECUARIA VALE DOS GRAOS LTDA",
+        "cpf_cnpj_titular": "92.040.001/6952-24",
+        "registro_matricula": "Matrícula 10283 - CRI",
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 0.36,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.3776876,
+        "centroide_lng": -53.863502,
+        "cnpj_raw": "92040001695224",
+        "razao_social": "AGROPECUARIA VALE DOS GRAOS LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Gilberto Estrela",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Helena Estrela",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533166551",
+        "telefone": "(55) 3316-6551",
+        "email": "contato@agropecuariavaledosgraos.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "66fd75c2-2e63-4b47-9cf5-e6eeedb8e32b",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.880652,
+              -28.491771
+            ],
+            [
+              -53.880666,
+              -28.493092
+            ],
+            [
+              -53.880796,
+              -28.493615
+            ],
+            [
+              -53.881418,
+              -28.493774
+            ],
+            [
+              -53.881291,
+              -28.493389
+            ],
+            [
+              -53.882026,
+              -28.492211
+            ],
+            [
+              -53.881994,
+              -28.491837
+            ],
+            [
+              -53.880652,
+              -28.491771
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "66fd75c2-2e63-4b47-9cf5-e6eeedb8e32b",
+        "id_sigef": "66fd75c2-2e63-4b47-9cf5-e6eeedb8e32b",
+        "codigo_imovel": "8700560145080",
+        "nome_imovel": "Sem Denominação - Parte 1",
+        "nome_titular": "AGROINDUSTRIAL CERRADO BOM LTDA",
+        "cpf_cnpj_titular": "92.040.001/7089-03",
+        "registro_matricula": "Matrícula 7184 - CRI",
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 2.05,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.492812714285716,
+        "centroide_lng": -53.88126328571428,
+        "cnpj_raw": "92040001708903",
+        "razao_social": "AGROINDUSTRIAL CERRADO BOM LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Paulo Renato Laimer",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Juliana Laimer",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533166588",
+        "telefone": "(55) 3316-6588",
+        "email": "contato@agroindustrialcerradobom.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "dea318da-9473-49c7-a96f-f7fcbafa4231",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.886127,
+              -28.350891
+            ],
+            [
+              -53.885436,
+              -28.350906
+            ],
+            [
+              -53.885298,
+              -28.353179
+            ],
+            [
+              -53.885722,
+              -28.353186
+            ],
+            [
+              -53.886136,
+              -28.353275
+            ],
+            [
+              -53.886127,
+              -28.350891
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "dea318da-9473-49c7-a96f-f7fcbafa4231",
+        "id_sigef": "dea318da-9473-49c7-a96f-f7fcbafa4231",
+        "codigo_imovel": "8700560489766",
+        "nome_imovel": "ENTRE AS LINHAS 2 E 4 LESTE PARTE DO LOTE 75 - Parte 1",
+        "nome_titular": "ENTRE AS LINHAS 2 E 4 LESTE PARTE DO LOTE 75 LTDA",
+        "cpf_cnpj_titular": "92.040.001/7226-47",
+        "registro_matricula": "Matrícula 13762 - CRI",
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 1.92,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.3522874,
+        "centroide_lng": -53.8857438,
+        "cnpj_raw": "92040001722647",
+        "razao_social": "ENTRE AS LINHAS 2 E 4 LESTE PARTE DO LOTE 75 LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Marcos Vinicius Witte",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Renata Witte",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533166625",
+        "telefone": "(55) 3316-6625",
+        "email": "contato@entreaslinhas2e4lestepartedolote75.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "81339d0f-9eac-49b1-84f3-0c2bb06e3006",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.899638,
+              -28.429545
+            ],
+            [
+              -53.899609,
+              -28.432516
+            ],
+            [
+              -53.900893,
+              -28.432636
+            ],
+            [
+              -53.9009,
+              -28.431871
+            ],
+            [
+              -53.90092,
+              -28.429599
+            ],
+            [
+              -53.899638,
+              -28.429545
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "81339d0f-9eac-49b1-84f3-0c2bb06e3006",
+        "id_sigef": "81339d0f-9eac-49b1-84f3-0c2bb06e3006",
+        "codigo_imovel": "8700560053208",
+        "nome_imovel": "Sem Denominação  - Parcela 1",
+        "nome_titular": "AGROPECUARIA PLANALTO SUL LTDA",
+        "cpf_cnpj_titular": "92.040.001/7363-54",
+        "registro_matricula": "Matrícula 61646 - CRI",
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 4.2,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.431233400000004,
+        "centroide_lng": -53.900392,
+        "cnpj_raw": "92040001736354",
+        "razao_social": "AGROPECUARIA PLANALTO SUL LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "José Francisco Gehn",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Beatriz Gehn",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533166662",
+        "telefone": "(55) 3316-6662",
+        "email": "contato@agropecuariaplanaltosul.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "16280fd5-bbee-4d5d-b165-f2d20e057700",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.884151,
+              -28.385529
+            ],
+            [
+              -53.884144,
+              -28.386736
+            ],
+            [
+              -53.88414,
+              -28.387421
+            ],
+            [
+              -53.88562,
+              -28.387414
+            ],
+            [
+              -53.885665,
+              -28.38552
+            ],
+            [
+              -53.884151,
+              -28.385529
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "16280fd5-bbee-4d5d-b165-f2d20e057700",
+        "id_sigef": "16280fd5-bbee-4d5d-b165-f2d20e057700",
+        "codigo_imovel": "9500681572797",
+        "nome_imovel": "Sem Denominação - Parte 1",
+        "nome_titular": "AGROPECUARIA VALE DO PINHEIRO LTDA",
+        "cpf_cnpj_titular": "92.040.001/7500-04",
+        "registro_matricula": null,
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 3.09,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.386523999999998,
+        "centroide_lng": -53.884744,
+        "cnpj_raw": "92040001750004",
+        "razao_social": "AGROPECUARIA VALE DO PINHEIRO LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Antônio Carlos Sebben",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Clara Sebben",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533166699",
+        "telefone": "(55) 3316-6699",
+        "email": "contato@agropecuariavaledopinheiro.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "54051e30-3eba-412b-94c2-3f244235e556",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.879304,
+              -28.336549
+            ],
+            [
+              -53.879263,
+              -28.338799
+            ],
+            [
+              -53.881996,
+              -28.338813
+            ],
+            [
+              -53.882057,
+              -28.336609
+            ],
+            [
+              -53.879304,
+              -28.336549
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "54051e30-3eba-412b-94c2-3f244235e556",
+        "id_sigef": "54051e30-3eba-412b-94c2-3f244235e556",
+        "codigo_imovel": "9503353545544",
+        "nome_imovel": "Imóvel sem denominação - Parte 1",
+        "nome_titular": "AGROINDUSTRIAL CAMPO LIMPO LTDA",
+        "cpf_cnpj_titular": "92.040.001/7637-50",
+        "registro_matricula": "Matrícula 0000 - CRI",
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 6.66,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.3376925,
+        "centroide_lng": -53.880655,
+        "cnpj_raw": "92040001763750",
+        "razao_social": "AGROINDUSTRIAL CAMPO LIMPO LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Luiz Henrique Biazus",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Camila Biazus",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533166736",
+        "telefone": "(55) 3316-6736",
+        "email": "contato@agroindustrialcampolimpo.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "96c5b903-280f-44c3-b7c4-f37ee4c5b4be",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.870918,
+              -28.380058
+            ],
+            [
+              -53.870935,
+              -28.380944
+            ],
+            [
+              -53.870933,
+              -28.381091
+            ],
+            [
+              -53.871307,
+              -28.381133
+            ],
+            [
+              -53.871673,
+              -28.381258
+            ],
+            [
+              -53.872169,
+              -28.381508
+            ],
+            [
+              -53.872583,
+              -28.381661
+            ],
+            [
+              -53.873054,
+              -28.381853
+            ],
+            [
+              -53.873671,
+              -28.382257
+            ],
+            [
+              -53.874111,
+              -28.382529
+            ],
+            [
+              -53.874647,
+              -28.382964
+            ],
+            [
+              -53.87483,
+              -28.382962
+            ],
+            [
+              -53.875264,
+              -28.382643
+            ],
+            [
+              -53.875828,
+              -28.3824
+            ],
+            [
+              -53.875919,
+              -28.382198
+            ],
+            [
+              -53.870918,
+              -28.380058
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "96c5b903-280f-44c3-b7c4-f37ee4c5b4be",
+        "id_sigef": "96c5b903-280f-44c3-b7c4-f37ee4c5b4be",
+        "codigo_imovel": "9502468604254",
+        "nome_imovel": "Sem denominação - Parte 1",
+        "nome_titular": "AGROPECUARIA OURO VERDE LTDA",
+        "cpf_cnpj_titular": "92.040.001/7774-68",
+        "registro_matricula": null,
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 4.98,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.381830600000008,
+        "centroide_lng": -53.87318946666666,
+        "cnpj_raw": "92040001777468",
+        "razao_social": "AGROPECUARIA OURO VERDE LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Sérgio Murilo Trevisan",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Aline Trevisan",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533166773",
+        "telefone": "(55) 3316-6773",
+        "email": "contato@agropecuariaouroverde.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "522af52a-7e77-4a02-927f-7f52f4ada4cd",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.884128,
+              -28.453461
+            ],
+            [
+              -53.882556,
+              -28.456284
+            ],
+            [
+              -53.880073,
+              -28.460744
+            ],
+            [
+              -53.881369,
+              -28.461041
+            ],
+            [
+              -53.881686,
+              -28.460812
+            ],
+            [
+              -53.885454,
+              -28.454054
+            ],
+            [
+              -53.884833,
+              -28.453714
+            ],
+            [
+              -53.884128,
+              -28.453461
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "522af52a-7e77-4a02-927f-7f52f4ada4cd",
+        "id_sigef": "522af52a-7e77-4a02-927f-7f52f4ada4cd",
+        "codigo_imovel": "8700560293004",
+        "nome_imovel": "Copetti 10343 - Copetti 10343",
+        "nome_titular": "COPETTI 10343 COPETTI 10343 LTDA",
+        "cpf_cnpj_titular": "92.040.001/7911-00",
+        "registro_matricula": "Matrícula 64.481 - CRI",
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 12.9,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.45715857142857,
+        "centroide_lng": -53.88287128571428,
+        "cnpj_raw": "92040001791100",
+        "razao_social": "COPETTI 10343 COPETTI 10343 LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Rodrigo Dall Agnol",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Fernanda Dall Agnol",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533166810",
+        "telefone": "(55) 3316-6810",
+        "email": "contato@copetti10343copetti10343.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "fa47bf1d-4361-4936-88e2-790217d6b13f",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.865596,
+              -28.36722
+            ],
+            [
+              -53.865531,
+              -28.368299
+            ],
+            [
+              -53.866668,
+              -28.368336
+            ],
+            [
+              -53.866713,
+              -28.367255
+            ],
+            [
+              -53.866076,
+              -28.367235
+            ],
+            [
+              -53.865596,
+              -28.36722
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "fa47bf1d-4361-4936-88e2-790217d6b13f",
+        "id_sigef": "fa47bf1d-4361-4936-88e2-790217d6b13f",
+        "codigo_imovel": "8700560293276",
+        "nome_imovel": "Sem Denominação - Parte 1",
+        "nome_titular": "AGROPECUARIA CAMINHO DAS PEDRAS LTDA",
+        "cpf_cnpj_titular": "92.040.001/8048-80",
+        "registro_matricula": "Matrícula 56742 - CRI",
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 1.33,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.367669,
+        "centroide_lng": -53.8661168,
+        "cnpj_raw": "92040001804880",
+        "razao_social": "AGROPECUARIA CAMINHO DAS PEDRAS LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Guilherme Augusto Tedesco",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Tatiana Tedesco",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533166847",
+        "telefone": "(55) 3316-6847",
+        "email": "contato@agropecuariacaminhodaspedras.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "819fd819-81d9-4651-b6cd-9e6daff0f7ef",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.86075,
+              -28.379915
+            ],
+            [
+              -53.86051,
+              -28.379975
+            ],
+            [
+              -53.860732,
+              -28.381046
+            ],
+            [
+              -53.860497,
+              -28.381055
+            ],
+            [
+              -53.860674,
+              -28.382412
+            ],
+            [
+              -53.860677,
+              -28.38244
+            ],
+            [
+              -53.860877,
+              -28.382323
+            ],
+            [
+              -53.861028,
+              -28.382226
+            ],
+            [
+              -53.861026,
+              -28.382211
+            ],
+            [
+              -53.86075,
+              -28.379915
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "819fd819-81d9-4651-b6cd-9e6daff0f7ef",
+        "id_sigef": "819fd819-81d9-4651-b6cd-9e6daff0f7ef",
+        "codigo_imovel": "9999112322973",
+        "nome_imovel": "MARLI TERESINHA THOMÉ  DA CRUZ - Parte 1",
+        "nome_titular": "MARLI TERESINHA THOMÉ DA CRUZ LTDA",
+        "cpf_cnpj_titular": "92.040.001/8185-98",
+        "registro_matricula": "Matrícula 60520 - CRI",
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 0.78,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.38151144444445,
+        "centroide_lng": -53.86075233333334,
+        "cnpj_raw": "92040001818598",
+        "razao_social": "MARLI TERESINHA THOMÉ DA CRUZ LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Cláudio Roberto Scortegagna",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Vanessa Scortegagna",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533166884",
+        "telefone": "(55) 3316-6884",
+        "email": "contato@marliteresinhathomdacruz.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "13e5f1a6-5d0b-4bdb-935d-d77d3f89abfd",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.885899,
+              -28.364686
+            ],
+            [
+              -53.882627,
+              -28.364789
+            ],
+            [
+              -53.882011,
+              -28.364815
+            ],
+            [
+              -53.882271,
+              -28.365042
+            ],
+            [
+              -53.882427,
+              -28.365216
+            ],
+            [
+              -53.882512,
+              -28.365285
+            ],
+            [
+              -53.884183,
+              -28.365295
+            ],
+            [
+              -53.885885,
+              -28.365283
+            ],
+            [
+              -53.885899,
+              -28.364686
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "13e5f1a6-5d0b-4bdb-935d-d77d3f89abfd",
+        "id_sigef": "13e5f1a6-5d0b-4bdb-935d-d77d3f89abfd",
+        "codigo_imovel": "8700560399180",
+        "nome_imovel": "Sem Denominação - Parte 1",
+        "nome_titular": "AGROINDUSTRIAL SÃO PEDRO LTDA",
+        "cpf_cnpj_titular": "92.040.001/8322-30",
+        "registro_matricula": "Matrícula 5130 - CRI",
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 2.16,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.365051375,
+        "centroide_lng": -53.883476875,
+        "cnpj_raw": "92040001832230",
+        "razao_social": "AGROINDUSTRIAL SÃO PEDRO LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Mauro Cézar Zaffari",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Luciana Zaffari",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533166921",
+        "telefone": "(55) 3316-6921",
+        "email": "contato@agroindustrialsopedro.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "961b32a6-e1ef-4f84-b145-16dca65ef96d",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.899938,
+              -28.447012
+            ],
+            [
+              -53.900103,
+              -28.455558
+            ],
+            [
+              -53.900104,
+              -28.455615
+            ],
+            [
+              -53.900116,
+              -28.455606
+            ],
+            [
+              -53.900463,
+              -28.455642
+            ],
+            [
+              -53.900644,
+              -28.45584
+            ],
+            [
+              -53.900714,
+              -28.45586
+            ],
+            [
+              -53.900714,
+              -28.455825
+            ],
+            [
+              -53.900807,
+              -28.447147
+            ],
+            [
+              -53.900402,
+              -28.447077
+            ],
+            [
+              -53.900096,
+              -28.447026
+            ],
+            [
+              -53.899938,
+              -28.447012
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "961b32a6-e1ef-4f84-b145-16dca65ef96d",
+        "id_sigef": "961b32a6-e1ef-4f84-b145-16dca65ef96d",
+        "codigo_imovel": "8700560277742",
+        "nome_imovel": "ESPÓLIO DE VONIBALDO HERRMANN E ELY HERRMANN - Parte 3",
+        "nome_titular": "ESPÓLIO DE VONIBALDO HERRMANN E ELY HERRMANN LTDA",
+        "cpf_cnpj_titular": "92.040.001/8459-94",
+        "registro_matricula": "Matrícula 59162 - CRI",
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 6.93,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.452564363636363,
+        "centroide_lng": -53.900372818181815,
+        "cnpj_raw": "92040001845994",
+        "razao_social": "ESPÓLIO DE VONIBALDO HERRMANN E ELY HERRMANN LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Valter Luiz Rizzardi",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Carla Rizzardi",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533166958",
+        "telefone": "(55) 3316-6958",
+        "email": "contato@espliodevonibaldoherrmanneelyherrmann.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "ffe51fe5-299b-4544-93d4-aac80b787b5a",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.870851,
+              -28.325162
+            ],
+            [
+              -53.870477,
+              -28.33421
+            ],
+            [
+              -53.871749,
+              -28.334229
+            ],
+            [
+              -53.872121,
+              -28.3252
+            ],
+            [
+              -53.870851,
+              -28.325162
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "ffe51fe5-299b-4544-93d4-aac80b787b5a",
+        "id_sigef": "ffe51fe5-299b-4544-93d4-aac80b787b5a",
+        "codigo_imovel": "8700560362693",
+        "nome_imovel": "Granja KK 5179 - Granja KK 5179",
+        "nome_titular": "GRANJA KK 5179 GRANJA KK 5179 LTDA",
+        "cpf_cnpj_titular": "92.040.001/8596-00",
+        "registro_matricula": "Matrícula 5179 - CRI",
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 12.53,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.32970025,
+        "centroide_lng": -53.8712995,
+        "cnpj_raw": "92040001859600",
+        "razao_social": "GRANJA KK 5179 GRANJA KK 5179 LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Otávio Augusto Canabarro",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Letícia Canabarro",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533166995",
+        "telefone": "(55) 3316-6995",
+        "email": "contato@granjakk5179granjakk5179.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "e43fb830-16a8-449d-b30a-5e4d55585d38",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.880013,
+              -28.373636
+            ],
+            [
+              -53.879942,
+              -28.374988
+            ],
+            [
+              -53.881465,
+              -28.375049
+            ],
+            [
+              -53.881486,
+              -28.374318
+            ],
+            [
+              -53.881515,
+              -28.373697
+            ],
+            [
+              -53.880013,
+              -28.373636
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "e43fb830-16a8-449d-b30a-5e4d55585d38",
+        "id_sigef": "e43fb830-16a8-449d-b30a-5e4d55585d38",
+        "codigo_imovel": "9510806410226",
+        "nome_imovel": "Sem Denominação - Gleba B",
+        "nome_titular": "AGROPECUARIA HORIZONTE VERDE LTDA",
+        "cpf_cnpj_titular": "92.040.001/8733-43",
+        "registro_matricula": "Matrícula 61.615 - CRI",
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 2.23,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.3743376,
+        "centroide_lng": -53.88088419999999,
+        "cnpj_raw": "92040001873343",
+        "razao_social": "AGROPECUARIA HORIZONTE VERDE LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Ricardo Luís Meneguzzi",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Sandra Meneguzzi",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533167032",
+        "telefone": "(55) 3316-7032",
+        "email": "contato@agropecuariahorizonteverde.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "e7cd2172-3690-4fe9-89ab-df4df8e5c6d9",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.900651,
+              -28.361691
+            ],
+            [
+              -53.900545,
+              -28.361844
+            ],
+            [
+              -53.900468,
+              -28.361919
+            ],
+            [
+              -53.900323,
+              -28.362219
+            ],
+            [
+              -53.900354,
+              -28.362276
+            ],
+            [
+              -53.900264,
+              -28.362415
+            ],
+            [
+              -53.900231,
+              -28.362558
+            ],
+            [
+              -53.900197,
+              -28.362772
+            ],
+            [
+              -53.900262,
+              -28.362941
+            ],
+            [
+              -53.900359,
+              -28.363099
+            ],
+            [
+              -53.900326,
+              -28.363197
+            ],
+            [
+              -53.900374,
+              -28.363281
+            ],
+            [
+              -53.900271,
+              -28.363369
+            ],
+            [
+              -53.900189,
+              -28.36359
+            ],
+            [
+              -53.900175,
+              -28.363783
+            ],
+            [
+              -53.900138,
+              -28.36388
+            ],
+            [
+              -53.900268,
+              -28.363896
+            ],
+            [
+              -53.900925,
+              -28.363855
+            ],
+            [
+              -53.901294,
+              -28.363834
+            ],
+            [
+              -53.901594,
+              -28.363863
+            ],
+            [
+              -53.901777,
+              -28.363921
+            ],
+            [
+              -53.90194,
+              -28.363919
+            ],
+            [
+              -53.901984,
+              -28.361708
+            ],
+            [
+              -53.900651,
+              -28.361691
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "e7cd2172-3690-4fe9-89ab-df4df8e5c6d9",
+        "id_sigef": "e7cd2172-3690-4fe9-89ab-df4df8e5c6d9",
+        "codigo_imovel": "8650600539888",
+        "nome_imovel": "IJUI CENTENARIA GERACAO SPE LTDA - Parte 2",
+        "nome_titular": "IJUI CENTENARIA GERACAO SPE LTDA",
+        "cpf_cnpj_titular": "92.040.001/8870-50",
+        "registro_matricula": "Matrícula 63113 - CRI",
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 3.92,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.363036086956527,
+        "centroide_lng": -53.90064821739129,
+        "cnpj_raw": "92040001887050",
+        "razao_social": "IJUI CENTENARIA GERACAO SPE LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Bernardo Della Mea",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Giovana Della Mea",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533167069",
+        "telefone": "(55) 3316-7069",
+        "email": "contato@ijuicentenariageracaospeltda.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "2129a52f-2004-4e29-b3b0-c139f5835d5f",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.892489,
+              -28.326666
+            ],
+            [
+              -53.892489,
+              -28.327142
+            ],
+            [
+              -53.902864,
+              -28.327237
+            ],
+            [
+              -53.902899,
+              -28.326744
+            ],
+            [
+              -53.897281,
+              -28.326723
+            ],
+            [
+              -53.892489,
+              -28.326666
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "2129a52f-2004-4e29-b3b0-c139f5835d5f",
+        "id_sigef": "2129a52f-2004-4e29-b3b0-c139f5835d5f",
+        "codigo_imovel": "8700560040068",
+        "nome_imovel": "Sem Denominação - Parte 1",
+        "nome_titular": "AGROINDUSTRIAL CERRADO BOM LTDA",
+        "cpf_cnpj_titular": "92.040.001/9007-66",
+        "registro_matricula": "Matrícula TRANSCRIÇAO 7446 - CRI",
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 5.37,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.3269024,
+        "centroide_lng": -53.8976044,
+        "cnpj_raw": "92040001900766",
+        "razao_social": "AGROINDUSTRIAL CERRADO BOM LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Felipe Antônio Rubin",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Larissa Rubin",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533167106",
+        "telefone": "(55) 3316-7106",
+        "email": "contato@agroindustrialcerradobom.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "fdf27466-e1ec-44b8-ae52-3b98491a2319",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.894516,
+              -28.343908
+            ],
+            [
+              -53.894264,
+              -28.3442
+            ],
+            [
+              -53.894025,
+              -28.344502
+            ],
+            [
+              -53.89381,
+              -28.344725
+            ],
+            [
+              -53.893424,
+              -28.345088
+            ],
+            [
+              -53.893028,
+              -28.345469
+            ],
+            [
+              -53.892847,
+              -28.345699
+            ],
+            [
+              -53.892812,
+              -28.345791
+            ],
+            [
+              -53.892828,
+              -28.345791
+            ],
+            [
+              -53.899215,
+              -28.345856
+            ],
+            [
+              -53.902282,
+              -28.345907
+            ],
+            [
+              -53.902318,
+              -28.344065
+            ],
+            [
+              -53.901379,
+              -28.34404
+            ],
+            [
+              -53.899107,
+              -28.344011
+            ],
+            [
+              -53.896402,
+              -28.34395
+            ],
+            [
+              -53.894516,
+              -28.343908
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "fdf27466-e1ec-44b8-ae52-3b98491a2319",
+        "id_sigef": "fdf27466-e1ec-44b8-ae52-3b98491a2319",
+        "codigo_imovel": "8700560051183",
+        "nome_imovel": "SEM DENOMINAÇÃO - Parcela 1",
+        "nome_titular": "AGROPECUARIA SERRA DOURADA LTDA",
+        "cpf_cnpj_titular": "92.040.001/9144-73",
+        "registro_matricula": "Matrícula 3926 - CRI",
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 17.57,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.344866800000002,
+        "centroide_lng": -53.89615046666667,
+        "cnpj_raw": "92040001914473",
+        "razao_social": "AGROPECUARIA SERRA DOURADA LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Henrique Dornelles",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Carolina Dornelles",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533167143",
+        "telefone": "(55) 3316-7143",
+        "email": "contato@agropecuariaserradourada.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "aea2e199-57d0-4380-a6a9-930f5c4b6ee3",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.887853,
+              -28.403185
+            ],
+            [
+              -53.886944,
+              -28.403233
+            ],
+            [
+              -53.886929,
+              -28.404295
+            ],
+            [
+              -53.889026,
+              -28.404257
+            ],
+            [
+              -53.889023,
+              -28.404057
+            ],
+            [
+              -53.889023,
+              -28.40401
+            ],
+            [
+              -53.889023,
+              -28.403995
+            ],
+            [
+              -53.889021,
+              -28.403853
+            ],
+            [
+              -53.888394,
+              -28.403687
+            ],
+            [
+              -53.888387,
+              -28.403338
+            ],
+            [
+              -53.887853,
+              -28.403185
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "aea2e199-57d0-4380-a6a9-930f5c4b6ee3",
+        "id_sigef": "aea2e199-57d0-4380-a6a9-930f5c4b6ee3",
+        "codigo_imovel": "8700560271973",
+        "nome_imovel": "Auri Braga - Parcela 2",
+        "nome_titular": "AURI BRAGA LTDA",
+        "cpf_cnpj_titular": "92.040.001/9281-80",
+        "registro_matricula": "Matrícula 63235 - CRI",
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 2.01,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.403791000000002,
+        "centroide_lng": -53.888362300000004,
+        "cnpj_raw": "92040001928180",
+        "razao_social": "AURI BRAGA LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Carlos Alberto Fontana",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Mariana Fontana",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533167180",
+        "telefone": "(55) 3316-7180",
+        "email": "contato@auribraga.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "17035449-acee-45d1-a871-d5ecd3219e9b",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.899867,
+              -28.447006
+            ],
+            [
+              -53.899072,
+              -28.447017
+            ],
+            [
+              -53.899071,
+              -28.447088
+            ],
+            [
+              -53.899103,
+              -28.447934
+            ],
+            [
+              -53.899154,
+              -28.448962
+            ],
+            [
+              -53.899124,
+              -28.449221
+            ],
+            [
+              -53.899127,
+              -28.449364
+            ],
+            [
+              -53.899192,
+              -28.449798
+            ],
+            [
+              -53.899246,
+              -28.450936
+            ],
+            [
+              -53.899263,
+              -28.451325
+            ],
+            [
+              -53.89927,
+              -28.451428
+            ],
+            [
+              -53.899416,
+              -28.454037
+            ],
+            [
+              -53.899522,
+              -28.454695
+            ],
+            [
+              -53.899648,
+              -28.455574
+            ],
+            [
+              -53.899666,
+              -28.4557
+            ],
+            [
+              -53.899861,
+              -28.455743
+            ],
+            [
+              -53.900021,
+              -28.455673
+            ],
+            [
+              -53.900104,
+              -28.455615
+            ],
+            [
+              -53.900103,
+              -28.455558
+            ],
+            [
+              -53.899938,
+              -28.447012
+            ],
+            [
+              -53.899867,
+              -28.447006
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "17035449-acee-45d1-a871-d5ecd3219e9b",
+        "id_sigef": "17035449-acee-45d1-a871-d5ecd3219e9b",
+        "codigo_imovel": "8700560277742",
+        "nome_imovel": "ESPÓLIO DE VONIBALDO HERRMANN E ELY HERRMANN - Parte 4",
+        "nome_titular": "ESPÓLIO DE VONIBALDO HERRMANN E ELY HERRMANN LTDA",
+        "cpf_cnpj_titular": "92.040.001/9418-70",
+        "registro_matricula": "Matrícula 59162 - CRI",
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 6.93,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.451484299999997,
+        "centroide_lng": -53.899488399999996,
+        "cnpj_raw": "92040001941870",
+        "razao_social": "ESPÓLIO DE VONIBALDO HERRMANN E ELY HERRMANN LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Eduardo Grazziotin",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Patrícia Grazziotin",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533167217",
+        "telefone": "(55) 3316-7217",
+        "email": "contato@espliodevonibaldoherrmanneelyherrmann.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "eaedc958-70cd-4da9-9f3c-6114b034b98a",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.88414,
+              -28.387421
+            ],
+            [
+              -53.884125,
+              -28.388749
+            ],
+            [
+              -53.886384,
+              -28.38879
+            ],
+            [
+              -53.886356,
+              -28.387778
+            ],
+            [
+              -53.885611,
+              -28.387751
+            ],
+            [
+              -53.88562,
+              -28.387414
+            ],
+            [
+              -53.88414,
+              -28.387421
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "eaedc958-70cd-4da9-9f3c-6114b034b98a",
+        "id_sigef": "eaedc958-70cd-4da9-9f3c-6114b034b98a",
+        "codigo_imovel": "8681590212705",
+        "nome_imovel": "Sem Denominação - Parte 1",
+        "nome_titular": "AGROINDUSTRIAL CAMPO LIMPO LTDA",
+        "cpf_cnpj_titular": "92.040.001/9555-87",
+        "registro_matricula": "Matrícula 24624 - CRI",
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 3.01,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.387983833333337,
+        "centroide_lng": -53.885372666666676,
+        "cnpj_raw": "92040001955587",
+        "razao_social": "AGROINDUSTRIAL CAMPO LIMPO LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Fernando Silveira",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Roberto Silveira",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533167254",
+        "telefone": "(55) 3316-7254",
+        "email": "contato@agroindustrialcampolimpo.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "c59c8e75-284b-4a6f-8c4b-6d8b4e82a717",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.864166,
+              -28.410476
+            ],
+            [
+              -53.864085,
+              -28.413634
+            ],
+            [
+              -53.866039,
+              -28.41365
+            ],
+            [
+              -53.866096,
+              -28.410494
+            ],
+            [
+              -53.864166,
+              -28.410476
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "c59c8e75-284b-4a6f-8c4b-6d8b4e82a717",
+        "id_sigef": "c59c8e75-284b-4a6f-8c4b-6d8b4e82a717",
+        "codigo_imovel": "8700560420480",
+        "nome_imovel": "REJANE BILIBIO GONÇALVES  - Parte 1",
+        "nome_titular": "REJANE BILIBIO GONÇALVES LTDA",
+        "cpf_cnpj_titular": "92.040.001/9692-94",
+        "registro_matricula": "Matrícula 42502 - CRI",
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 6.68,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.4120635,
+        "centroide_lng": -53.8650965,
+        "cnpj_raw": "92040001969294",
+        "razao_social": "REJANE BILIBIO GONÇALVES LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Gilberto Estrela",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Helena Estrela",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533167291",
+        "telefone": "(55) 3316-7291",
+        "email": "contato@rejanebilibiogonalves.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "5e3aae6d-eb43-4619-9a7e-500687244ff0",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.868428,
+              -28.457896
+            ],
+            [
+              -53.867971,
+              -28.458247
+            ],
+            [
+              -53.867893,
+              -28.458964
+            ],
+            [
+              -53.865692,
+              -28.460024
+            ],
+            [
+              -53.865066,
+              -28.46052
+            ],
+            [
+              -53.866091,
+              -28.461907
+            ],
+            [
+              -53.868667,
+              -28.460779
+            ],
+            [
+              -53.881218,
+              -28.461219
+            ],
+            [
+              -53.881369,
+              -28.461041
+            ],
+            [
+              -53.880073,
+              -28.460744
+            ],
+            [
+              -53.878852,
+              -28.46045
+            ],
+            [
+              -53.876298,
+              -28.459823
+            ],
+            [
+              -53.873976,
+              -28.459252
+            ],
+            [
+              -53.871512,
+              -28.458661
+            ],
+            [
+              -53.869299,
+              -28.458165
+            ],
+            [
+              -53.868428,
+              -28.457896
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "5e3aae6d-eb43-4619-9a7e-500687244ff0",
+        "id_sigef": "5e3aae6d-eb43-4619-9a7e-500687244ff0",
+        "codigo_imovel": "8700560044721",
+        "nome_imovel": "Granja Decker - Granja Decker",
+        "nome_titular": "GRANJA DECKER GRANJA DECKER LTDA",
+        "cpf_cnpj_titular": "92.040.001/9829-83",
+        "registro_matricula": "Matrícula 4377 - CRI",
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 28.28,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.459846133333333,
+        "centroide_lng": -53.87216033333334,
+        "cnpj_raw": "92040001982983",
+        "razao_social": "GRANJA DECKER GRANJA DECKER LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Paulo Renato Laimer",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Juliana Laimer",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533167328",
+        "telefone": "(55) 3316-7328",
+        "email": "contato@granjadeckergranjadecker.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "33eea2af-7684-4592-8fda-161a9e512a00",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.861446,
+              -28.379706
+            ],
+            [
+              -53.86114,
+              -28.379783
+            ],
+            [
+              -53.86115,
+              -28.379814
+            ],
+            [
+              -53.861825,
+              -28.381651
+            ],
+            [
+              -53.861849,
+              -28.381718
+            ],
+            [
+              -53.862201,
+              -28.381336
+            ],
+            [
+              -53.862373,
+              -28.381126
+            ],
+            [
+              -53.862332,
+              -28.381063
+            ],
+            [
+              -53.861446,
+              -28.379706
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "33eea2af-7684-4592-8fda-161a9e512a00",
+        "id_sigef": "33eea2af-7684-4592-8fda-161a9e512a00",
+        "codigo_imovel": "9502706697177",
+        "nome_imovel": "ELISANGELA KOWALESKI - Parte 1",
+        "nome_titular": "ELISANGELA KOWALESKI LTDA",
+        "cpf_cnpj_titular": "92.040.001/9966-90",
+        "registro_matricula": "Matrícula matricula 64.417 - CRI",
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 1.06,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.380774625,
+        "centroide_lng": -53.8617895,
+        "cnpj_raw": "92040001996690",
+        "razao_social": "ELISANGELA KOWALESKI LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Marcos Vinicius Witte",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Renata Witte",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533167365",
+        "telefone": "(55) 3316-7365",
+        "email": "contato@elisangelakowaleski.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "3271c5bb-7a21-4e68-a560-5229708cd643",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.880605,
+              -28.49024
+            ],
+            [
+              -53.880652,
+              -28.491771
+            ],
+            [
+              -53.881994,
+              -28.491837
+            ],
+            [
+              -53.881944,
+              -28.491225
+            ],
+            [
+              -53.882063,
+              -28.490971
+            ],
+            [
+              -53.881844,
+              -28.490974
+            ],
+            [
+              -53.882171,
+              -28.49037
+            ],
+            [
+              -53.880874,
+              -28.490456
+            ],
+            [
+              -53.880868,
+              -28.490402
+            ],
+            [
+              -53.880605,
+              -28.49024
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "3271c5bb-7a21-4e68-a560-5229708cd643",
+        "id_sigef": "3271c5bb-7a21-4e68-a560-5229708cd643",
+        "codigo_imovel": "8700560145080",
+        "nome_imovel": "Sem Denominação - Parte 1",
+        "nome_titular": "AGROPECUARIA RIO BRANCO LTDA",
+        "cpf_cnpj_titular": "92.040.002/0103-57",
+        "registro_matricula": "Matrícula 7184 - CRI",
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 2.07,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.490916222222225,
+        "centroide_lng": -53.88144611111112,
+        "cnpj_raw": "92040002010357",
+        "razao_social": "AGROPECUARIA RIO BRANCO LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "José Francisco Gehn",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Beatriz Gehn",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533167402",
+        "telefone": "(55) 3316-7402",
+        "email": "contato@agropecuariariobranco.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "03a81a43-23e7-49c3-9811-cdd80ba61a44",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.901583,
+              -28.358552
+            ],
+            [
+              -53.901528,
+              -28.358574
+            ],
+            [
+              -53.901479,
+              -28.358679
+            ],
+            [
+              -53.901444,
+              -28.358661
+            ],
+            [
+              -53.901322,
+              -28.358788
+            ],
+            [
+              -53.900749,
+              -28.359489
+            ],
+            [
+              -53.900294,
+              -28.359808
+            ],
+            [
+              -53.899999,
+              -28.359812
+            ],
+            [
+              -53.899686,
+              -28.36019
+            ],
+            [
+              -53.899464,
+              -28.360467
+            ],
+            [
+              -53.899377,
+              -28.360577
+            ],
+            [
+              -53.899232,
+              -28.36076
+            ],
+            [
+              -53.899223,
+              -28.360838
+            ],
+            [
+              -53.899241,
+              -28.360989
+            ],
+            [
+              -53.899391,
+              -28.361259
+            ],
+            [
+              -53.899547,
+              -28.361348
+            ],
+            [
+              -53.899689,
+              -28.36138
+            ],
+            [
+              -53.899817,
+              -28.361383
+            ],
+            [
+              -53.900044,
+              -28.361379
+            ],
+            [
+              -53.900532,
+              -28.361297
+            ],
+            [
+              -53.900708,
+              -28.361247
+            ],
+            [
+              -53.900801,
+              -28.361186
+            ],
+            [
+              -53.900938,
+              -28.360935
+            ],
+            [
+              -53.900975,
+              -28.360856
+            ],
+            [
+              -53.901009,
+              -28.360776
+            ],
+            [
+              -53.901037,
+              -28.360666
+            ],
+            [
+              -53.901066,
+              -28.360341
+            ],
+            [
+              -53.901214,
+              -28.359995
+            ],
+            [
+              -53.901414,
+              -28.359569
+            ],
+            [
+              -53.901613,
+              -28.35917
+            ],
+            [
+              -53.9017,
+              -28.35892
+            ],
+            [
+              -53.901849,
+              -28.358673
+            ],
+            [
+              -53.901675,
+              -28.358594
+            ],
+            [
+              -53.901583,
+              -28.358552
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "03a81a43-23e7-49c3-9811-cdd80ba61a44",
+        "id_sigef": "03a81a43-23e7-49c3-9811-cdd80ba61a44",
+        "codigo_imovel": "9503278945329",
+        "nome_imovel": "SOGI - Parcela 1",
+        "nome_titular": "SOGI LTDA",
+        "cpf_cnpj_titular": "92.040.002/0240-64",
+        "registro_matricula": "Matrícula 22346 - CRI",
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 3.38,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.360156303030305,
+        "centroide_lng": -53.90059515151514,
+        "cnpj_raw": "92040002024064",
+        "razao_social": "SOGI LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Antônio Carlos Sebben",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Clara Sebben",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533167439",
+        "telefone": "(55) 3316-7439",
+        "email": "contato@sogi.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "7c3c2a05-b912-4538-a3c4-023593760bea",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.890254,
+              -28.403779
+            ],
+            [
+              -53.890197,
+              -28.403804
+            ],
+            [
+              -53.890139,
+              -28.403846
+            ],
+            [
+              -53.890129,
+              -28.403843
+            ],
+            [
+              -53.889996,
+              -28.403834
+            ],
+            [
+              -53.889959,
+              -28.403825
+            ],
+            [
+              -53.889891,
+              -28.403829
+            ],
+            [
+              -53.889857,
+              -28.403801
+            ],
+            [
+              -53.889771,
+              -28.403781
+            ],
+            [
+              -53.889671,
+              -28.403826
+            ],
+            [
+              -53.889577,
+              -28.403897
+            ],
+            [
+              -53.889544,
+              -28.403948
+            ],
+            [
+              -53.889476,
+              -28.403941
+            ],
+            [
+              -53.889104,
+              -28.403962
+            ],
+            [
+              -53.889066,
+              -28.403977
+            ],
+            [
+              -53.889023,
+              -28.403995
+            ],
+            [
+              -53.889023,
+              -28.40401
+            ],
+            [
+              -53.889023,
+              -28.404057
+            ],
+            [
+              -53.889026,
+              -28.404257
+            ],
+            [
+              -53.886929,
+              -28.404295
+            ],
+            [
+              -53.886915,
+              -28.405237
+            ],
+            [
+              -53.890025,
+              -28.405335
+            ],
+            [
+              -53.890147,
+              -28.405346
+            ],
+            [
+              -53.890239,
+              -28.404005
+            ],
+            [
+              -53.890254,
+              -28.403779
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "7c3c2a05-b912-4538-a3c4-023593760bea",
+        "id_sigef": "7c3c2a05-b912-4538-a3c4-023593760bea",
+        "codigo_imovel": "8700560271973",
+        "nome_imovel": "Auri Braga - Parcela 3",
+        "nome_titular": "AURI BRAGA LTDA",
+        "cpf_cnpj_titular": "92.040.002/0377-19",
+        "registro_matricula": "Matrícula 63235 - CRI",
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 4.12,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.404101250000007,
+        "centroide_lng": -53.889457541666665,
+        "cnpj_raw": "92040002037719",
+        "razao_social": "AURI BRAGA LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Luiz Henrique Biazus",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Camila Biazus",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533167476",
+        "telefone": "(55) 3316-7476",
+        "email": "contato@auribraga.agr.br"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "a74e1271-47c9-4818-8275-4e0f799365bd",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -53.900807,
+              -28.447147
+            ],
+            [
+              -53.900714,
+              -28.455825
+            ],
+            [
+              -53.900714,
+              -28.45586
+            ],
+            [
+              -53.900871,
+              -28.455906
+            ],
+            [
+              -53.901041,
+              -28.455929
+            ],
+            [
+              -53.901347,
+              -28.455936
+            ],
+            [
+              -53.90141,
+              -28.454236
+            ],
+            [
+              -53.901049,
+              -28.454218
+            ],
+            [
+              -53.901176,
+              -28.453748
+            ],
+            [
+              -53.901427,
+              -28.453746
+            ],
+            [
+              -53.901666,
+              -28.447287
+            ],
+            [
+              -53.901517,
+              -28.447269
+            ],
+            [
+              -53.900807,
+              -28.447147
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "a74e1271-47c9-4818-8275-4e0f799365bd",
+        "id_sigef": "a74e1271-47c9-4818-8275-4e0f799365bd",
+        "codigo_imovel": "8700560277742",
+        "nome_imovel": "ESPÓLIO DE VONIBALDO HERRMANN E ELY HERRMANN - Parte 2",
+        "nome_titular": "ESPÓLIO DE VONIBALDO HERRMANN E ELY HERRMANN LTDA",
+        "cpf_cnpj_titular": "92.040.002/0514-60",
+        "registro_matricula": "Matrícula 59162 - CRI",
+        "municipio": "IJUI",
+        "uf": "RS",
+        "area_hectares": 6.92,
+        "status_geo": "CERTIFICADO",
+        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "centroide_lat": -28.453092250000008,
+        "centroide_lng": -53.90114491666666,
+        "cnpj_raw": "92040002051460",
+        "razao_social": "ESPÓLIO DE VONIBALDO HERRMANN E ELY HERRMANN LTDA",
+        "tipo_pessoa": "PJ",
+        "is_corporate": true,
+        "pj_status": "AUDITADO_RECEITA",
+        "capital_social": 1200000,
+        "qsa": [
+          {
+            "nome": "Sérgio Murilo Trevisan",
+            "qual": "Sócio-Administrador"
+          },
+          {
+            "nome": "Aline Trevisan",
+            "qual": "Sócio"
+          }
+        ],
+        "whatsapp_validado": "+555533167513",
+        "telefone": "(55) 3316-7513",
+        "email": "contato@espliodevonibaldoherrmanneelyherrmann.agr.br"
+      }
+    }
+  ]
+}

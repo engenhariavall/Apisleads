@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VERSUS | Acesso Corporativo & Inteligência de Mercado</title>
+  
+  <meta name="description" content="Portal de autenticação executiva da plataforma VERSUS - Inteligência de mercado, prospecção e análise tática de concorrência.">
+  <meta name="theme-color" content="#050814">
+  
+  <!-- Fontes Corporativas de Alta Precisão -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Estilos Dedicados de Login Imersivo -->
+  <link rel="stylesheet" href="/css/login.css?v=2.0.0">
+  <link rel="stylesheet" href="/css/preload.css?v=2.0.0">
+</head>
+<body>
+
+  <!-- Camada de Gradiente Atmosférico de Fundo -->
+  <div class="space-gradient-underlay" aria-hidden="true"></div>
+
+  <!-- Canvas Interativo 3D / Malha Geodésica com Parallax LERP -->
+  <canvas id="canvasBackground" aria-hidden="true"></canvas>
+
+  <!-- Palco do Primeiro Plano (Foreground) -->
+  <main class="login-stage">
+    
+    <!-- Cartão Flutuante Glassmorphism com Animação Gravidade Zero -->
+    <section class="glass-login-card" aria-label="Portal de Acesso Corporativo">
+      
+      <!-- Cabeçalho Tipográfico Minimalista (Sem logotipos de raio ou cadeados infantis) -->
+      <header class="brand-header">
+        <div class="brand-badge">
+          <span class="brand-badge-dot"></span>
+          <span class="brand-badge-text">Intelligence Engine</span>
+        </div>
+        <h1 class="brand-title">VERSUS <span class="accent-cyan">DATA</span></h1>
+        <p class="brand-subtitle">Plataforma executiva de inteligência geomercadológica e scouting tático</p>
+      </header>
+
+      <!-- Formulário Minimalista com Inputs de Linha Inferior -->
+      <form class="minimal-form" id="formLogin" novalidate autocomplete="on">
+        
+        <!-- Campo: E-mail Corporativo -->
+        <div class="form-group">
+          <label for="inputEmail">E-mail Corporativo</label>
+          <input 
+            type="email" 
+            id="inputEmail" 
+            class="minimal-input" 
+            name="email" 
+            placeholder="usuario@versus.ai" 
+            autocomplete="username" 
+            required 
+            spellcheck="false"
+          >
+          <span class="input-accent-line" aria-hidden="true"></span>
+        </div>
+
+        <!-- Campo: Senha de Acesso -->
+        <div class="form-group">
+          <label for="inputPassword">Credencial de Segurança</label>
+          <input 
+            type="password" 
+            id="inputPassword" 
+            class="minimal-input" 
+            name="password" 
+            placeholder="••••••••••••" 
+            autocomplete="current-password" 
+            required
+          >
+          <span class="input-accent-line" aria-hidden="true"></span>
+        </div>
+
+        <!-- Caixa de Feedback de Validação / Erro -->
+        <div class="form-feedback" id="formFeedback" role="alert" aria-live="assertive"></div>
+
+        <!-- Botão de Acesso Executivo (Cantos Retos / Máx 4px, Sem Formato Pílula) -->
+        <button type="submit" class="btn-access" id="btnSubmit">
+          <span class="btn-spinner" id="btnSpinner" aria-hidden="true"></span>
+          <span id="btnText">Acessar Plataforma</span>
+        </button>
+      </form>
+
+      <!-- Rodapé do Card com Acesso Rápido Discreto -->
+      <footer class="card-footer">
+        <button type="button" class="btn-quick-fill" id="btnQuickFillMaster" title="Preencher credenciais Master para homologação">
+          Carregar Credenciais Master
+        </button>
+        <span class="footer-meta">VERSUS SYSTEM // RBAC &amp; JWT ACTIVE</span>
+      </footer>
+
+    </section>
+
+  </main>
+
+  <!-- Motor de Pré-Loader e Transição Imersiva -->
+  <script src="/js/preload.js?v=2.1.0"></script>
+  <!-- Script do Canvas 3D e Manipulação de Sessão -->
+  <script src="/js/login-canvas.js?v=2.1.0"></script>
+</body>
+</html>
