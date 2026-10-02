@@ -1,4 +1,3 @@
-import { DatabaseSync } from 'node:sqlite';
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
@@ -14,20 +13,35 @@ if (!fs.existsSync(DATA_DIR)) {
 
 const DB_PATH = path.join(DATA_DIR, 'leads.sqlite');
 
+let DatabaseSync = null;
+try {
+  const sqliteMod = await import('node:sqlite');
+  DatabaseSync = sqliteMod.DatabaseSync;
+} catch (errSqlite) {
+  console.warn('⚠️ [SQLITE] Driver nativo node:sqlite não disponível neste runtime:', errSqlite.message);
+}
+
 // ------------------------------------------------------------------------------
 // 1. Inicialização do Driver SQLite Local (Fallback / Dev)
 // ------------------------------------------------------------------------------
-const sqliteDb = new DatabaseSync(DB_PATH);
-
-sqliteDb.exec(`
-  PRAGMA journal_mode = WAL;
-  PRAGMA synchronous = NORMAL;
-  PRAGMA cache_size = -64000;
-  PRAGMA temp_store = MEMORY;
-`);
+let sqliteDb = null;
+if (DatabaseSync) {
+  try {
+    sqliteDb = new DatabaseSync(DB_PATH);
+    sqliteDb.exec(`
+      PRAGMA journal_mode = WAL;
+      PRAGMA synchronous = NORMAL;
+      PRAGMA cache_size = -64000;
+      PRAGMA temp_store = MEMORY;
+    `);
+  } catch (errInit) {
+    console.warn('⚠️ [SQLITE INIT ERROR]:', errInit.message);
+  }
+}
 
 // Criação das tabelas base SQLite
-sqliteDb.exec(`
+if (sqliteDb) {
+  sqliteDb.exec(`
   CREATE TABLE IF NOT EXISTS segments (
     id TEXT PRIMARY KEY,
     name TEXT NOT NULL UNIQUE,
@@ -71,7 +85,8 @@ sqliteDb.exec(`
     email TEXT,
     created_at TEXT DEFAULT CURRENT_TIMESTAMP
   );
-`);
+  `);
+}
 
 // Migração segura de colunas no SQLite
 try {

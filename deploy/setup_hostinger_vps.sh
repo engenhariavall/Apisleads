@@ -16,12 +16,10 @@ export DEBIAN_FRONTEND=noninteractive
 apt update -y && apt upgrade -y
 apt install -y curl git ufw nginx certbot python3-certbot-nginx build-essential
 
-# 2. Instalação do Node.js 20 LTS (NodeSource) e PM2
-echo "⚡ [2/7] Instalando Node.js 20 LTS e PM2..."
-if ! command -v node &> /dev/null; then
-  curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
-  apt install -y nodejs
-fi
+# 2. Instalação do Node.js 22 LTS (NodeSource) e PM2
+echo "⚡ [2/7] Instalando Node.js 22 LTS e PM2..."
+curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
+apt install -y nodejs
 
 node_version=$(node -v)
 echo "   Node instalado: $node_version"
@@ -37,6 +35,7 @@ cd /var/www
 if [ -d "/var/www/versus-api" ]; then
   echo "   Repositório já existe. Puxando as últimas atualizações..."
   cd /var/www/versus-api
+  git reset --hard HEAD
   git pull origin main
 else
   git clone https://github.com/engenhariavall/Apisleads.git versus-api
@@ -55,8 +54,11 @@ SPARKS_AUTO_START=true
 API_BASE_URL=/api
 EOF
 
-# 5. Instalação de Dependências
-echo "📦 [5/7] Instalando dependências do projeto..."
+# 5. Instalação de Dependências e Criação de Diretórios
+echo "📦 [5/7] Instalando dependências e estruturando logs..."
+mkdir -p /var/www/versus-api/logs
+mkdir -p /var/www/versus-api/data
+cd /var/www/versus-api
 npm install --production
 
 # 6. Configuração e Inicialização do PM2
@@ -65,6 +67,8 @@ pm2 delete versus-api || true
 pm2 start ecosystem.config.cjs --env production
 pm2 save
 pm2 startup systemd -u root --hp /root || true
+sleep 3
+curl -s http://127.0.0.1:3000/health || true
 
 # 7. Configuração do Nginx como Proxy Reverso
 echo "🌐 [7/7] Configurando servidor web Nginx (Porta 80 -> Porta 3000)..."

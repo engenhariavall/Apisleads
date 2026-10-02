@@ -3,6 +3,7 @@ module.exports = {
     {
       name: 'versus-api',
       script: 'server/index.js',
+      cwd: '/var/www/versus-api',
       instances: 1, // 1 instância para driver SQLite local; expansível para 'max' ao migrar para Supabase
       exec_mode: 'fork', // 'fork' para SQLite (WAL); alternar para 'cluster' com PostgreSQL
       watch: false,
