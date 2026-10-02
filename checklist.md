@@ -3246,17 +3246,52 @@ Este documento rastreia de forma contínua, estruturada e duradoura todo o hist�
 > 📋 **Documento de Referência:** [plano_deploy_nuvem_versus.md](file:///C:/Users/Usuario/.gemini/antigravity-ide/brain/2b21331b-69ae-43ca-8df3-028c264d8cf9/plano_deploy_nuvem_versus.md)  
 > 🎯 **Foco Central:** Subida para a nuvem da arquitetura em 3 camadas, ativação de todos os robôs do VERSUS Sparks e Cron Jobs 24/7 na VPS, conexão com banco gerenciado Supabase (PostgreSQL 15+ & PostGIS) e Edge CDN na Vercel.
 
-- [ ] **Etapa 1: Banco de Dados Supabase (PostgreSQL 15+ / PostGIS)**
-  - **Status:** ⏳ Aguardando Sinal Verde pós-Fase 71.
+- [x] **Etapa 1: Banco de Dados Supabase (PostgreSQL 15+ / PostGIS)**
+  - **Status:** ✅ Concluído. Conexão remota Supabase integrada e ativa com pool resiliente e migração dual-engine.
 
-- [ ] **Etapa 2: VPS Linux Ubuntu (Backend Node.js, Python IA & PM2 24/7)**
-  - **Status:** ⏳ Aguardando Sinal Verde pós-Fase 71.
+- [x] **Etapa 2: VPS Linux Ubuntu (Backend Node.js, Python IA & PM2 24/7)**
+  - **Status:** ✅ Concluído. Cluster PM2 (`versus-api`) rodando na VPS Hostinger (`179.236.237.116`), com robôs do VERSUS Sparks (tick a cada 5 min) e agendador fundiário (a cada 6h) operando 24/7.
 
-- [ ] **Etapa 3: Vercel (Frontend SPA com Proxy Reverso /api/*)**
-  - **Status:** ⏳ Aguardando Sinal Verde pós-Fase 71.
+- [x] **Etapa 3: Vercel (Frontend SPA com Proxy Reverso /api/*)**
+  - **Status:** ✅ Concluído. Frontend em produção (`https://apisleads.vercel.app`), com proxy reverso apontando para a VPS e CDN global.
 
-- [ ] **Etapa 4: Teste de Fumaça (Smoke Test) e Liberação para o Cliente Final**
-  - **Status:** ⏳ Aguardando Sinal Verde pós-Fase 71.
+- [x] **Etapa 4: Teste de Fumaça (Smoke Test) e Liberação para o Cliente Final**
+  - **Status:** ✅ Concluído. Login Super Admin (`hajaluzstudio@gmail.com`), tenant *Avall Marketing e Vendas* e operador *Felipe Corá* 100% operacionais.
+  - **Status:** ✅ Radar Sparks com paginação completa `[1, 2, 3...]`, 31 sinais reais e fuso horário oficial de Brasília (`America/Sao_Paulo`).
+
+---
+🏆 **FASE 72 CONCLUÍDA E HOMOLOGADA COM SUCESSO (DEPLOY EM NUVEM 24/7 ATIVO)**.
+
+---
+
+## 📅 SPRINT SEGUNDA-FEIRA: HOMOLOGAÇÃO & AUTOMAÇÕES EM NUVEM
+
+> 🎯 **Foco Central:** Automação do Sensoriamento Orbital sem cliques manuais e validação em produção da Taxonomia Econômica Dinâmica por CNAE no Trade Flow.
+
+- [ ] **ITEM 1: AUTOMAÇÃO TOTAL DA AUDITORIA ORBITAL & COGNIÇÃO NEURAL (ON-OPEN)**
+  - **Contexto:** Eliminar a necessidade de clique manual no botão *"Executar Auditoria Orbital (Pivôs, Silos & NDVI)"* no Inspetor (Raio-X), tornando a varredura 100% automática ao inspecionar qualquer propriedade rural.
+  - **Escopo Técnico:**
+    - [ ] No `client/js/app.js` (`renderCognitiveVisionUI`), se a fazenda ainda não possui dados em memória, acionar automaticamente o endpoint `POST /api/cognitive/vision/satellite-audit` em background com spinner sutil de sensoriamento.
+    - [ ] Se a propriedade já possui cache criptográfico SHA-256 de 60 dias gravado no banco, carregar instantaneamente (< 20ms) os Pivôs Centrais, Silos, Açudes e NDVI.
+    - [ ] Se for nova propriedade, receber o retorno da rede neural e renderizar diretamente o bloco completo sem requerer ação do operador.
+    - [ ] Adicionar botão/link discreto `↻ Re-escanear Órbita` para permitir atualização forçada opcional caso o analista deseje.
+  - **Status:** ⏳ Agendado para Segunda-feira.
+
+- [ ] **ITEM 2: VALIDAÇÃO EM PRODUÇÃO DA TAXONOMIA ECONÔMICA DINÂMICA POR CNAE (TRADE FLOW)**
+  - **Contexto:** Verificar se as alterações de inteligência econômica por CNAE implantadas no backend (`competitorTradeFlowService.js`) e no frontend (`app.js`) estão refletindo perfeitamente no ambiente de produção da nuvem.
+  - **Checklist de Validação:**
+    - [ ] **Elétrica e Instalações (CNAE 4321):** Mix de Instalações Elétricas Industriais/Comerciais (45%), Manutenção de Quadros (30%), Projetos/Automação (15%) e Materiais (10%) com ticket calibrado (ex: R$ 14.000 a R$ 65.000).
+    - [ ] **Construção Civil e Obras (CNAE 41, 42, 43):** Mix de Obras Civis, Estruturas, Reformas e Gerenciamento.
+    - [ ] **Tecnologia & Software (CNAE 62, 63):** Licenciamento SaaS, Customização de Sistemas e Cloud.
+    - [ ] **Publicidade e Marketing (CNAE 73):** Tráfego Pago, Branding, Redes Sociais e Vendas.
+    - [ ] **Contabilidade e Jurídico (CNAE 69, 70, 74):** Honorários, Planejamento Tributário e Consultoria.
+    - [ ] **Transporte e Logística (CNAE 49, 52, 53):** Fretes fracionados, lotados e armazenagem.
+    - [ ] **Comércio e Serviços Gerais:** Fallback universal com extração da descrição cadastral real do CNPJ.
+    - [ ] **Setor Agropecuário Puro (CNAE 01, 4661, 4683, Cooperativas):** Preservar máquinas, tratores, colheitadeiras e insumos exclusivamente para quem é do agro.
+    - [ ] **Alvos Reais:** Confirmar que empresas não-agro cruzam com empresas compradoras B2B da praça (ex: 54 empresas B2B em Passo Fundo) e não com fazendas de grãos.
+    - [ ] **Anúncios de Contra-Ataque:** No modal de Cerco de Tráfego Pago, validar cópias focadas em atendimento corporativo com NF e faturamento PJ em vez de mensagens rurais.
+  - **Status:** ⏳ Agendado para Segunda-feira.
+
 
 
 
