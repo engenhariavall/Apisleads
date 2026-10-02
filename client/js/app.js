@@ -8487,6 +8487,17 @@ window.renderCompetitorTradeFlow = async function(leadId) {
 
     window.currentTradeFlowData = data;
 
+    const labelMixTitle = document.getElementById('labelTradeFlowMixTitle');
+    if (labelMixTitle) {
+      if (data.product_mix.is_service) {
+        labelMixTitle.textContent = 'MIX DE SERVIÇOS (CNAE)';
+      } else if (data.product_mix.is_agro) {
+        labelMixTitle.textContent = 'MIX AGROPECUÁRIO (CNAE)';
+      } else {
+        labelMixTitle.textContent = 'MIX DE PRODUTOS (CNAE)';
+      }
+    }
+
     if (badgeRev) {
       badgeRev.textContent = data.trade_flow.faturamento_formatado || 'ESTIMADO';
     }
@@ -8495,7 +8506,11 @@ window.renderCompetitorTradeFlow = async function(leadId) {
     }
 
     if (mixBars && data.product_mix.mix_items) {
-      mixBars.innerHTML = data.product_mix.mix_items.map(m => `
+      const categoryHeader = data.product_mix.category_label 
+        ? `<div style="font-size:0.6rem;font-weight:700;color:#38BDF8;margin-bottom:0.4rem;padding-bottom:0.25rem;border-bottom:1px solid rgba(255,255,255,0.06);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" title="${data.product_mix.category_label}">${data.product_mix.category_label}</div>` 
+        : '';
+
+      mixBars.innerHTML = categoryHeader + data.product_mix.mix_items.map(m => `
         <div style="display:flex;flex-direction:column;gap:1px;">
           <div style="display:flex;justify-content:space-between;font-size:0.62rem;color:#E2E8F0;">
             <span style="font-weight:600;">${m.item}</span>
@@ -8517,7 +8532,7 @@ window.renderCompetitorTradeFlow = async function(leadId) {
           </div>
           <div style="display:flex;align-items:center;gap:0.5rem;">
             <span style="font-size:0.6rem;font-weight:800;color:#4ADE80;">${d.volume_estimado_formatado}</span>
-            <span style="font-size:0.56rem;color:#38BDF8;background:rgba(56,189,248,0.12);padding:0.05rem 0.3rem;border-radius:3px;">${d.produtores_alvo_count} alvos</span>
+            <span style="font-size:0.56rem;color:#38BDF8;background:rgba(56,189,248,0.12);padding:0.05rem 0.3rem;border-radius:3px;">${d.produtores_alvo_count} ${d.target_type_label || 'alvos'}</span>
           </div>
         </div>
       `).join('');

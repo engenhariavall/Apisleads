@@ -406,8 +406,19 @@ export async function lookupOrRegisterCompetitor(cnpjInput, manualData = {}, ten
   const formatted = formatCnpj(cleanDigits);
   const resolvedTenant = tenantId || 'tenant-root-default';
 
-  // 1. Verifica se já existe na base local do sistema para este tenant
-  let lead = db.prepare('SELECT * FROM leads WHERE (cnpj_raw = ? OR cnpj = ?) AND tenant_id = ?').get(cleanDigits, formatted, resolvedTenant);
+  // 1. Verifica se já existe na base local do sistema (para este tenant ou na base compartilhada / root)
+  let lead = db.prepare(`
+    SELECT * FROM leads 
+    WHERE (cnpj_raw = ? OR cnpj = ?) 
+      AND (tenant_id = ? OR tenant_id = 'tenant-root-default')
+    ORDER BY CASE WHEN tenant_id = ? THEN 0 ELSE 1 END
+    LIMIT 1
+  `).get(cleanDigits, formatted, resolvedTenant, resolvedTenant);
+
+  // Fallback geral: se já existe em qualquer registro da tabela leads (respeitando a restrição UNIQUE global de leads.cnpj)
+  if (!lead) {
+    lead = db.prepare('SELECT * FROM leads WHERE (cnpj_raw = ? OR cnpj = ?) LIMIT 1').get(cleanDigits, formatted);
+  }
 
   // Verifica se o registro existente possui dados genéricos/mockados ou residuais que necessitam de purge
   const hasMockOrResidualData = lead && (
@@ -511,6 +522,26 @@ export async function lookupOrRegisterCompetitor(cnpjInput, manualData = {}, ten
           ?, ?, ?, ?, ?, ?, ?,
           ?, ?, 1, datetime('now', 'localtime')
         )
+        ON CONFLICT(cnpj) DO UPDATE SET
+          is_competitor = 1,
+          razao_social = excluded.razao_social,
+          nome_fantasia = excluded.nome_fantasia,
+          cnae_principal_codigo = excluded.cnae_principal_codigo,
+          cnae_principal_descricao = excluded.cnae_principal_descricao,
+          porte = excluded.porte,
+          capital_social = excluded.capital_social,
+          situacao_cadastral = excluded.situacao_cadastral,
+          municipio = excluded.municipio,
+          uf = excluded.uf,
+          logradouro = excluded.logradouro,
+          numero = excluded.numero,
+          bairro = excluded.bairro,
+          cep = excluded.cep,
+          telefone = excluded.telefone,
+          email = excluded.email,
+          qsa = excluded.qsa,
+          latitude = COALESCE(excluded.latitude, leads.latitude),
+          longitude = COALESCE(excluded.longitude, leads.longitude)
       `).run(
         newId, resolvedTenant, formatted, cleanDigits, realData.razao_social, realData.nome_fantasia,
         realData.cnae_principal_codigo, realData.cnae_principal_descricao, realData.porte, realData.capital_social,
@@ -520,7 +551,7 @@ export async function lookupOrRegisterCompetitor(cnpjInput, manualData = {}, ten
         compCoord.lat, compCoord.lng
       );
 
-      lead = db.prepare('SELECT * FROM leads WHERE id = ?').get(newId);
+      lead = db.prepare('SELECT * FROM leads WHERE (cnpj_raw = ? OR cnpj = ?) LIMIT 1').get(cleanDigits, formatted);
     }
   }
 
