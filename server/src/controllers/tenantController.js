@@ -18,16 +18,31 @@ import db from '../config/database.js';
  */
 export async function listTenants(req, res) {
   try {
-    const tenants = db.prepare(`
-      SELECT t.id, t.name, t.cnpj, t.plan, t.status, t.max_users,
-             t.daily_quota_limit, t.monthly_quota_limit, t.created_at, t.updated_at,
-             COUNT(u.id) AS total_users,
-             SUM(CASE WHEN u.is_active = 1 THEN 1 ELSE 0 END) AS active_users
-      FROM tenants t
-      LEFT JOIN users u ON t.id = u.tenant_id
-      GROUP BY t.id
-      ORDER BY t.created_at ASC
-    `).all();
+    let tenants = [];
+    if (db.isPostgres && db.pool) {
+      const qRes = await db.query(`
+        SELECT t.id, t.name, t.cnpj, t.plan, t.status, t.max_users,
+               t.daily_quota_limit, t.monthly_quota_limit, t.created_at, t.updated_at,
+               COUNT(u.id) AS total_users,
+               SUM(CASE WHEN u.is_active = TRUE OR u.is_active = 1 THEN 1 ELSE 0 END) AS active_users
+        FROM tenants t
+        LEFT JOIN users u ON t.id = u.tenant_id
+        GROUP BY t.id
+        ORDER BY t.created_at ASC
+      `);
+      tenants = qRes.rows || [];
+    } else {
+      tenants = db.prepare(`
+        SELECT t.id, t.name, t.cnpj, t.plan, t.status, t.max_users,
+               t.daily_quota_limit, t.monthly_quota_limit, t.created_at, t.updated_at,
+               COUNT(u.id) AS total_users,
+               SUM(CASE WHEN u.is_active = 1 THEN 1 ELSE 0 END) AS active_users
+        FROM tenants t
+        LEFT JOIN users u ON t.id = u.tenant_id
+        GROUP BY t.id
+        ORDER BY t.created_at ASC
+      `).all();
+    }
 
     return res.status(200).json({
       success: true,
@@ -51,7 +66,34 @@ export async function listTenants(req, res) {
 export async function getTenantDetails(req, res) {
   try {
     const { id } = req.params;
-    const tenant = db.prepare('SELECT * FROM tenants WHERE id = ?').get(id);
+    let tenant = null;
+    let users = [];
+
+    if (db.isPostgres && db.pool) {
+      const tRes = await db.query('SELECT * FROM tenants WHERE id = ?', [id]);
+      tenant = tRes.rows && tRes.rows.length > 0 ? tRes.rows[0] : null;
+
+      if (tenant) {
+        const uRes = await db.query(`
+          SELECT id, email, name, role, is_active, created_at, last_login_at
+          FROM users
+          WHERE tenant_id = ?
+          ORDER BY created_at ASC
+        `, [id]);
+        users = uRes.rows || [];
+      }
+    } else {
+      tenant = db.prepare('SELECT * FROM tenants WHERE id = ?').get(id);
+
+      if (tenant) {
+        users = db.prepare(`
+          SELECT id, email, name, role, is_active, created_at, last_login_at
+          FROM users
+          WHERE tenant_id = ?
+          ORDER BY created_at ASC
+        `).all(id);
+      }
+    }
 
     if (!tenant) {
       return res.status(404).json({
@@ -60,13 +102,6 @@ export async function getTenantDetails(req, res) {
         message: 'Empresa não encontrada.'
       });
     }
-
-    const users = db.prepare(`
-      SELECT id, email, name, role, is_active, created_at, last_login_at
-      FROM users
-      WHERE tenant_id = ?
-      ORDER BY created_at ASC
-    `).all(id);
 
     return res.status(200).json({
       success: true,
@@ -108,7 +143,13 @@ export async function createTenant(req, res) {
 
     // Se CNPJ informado, valida duplicidade
     if (cnpj) {
-      const existingCnpj = db.prepare('SELECT id FROM tenants WHERE cnpj = ?').get(cnpj);
+      let existingCnpj = null;
+      if (db.isPostgres && db.pool) {
+        const cRes = await db.query('SELECT id FROM tenants WHERE cnpj = ?', [cnpj]);
+        existingCnpj = cRes.rows && cRes.rows.length > 0;
+      } else {
+        existingCnpj = db.prepare('SELECT id FROM tenants WHERE cnpj = ?').get(cnpj);
+      }
       if (existingCnpj) {
         return res.status(400).json({
           success: false,
@@ -120,24 +161,45 @@ export async function createTenant(req, res) {
 
     const tenantId = `tenant-${crypto.randomBytes(4).toString('hex')}`;
 
-    db.prepare(`
-      INSERT INTO tenants (id, name, cnpj, plan, status, max_users, daily_quota_limit, monthly_quota_limit, created_at, updated_at)
-      VALUES (?, ?, ?, ?, 'ACTIVE', ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
-    `).run(tenantId, name, cnpj || null, plan, max_users, daily_quota_limit, monthly_quota_limit);
+    if (db.isPostgres && db.pool) {
+      await db.query(`
+        INSERT INTO tenants (id, name, cnpj, plan, status, max_users, daily_quota_limit, monthly_quota_limit, created_at, updated_at)
+        VALUES (?, ?, ?, ?, 'ACTIVE', ?, ?, ?, NOW(), NOW())
+      `, [tenantId, name, cnpj || null, plan, max_users, daily_quota_limit, monthly_quota_limit]);
+    } else {
+      db.prepare(`
+        INSERT INTO tenants (id, name, cnpj, plan, status, max_users, daily_quota_limit, monthly_quota_limit, created_at, updated_at)
+        VALUES (?, ?, ?, ?, 'ACTIVE', ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+      `).run(tenantId, name, cnpj || null, plan, max_users, daily_quota_limit, monthly_quota_limit);
+    }
 
     // FASE 59: Inicialização automática de Test Drive (7 dias) em tenant_api_configs
     try {
       const configId = `cfg-${tenantId}`;
       const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();
-      db.prepare(`
-        INSERT OR IGNORE INTO tenant_api_configs (id, tenant_id, use_master_key, test_drive_expires_at, created_at, updated_at)
-        VALUES (?, ?, 1, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
-      `).run(configId, tenantId, expiresAt);
+      if (db.isPostgres && db.pool) {
+        await db.query(`
+          INSERT INTO tenant_api_configs (id, tenant_id, use_master_key, test_drive_expires_at, created_at, updated_at)
+          VALUES (?, ?, 1, ?, NOW(), NOW())
+          ON CONFLICT (tenant_id) DO NOTHING
+        `, [configId, tenantId, expiresAt]);
+      } else {
+        db.prepare(`
+          INSERT OR IGNORE INTO tenant_api_configs (id, tenant_id, use_master_key, test_drive_expires_at, created_at, updated_at)
+          VALUES (?, ?, 1, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+        `).run(configId, tenantId, expiresAt);
+      }
     } catch (cfgErr) {
       console.warn('Aviso ao inicializar tenant_api_configs:', cfgErr.message);
     }
 
-    const newTenant = db.prepare('SELECT * FROM tenants WHERE id = ?').get(tenantId);
+    let newTenant = null;
+    if (db.isPostgres && db.pool) {
+      const nRes = await db.query('SELECT * FROM tenants WHERE id = ?', [tenantId]);
+      newTenant = nRes.rows && nRes.rows.length > 0 ? nRes.rows[0] : null;
+    } else {
+      newTenant = db.prepare('SELECT * FROM tenants WHERE id = ?').get(tenantId);
+    }
 
     return res.status(201).json({
       success: true,
@@ -163,7 +225,14 @@ export async function updateTenant(req, res) {
     const { id } = req.params;
     const body = req.body || {};
 
-    const tenant = db.prepare('SELECT * FROM tenants WHERE id = ?').get(id);
+    let tenant = null;
+    if (db.isPostgres && db.pool) {
+      const tRes = await db.query('SELECT * FROM tenants WHERE id = ?', [id]);
+      tenant = tRes.rows && tRes.rows.length > 0 ? tRes.rows[0] : null;
+    } else {
+      tenant = db.prepare('SELECT * FROM tenants WHERE id = ?').get(id);
+    }
+
     if (!tenant) {
       return res.status(404).json({
         success: false,
@@ -189,14 +258,29 @@ export async function updateTenant(req, res) {
     const daily_quota_limit = body.daily_quota_limit !== undefined ? Number(body.daily_quota_limit) : tenant.daily_quota_limit;
     const monthly_quota_limit = body.monthly_quota_limit !== undefined ? Number(body.monthly_quota_limit) : tenant.monthly_quota_limit;
 
-    db.prepare(`
-      UPDATE tenants 
-      SET name = ?, cnpj = ?, plan = ?, status = ?, max_users = ?, 
-          daily_quota_limit = ?, monthly_quota_limit = ?, updated_at = CURRENT_TIMESTAMP
-      WHERE id = ?
-    `).run(name, cnpj || null, plan, status, max_users, daily_quota_limit, monthly_quota_limit, id);
+    if (db.isPostgres && db.pool) {
+      await db.query(`
+        UPDATE tenants 
+        SET name = ?, cnpj = ?, plan = ?, status = ?, max_users = ?, 
+            daily_quota_limit = ?, monthly_quota_limit = ?, updated_at = NOW()
+        WHERE id = ?
+      `, [name, cnpj || null, plan, status, max_users, daily_quota_limit, monthly_quota_limit, id]);
+    } else {
+      db.prepare(`
+        UPDATE tenants 
+        SET name = ?, cnpj = ?, plan = ?, status = ?, max_users = ?, 
+            daily_quota_limit = ?, monthly_quota_limit = ?, updated_at = CURRENT_TIMESTAMP
+        WHERE id = ?
+      `).run(name, cnpj || null, plan, status, max_users, daily_quota_limit, monthly_quota_limit, id);
+    }
 
-    const updated = db.prepare('SELECT * FROM tenants WHERE id = ?').get(id);
+    let updated = null;
+    if (db.isPostgres && db.pool) {
+      const uRes = await db.query('SELECT * FROM tenants WHERE id = ?', [id]);
+      updated = uRes.rows && uRes.rows.length > 0 ? uRes.rows[0] : null;
+    } else {
+      updated = db.prepare('SELECT * FROM tenants WHERE id = ?').get(id);
+    }
 
     return res.status(200).json({
       success: true,
@@ -215,7 +299,7 @@ export async function updateTenant(req, res) {
 }
 
 /**
- * Remove definitivamente uma organização/tenant com cascata governamental segura no SQLite
+ * Remove definitivamente uma organização/tenant com cascata governamental segura
  */
 export async function deleteTenant(req, res) {
   try {
@@ -229,7 +313,14 @@ export async function deleteTenant(req, res) {
       });
     }
 
-    const tenant = db.prepare('SELECT id, name FROM tenants WHERE id = ?').get(id);
+    let tenant = null;
+    if (db.isPostgres && db.pool) {
+      const tRes = await db.query('SELECT id, name FROM tenants WHERE id = ?', [id]);
+      tenant = tRes.rows && tRes.rows.length > 0 ? tRes.rows[0] : null;
+    } else {
+      tenant = db.prepare('SELECT id, name FROM tenants WHERE id = ?').get(id);
+    }
+
     if (!tenant) {
       return res.status(404).json({
         success: false,
@@ -238,53 +329,42 @@ export async function deleteTenant(req, res) {
       });
     }
 
-    // Executa limpeza em cascata segura no SQLite:
-    // 1. Desvincula logs de auditoria para integridade histórica
-    try {
-      db.prepare('UPDATE audit_logs SET tenant_id = NULL WHERE tenant_id = ?').run(id);
-    } catch (e) {
-      console.warn('Aviso ao desvincular audit_logs do tenant:', e.message);
+    let deletedUsersCount = 0;
+    let deletedLeadsCount = 0;
+
+    if (db.isPostgres && db.pool) {
+      try { await db.query('UPDATE audit_logs SET tenant_id = NULL WHERE tenant_id = ?', [id]); } catch (e) {}
+      try { await db.query('DELETE FROM leads WHERE is_competitor = 1 AND tenant_id = ?', [id]); } catch (e) {}
+      try { await db.query('DELETE FROM export_quotas WHERE user_id IN (SELECT id FROM users WHERE tenant_id = ?)', [id]); } catch (e) {}
+      const du = await db.query('DELETE FROM users WHERE tenant_id = ?', [id]);
+      deletedUsersCount = du.rowCount || 0;
+      const dl = await db.query('DELETE FROM leads WHERE tenant_id = ?', [id]);
+      deletedLeadsCount = dl.rowCount || 0;
+      try { await db.query('DELETE FROM tenant_api_configs WHERE tenant_id = ?', [id]); } catch (e) {}
+      await db.query('DELETE FROM tenants WHERE id = ?', [id]);
+    } else {
+      try { db.prepare('UPDATE audit_logs SET tenant_id = NULL WHERE tenant_id = ?').run(id); } catch (e) {}
+      try { db.prepare('DELETE FROM leads WHERE is_competitor = 1 AND tenant_id = ?').run(id); } catch (e) {}
+      try {
+        db.prepare(`
+          DELETE FROM export_quotas 
+          WHERE user_id IN (SELECT id FROM users WHERE tenant_id = ?)
+        `).run(id);
+      } catch (e) {}
+      const du = db.prepare('DELETE FROM users WHERE tenant_id = ?').run(id);
+      deletedUsersCount = du.changes || 0;
+      const dl = db.prepare('DELETE FROM leads WHERE tenant_id = ?').run(id);
+      deletedLeadsCount = dl.changes || 0;
+      try { db.prepare('DELETE FROM tenant_api_configs WHERE tenant_id = ?').run(id); } catch (e) {}
+      db.prepare('DELETE FROM tenants WHERE id = ?').run(id);
     }
-
-    // 2. Remove registros de concorrência e inteligência competitiva da empresa
-    try {
-      db.prepare('DELETE FROM leads WHERE is_competitor = 1 AND tenant_id = ?').run(id);
-    } catch (e) {
-      console.warn('Aviso ao remover concorrentes do tenant:', e.message);
-    }
-
-    // 3. Remove cotas de exportação de todos os operadores vinculados a este tenant
-    try {
-      db.prepare(`
-        DELETE FROM export_quotas 
-        WHERE user_id IN (SELECT id FROM users WHERE tenant_id = ?)
-      `).run(id);
-    } catch (e) {
-      console.warn('Aviso ao remover export_quotas dos operadores do tenant:', e.message);
-    }
-
-    // 4. Remove operadores e usuários vinculados a este tenant
-    const deletedUsers = db.prepare('DELETE FROM users WHERE tenant_id = ?').run(id);
-
-    // 5. Remove leads exclusivos gerados/importados por este tenant (exceto leads do root)
-    const deletedLeads = db.prepare('DELETE FROM leads WHERE tenant_id = ?').run(id);
-
-    // FASE 59: Remove configurações de API do tenant
-    try {
-      db.prepare('DELETE FROM tenant_api_configs WHERE tenant_id = ?').run(id);
-    } catch (e) {
-      console.warn('Aviso ao remover tenant_api_configs:', e.message);
-    }
-
-    // 6. Remove a empresa da tabela tenants
-    db.prepare('DELETE FROM tenants WHERE id = ?').run(id);
 
     return res.status(200).json({
       success: true,
-      message: `Empresa "${tenant.name}" excluída definitivamente com sucesso (${deletedUsers.changes || 0} operadores e ${deletedLeads.changes || 0} leads purgados).`,
+      message: `Empresa "${tenant.name}" excluída definitivamente com sucesso (${deletedUsersCount} operadores e ${deletedLeadsCount} leads purgados).`,
       action: 'DELETED',
-      deleted_users_count: deletedUsers.changes || 0,
-      deleted_leads_count: deletedLeads.changes || 0
+      deleted_users_count: deletedUsersCount,
+      deleted_leads_count: deletedLeadsCount
     });
   } catch (err) {
     console.error('❌ Erro ao excluir tenant em cascata:', err);
@@ -302,10 +382,20 @@ export async function deleteTenant(req, res) {
 export async function getMyTenantSettings(req, res) {
   try {
     const tenantId = req.user?.tenant_id || 'tenant-root-default';
-    let tenant = db.prepare('SELECT id, name, cnpj, plan, status, max_users, daily_quota_limit, monthly_quota_limit, whatsapp_inbound, settings_json FROM tenants WHERE id = ?').get(tenantId);
-    
-    if (!tenant) {
-      tenant = db.prepare('SELECT id, name, cnpj, plan, status, max_users, daily_quota_limit, monthly_quota_limit, whatsapp_inbound, settings_json FROM tenants WHERE id = ?').get('tenant-root-default');
+    let tenant = null;
+
+    if (db.isPostgres && db.pool) {
+      const tRes = await db.query('SELECT id, name, cnpj, plan, status, max_users, daily_quota_limit, monthly_quota_limit, whatsapp_inbound, settings_json FROM tenants WHERE id = ?', [tenantId]);
+      tenant = tRes.rows && tRes.rows.length > 0 ? tRes.rows[0] : null;
+      if (!tenant) {
+        const rootRes = await db.query('SELECT id, name, cnpj, plan, status, max_users, daily_quota_limit, monthly_quota_limit, whatsapp_inbound, settings_json FROM tenants WHERE id = ?', ['tenant-root-default']);
+        tenant = rootRes.rows && rootRes.rows.length > 0 ? rootRes.rows[0] : null;
+      }
+    } else {
+      tenant = db.prepare('SELECT id, name, cnpj, plan, status, max_users, daily_quota_limit, monthly_quota_limit, whatsapp_inbound, settings_json FROM tenants WHERE id = ?').get(tenantId);
+      if (!tenant) {
+        tenant = db.prepare('SELECT id, name, cnpj, plan, status, max_users, daily_quota_limit, monthly_quota_limit, whatsapp_inbound, settings_json FROM tenants WHERE id = ?').get('tenant-root-default');
+      }
     }
 
     if (!tenant) {
@@ -315,6 +405,11 @@ export async function getMyTenantSettings(req, res) {
         message: 'Organização não encontrada.'
       });
     }
+
+    let parsedSettings = {};
+    try {
+      parsedSettings = typeof tenant.settings_json === 'string' ? JSON.parse(tenant.settings_json || '{}') : (tenant.settings_json || {});
+    } catch (e) {}
 
     return res.status(200).json({
       success: true,
@@ -328,7 +423,7 @@ export async function getMyTenantSettings(req, res) {
         daily_quota_limit: tenant.daily_quota_limit,
         monthly_quota_limit: tenant.monthly_quota_limit,
         whatsapp_inbound: tenant.whatsapp_inbound || '',
-        settings: JSON.parse(tenant.settings_json || '{}')
+        settings: parsedSettings
       }
     });
   } catch (err) {
@@ -356,7 +451,14 @@ export async function updateMyTenantSettings(req, res) {
       cleanWa = `55${cleanWa}`;
     }
 
-    const tenant = db.prepare('SELECT * FROM tenants WHERE id = ?').get(tenantId);
+    let tenant = null;
+    if (db.isPostgres && db.pool) {
+      const tRes = await db.query('SELECT * FROM tenants WHERE id = ?', [tenantId]);
+      tenant = tRes.rows && tRes.rows.length > 0 ? tRes.rows[0] : null;
+    } else {
+      tenant = db.prepare('SELECT * FROM tenants WHERE id = ?').get(tenantId);
+    }
+
     if (!tenant) {
       return res.status(404).json({
         success: false,
@@ -365,21 +467,46 @@ export async function updateMyTenantSettings(req, res) {
       });
     }
 
-    const currentSettings = JSON.parse(tenant.settings_json || '{}');
+    let currentSettings = {};
+    try {
+      currentSettings = typeof tenant.settings_json === 'string' ? JSON.parse(tenant.settings_json || '{}') : (tenant.settings_json || {});
+    } catch (e) {}
+
     const updatedSettings = {
       ...currentSettings,
       ...(body.settings || {})
     };
 
-    db.prepare(`
-      UPDATE tenants 
-      SET whatsapp_inbound = ?,
-          settings_json = ?,
-          updated_at = CURRENT_TIMESTAMP
-      WHERE id = ?
-    `).run(cleanWa, JSON.stringify(updatedSettings), tenantId);
+    if (db.isPostgres && db.pool) {
+      await db.query(`
+        UPDATE tenants 
+        SET whatsapp_inbound = ?,
+            settings_json = ?,
+            updated_at = NOW()
+        WHERE id = ?
+      `, [cleanWa, JSON.stringify(updatedSettings), tenantId]);
+    } else {
+      db.prepare(`
+        UPDATE tenants 
+        SET whatsapp_inbound = ?,
+            settings_json = ?,
+            updated_at = CURRENT_TIMESTAMP
+        WHERE id = ?
+      `).run(cleanWa, JSON.stringify(updatedSettings), tenantId);
+    }
 
-    const updated = db.prepare('SELECT id, name, cnpj, plan, status, max_users, daily_quota_limit, monthly_quota_limit, whatsapp_inbound, settings_json FROM tenants WHERE id = ?').get(tenantId);
+    let updated = null;
+    if (db.isPostgres && db.pool) {
+      const uRes = await db.query('SELECT id, name, cnpj, plan, status, max_users, daily_quota_limit, monthly_quota_limit, whatsapp_inbound, settings_json FROM tenants WHERE id = ?', [tenantId]);
+      updated = uRes.rows && uRes.rows.length > 0 ? uRes.rows[0] : null;
+    } else {
+      updated = db.prepare('SELECT id, name, cnpj, plan, status, max_users, daily_quota_limit, monthly_quota_limit, whatsapp_inbound, settings_json FROM tenants WHERE id = ?').get(tenantId);
+    }
+
+    let resSettings = {};
+    try {
+      resSettings = typeof updated.settings_json === 'string' ? JSON.parse(updated.settings_json || '{}') : (updated.settings_json || {});
+    } catch (e) {}
 
     return res.status(200).json({
       success: true,
@@ -391,7 +518,7 @@ export async function updateMyTenantSettings(req, res) {
         plan: updated.plan,
         status: updated.status,
         whatsapp_inbound: updated.whatsapp_inbound || '',
-        settings: JSON.parse(updated.settings_json || '{}')
+        settings: resSettings
       }
     });
   } catch (err) {
@@ -403,4 +530,3 @@ export async function updateMyTenantSettings(req, res) {
     });
   }
 }
-
