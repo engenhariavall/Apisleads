@@ -508,6 +508,35 @@ html, body, * {
   transform: translateX(3px);
 }
 
+.btn-admin-sync {
+  background: #0B1224;
+  border: 1px solid rgba(0, 210, 255, 0.35);
+  color: #00D2FF;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.45rem 0.9rem;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-admin-sync:hover {
+  background: rgba(0, 85, 255, 0.15);
+  border-color: #00D2FF;
+  color: #FFFFFF;
+  box-shadow: 0 2px 8px rgba(0, 210, 255, 0.25);
+}
+
+.btn-admin-sync:disabled,
+.btn-admin-sync.loading {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 .btn-topbar-action {
   background: #0B1224;
   border: 1px solid rgba(148, 163, 184, 0.15);

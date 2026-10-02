@@ -2256,5 +2256,46 @@
         alert(`Erro ao salvar configurações do inquilino: ${err.message}`);
       }
     });
+
+    // 17. Sincronização e Geocodificação da Base Real (Super Admin)
+    const handleSyncRealData = async (btn) => {
+      const originalHtml = btn.innerHTML;
+      btn.disabled = true;
+      btn.classList.add('loading');
+      btn.innerHTML = '<span style="display:inline-block; animation:spin 1s linear infinite; margin-right:4px;">⟳</span><span>Sincronizando Base Real...</span>';
+
+      showToast('Iniciando re-sincronização e geocodificação em lote dos endereços fiscais...');
+
+      try {
+        const res = await fetch('/api/leads/re-sync-all', {
+          method: 'POST',
+          headers: getAuthHeaders(),
+          body: JSON.stringify({ all: false })
+        });
+
+        const data = await res.json();
+        if (!res.ok || !data.success) {
+          throw new Error(data.error || 'Falha na sincronização da base');
+        }
+
+        showToast(data.message || 'Re-sincronização concluída com sucesso!');
+        loadOverviewStats();
+      } catch (err) {
+        console.error('Erro ao sincronizar base real:', err);
+        showToast(err.message || 'Falha ao sincronizar base real.');
+      } finally {
+        btn.disabled = false;
+        btn.classList.remove('loading');
+        btn.innerHTML = originalHtml;
+      }
+    };
+
+    document.getElementById('btnAdminSyncRealData')?.addEventListener('click', function() {
+      handleSyncRealData(this);
+    });
+
+    document.getElementById('btnOverviewSyncRealData')?.addEventListener('click', function() {
+      handleSyncRealData(this);
+    });
   });
 })();

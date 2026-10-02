@@ -161,6 +161,12 @@
           <span class="topbar-current" id="topbarCurrentView">Métricas Globais & Usuários</span>
         </div>
         <div class="topbar-right">
+          <button type="button" class="btn-admin-sync" id="btnAdminSyncRealData" title="Re-sincronizar geocodificação em lote e purgar resíduos antigos">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.3"/>
+            </svg>
+            <span class="sync-text">Sincronizar Base Real</span>
+          </button>
           <a href="/" class="btn-transition-crm" id="btnTransitionCrm" title="Acessar Plataforma API Leads">
             <span>Acessar API Leads</span>
             <span class="arrow-sym">→</span>
@@ -200,6 +206,24 @@
               <div class="kpi-value" id="adminStatAuditEvents">-</div>
               <div class="kpi-caption">Registros de segurança rastreados na base</div>
             </article>
+          </div>
+
+          <!-- Card de Manutenção & Sincronização da Base Real -->
+          <div class="admin-card-section" style="margin-top: 1rem;">
+            <div class="card-section-header" style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 0.75rem; border-bottom: 1px solid rgba(148, 163, 184, 0.1);">
+              <div>
+                <h3 style="font-size: 0.95rem; font-weight: 700; color: #FFFFFF; margin: 0;">MANUTENÇÃO & SINCRONIZAÇÃO DA BASE REAL</h3>
+                <p style="font-size: 0.78rem; color: #94A3B8; margin: 0.25rem 0 0 0;">
+                  Executa rotina técnica de re-geocodificação em lote (OpenStreetMap / Nominatim) para refinar coordenadas de rua de empresas e produtores e purga resíduos antigos de testes.
+                </p>
+              </div>
+              <button type="button" class="btn-admin-sync" id="btnOverviewSyncRealData" style="background: rgba(0, 85, 255, 0.15); border: 1px solid rgba(0, 210, 255, 0.4); color: #00D2FF; white-space: nowrap;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:-2px; margin-right:4px;">
+                  <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.3"/>
+                </svg>
+                <span>Sincronizar Base Real</span>
+              </button>
+            </div>
           </div>
         </div>
 
