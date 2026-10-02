@@ -3,6 +3,11 @@
   "cleanUrls": true,
   "rewrites": [
     { "source": "/relatorio", "destination": "/relatorio.html" },
-    { "source": "/api/(.*)", "destination": "http://SEU_IP_OU_DOMINIO_VPS:3000/api/$1" }
+    { "source": "/admin", "destination": "/admin.html" },
+    { "source": "/login", "destination": "/login.html" },
+    { "source": "/health", "destination": "http://179.236.237.116/health" },
+    { "source": "/api/(.*)", "destination": "http://179.236.237.116/api/$1" },
+    { "source": "/ai/(.*)", "destination": "http://179.236.237.116/ai/$1" },
+    { "source": "/copilot/(.*)", "destination": "http://179.236.237.116/copilot/$1" }
   ]
 }
