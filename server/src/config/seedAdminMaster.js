@@ -5,6 +5,7 @@
  * 
  * Cria ou atualiza o usuário Super Admin padrão e quota irrestrita
  * com credenciais provenientes de variáveis de ambiente ou defaults de segurança.
+ * Suporta arquitetura Dual-Engine: SQLite Local + PostgreSQL / Supabase.
  */
 
 import crypto from 'crypto';
@@ -17,43 +18,55 @@ export async function seedSuperAdmin() {
   const adminName = process.env.SUPER_ADMIN_NAME || 'Super Admin Master';
 
   try {
-    // 1. Verifica se já existe QUALQUER SUPER_ADMIN ativo
-    const anySuperAdmin = db.prepare("SELECT id, email, role FROM users WHERE role = 'SUPER_ADMIN'").get();
-    if (anySuperAdmin) {
-      console.log(`👑 [ADMIN MASTER SEED] Super Admin já ativo: ${anySuperAdmin.email}`);
-      return;
+    const passwordHash = await hashPassword(adminPass);
+
+    // 1. Seed no SQLite local
+    if (db.sqlite) {
+      try {
+        const existingSqlite = db.prepare('SELECT id, email, role FROM users WHERE email = ?').get(adminEmail);
+        if (!existingSqlite) {
+          const userId = `usr-admin-${crypto.randomBytes(4).toString('hex')}`;
+          db.prepare(`
+            INSERT INTO users (id, tenant_id, email, password_hash, access_password, name, role, is_active, created_at)
+            VALUES (?, 'tenant-root-default', ?, ?, ?, ?, 'SUPER_ADMIN', 1, CURRENT_TIMESTAMP)
+          `).run(userId, adminEmail, passwordHash, adminPass, adminName);
+
+          db.prepare(`
+            INSERT OR IGNORE INTO export_quotas (user_id, daily_limit, monthly_limit, used_today, used_this_month, last_reset_date)
+            VALUES (?, 999999, 9999999, 0, 0, date('now'))
+          `).run(userId);
+          console.log(`👑 [ADMIN MASTER SEED SQLITE] Super Admin provisionado: ${adminEmail}`);
+        } else {
+          db.prepare("UPDATE users SET role = 'SUPER_ADMIN', password_hash = ?, access_password = ?, is_active = 1 WHERE id = ?").run(passwordHash, adminPass, existingSqlite.id);
+        }
+      } catch (errSqlite) {
+        console.warn('⚠️ [ADMIN MASTER SEED SQLITE WARNING]:', errSqlite.message);
+      }
     }
 
-    const existing = db.prepare('SELECT id, email, role FROM users WHERE email = ?').get(adminEmail);
+    // 2. Seed no PostgreSQL / Supabase
+    if (db.isPostgres && db.pool) {
+      try {
+        const pRes = await db.query('SELECT id, email, role FROM users WHERE email = ?', [adminEmail]);
+        if (!pRes.rows || pRes.rows.length === 0) {
+          const userId = `usr-admin-${crypto.randomBytes(4).toString('hex')}`;
+          await db.query(`
+            INSERT INTO users (id, tenant_id, email, password_hash, access_password, name, role, is_active, created_at)
+            VALUES (?, 'tenant-root-default', ?, ?, ?, ?, 'SUPER_ADMIN', TRUE, NOW())
+          `, [userId, adminEmail, passwordHash, adminPass, adminName]);
 
-    if (!existing) {
-      const passwordHash = await hashPassword(adminPass);
-      const userId = `usr-admin-${crypto.randomBytes(4).toString('hex')}`;
-
-      db.prepare(`
-        INSERT INTO users (id, tenant_id, email, password_hash, name, role, is_active, created_at)
-        VALUES (?, 'tenant-root-default', ?, ?, ?, 'SUPER_ADMIN', 1, CURRENT_TIMESTAMP)
-      `).run(userId, adminEmail, passwordHash, adminName);
-
-      // Quota ilimitada para o Super Admin (999.999/dia e 9.999.999/mês)
-      db.prepare(`
-        INSERT INTO export_quotas (user_id, daily_limit, monthly_limit, used_today, used_this_month, last_reset_date)
-        VALUES (?, 999999, 9999999, 0, 0, date('now'))
-      `).run(userId);
-
-      // Log inicial de sistema
-      db.prepare(`
-        INSERT INTO audit_logs (id, tenant_id, user_id, user_email, action, endpoint, query_params, ip_address, user_agent)
-        VALUES (?, 'tenant-root-default', ?, ?, 'SYSTEM_INIT_SUPER_ADMIN', 'seedAdminMaster', '{"event":"bootstrap_complete"}', '127.0.0.1', 'VersusSystemEngine/1.0')
-      `).run(`log-${crypto.randomBytes(6).toString('hex')}`, userId, adminEmail);
-
-      console.log(`👑 [ADMIN MASTER SEED] Super Admin provisionado com sucesso: ${adminEmail} (Role: SUPER_ADMIN)`);
-    } else {
-      // Garante que o role seja SUPER_ADMIN caso tenha sido alterado
-      if (existing.role !== 'SUPER_ADMIN') {
-        db.prepare("UPDATE users SET role = 'SUPER_ADMIN' WHERE id = ?").run(existing.id);
+          await db.query(`
+            INSERT INTO export_quotas (user_id, daily_limit, monthly_limit, used_today, used_this_month, last_reset_date)
+            VALUES (?, 999999, 9999999, 0, 0, CURRENT_DATE)
+            ON CONFLICT (user_id) DO NOTHING
+          `, [userId]);
+          console.log(`👑 [ADMIN MASTER SEED POSTGRES] Super Admin provisionado: ${adminEmail}`);
+        } else {
+          await db.query("UPDATE users SET role = 'SUPER_ADMIN', password_hash = ?, access_password = ?, is_active = TRUE WHERE id = ?", [passwordHash, adminPass, pRes.rows[0].id]);
+        }
+      } catch (errPg) {
+        console.warn('⚠️ [ADMIN MASTER SEED POSTGRES WARNING]:', errPg.message);
       }
-      console.log(`👑 [ADMIN MASTER SEED] Super Admin já existente e ativo: ${adminEmail}`);
     }
   } catch (err) {
     console.error('❌ [ADMIN MASTER SEED ERROR] Falha ao provisionar Super Admin:', err.message);

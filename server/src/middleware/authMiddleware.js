@@ -34,7 +34,7 @@ export function extractToken(req) {
  * Middleware de Autenticação Obrigatória
  * Injeta req.user = { id, email, name, role }
  */
-export function requireAuth(req, res, next) {
+export async function requireAuth(req, res, next) {
   const token = extractToken(req);
 
   if (!token) {
@@ -57,14 +57,26 @@ export function requireAuth(req, res, next) {
 
   // Verifica se o usuário ainda existe e está ativo no banco
   try {
-    const user = db.prepare(`
-      SELECT u.id, u.tenant_id, t.status AS tenant_status, u.email, u.name, u.role, u.is_active 
-      FROM users u
-      LEFT JOIN tenants t ON u.tenant_id = t.id
-      WHERE u.id = ?
-    `).get(payload.id);
+    let user = null;
+    if (db.isPostgres && db.pool) {
+      const uRes = await db.query(`
+        SELECT u.id, u.tenant_id, t.status AS tenant_status, u.email, u.name, u.role, u.is_active 
+        FROM users u
+        LEFT JOIN tenants t ON u.tenant_id = t.id
+        WHERE u.id = ?
+      `, [payload.id]);
+      user = uRes.rows && uRes.rows.length > 0 ? uRes.rows[0] : null;
+    } else {
+      user = db.prepare(`
+        SELECT u.id, u.tenant_id, t.status AS tenant_status, u.email, u.name, u.role, u.is_active 
+        FROM users u
+        LEFT JOIN tenants t ON u.tenant_id = t.id
+        WHERE u.id = ?
+      `).get(payload.id);
+    }
 
-    if (!user || user.is_active !== 1) {
+    const isActive = user && (user.is_active === 1 || user.is_active === true);
+    if (!user || !isActive) {
       return res.status(401).json({
         success: false,
         error: 'USER_INACTIVE',
@@ -121,7 +133,7 @@ export function getTenantFromRequest(req) {
 /**
  * Middleware opcional de autenticação: se houver token válido, preenche req.user, senão segue como anônimo
  */
-export function optionalAuth(req, res, next) {
+export async function optionalAuth(req, res, next) {
   const token = extractToken(req);
   if (!token) {
     req.user = null;
@@ -131,8 +143,15 @@ export function optionalAuth(req, res, next) {
   const payload = verifyJwt(token);
   if (payload && payload.id) {
     try {
-      const user = db.prepare('SELECT id, tenant_id, email, name, role, is_active FROM users WHERE id = ?').get(payload.id);
-      if (user && user.is_active === 1) {
+      let user = null;
+      if (db.isPostgres && db.pool) {
+        const uRes = await db.query('SELECT id, tenant_id, email, name, role, is_active FROM users WHERE id = ?', [payload.id]);
+        user = uRes.rows && uRes.rows.length > 0 ? uRes.rows[0] : null;
+      } else {
+        user = db.prepare('SELECT id, tenant_id, email, name, role, is_active FROM users WHERE id = ?').get(payload.id);
+      }
+      const isActive = user && (user.is_active === 1 || user.is_active === true);
+      if (user && isActive) {
         req.user = {
           id: user.id,
           tenant_id: user.tenant_id || 'tenant-root-default',

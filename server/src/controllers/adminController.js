@@ -45,7 +45,13 @@ export async function listUsers(req, res) {
 
     query += ` ORDER BY u.created_at ASC `;
 
-    const users = db.prepare(query).all(...params);
+    let users = [];
+    if (db.isPostgres && db.pool) {
+      const uRes = await db.query(query, params);
+      users = uRes.rows || [];
+    } else {
+      users = db.prepare(query).all(...params);
+    }
 
     return res.status(200).json({
       success: true,
@@ -81,7 +87,22 @@ export async function createUser(req, res) {
     }
 
     // Valida se o Tenant existe e está ativo
-    const tenant = db.prepare('SELECT id, name, status, max_users FROM tenants WHERE id = ?').get(tenant_id);
+    let tenant = null;
+    let currentUsersCount = 0;
+    if (db.isPostgres && db.pool) {
+      const tRes = await db.query('SELECT id, name, status, max_users FROM tenants WHERE id = ?', [tenant_id]);
+      tenant = tRes.rows && tRes.rows.length > 0 ? tRes.rows[0] : null;
+      if (tenant) {
+        const cRes = await db.query('SELECT COUNT(*) as count FROM users WHERE tenant_id = ?', [tenant_id]);
+        currentUsersCount = parseInt(cRes.rows[0]?.count || 0, 10);
+      }
+    } else {
+      tenant = db.prepare('SELECT id, name, status, max_users FROM tenants WHERE id = ?').get(tenant_id);
+      if (tenant) {
+        currentUsersCount = db.prepare('SELECT COUNT(*) as count FROM users WHERE tenant_id = ?').get(tenant_id)?.count || 0;
+      }
+    }
+
     if (!tenant) {
       return res.status(400).json({
         success: false,
@@ -128,7 +149,6 @@ export async function createUser(req, res) {
     }
 
     // Trava de limite de operadores contratados (max_users)
-    const currentUsersCount = db.prepare('SELECT COUNT(*) as count FROM users WHERE tenant_id = ?').get(tenant_id)?.count || 0;
     if (currentUsersCount >= tenant.max_users) {
       return res.status(400).json({
         success: false,
@@ -138,7 +158,14 @@ export async function createUser(req, res) {
     }
 
     const cleanEmail = email.toLowerCase().trim();
-    const existing = db.prepare('SELECT id FROM users WHERE email = ?').get(cleanEmail);
+    let existing = null;
+    if (db.isPostgres && db.pool) {
+      const eRes = await db.query('SELECT id FROM users WHERE email = ?', [cleanEmail]);
+      existing = eRes.rows && eRes.rows.length > 0 ? eRes.rows[0] : null;
+    } else {
+      existing = db.prepare('SELECT id FROM users WHERE email = ?').get(cleanEmail);
+    }
+
     if (existing) {
       return res.status(400).json({
         success: false,
@@ -150,16 +177,28 @@ export async function createUser(req, res) {
     const userId = `usr-${crypto.randomBytes(5).toString('hex')}`;
     const passwordHash = await hashPassword(password);
 
-    db.prepare(`
-      INSERT INTO users (id, tenant_id, email, password_hash, access_password, name, role, is_active, created_at)
-      VALUES (?, ?, ?, ?, ?, ?, ?, 1, CURRENT_TIMESTAMP)
-    `).run(userId, tenant_id, cleanEmail, passwordHash, password, name.trim(), assignedRole);
+    if (db.isPostgres && db.pool) {
+      await db.query(`
+        INSERT INTO users (id, tenant_id, email, password_hash, access_password, name, role, is_active, created_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, TRUE, NOW())
+      `, [userId, tenant_id, cleanEmail, passwordHash, password, name.trim(), assignedRole]);
 
-    const todayStr = new Date().toISOString().slice(0, 10);
-    db.prepare(`
-      INSERT INTO export_quotas (user_id, daily_limit, monthly_limit, used_today, used_this_month, last_reset_date)
-      VALUES (?, ?, ?, 0, 0, ?)
-    `).run(userId, Number(daily_limit) || 500, Number(monthly_limit) || 5000, todayStr);
+      await db.query(`
+        INSERT INTO export_quotas (user_id, daily_limit, monthly_limit, used_today, used_this_month, last_reset_date)
+        VALUES (?, ?, ?, 0, 0, CURRENT_DATE)
+      `, [userId, Number(daily_limit) || 500, Number(monthly_limit) || 5000]);
+    } else {
+      db.prepare(`
+        INSERT INTO users (id, tenant_id, email, password_hash, access_password, name, role, is_active, created_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, 1, CURRENT_TIMESTAMP)
+      `).run(userId, tenant_id, cleanEmail, passwordHash, password, name.trim(), assignedRole);
+
+      const todayStr = new Date().toISOString().slice(0, 10);
+      db.prepare(`
+        INSERT INTO export_quotas (user_id, daily_limit, monthly_limit, used_today, used_this_month, last_reset_date)
+        VALUES (?, ?, ?, 0, 0, ?)
+      `).run(userId, Number(daily_limit) || 500, Number(monthly_limit) || 5000, todayStr);
+    }
 
     const userData = {
       id: userId,
@@ -193,13 +232,20 @@ export async function updateUser(req, res) {
     const { id } = req.params;
     const { name, email, password, role, is_active, daily_limit, monthly_limit, tenant_id } = req.body || {};
 
-    const user = db.prepare('SELECT id, email, role, tenant_id FROM users WHERE id = ?').get(id);
+    let user = null;
+    if (db.isPostgres && db.pool) {
+      const uRes = await db.query('SELECT id, email, role, tenant_id FROM users WHERE id = ?', [id]);
+      user = uRes.rows && uRes.rows.length > 0 ? uRes.rows[0] : null;
+    } else {
+      user = db.prepare('SELECT id, email, role, tenant_id FROM users WHERE id = ?').get(id);
+    }
+
     if (!user) {
       return res.status(404).json({ success: false, error: 'USER_NOT_FOUND', message: 'Usuário não encontrado.' });
     }
 
     // Proteção: Não permite desativar o próprio Super Admin logado
-    if (req.user.id === id && is_active === 0) {
+    if (req.user.id === id && (is_active === 0 || is_active === false)) {
       return res.status(400).json({
         success: false,
         error: 'CANNOT_DEACTIVATE_SELF',
@@ -213,7 +259,13 @@ export async function updateUser(req, res) {
     if (name) { updates.push('name = ?'); params.push(name.trim()); }
     if (email) {
       const normalizedEmail = email.toLowerCase().trim();
-      const existingEmail = db.prepare('SELECT id FROM users WHERE email = ? AND id != ?').get(normalizedEmail, id);
+      let existingEmail = null;
+      if (db.isPostgres && db.pool) {
+        const eRes = await db.query('SELECT id FROM users WHERE email = ? AND id != ?', [normalizedEmail, id]);
+        existingEmail = eRes.rows && eRes.rows.length > 0 ? eRes.rows[0] : null;
+      } else {
+        existingEmail = db.prepare('SELECT id FROM users WHERE email = ? AND id != ?').get(normalizedEmail, id);
+      }
       if (existingEmail) {
         return res.status(400).json({ success: false, error: 'EMAIL_ALREADY_EXISTS', message: 'Este e-mail já está sendo utilizado por outro usuário.' });
       }
@@ -246,19 +298,30 @@ export async function updateUser(req, res) {
       updates.push('role = ?'); params.push(role);
     }
     if (tenant_id) {
-      const tenantCheck = db.prepare('SELECT id FROM tenants WHERE id = ?').get(tenant_id);
+      let tenantCheck = null;
+      if (db.isPostgres && db.pool) {
+        const tcRes = await db.query('SELECT id FROM tenants WHERE id = ?', [tenant_id]);
+        tenantCheck = tcRes.rows && tcRes.rows.length > 0;
+      } else {
+        tenantCheck = db.prepare('SELECT id FROM tenants WHERE id = ?').get(tenant_id);
+      }
       if (tenantCheck) {
         updates.push('tenant_id = ?');
         params.push(tenant_id);
       }
     }
     if (is_active !== undefined) {
-      updates.push('is_active = ?'); params.push(is_active ? 1 : 0);
+      updates.push('is_active = ?'); params.push(is_active ? true : false);
     }
 
     if (updates.length > 0) {
       params.push(id);
-      db.prepare(`UPDATE users SET ${updates.join(', ')} WHERE id = ?`).run(...params);
+      const updateSql = `UPDATE users SET ${updates.join(', ')} WHERE id = ?`;
+      if (db.isPostgres && db.pool) {
+        await db.query(updateSql, params);
+      } else {
+        db.prepare(updateSql).run(...params);
+      }
     }
 
     // Atualiza quotas se informado
@@ -270,9 +333,14 @@ export async function updateUser(req, res) {
       const qParams = [];
       if (finalDaily !== undefined) { qUpdates.push('daily_limit = ?'); qParams.push(Number(finalDaily)); }
       if (finalMonthly !== undefined) { qUpdates.push('monthly_limit = ?'); qParams.push(Number(finalMonthly)); }
-      qUpdates.push('updated_at = CURRENT_TIMESTAMP');
+      qUpdates.push('updated_at = NOW()');
       qParams.push(id);
-      db.prepare(`UPDATE export_quotas SET ${qUpdates.join(', ')} WHERE user_id = ?`).run(...qParams);
+      const quotaSql = `UPDATE export_quotas SET ${qUpdates.join(', ')} WHERE user_id = ?`;
+      if (db.isPostgres && db.pool) {
+        await db.query(quotaSql, qParams);
+      } else {
+        db.prepare(quotaSql.replace('NOW()', 'CURRENT_TIMESTAMP')).run(...qParams);
+      }
     }
 
     return res.status(200).json({
@@ -300,13 +368,24 @@ export async function resetUserPassword(req, res) {
       });
     }
 
-    const user = db.prepare('SELECT id, email FROM users WHERE id = ?').get(id);
+    let user = null;
+    if (db.isPostgres && db.pool) {
+      const uRes = await db.query('SELECT id, email FROM users WHERE id = ?', [id]);
+      user = uRes.rows && uRes.rows.length > 0 ? uRes.rows[0] : null;
+    } else {
+      user = db.prepare('SELECT id, email FROM users WHERE id = ?').get(id);
+    }
+
     if (!user) {
       return res.status(404).json({ success: false, error: 'USER_NOT_FOUND', message: 'Usuário não encontrado.' });
     }
 
     const passwordHash = await hashPassword(password);
-    db.prepare('UPDATE users SET password_hash = ?, access_password = ? WHERE id = ?').run(passwordHash, password, id);
+    if (db.isPostgres && db.pool) {
+      await db.query('UPDATE users SET password_hash = ?, access_password = ? WHERE id = ?', [passwordHash, password, id]);
+    } else {
+      db.prepare('UPDATE users SET password_hash = ?, access_password = ? WHERE id = ?').run(passwordHash, password, id);
+    }
 
     return res.status(200).json({
       success: true,
@@ -332,16 +411,27 @@ export async function deleteUser(req, res) {
       });
     }
 
-    const user = db.prepare('SELECT id, email FROM users WHERE id = ?').get(id);
+    let user = null;
+    if (db.isPostgres && db.pool) {
+      const uRes = await db.query('SELECT id, email FROM users WHERE id = ?', [id]);
+      user = uRes.rows && uRes.rows.length > 0 ? uRes.rows[0] : null;
+    } else {
+      user = db.prepare('SELECT id, email FROM users WHERE id = ?').get(id);
+    }
+
     if (!user) {
       return res.status(404).json({ success: false, error: 'USER_NOT_FOUND', message: 'Usuário não encontrado.' });
     }
 
-    try {
-      db.prepare('UPDATE audit_logs SET user_id = NULL WHERE user_id = ?').run(id);
-    } catch (e) {}
-    db.prepare('DELETE FROM export_quotas WHERE user_id = ?').run(id);
-    db.prepare('DELETE FROM users WHERE id = ?').run(id);
+    if (db.isPostgres && db.pool) {
+      try { await db.query('UPDATE audit_logs SET user_id = NULL WHERE user_id = ?', [id]); } catch (e) {}
+      await db.query('DELETE FROM export_quotas WHERE user_id = ?', [id]);
+      await db.query('DELETE FROM users WHERE id = ?', [id]);
+    } else {
+      try { db.prepare('UPDATE audit_logs SET user_id = NULL WHERE user_id = ?').run(id); } catch (e) {}
+      db.prepare('DELETE FROM export_quotas WHERE user_id = ?').run(id);
+      db.prepare('DELETE FROM users WHERE id = ?').run(id);
+    }
 
     return res.status(200).json({
       success: true,
@@ -387,7 +477,13 @@ export async function getAuditLogs(req, res) {
     query += ' ORDER BY a.created_at DESC LIMIT ? OFFSET ?';
     params.push(pageSize, offset);
 
-    const logs = db.prepare(query).all(...params);
+    let logs = [];
+    if (db.isPostgres && db.pool) {
+      const lRes = await db.query(query, params);
+      logs = lRes.rows || [];
+    } else {
+      logs = db.prepare(query).all(...params);
+    }
 
     let countQuery = 'SELECT COUNT(*) as total FROM audit_logs';
     const countParams = [];
@@ -398,8 +494,14 @@ export async function getAuditLogs(req, res) {
       countQuery += ` WHERE ${countClauses.join(' AND ')}`;
     }
 
-    const totalRow = db.prepare(countQuery).get(...countParams);
-    const total = totalRow ? totalRow.total : 0;
+    let total = 0;
+    if (db.isPostgres && db.pool) {
+      const cRes = await db.query(countQuery, countParams);
+      total = parseInt(cRes.rows[0]?.total || 0, 10);
+    } else {
+      const totalRow = db.prepare(countQuery).get(...countParams);
+      total = totalRow ? totalRow.total : 0;
+    }
 
     return res.status(200).json({
       success: true,
@@ -423,25 +525,61 @@ export async function getAuditLogs(req, res) {
  */
 export async function getAdminMetrics(req, res) {
   try {
-    const totalUsers = db.prepare('SELECT COUNT(*) as c FROM users').get().c;
-    const activeUsers = db.prepare('SELECT COUNT(*) as c FROM users WHERE is_active = 1').get().c;
-    const totalAuditEvents = db.prepare('SELECT COUNT(*) as c FROM audit_logs').get().c;
-    const totalExportsToday = db.prepare("SELECT COALESCE(SUM(records_count), 0) as s FROM audit_logs WHERE action LIKE '%EXPORT%' AND date(created_at) = date('now')").get().s;
+    let totalUsers = 0;
+    let activeUsers = 0;
+    let totalAuditEvents = 0;
+    let totalExportsToday = 0;
+    let topActions = [];
+    let recentLogs = [];
 
-    const topActions = db.prepare(`
-      SELECT action, COUNT(*) as count 
-      FROM audit_logs 
-      GROUP BY action 
-      ORDER BY count DESC 
-      LIMIT 5
-    `).all();
+    if (db.isPostgres && db.pool) {
+      const uTotal = await db.query('SELECT COUNT(*) as c FROM users');
+      totalUsers = parseInt(uTotal.rows[0]?.c || 0, 10);
 
-    const recentLogs = db.prepare(`
-      SELECT id, user_email, action, endpoint, records_count, ip_address, created_at
-      FROM audit_logs
-      ORDER BY created_at DESC
-      LIMIT 8
-    `).all();
+      const uActive = await db.query('SELECT COUNT(*) as c FROM users WHERE is_active = TRUE');
+      activeUsers = parseInt(uActive.rows[0]?.c || 0, 10);
+
+      const aTotal = await db.query('SELECT COUNT(*) as c FROM audit_logs');
+      totalAuditEvents = parseInt(aTotal.rows[0]?.c || 0, 10);
+
+      const eToday = await db.query("SELECT COALESCE(SUM(records_count), 0) as s FROM audit_logs WHERE action LIKE '%EXPORT%' AND created_at >= CURRENT_DATE");
+      totalExportsToday = parseInt(eToday.rows[0]?.s || 0, 10);
+
+      const tAct = await db.query(`
+        SELECT action, COUNT(*) as count 
+        FROM audit_logs 
+        GROUP BY action 
+        ORDER BY count DESC 
+        LIMIT 5
+      `);
+      topActions = tAct.rows || [];
+
+      const rLogs = await db.query(`
+        SELECT id, user_email, action, endpoint, records_count, ip_address, created_at
+        FROM audit_logs
+        ORDER BY created_at DESC
+        LIMIT 8
+      `);
+      recentLogs = rLogs.rows || [];
+    } else {
+      totalUsers = db.prepare('SELECT COUNT(*) as c FROM users').get()?.c || 0;
+      activeUsers = db.prepare('SELECT COUNT(*) as c FROM users WHERE is_active = 1').get()?.c || 0;
+      totalAuditEvents = db.prepare('SELECT COUNT(*) as c FROM audit_logs').get()?.c || 0;
+      totalExportsToday = db.prepare("SELECT COALESCE(SUM(records_count), 0) as s FROM audit_logs WHERE action LIKE '%EXPORT%' AND date(created_at) = date('now')").get()?.s || 0;
+      topActions = db.prepare(`
+        SELECT action, COUNT(*) as count 
+        FROM audit_logs 
+        GROUP BY action 
+        ORDER BY count DESC 
+        LIMIT 5
+      `).all();
+      recentLogs = db.prepare(`
+        SELECT id, user_email, action, endpoint, records_count, ip_address, created_at
+        FROM audit_logs
+        ORDER BY created_at DESC
+        LIMIT 8
+      `).all();
+    }
 
     return res.status(200).json({
       success: true,

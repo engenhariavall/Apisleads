@@ -31,7 +31,13 @@ export async function login(req, res) {
     }
 
     const cleanEmail = email.toLowerCase().trim();
-    const user = db.prepare('SELECT * FROM users WHERE email = ?').get(cleanEmail);
+    let user = null;
+    if (db.isPostgres && db.pool) {
+      const uRes = await db.query('SELECT * FROM users WHERE email = ?', [cleanEmail]);
+      user = uRes.rows && uRes.rows.length > 0 ? uRes.rows[0] : null;
+    } else {
+      user = db.prepare('SELECT * FROM users WHERE email = ?').get(cleanEmail);
+    }
 
     if (!user) {
       return res.status(401).json({
@@ -41,7 +47,8 @@ export async function login(req, res) {
       });
     }
 
-    if (user.is_active !== 1) {
+    const isActive = user.is_active === 1 || user.is_active === true;
+    if (!isActive) {
       return res.status(403).json({
         success: false,
         error: 'USER_DEACTIVATED',
@@ -56,10 +63,17 @@ export async function login(req, res) {
         const diff = process.hrtime(start);
         const latencyMs = Math.round((diff[0] * 1e3 + diff[1] * 1e-6) * 10) / 10;
         const formattedUa = formatUserAgent(req.headers['user-agent'] || 'Unknown');
-        db.prepare(`
-          INSERT INTO audit_logs (id, user_id, user_email, action, endpoint, query_params, ip_address, user_agent, status_code, latency_ms)
-          VALUES (?, ?, ?, 'LOGIN_FAILED', '/api/auth/login', '{"reason":"bad_password"}', ?, ?, 401, ?)
-        `).run(`log-${crypto.randomBytes(6).toString('hex')}`, user.id, user.email, req.ip || '127.0.0.1', formattedUa, latencyMs);
+        if (db.isPostgres && db.pool) {
+          await db.query(`
+            INSERT INTO audit_logs (id, user_id, user_email, action, endpoint, query_params, ip_address, user_agent, created_at)
+            VALUES (?, ?, ?, 'LOGIN_FAILED', '/api/auth/login', '{"reason":"bad_password"}', ?, ?, NOW())
+          `, [`log-${crypto.randomBytes(6).toString('hex')}`, user.id, user.email, req.ip || '127.0.0.1', formattedUa]);
+        } else {
+          db.prepare(`
+            INSERT INTO audit_logs (id, user_id, user_email, action, endpoint, query_params, ip_address, user_agent, status_code, latency_ms)
+            VALUES (?, ?, ?, 'LOGIN_FAILED', '/api/auth/login', '{"reason":"bad_password"}', ?, ?, 401, ?)
+          `).run(`log-${crypto.randomBytes(6).toString('hex')}`, user.id, user.email, req.ip || '127.0.0.1', formattedUa, latencyMs);
+        }
       } catch {}
 
       return res.status(401).json({
@@ -70,20 +84,33 @@ export async function login(req, res) {
     }
 
     // Atualiza last_login_at
-    db.prepare("UPDATE users SET last_login_at = CURRENT_TIMESTAMP WHERE id = ?").run(user.id);
+    if (db.isPostgres && db.pool) {
+      await db.query('UPDATE users SET last_login_at = NOW() WHERE id = ?', [user.id]);
+    } else {
+      db.prepare("UPDATE users SET last_login_at = CURRENT_TIMESTAMP WHERE id = ?").run(user.id);
+    }
 
     // Busca dados do Tenant associado
-    const tenant = db.prepare('SELECT id, name, plan, status, allowed_niches FROM tenants WHERE id = ?').get(user.tenant_id || 'tenant-root-default') || {
-      id: 'tenant-root-default',
-      name: 'VERSUS INTELLIGENCE (ROOT)',
-      plan: 'ENTERPRISE UNLIMITED',
-      status: 'ACTIVE',
-      allowed_niches: '["agro","b2b","saude"]'
-    };
+    let tenant = null;
+    if (db.isPostgres && db.pool) {
+      const tRes = await db.query('SELECT id, name, plan, status, allowed_niches FROM tenants WHERE id = ?', [user.tenant_id || 'tenant-root-default']);
+      tenant = tRes.rows && tRes.rows.length > 0 ? tRes.rows[0] : null;
+    } else {
+      tenant = db.prepare('SELECT id, name, plan, status, allowed_niches FROM tenants WHERE id = ?').get(user.tenant_id || 'tenant-root-default');
+    }
+    if (!tenant) {
+      tenant = {
+        id: 'tenant-root-default',
+        name: 'VERSUS INTELLIGENCE (ROOT)',
+        plan: 'ENTERPRISE UNLIMITED',
+        status: 'ACTIVE',
+        allowed_niches: '["agro","b2b","saude"]'
+      };
+    }
 
     let allowedNiches = ['agro', 'b2b', 'saude'];
     try {
-      if (tenant.allowed_niches) allowedNiches = JSON.parse(tenant.allowed_niches);
+      if (tenant.allowed_niches) allowedNiches = typeof tenant.allowed_niches === 'string' ? JSON.parse(tenant.allowed_niches) : tenant.allowed_niches;
     } catch (e) {}
 
     if (tenant.status !== 'ACTIVE' && user.role !== 'SUPER_ADMIN') {
@@ -108,22 +135,38 @@ export async function login(req, res) {
     );
 
     // Busca quotas do usuário
-    const quota = db.prepare('SELECT daily_limit, monthly_limit, used_today, used_this_month FROM export_quotas WHERE user_id = ?').get(user.id) || {
-      daily_limit: 500,
-      monthly_limit: 5000,
-      used_today: 0,
-      used_this_month: 0
-    };
+    let quota = null;
+    if (db.isPostgres && db.pool) {
+      const qRes = await db.query('SELECT daily_limit, monthly_limit, used_today, used_this_month FROM export_quotas WHERE user_id = ?', [user.id]);
+      quota = qRes.rows && qRes.rows.length > 0 ? qRes.rows[0] : null;
+    } else {
+      quota = db.prepare('SELECT daily_limit, monthly_limit, used_today, used_this_month FROM export_quotas WHERE user_id = ?').get(user.id);
+    }
+    if (!quota) {
+      quota = {
+        daily_limit: 500,
+        monthly_limit: 5000,
+        used_today: 0,
+        used_this_month: 0
+      };
+    }
 
     // Registra log de login bem-sucedido com tenant_id
     try {
       const diff = process.hrtime(start);
       const latencyMs = Math.round((diff[0] * 1e3 + diff[1] * 1e-6) * 10) / 10;
       const formattedUa = formatUserAgent(req.headers['user-agent'] || 'Unknown');
-      db.prepare(`
-        INSERT INTO audit_logs (id, tenant_id, user_id, user_email, action, endpoint, query_params, ip_address, user_agent, status_code, latency_ms)
-        VALUES (?, ?, ?, ?, 'LOGIN_SUCCESS', '/api/auth/login', '{"auth":"jwt"}', ?, ?, 200, ?)
-      `).run(`log-${crypto.randomBytes(6).toString('hex')}`, tenant.id, user.id, user.email, req.ip || '127.0.0.1', formattedUa, latencyMs);
+      if (db.isPostgres && db.pool) {
+        await db.query(`
+          INSERT INTO audit_logs (id, tenant_id, user_id, user_email, action, endpoint, query_params, ip_address, user_agent, created_at)
+          VALUES (?, ?, ?, ?, 'LOGIN_SUCCESS', '/api/auth/login', '{"auth":"jwt"}', ?, ?, NOW())
+        `, [`log-${crypto.randomBytes(6).toString('hex')}`, tenant.id, user.id, user.email, req.ip || '127.0.0.1', formattedUa]);
+      } else {
+        db.prepare(`
+          INSERT INTO audit_logs (id, tenant_id, user_id, user_email, action, endpoint, query_params, ip_address, user_agent, status_code, latency_ms)
+          VALUES (?, ?, ?, ?, 'LOGIN_SUCCESS', '/api/auth/login', '{"auth":"jwt"}', ?, ?, 200, ?)
+        `).run(`log-${crypto.randomBytes(6).toString('hex')}`, tenant.id, user.id, user.email, req.ip || '127.0.0.1', formattedUa, latencyMs);
+      }
     } catch {}
 
     return res.status(200).json({
@@ -163,30 +206,52 @@ export async function login(req, res) {
  */
 export async function getMe(req, res) {
   try {
-    const user = db.prepare(`
-      SELECT u.id, u.tenant_id, t.name AS tenant_name, t.plan AS tenant_plan, t.status AS tenant_status, t.allowed_niches,
-             u.email, u.name, u.role, u.is_active, u.created_at, u.last_login_at
-      FROM users u
-      LEFT JOIN tenants t ON u.tenant_id = t.id
-      WHERE u.id = ?
-    `).get(req.user.id);
+    let user = null;
+    if (db.isPostgres && db.pool) {
+      const uRes = await db.query(`
+        SELECT u.id, u.tenant_id, t.name AS tenant_name, t.plan AS tenant_plan, t.status AS tenant_status, t.allowed_niches,
+               u.email, u.name, u.role, u.is_active, u.created_at, u.last_login_at
+        FROM users u
+        LEFT JOIN tenants t ON u.tenant_id = t.id
+        WHERE u.id = ?
+      `, [req.user.id]);
+      user = uRes.rows && uRes.rows.length > 0 ? uRes.rows[0] : null;
+    } else {
+      user = db.prepare(`
+        SELECT u.id, u.tenant_id, t.name AS tenant_name, t.plan AS tenant_plan, t.status AS tenant_status, t.allowed_niches,
+               u.email, u.name, u.role, u.is_active, u.created_at, u.last_login_at
+        FROM users u
+        LEFT JOIN tenants t ON u.tenant_id = t.id
+        WHERE u.id = ?
+      `).get(req.user.id);
+    }
 
     if (!user) {
       return res.status(404).json({ success: false, error: 'USER_NOT_FOUND', message: 'Usuário não encontrado.' });
     }
 
     try {
-      user.allowed_niches = JSON.parse(user.allowed_niches || '["agro","b2b","saude"]');
+      user.allowed_niches = typeof user.allowed_niches === 'string' ? JSON.parse(user.allowed_niches || '["agro","b2b","saude"]') : (user.allowed_niches || ['agro', 'b2b', 'saude']);
     } catch (e) {
       user.allowed_niches = ['agro', 'b2b', 'saude'];
     }
 
-    const quota = db.prepare('SELECT daily_limit, monthly_limit, used_today, used_this_month, last_reset_date FROM export_quotas WHERE user_id = ?').get(user.id) || {
-      daily_limit: 500,
-      monthly_limit: 5000,
-      used_today: 0,
-      used_this_month: 0
-    };
+    let quota = null;
+    if (db.isPostgres && db.pool) {
+      const qRes = await db.query('SELECT daily_limit, monthly_limit, used_today, used_this_month, last_reset_date FROM export_quotas WHERE user_id = ?', [user.id]);
+      quota = qRes.rows && qRes.rows.length > 0 ? qRes.rows[0] : null;
+    } else {
+      quota = db.prepare('SELECT daily_limit, monthly_limit, used_today, used_this_month, last_reset_date FROM export_quotas WHERE user_id = ?').get(user.id);
+    }
+
+    if (!quota) {
+      quota = {
+        daily_limit: user.role === 'SUPER_ADMIN' ? 999999 : 500,
+        monthly_limit: user.role === 'SUPER_ADMIN' ? 9999999 : 5000,
+        used_today: 0,
+        used_this_month: 0
+      };
+    }
 
     return res.status(200).json({
       success: true,
@@ -211,10 +276,17 @@ export async function logout(req, res) {
   if (req.user) {
     try {
       const formattedUa = formatUserAgent(req.headers['user-agent'] || 'Unknown');
-      db.prepare(`
-        INSERT INTO audit_logs (id, user_id, user_email, action, endpoint, query_params, ip_address, user_agent, status_code, latency_ms)
-        VALUES (?, ?, ?, 'LOGOUT', '/api/auth/logout', '{}', ?, ?, 200, 1.0)
-      `).run(`log-${crypto.randomBytes(6).toString('hex')}`, req.user.id, req.user.email, req.ip || '127.0.0.1', formattedUa);
+      if (db.isPostgres && db.pool) {
+        await db.query(`
+          INSERT INTO audit_logs (id, tenant_id, user_id, user_email, action, endpoint, query_params, ip_address, user_agent, created_at)
+          VALUES (?, ?, ?, ?, 'LOGOUT', '/api/auth/logout', '{}', ?, ?, NOW())
+        `, [`log-${crypto.randomBytes(6).toString('hex')}`, req.user.tenant_id || 'tenant-root-default', req.user.id, req.user.email, req.ip || '127.0.0.1', formattedUa]);
+      } else {
+        db.prepare(`
+          INSERT INTO audit_logs (id, user_id, user_email, action, endpoint, query_params, ip_address, user_agent, status_code, latency_ms)
+          VALUES (?, ?, ?, 'LOGOUT', '/api/auth/logout', '{}', ?, ?, 200, 1.0)
+        `).run(`log-${crypto.randomBytes(6).toString('hex')}`, req.user.id, req.user.email, req.ip || '127.0.0.1', formattedUa);
+      }
     } catch {}
   }
 
