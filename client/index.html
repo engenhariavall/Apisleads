@@ -1437,7 +1437,7 @@
             
             <!-- Barra de Sub-Abas Táticas: Concorrência vs Bureau de Crédito (Assertiva) -->
             <div class="competitor-module-subtabs" style="display: flex; gap: 0.65rem; border-bottom: 1px solid rgba(148, 163, 184, 0.15); padding-bottom: 0.75rem;">
-              <button type="button" id="subtabCompetitorIntelligence" class="btn-subtab-switch" style="padding: 0.6rem 1.15rem; background: #0055FF; color: #FFFFFF; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 6px; font-size: 0.78rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+              <button type="button" id="subtabCompetitorIntelligence" class="btn-subtab-switch" onclick="window.switchBureauSubtab && window.switchBureauSubtab('competitors')" style="padding: 0.6rem 1.15rem; background: #0055FF; color: #FFFFFF; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 6px; font-size: 0.78rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <circle cx="12" cy="12" r="10"></circle>
                   <line x1="22" y1="12" x2="18" y2="12"></line>
@@ -1448,7 +1448,7 @@
                 <span>Inteligência de Concorrência & Scouting</span>
               </button>
 
-              <button type="button" id="subtabBureauCredit" class="btn-subtab-switch" style="padding: 0.6rem 1.15rem; background: rgba(148, 163, 184, 0.08); color: #94A3B8; border: 1px solid rgba(148, 163, 184, 0.2); border-radius: 6px; font-size: 0.78rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+              <button type="button" id="subtabBureauCredit" class="btn-subtab-switch" onclick="window.switchBureauSubtab && window.switchBureauSubtab('bureau')" style="padding: 0.6rem 1.15rem; background: rgba(148, 163, 184, 0.08); color: #94A3B8; border: 1px solid rgba(148, 163, 184, 0.2); border-radius: 6px; font-size: 0.78rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
                   <polyline points="9 12 11 14 15 10"></polyline>
@@ -1661,11 +1661,13 @@
                     </tr>
                   </tbody>
                 </table>
+              </div>
             </div>
-            <!-- FIM SUB-VISÃO A: INTELIGÊNCIA COMPETITIVA -->
+          </div>
+          <!-- FIM SUB-VISÃO A: INTELIGÊNCIA COMPETITIVA -->
 
-            <!-- SUB-VISÃO B: CONSULTA CADASTRAL & CRÉDITO BUREAU (ESTILO SERASA / ASSERTIVA v3) -->
-            <div id="subviewBureauContent" style="display: none; flex-direction: column; gap: 1.25rem;">
+          <!-- SUB-VISÃO B: CONSULTA CADASTRAL & CRÉDITO BUREAU (ESTILO SERASA / ASSERTIVA v3) -->
+          <div id="subviewBureauContent" style="display: none; flex-direction: column; gap: 1.25rem;">
               
               <!-- Header Tático da Consulta Bureau -->
               <div class="bureau-header-card" style="background: #0B1224; border: 1px solid rgba(148, 163, 184, 0.15); border-radius: 8px; padding: 1.25rem 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.25rem;">
@@ -4038,7 +4040,7 @@ Carregando script de abordagem...
   <!-- VERSUS SPARKS: Central Global de Notificações, Áudio Executivo & Deep Linking -->
   <script src="/js/sparksNotificationCenter.js?v=1.0.0"></script>
   <!-- FASE ASSERTIVA v3: Motor Executivo de Consulta Cadastral & Crédito Bureau -->
-  <script src="/js/bureauConsultation.js?v=1.0.0"></script>
+  <script src="/js/bureauConsultation.js?v=1.0.2"></script>
 </body>
 </html>
 

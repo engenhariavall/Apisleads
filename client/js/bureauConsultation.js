@@ -61,36 +61,53 @@
     const chkForce = document.getElementById('chkBureauForceRefresh');
     const noticeBanner = document.getElementById('bureauNoticeBanner');
 
-    // 1. Alternância de Sub-Abas Táticas
-    function switchSubtab(activeTab) {
+    // 1. Alternância de Sub-Abas Táticas (Global e Resiliente)
+    window.switchBureauSubtab = function(activeTab) {
+      const sComp = document.getElementById('subtabCompetitorIntelligence');
+      const sBur = document.getElementById('subtabBureauCredit');
+      const vComp = document.getElementById('subviewCompetitorsContent');
+      const vBur = document.getElementById('subviewBureauContent');
+
       if (activeTab === 'bureau') {
-        if (subtabBureau) {
-          subtabBureau.style.background = '#0055FF';
-          subtabBureau.style.color = '#FFFFFF';
-          subtabBureau.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+        if (sBur) {
+          sBur.style.background = '#0055FF';
+          sBur.style.color = '#FFFFFF';
+          sBur.style.borderColor = 'rgba(255, 255, 255, 0.2)';
         }
-        if (subtabCompetitors) {
-          subtabCompetitors.style.background = 'rgba(148, 163, 184, 0.08)';
-          subtabCompetitors.style.color = '#94A3B8';
-          subtabCompetitors.style.borderColor = 'rgba(148, 163, 184, 0.2)';
+        if (sComp) {
+          sComp.style.background = 'rgba(148, 163, 184, 0.08)';
+          sComp.style.color = '#94A3B8';
+          sComp.style.borderColor = 'rgba(148, 163, 184, 0.2)';
         }
-        if (subviewBureau) subviewBureau.style.display = 'flex';
-        if (subviewCompetitors) subviewCompetitors.style.display = 'none';
+        if (vBur) {
+          vBur.style.display = 'flex';
+          vBur.style.visibility = 'visible';
+          vBur.style.opacity = '1';
+        }
+        if (vComp) {
+          vComp.style.display = 'none';
+        }
       } else {
-        if (subtabCompetitors) {
-          subtabCompetitors.style.background = '#0055FF';
-          subtabCompetitors.style.color = '#FFFFFF';
-          subtabCompetitors.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+        if (sComp) {
+          sComp.style.background = '#0055FF';
+          sComp.style.color = '#FFFFFF';
+          sComp.style.borderColor = 'rgba(255, 255, 255, 0.2)';
         }
-        if (subtabBureau) {
-          subtabBureau.style.background = 'rgba(148, 163, 184, 0.08)';
-          subtabBureau.style.color = '#94A3B8';
-          subtabBureau.style.borderColor = 'rgba(148, 163, 184, 0.2)';
+        if (sBur) {
+          sBur.style.background = 'rgba(148, 163, 184, 0.08)';
+          sBur.style.color = '#94A3B8';
+          sBur.style.borderColor = 'rgba(148, 163, 184, 0.2)';
         }
-        if (subviewCompetitors) subviewCompetitors.style.display = 'flex';
-        if (subviewBureau) subviewBureau.style.display = 'none';
+        if (vComp) {
+          vComp.style.display = 'flex';
+        }
+        if (vBur) {
+          vBur.style.display = 'none';
+        }
       }
-    }
+    };
+
+    const switchSubtab = window.switchBureauSubtab;
 
     subtabCompetitors?.addEventListener('click', () => switchSubtab('competitors'));
     subtabBureau?.addEventListener('click', () => switchSubtab('bureau'));
