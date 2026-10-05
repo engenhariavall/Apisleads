@@ -227,7 +227,8 @@ async function migrateData() {
             latitude, longitude, vertical_type, vertical_data,
             audit_status, audited_by, endereco_operacional,
             lat_operacional, lng_operacional, address_reconciled,
-            reconciliation_source, reconciliation_confidence, is_competitor
+            reconciliation_source, reconciliation_confidence, is_competitor,
+            funnel_status, funnel_updated_at, area_lavoura_util_ha
           ) VALUES (
             $1, $2, $3, $4, $5,
             $6, $7, $8,
@@ -237,7 +238,8 @@ async function migrateData() {
             $24, $25, $26, $27,
             $28, $29, $30,
             $31, $32, $33,
-            $34, $35, $36
+            $34, $35, $36,
+            $37, $38, $39
           )
           ON CONFLICT (cnpj) DO UPDATE SET
             razao_social = EXCLUDED.razao_social,
@@ -272,6 +274,9 @@ async function migrateData() {
             reconciliation_source = EXCLUDED.reconciliation_source,
             reconciliation_confidence = EXCLUDED.reconciliation_confidence,
             is_competitor = EXCLUDED.is_competitor,
+            funnel_status = EXCLUDED.funnel_status,
+            funnel_updated_at = EXCLUDED.funnel_updated_at,
+            area_lavoura_util_ha = EXCLUDED.area_lavoura_util_ha,
             updated_at = NOW()
         `, [
           lead.id, lead.cnpj, lead.cnpj_raw, lead.razao_social, lead.nome_fantasia,
@@ -282,7 +287,8 @@ async function migrateData() {
           latitude, longitude, lead.vertical_type || 'GERAL', verticalData,
           lead.audit_status, lead.audited_by || 'OPERADOR_LOCAL', lead.endereco_operacional,
           latOp, lngOp, addressReconciled,
-          lead.reconciliation_source, lead.reconciliation_confidence, isCompetitor
+          lead.reconciliation_source, lead.reconciliation_confidence, isCompetitor,
+          lead.funnel_status || 'NOVOS', lead.funnel_updated_at || null, lead.area_lavoura_util_ha || null
         ]);
       }
       transformedLeads++;
@@ -321,6 +327,7 @@ async function migrateData() {
             whatsapp_validado, linkedin_url_real, email_validado, osint_status,
             dados_agronomicos, visual_audit_status, visual_audit_tier,
             pivots_detected, silos_detected, dams_detected, vegetative_vigor_index,
+            codigo_car, funnel_status, area_lavoura_util_ha,
             updated_at
           ) VALUES (
             $1, $2, $3, $4, $5, $6, $7,
@@ -330,6 +337,7 @@ async function migrateData() {
             $19, $20, $21, $22,
             $23, $24, $25,
             $26, $27, $28, $29,
+            $30, $31, $32,
             NOW()
           )
           ON CONFLICT (id) DO UPDATE SET
@@ -337,6 +345,9 @@ async function migrateData() {
             area_hectares = EXCLUDED.area_hectares,
             intent_score = EXCLUDED.intent_score,
             intent_classification = EXCLUDED.intent_classification,
+            codigo_car = EXCLUDED.codigo_car,
+            funnel_status = EXCLUDED.funnel_status,
+            area_lavoura_util_ha = EXCLUDED.area_lavoura_util_ha,
             updated_at = NOW()
         `, [
           p.id, p.tenant_id || 'tenant-root-default', p.id_sigef, p.codigo_imovel, p.nome_imovel, p.municipio, p.uf,
@@ -345,7 +356,8 @@ async function migrateData() {
           p.intent_score || 0, p.intent_classification || 'COLD', p.intent_triggers || '[]',
           p.whatsapp_validado, p.linkedin_url_real, p.email_validado, p.osint_status || 'PENDING',
           p.dados_agronomicos || null, p.visual_audit_status || null, p.visual_audit_tier || null,
-          p.pivots_detected || 0, p.silos_detected || 0, p.dams_detected || 0, p.vegetative_vigor_index || null
+          p.pivots_detected || 0, p.silos_detected || 0, p.dams_detected || 0, p.vegetative_vigor_index || null,
+          p.codigo_car || null, p.funnel_status || 'NOVOS', p.area_lavoura_util_ha || null
         ]);
       }
       console.log(`   ✅ ${props.length} propriedades rurais sincronizadas no Supabase.`);
