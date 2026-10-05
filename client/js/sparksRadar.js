@@ -1090,6 +1090,16 @@
 
       if (json.success) {
         showToastNotification(`${json.data.mensagem}`, 'success');
+        
+        // Se houver novos sinais capturados nesta varredura, dispara o alerta flutuante e som
+        if (Array.isArray(json.data.novos_sinais) && json.data.novos_sinais.length > 0) {
+          if (window.SparksNotificationCenter && typeof window.SparksNotificationCenter.triggerAlert === 'function') {
+            json.data.novos_sinais.forEach(s => {
+              window.SparksNotificationCenter.triggerAlert(s);
+            });
+          }
+        }
+
         await loadSparksData(false);
       } else {
         showToastNotification(`Erro: ${json.error || 'Falha no disparo'}`, 'error');
@@ -1108,13 +1118,23 @@
   }
 
   /**
-   * Abre o WhatsApp com mensagem comercial estruturada sobre a oportunidade detectada
+   * Abre o WhatsApp com mensagem executiva estruturada sobre a oportunidade detectada (SEM EMOJIS)
    */
-  function openWhatsAppForSignal(encodedTitular, encodedTrigger) {
+  function openWhatsAppForSignal(encodedTitular, encodedTrigger, signalId = null) {
     const titular = decodeURIComponent(encodedTitular || 'Produtor Rural');
     const trigger = decodeURIComponent(encodedTrigger || 'Oportunidade Agro');
+    const deepLink = signalId ? `${window.location.origin}/?tab=sparks&signal_id=${signalId}` : window.location.href;
 
-    const message = `Olá ${titular}, tudo bem? Notei sua movimentação recente no setor agropecuário referente a: "${trigger}". Temos condições exclusivas para implementos, irrigação e frotas agrícolas para a sua operação. Como posso te auxiliar hoje?`;
+    const message = [
+      `[VERSUS SPARKS] ALERTA DE OPORTUNIDADE COMERCIAL`,
+      `----------------------------------------`,
+      `TITULAR: ${titular}`,
+      `GATILHO DETECTADO: ${trigger}`,
+      `----------------------------------------`,
+      `ACESSAR NA PLATAFORMA:`,
+      deepLink
+    ].join('\n');
+
     const url = `https://wa.me/?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
   }

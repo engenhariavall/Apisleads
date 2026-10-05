@@ -1273,6 +1273,8 @@
         loadAdminAuditLogs(action, tenantId);
       } else if (activeId === 'sectionApiSettings') {
         loadAdminApiSettings();
+      } else if (activeId === 'sectionSparksAlerts') {
+        loadAdminSparksRecipients();
       }
 
       // Garante foco no topo da visualização sem rolagem suave acumulada
@@ -2297,5 +2299,319 @@
     document.getElementById('btnOverviewSyncRealData')?.addEventListener('click', function() {
       handleSyncRealData(this);
     });
+
+    // =========================================================================
+    // MÓDULO: GESTÃO DE ALERTAS DO RADAR SPARKS (WHATSAPP DE GESTORES)
+    // =========================================================================
+
+    function formatRecipientPhoneDisplay(phone) {
+      if (!phone) return '-';
+      const clean = String(phone).replace(/\D/g, '');
+      if (clean.length === 13 && clean.startsWith('55')) {
+        const ddd = clean.slice(2, 4);
+        const part1 = clean.slice(4, 9);
+        const part2 = clean.slice(9);
+        return `+55 (${ddd}) ${part1}-${part2}`;
+      } else if (clean.length === 11) {
+        const ddd = clean.slice(0, 2);
+        const part1 = clean.slice(2, 7);
+        const part2 = clean.slice(7);
+        return `(${ddd}) ${part1}-${part2}`;
+      }
+      return phone;
+    }
+
+    function renderRobotBadges(typesJson) {
+      if (!typesJson || typesJson === 'ALL') {
+        return `<span class="badge-role" style="background: rgba(16, 185, 129, 0.12); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.3); font-size: 0.7rem; padding: 0.15rem 0.5rem; border-radius: 3px;">Todos os 6 Robôs</span>`;
+      }
+      try {
+        const arr = typeof typesJson === 'string' ? JSON.parse(typesJson) : typesJson;
+        if (!Array.isArray(arr) || !arr.length) return `<span class="badge-role" style="background: rgba(16, 185, 129, 0.12); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.3); font-size: 0.7rem; padding: 0.15rem 0.5rem; border-radius: 3px;">Todos os 6 Robôs</span>`;
+        return arr.map(t => {
+          let label = t;
+          let color = '#94A3B8';
+          if (t === 'CREDITO_BNDES') { label = 'Crédito BNDES'; color = '#F59E0B'; }
+          else if (t === 'OUTORGA_ANA') { label = 'Outorgas ANA'; color = '#00D2FF'; }
+          else if (t === 'EXPANSAO_LEILAO') { label = 'Expansão'; color = '#A855F7'; }
+          else if (t === 'DOU') { label = 'DOU'; color = '#38BDF8'; }
+          else if (t === 'EVENTO_AGRO') { label = 'Feiras'; color = '#EC4899'; }
+          else if (t === 'PASSIVO_IBAMA') { label = 'IBAMA'; color = '#EF4444'; }
+          return `<span style="display: inline-block; background: rgba(255,255,255,0.05); color: ${color}; border: 1px solid ${color}40; font-size: 0.68rem; padding: 0.15rem 0.45rem; border-radius: 3px; margin: 0.1rem 0.2rem 0.1rem 0;">${label}</span>`;
+        }).join('');
+      } catch (_) {
+        return `<span class="badge-role" style="background: rgba(16, 185, 129, 0.12); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.3); font-size: 0.7rem; padding: 0.15rem 0.5rem; border-radius: 3px;">Todos os 6 Robôs</span>`;
+      }
+    }
+
+    async function loadAdminSparksRecipients() {
+      const tbody = document.getElementById('tableSparksRecipientsBody');
+      if (!tbody) return;
+
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="6" style="text-align: center; color: #94A3B8; padding: 2rem;">
+            Carregando lista de gestores destinatários...
+          </td>
+        </tr>
+      `;
+
+      try {
+        const res = await fetch('/api/sparks/recipients', {
+          headers: getAuthHeaders()
+        });
+        const json = await res.json();
+
+        if (!res.ok || !json.success) {
+          throw new Error(json.error || 'Falha ao buscar destinatários');
+        }
+
+        const recipients = json.data || [];
+        const total = recipients.length;
+        const active = recipients.filter(r => r.ativo === 1).length;
+
+        const statTotal = document.getElementById('statSparksRecipientsTotal');
+        const statActive = document.getElementById('statSparksRecipientsActive');
+        if (statTotal) statTotal.textContent = total;
+        if (statActive) statActive.textContent = active;
+
+        if (!recipients.length) {
+          tbody.innerHTML = `
+            <tr>
+              <td colspan="6" style="text-align: center; color: #64748B; padding: 3rem;">
+                <p style="margin-bottom: 0.5rem; font-size: 0.85rem; color: #E2E8F0;">Nenhum gestor cadastrado ainda para receber alertas do Radar Sparks.</p>
+                <small style="color: #94A3B8;">Clique em "+ Adicionar Gestor" para cadastrar o primeiro número de WhatsApp.</small>
+              </td>
+            </tr>
+          `;
+          return;
+        }
+
+        tbody.innerHTML = recipients.map(r => {
+          const isActive = r.ativo === 1;
+          const statusBadge = isActive 
+            ? `<span style="background: rgba(16, 185, 129, 0.15); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.3); padding: 0.2rem 0.55rem; border-radius: 4px; font-size: 0.7rem; font-weight: 700;">ATIVO</span>`
+            : `<span style="background: rgba(148, 163, 184, 0.15); color: #94A3B8; border: 1px solid rgba(148, 163, 184, 0.3); padding: 0.2rem 0.55rem; border-radius: 4px; font-size: 0.7rem; font-weight: 600;">SILENCIADO</span>`;
+
+          return `
+            <tr id="rowRecipient_${r.id}">
+              <td>
+                <strong style="color: #FFFFFF; font-size: 0.85rem; display: block;">${escapeHtml(r.nome)}</strong>
+                <small style="color: #64748B; font-size: 0.72rem;">ID: ${escapeHtml(r.id)}</small>
+              </td>
+              <td>
+                <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; color: #38BDF8;">
+                  ${formatRecipientPhoneDisplay(r.telefone)}
+                </span>
+              </td>
+              <td>
+                ${renderRobotBadges(r.tipos_alertas)}
+              </td>
+              <td>
+                ${statusBadge}
+              </td>
+              <td>
+                <span style="font-size: 0.75rem; color: #94A3B8;">
+                  ${formatLogTimestamp(r.created_at)}
+                </span>
+              </td>
+              <td style="text-align: right;">
+                <div style="display: inline-flex; gap: 0.4rem; align-items: center;">
+                  <button type="button" class="btn-table-action" onclick="window.testSparksRecipient('${r.id}')" title="Enviar disparo de teste via WhatsApp" style="background: rgba(0, 210, 255, 0.08); border: 1px solid rgba(0, 210, 255, 0.25); color: #00D2FF; padding: 0.3rem 0.6rem; border-radius: 4px; font-size: 0.72rem; cursor: pointer;">
+                    Testar
+                  </button>
+                  <button type="button" class="btn-table-action" onclick="window.toggleSparksRecipient('${r.id}')" title="${isActive ? 'Silenciar alertas' : 'Ativar alertas'}" style="background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.15); color: #CBD5E1; padding: 0.3rem 0.6rem; border-radius: 4px; font-size: 0.72rem; cursor: pointer;">
+                    ${isActive ? 'Silenciar' : 'Ativar'}
+                  </button>
+                  <button type="button" class="btn-table-action" onclick="window.deleteSparksRecipient('${r.id}', '${escapeHtml(r.nome)}')" title="Excluir este gestor" style="background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.25); color: #F87171; padding: 0.3rem 0.6rem; border-radius: 4px; font-size: 0.72rem; cursor: pointer;">
+                    Excluir
+                  </button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }).join('');
+
+      } catch (err) {
+        console.error('Erro ao listar gestores Sparks:', err);
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="6" style="text-align: center; color: #EF4444; padding: 2rem;">
+              Falha ao carregar destinatários: ${escapeHtml(err.message)}
+            </td>
+          </tr>
+        `;
+      }
+    }
+
+    // Modal de Cadastro
+    const modalRecipient = document.getElementById('modalAdminSparksRecipient');
+    const formRecipient = document.getElementById('formAdminSparksRecipient');
+
+    function openAddRecipientModal() {
+      if (!modalRecipient) return;
+      formRecipient?.reset();
+      document.getElementById('inputSparksRecipientId').value = '';
+      document.getElementById('modalSparksRecipientTitle').textContent = 'Cadastrar Gestor para Alertas Sparks';
+      modalRecipient.style.display = 'flex';
+      document.getElementById('inputSparksRecipientNome')?.focus();
+    }
+
+    function closeAddRecipientModal() {
+      if (modalRecipient) modalRecipient.style.display = 'none';
+    }
+
+    document.getElementById('btnAdminAddRecipient')?.addEventListener('click', openAddRecipientModal);
+    document.getElementById('btnCloseSparksRecipientModal')?.addEventListener('click', closeAddRecipientModal);
+    document.getElementById('btnCancelSparksRecipientModal')?.addEventListener('click', closeAddRecipientModal);
+
+    // Toggle Todos os Robôs
+    const checkAllRobots = document.getElementById('checkSparksAllRobots');
+    checkAllRobots?.addEventListener('change', (e) => {
+      const checks = document.querySelectorAll('input[name="sparksRobotType"]');
+      checks.forEach(c => c.checked = e.target.checked);
+    });
+
+    // Submissão do Cadastro
+    formRecipient?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const nome = document.getElementById('inputSparksRecipientNome')?.value?.trim();
+      const telefone = document.getElementById('inputSparksRecipientPhone')?.value?.trim();
+
+      const selectedRobots = Array.from(document.querySelectorAll('input[name="sparksRobotType"]:checked')).map(c => c.value);
+      const isAllChecked = checkAllRobots?.checked || selectedRobots.length === 6;
+
+      const submitBtn = document.getElementById('btnSaveSparksRecipientModal');
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Salvando...';
+      }
+
+      try {
+        const res = await fetch('/api/sparks/recipients', {
+          method: 'POST',
+          headers: getAuthHeaders(),
+          body: JSON.stringify({
+            nome,
+            telefone,
+            tipos_alertas: isAllChecked ? 'ALL' : selectedRobots
+          })
+        });
+
+        const data = await res.json();
+        if (!res.ok || !data.success) {
+          throw new Error(data.error || 'Falha ao salvar destinatário');
+        }
+
+        showToast('Gestor cadastrado com sucesso!');
+        closeAddRecipientModal();
+        loadAdminSparksRecipients();
+      } catch (err) {
+        showToast(err.message || 'Erro ao salvar gestor.');
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Salvar Destinatário';
+        }
+      }
+    });
+
+    // Funções Globais de Ação na Tabela
+    window.testSparksRecipient = async function(id) {
+      showToast('Gerando disparo de teste para o WhatsApp...');
+      try {
+        const res = await fetch(`/api/sparks/recipients/${id}/test`, {
+          method: 'POST',
+          headers: getAuthHeaders()
+        });
+        const data = await res.json();
+        if (!res.ok || !data.success) {
+          throw new Error(data.error || 'Falha no teste');
+        }
+
+        showToast(`Disparo de teste gerado para ${data.data.recipient_name}!`);
+        if (data.data.direct_url) {
+          window.open(data.data.direct_url, '_blank');
+        }
+      } catch (err) {
+        showToast(`Erro no teste: ${err.message}`);
+      }
+    };
+
+    window.toggleSparksRecipient = async function(id) {
+      try {
+        const res = await fetch(`/api/sparks/recipients/${id}/toggle`, {
+          method: 'PATCH',
+          headers: getAuthHeaders()
+        });
+        const data = await res.json();
+        if (!res.ok || !data.success) {
+          throw new Error(data.error || 'Falha ao alternar');
+        }
+        showToast(data.message || 'Status atualizado com sucesso!');
+        loadAdminSparksRecipients();
+      } catch (err) {
+        showToast(`Erro: ${err.message}`);
+      }
+    };
+
+    window.deleteSparksRecipient = async function(id, nome) {
+      if (!confirm(`Deseja realmente remover o gestor "${nome}" da lista de alertas?`)) {
+        return;
+      }
+      try {
+        const res = await fetch(`/api/sparks/recipients/${id}`, {
+          method: 'DELETE',
+          headers: getAuthHeaders()
+        });
+        const data = await res.json();
+        if (!res.ok || !data.success) {
+          throw new Error(data.error || 'Falha ao excluir');
+        }
+        showToast('Gestor removido com sucesso.');
+        loadAdminSparksRecipients();
+      } catch (err) {
+        showToast(`Erro ao excluir: ${err.message}`);
+      }
+    };
+
+    // Botão de Simulação de Sinal & Teste
+    document.getElementById('btnAdminSimulateSpark')?.addEventListener('click', async function() {
+      const btn = this;
+      btn.disabled = true;
+      btn.innerHTML = '<span>Simulando...</span>';
+
+      try {
+        const res = await fetch('/api/sparks/signals/simulate', {
+          method: 'POST',
+          headers: getAuthHeaders(),
+          body: JSON.stringify({
+            spark_type: 'CREDITO_BNDES',
+            titulo: 'Crédito BNDES Finame Agro Aprovado: R$ 4.250.000,00',
+            resumo: 'Liberação de linha Moderfrota/Finame para 2 Colheitadeiras axiais e Trator 380cv.',
+            titular: 'GRUPO AGROPECUARIO MODELO LTDA',
+            valor_monetario: 4250000.0
+          })
+        });
+
+        const data = await res.json();
+        if (!res.ok || !data.success) {
+          throw new Error(data.error || 'Falha na simulação');
+        }
+
+        showToast('Sinal de teste injetado e alertas despachados aos gestores!');
+      } catch (err) {
+        showToast(`Erro na simulação: ${err.message}`);
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+          <span>Simular Sinal & Teste</span>
+        `;
+      }
+    });
+
   });
 })();

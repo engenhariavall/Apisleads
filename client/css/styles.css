@@ -9763,6 +9763,232 @@ input:checked + .slider:before {
   border-color: rgba(0, 210, 255, 0.6) !important;
 }
 
+/* ==========================================================================
+   VERSUS SPARKS: CENTRAL GLOBAL DE ALERTAS FLUTUANTES & SOM EXECUTIVO
+   ========================================================================== */
+
+.btn-topbar-sound {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #94A3B8;
+  width: 34px;
+  height: 34px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-right: 0.5rem;
+}
+
+.btn-topbar-sound:hover {
+  background: rgba(0, 210, 255, 0.12);
+  border-color: rgba(0, 210, 255, 0.4);
+  color: #00D2FF;
+  transform: translateY(-1px);
+}
+
+.sparks-global-alerts-container {
+  position: fixed;
+  top: 72px;
+  right: 24px;
+  z-index: 999999;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  pointer-events: none;
+  max-width: 420px;
+  width: calc(100vw - 48px);
+}
+
+.sparks-alert-toast {
+  pointer-events: auto;
+  position: relative;
+  background: rgba(11, 18, 36, 0.96);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-left: 4px solid #00D2FF;
+  border-radius: 8px;
+  padding: 1rem 1.15rem;
+  box-shadow: 0 12px 35px -6px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  animation: sparksSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  overflow: hidden;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.sparks-alert-toast.fade-out {
+  opacity: 0;
+  transform: translateX(30px) scale(0.96);
+  pointer-events: none;
+}
+
+@keyframes sparksSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-12px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.sparks-toast-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sparks-toast-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.sparks-toast-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sparks-toast-tag {
+  font-size: 0.73rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.sparks-toast-badge-live {
+  background: rgba(16, 185, 129, 0.15);
+  color: #10B981;
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  font-size: 0.62rem;
+  font-weight: 800;
+  padding: 0.12rem 0.35rem;
+  border-radius: 3px;
+  letter-spacing: 0.05em;
+  display: inline-flex;
+  align-items: center;
+}
+
+.sparks-toast-close {
+  background: transparent;
+  border: none;
+  color: #64748B;
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 0.1rem 0.3rem;
+  border-radius: 4px;
+  transition: color 0.15s ease;
+}
+
+.sparks-toast-close:hover {
+  color: #FFFFFF;
+}
+
+.sparks-toast-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.sparks-toast-title {
+  margin: 0;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 1.35;
+}
+
+.sparks-toast-titular {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.74rem;
+  color: #94A3B8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sparks-toast-titular strong {
+  color: #E2E8F0;
+  font-weight: 600;
+}
+
+.sparks-toast-value {
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  font-family: 'JetBrains Mono', monospace;
+  margin-top: 0.15rem;
+}
+
+.sparks-toast-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.sparks-toast-btn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.73rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.sparks-toast-btn.primary {
+  background: rgba(0, 85, 255, 0.25);
+  border: 1px solid rgba(0, 210, 255, 0.45);
+  color: #00D2FF;
+}
+
+.sparks-toast-btn.primary:hover {
+  background: rgba(0, 85, 255, 0.45);
+  border-color: #00D2FF;
+  box-shadow: 0 0 10px rgba(0, 210, 255, 0.3);
+}
+
+.sparks-toast-btn.secondary {
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  color: #34D399;
+}
+
+.sparks-toast-btn.secondary:hover {
+  background: rgba(16, 185, 129, 0.3);
+  border-color: #10B981;
+}
+
+.sparks-toast-timer-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background: rgba(0, 210, 255, 0.6);
+  width: 100%;
+  animation: sparksToastTimer 10s linear forwards;
+}
+
+@keyframes sparksToastTimer {
+  from { width: 100%; }
+  to { width: 0%; }
+}
+
+
 
 
 

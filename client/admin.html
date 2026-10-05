@@ -97,6 +97,15 @@
           </span>
           <span class="nav-label">Auditoria & Logs</span>
         </a>
+        <a href="#sectionSparksAlerts" class="sidebar-nav-item" data-target="sectionSparksAlerts" onclick="switchAdminView('sectionSparksAlerts'); return false;">
+          <span class="nav-icon">
+            <svg class="nav-icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+          </span>
+          <span class="nav-label">Alertas Sparks (WhatsApp)</span>
+        </a>
 
         <div class="sidebar-nav-category" style="margin-top: 1.5rem;">SISTEMA & ATALHOS</div>
         <a href="/" class="sidebar-nav-item nav-item-external" title="Acessar Painel API Leads">
@@ -478,6 +487,94 @@
                   <tr>
                     <td colspan="7" style="text-align: center; color: #94A3B8; padding: 2.5rem;">
                       Carregando status das chaves dos inquilinos...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bloco 6: Alertas do Radar Sparks (WhatsApp de Gestores) -->
+        <div class="admin-view-section admin-view-pane" id="sectionSparksAlerts">
+          <div class="page-header-row">
+            <div class="page-titles">
+              <h1>ALERTAS RADAR SPARKS (WHATSAPP DE GESTORES)</h1>
+              <p>Gerenciamento de múltiplos gestores para recebimento automático de oportunidades de maquinário, outorgas e leilões. Envio gratuito e sem cobrança de API.</p>
+            </div>
+            <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
+              <button type="button" class="btn-admin-secondary" id="btnAdminSimulateSpark" title="Simula a descoberta de um sinal para testar o alerta na tela e no WhatsApp">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                </svg>
+                <span>Simular Sinal & Teste</span>
+              </button>
+              <button type="button" class="btn-admin-primary" id="btnAdminAddRecipient">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                <span>Adicionar Gestor</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Cards de Métricas dos Alertas -->
+          <div class="admin-stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-bottom: 1.5rem;">
+            <div class="admin-stat-card">
+              <span class="stat-label">GESTORES CADASTRADOS</span>
+              <strong class="stat-value text-white" id="statSparksRecipientsTotal">0</strong>
+              <span class="stat-desc">Destinatários configurados</span>
+            </div>
+            <div class="admin-stat-card">
+              <span class="stat-label">ALERTAS ATIVOS</span>
+              <strong class="stat-value text-cyan" id="statSparksRecipientsActive">0</strong>
+              <span class="stat-desc">Recebendo notificações</span>
+            </div>
+            <div class="admin-stat-card">
+              <span class="stat-label">MONITORES CONECTADOS</span>
+              <strong class="stat-value" style="color: #10B981;">6 Robôs</strong>
+              <span class="stat-desc">Finame, ANA, DOU, Leilões, Feiras, IBAMA</span>
+            </div>
+            <div class="admin-stat-card">
+              <span class="stat-label">MODALIDADE DE ENVIO</span>
+              <strong class="stat-value" style="color: #38BDF8; font-size: 1.1rem; margin-top: 0.2rem;">WhatsApp Web Direto</strong>
+              <span class="stat-desc">100% Gratuito (Sem API Paga)</span>
+            </div>
+          </div>
+
+          <!-- Tabela de Gestores Destinatários -->
+          <div class="admin-card-section">
+            <div class="card-section-title" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem;">
+              <span style="font-weight: 700; font-size: 0.95rem; color: #FFFFFF; letter-spacing: 0.05em; display: flex; align-items: center; gap: 0.5rem;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00D2FF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+                DESTINATÁRIOS HABILITADOS PARA SINAIS DE COMPRA
+              </span>
+              <span style="color: #94A3B8; font-size: 0.75rem;">
+                Os links gerados abrem diretamente o dossiê do lead no painel desktop.
+              </span>
+            </div>
+            <div class="table-responsive">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Gestor / Cargo</th>
+                    <th>Telefone WhatsApp</th>
+                    <th>Robôs de Interesse</th>
+                    <th>Status</th>
+                    <th>Cadastrado em</th>
+                    <th style="text-align: right;">Ações de Controle</th>
+                  </tr>
+                </thead>
+                <tbody id="tableSparksRecipientsBody">
+                  <tr>
+                    <td colspan="6" style="text-align: center; color: #94A3B8; padding: 2.5rem;">
+                      Carregando lista de gestores destinatários...
                     </td>
                   </tr>
                 </tbody>
@@ -1003,6 +1100,67 @@
         <div class="modal-foot" style="display: flex; justify-content: flex-end; gap: 0.5rem;">
           <button type="button" class="btn-admin-secondary" id="btnCancelTenantApiModal">Cancelar</button>
           <button type="submit" class="btn-modal-save" id="btnSaveTenantApiModal">Salvar Configurações</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Cadastrar / Editar Gestor de Alertas Sparks (Super Admin) -->
+  <div class="modal-overlay" id="modalAdminSparksRecipient" style="z-index: 1250; display: none;">
+    <div class="modal-dialog-box" style="max-width: 580px;">
+      <div class="modal-head">
+        <div>
+          <h3 id="modalSparksRecipientTitle">Cadastrar Gestor para Alertas Sparks</h3>
+          <p style="font-size: 0.74rem; color: #94A3B8; margin-top: 0.2rem;">Canal WhatsApp oficial sem custos de API para sinais de compra de maquinário e outorgas.</p>
+        </div>
+        <button type="button" class="btn-modal-close" id="btnCloseSparksRecipientModal">✕</button>
+      </div>
+      <form id="formAdminSparksRecipient">
+        <input type="hidden" id="inputSparksRecipientId" value="">
+        <div class="modal-body" style="display: flex; flex-direction: column; gap: 1rem;">
+          <div class="form-group-admin">
+            <label for="inputSparksRecipientNome">Nome Completo / Cargo do Gestor</label>
+            <input type="text" id="inputSparksRecipientNome" class="admin-input" required placeholder="Ex: Diretor Comercial - Maquinário">
+          </div>
+          <div class="form-group-admin">
+            <label for="inputSparksRecipientPhone">Telefone WhatsApp (com DDD)</label>
+            <input type="text" id="inputSparksRecipientPhone" class="admin-input" required placeholder="(99) 99999-9999" maxlength="20">
+            <small style="color: #64748B; font-size: 0.7rem; margin-top: 0.3rem; display: block;">Validação de 67 DDDs nacionais. Aceita números com ou sem o código 55.</small>
+          </div>
+
+          <!-- Seleção dos Robôs de Interesse -->
+          <div class="modal-subcard" style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 0.9rem 1rem;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.65rem;">
+              <span style="font-size: 0.78rem; font-weight: 700; color: #FFFFFF;">ROBÔS HABILITADOS PARA ESTE GESTOR</span>
+              <label style="display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.72rem; color: #00D2FF; cursor: pointer;">
+                <input type="checkbox" id="checkSparksAllRobots" checked style="accent-color: #00D2FF;"> Todos
+              </label>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem;">
+              <label style="display: inline-flex; align-items: center; gap: 0.45rem; font-size: 0.75rem; color: #CBD5E1; cursor: pointer;">
+                <input type="checkbox" name="sparksRobotType" value="CREDITO_BNDES" checked style="accent-color: #F59E0B;"> Crédito BNDES Finame
+              </label>
+              <label style="display: inline-flex; align-items: center; gap: 0.45rem; font-size: 0.75rem; color: #CBD5E1; cursor: pointer;">
+                <input type="checkbox" name="sparksRobotType" value="OUTORGA_ANA" checked style="accent-color: #00D2FF;"> Outorgas de Água ANA
+              </label>
+              <label style="display: inline-flex; align-items: center; gap: 0.45rem; font-size: 0.75rem; color: #CBD5E1; cursor: pointer;">
+                <input type="checkbox" name="sparksRobotType" value="EXPANSAO_LEILAO" checked style="accent-color: #A855F7;"> Expansão & Leilões
+              </label>
+              <label style="display: inline-flex; align-items: center; gap: 0.45rem; font-size: 0.75rem; color: #CBD5E1; cursor: pointer;">
+                <input type="checkbox" name="sparksRobotType" value="DOU" checked style="accent-color: #38BDF8;"> Diário Oficial (DOU)
+              </label>
+              <label style="display: inline-flex; align-items: center; gap: 0.45rem; font-size: 0.75rem; color: #CBD5E1; cursor: pointer;">
+                <input type="checkbox" name="sparksRobotType" value="EVENTO_AGRO" checked style="accent-color: #EC4899;"> Feiras Agropecuárias
+              </label>
+              <label style="display: inline-flex; align-items: center; gap: 0.45rem; font-size: 0.75rem; color: #CBD5E1; cursor: pointer;">
+                <input type="checkbox" name="sparksRobotType" value="PASSIVO_IBAMA" checked style="accent-color: #EF4444;"> Passivo IBAMA
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="modal-foot" style="display: flex; justify-content: flex-end; gap: 0.5rem;">
+          <button type="button" class="btn-admin-secondary" id="btnCancelSparksRecipientModal">Cancelar</button>
+          <button type="submit" class="btn-admin-primary" id="btnSaveSparksRecipientModal">Salvar Destinatário</button>
         </div>
       </form>
     </div>
