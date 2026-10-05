@@ -41,6 +41,30 @@ async function runTest() {
     console.log(`\n📋 Tabelas encontradas no schema public (${tablesRes.rows.length}):`);
     tablesRes.rows.forEach(r => console.log(`   - ${r.table_name}`));
 
+    // Contagem de registros existentes
+    const leadsCount = await pool.query('SELECT count(*) as c FROM leads;');
+    const propsCount = await pool.query('SELECT count(*) as c FROM propriedades_rurais;');
+    const usersCount = await pool.query('SELECT count(*) as c FROM users;');
+    console.log('\n📊 Registros atuais no Supabase:');
+    console.log(`   - leads: ${leadsCount.rows[0].c}`);
+    console.log(`   - propriedades_rurais: ${propsCount.rows[0].c}`);
+    console.log(`   - users: ${usersCount.rows[0].c}`);
+
+    // Verifica colunas recentes da Fase 66 em leads e propriedades_rurais
+    const colsLead = await pool.query(`
+      SELECT column_name 
+      FROM information_schema.columns 
+      WHERE table_name = 'leads' AND column_name IN ('funnel_status', 'funnel_updated_at', 'area_lavoura_util_ha');
+    `);
+    console.log('\n🔍 Colunas da Fase 66 em leads no Supabase:', colsLead.rows.map(r => r.column_name));
+
+    const colsProp = await pool.query(`
+      SELECT column_name 
+      FROM information_schema.columns 
+      WHERE table_name = 'propriedades_rurais' AND column_name IN ('funnel_status', 'area_lavoura_util_ha', 'codigo_car', 'sefaz_ie_produtor');
+    `);
+    console.log('🔍 Colunas da Fase 66 em propriedades_rurais no Supabase:', colsProp.rows.map(r => r.column_name));
+
     process.exit(0);
   } catch (err) {
     console.error('❌ Erro ao conectar no Supabase:', err.message);
