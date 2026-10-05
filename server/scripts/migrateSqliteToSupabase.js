@@ -318,47 +318,67 @@ async function migrateData() {
           geoJson = '{}';
         }
 
-        await pool.query(`
-          INSERT INTO propriedades_rurais (
-            id, tenant_id, id_sigef, codigo_imovel, nome_imovel, municipio, uf,
-            area_hectares, geometria_poligono, centroide_lat, centroide_lng,
-            raio_abrangencia_km, nome_titular, cpf_cnpj_titular, status_geo,
-            intent_score, intent_classification, intent_triggers,
-            whatsapp_validado, linkedin_url_real, email_validado, osint_status,
-            dados_agronomicos, visual_audit_status, visual_audit_tier,
-            pivots_detected, silos_detected, dams_detected, vegetative_vigor_index,
-            codigo_car, funnel_status, area_lavoura_util_ha,
-            updated_at
-          ) VALUES (
-            $1, $2, $3, $4, $5, $6, $7,
-            $8, $9, $10, $11,
-            $12, $13, $14, $15,
-            $16, $17, $18,
-            $19, $20, $21, $22,
-            $23, $24, $25,
-            $26, $27, $28, $29,
-            $30, $31, $32,
-            NOW()
-          )
-          ON CONFLICT (id) DO UPDATE SET
-            nome_imovel = EXCLUDED.nome_imovel,
-            area_hectares = EXCLUDED.area_hectares,
-            intent_score = EXCLUDED.intent_score,
-            intent_classification = EXCLUDED.intent_classification,
-            codigo_car = EXCLUDED.codigo_car,
-            funnel_status = EXCLUDED.funnel_status,
-            area_lavoura_util_ha = EXCLUDED.area_lavoura_util_ha,
-            updated_at = NOW()
-        `, [
-          p.id, p.tenant_id || 'tenant-root-default', p.id_sigef, p.codigo_imovel, p.nome_imovel, p.municipio, p.uf,
-          p.area_hectares || 0, geoJson, p.centroide_lat, p.centroide_lng,
-          p.raio_abrangencia_km || 5, p.nome_titular, p.cpf_cnpj_titular, p.status_geo || 'SEM_GEO',
-          p.intent_score || 0, p.intent_classification || 'COLD', p.intent_triggers || '[]',
-          p.whatsapp_validado, p.linkedin_url_real, p.email_validado, p.osint_status || 'PENDING',
-          p.dados_agronomicos || null, p.visual_audit_status || null, p.visual_audit_tier || null,
-          p.pivots_detected || 0, p.silos_detected || 0, p.dams_detected || 0, p.vegetative_vigor_index || null,
-          p.codigo_car || null, p.funnel_status || 'NOVOS', p.area_lavoura_util_ha || null
-        ]);
+        // Checa se a propriedade já existe por id_sigef ou id para evitar erro de chave única
+        const existing = await pool.query(
+          'SELECT id FROM propriedades_rurais WHERE (id_sigef IS NOT NULL AND id_sigef = $1) OR id = $2 LIMIT 1',
+          [p.id_sigef || null, p.id]
+        );
+
+        if (existing.rows.length > 0) {
+          await pool.query(`
+            UPDATE propriedades_rurais SET
+              nome_imovel = $1,
+              municipio = $2,
+              uf = $3,
+              area_hectares = $4,
+              geometria_poligono = $5,
+              centroide_lat = $6,
+              centroide_lng = $7,
+              codigo_car = $8,
+              funnel_status = $9,
+              area_lavoura_util_ha = $10,
+              updated_at = NOW()
+            WHERE id = $11
+          `, [
+            p.nome_imovel, p.municipio, p.uf, p.area_hectares || 0,
+            geoJson, p.centroide_lat, p.centroide_lng,
+            p.codigo_car || null, p.funnel_status || 'NOVOS', p.area_lavoura_util_ha || null,
+            existing.rows[0].id
+          ]);
+        } else {
+          await pool.query(`
+            INSERT INTO propriedades_rurais (
+              id, tenant_id, id_sigef, codigo_imovel, nome_imovel, municipio, uf,
+              area_hectares, geometria_poligono, centroide_lat, centroide_lng,
+              raio_abrangencia_km, nome_titular, cpf_cnpj_titular, status_geo,
+              intent_score, intent_classification, intent_triggers,
+              whatsapp_validado, linkedin_url_real, email_validado, osint_status,
+              dados_agronomicos, visual_audit_status, visual_audit_tier,
+              pivots_detected, silos_detected, dams_detected, vegetative_vigor_index,
+              codigo_car, funnel_status, area_lavoura_util_ha,
+              updated_at
+            ) VALUES (
+              $1, $2, $3, $4, $5, $6, $7,
+              $8, $9, $10, $11,
+              $12, $13, $14, $15,
+              $16, $17, $18,
+              $19, $20, $21, $22,
+              $23, $24, $25,
+              $26, $27, $28, $29,
+              $30, $31, $32,
+              NOW()
+            )
+          `, [
+            p.id, p.tenant_id || 'tenant-root-default', p.id_sigef || null, p.codigo_imovel, p.nome_imovel, p.municipio, p.uf,
+            p.area_hectares || 0, geoJson, p.centroide_lat, p.centroide_lng,
+            p.raio_abrangencia_km || 5, p.nome_titular, p.cpf_cnpj_titular, p.status_geo || 'SEM_GEO',
+            p.intent_score || 0, p.intent_classification || 'COLD', p.intent_triggers || '[]',
+            p.whatsapp_validado, p.linkedin_url_real, p.email_validado, p.osint_status || 'PENDING',
+            p.dados_agronomicos || null, p.visual_audit_status || null, p.visual_audit_tier || null,
+            p.pivots_detected || 0, p.silos_detected || 0, p.dams_detected || 0, p.vegetative_vigor_index || null,
+            p.codigo_car || null, p.funnel_status || 'NOVOS', p.area_lavoura_util_ha || null
+          ]);
+        }
       }
       console.log(`   ✅ ${props.length} propriedades rurais sincronizadas no Supabase.`);
     }
