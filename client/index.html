@@ -3195,13 +3195,13 @@ Carregando script de abordagem...
   </div>
 
   <!-- Modal de Exportação com Escolha de Formato -->
-  <div class="modal-backdrop" id="exportModal">
-    <div class="modal-card">
-      <div class="modal-header">
+  <div class="modal-backdrop" id="exportModal" style="overflow-y: auto; align-items: center; justify-content: center; z-index: 1000;">
+    <div class="modal-card" style="max-height: calc(100vh - 2.5rem); display: flex; flex-direction: column; overflow: hidden; margin: auto;">
+      <div class="modal-header" style="flex-shrink: 0;">
         <h3>Exportar ou Sincronizar Leads</h3>
         <button class="modal-close" id="btnCloseExportModal">&times;</button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" style="overflow-y: auto; flex: 1 1 auto;">
         <!-- Seletor de Escopo de Exportação Inteligente -->
         <div class="export-scope-card" id="exportScopeContainer" style="margin-bottom: 1.15rem; padding: 0.75rem 0.95rem; background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 8px;">
           <div style="font-size: 0.68rem; font-weight: 800; color: #94A3B8; text-transform: uppercase; margin-bottom: 0.55rem; letter-spacing: 0.05em; display: flex; align-items: center; justify-content: space-between;">
@@ -3294,9 +3294,9 @@ Carregando script de abordagem...
           </label>
         </div>
       </div>
-      <div class="modal-footer">
+      <div class="modal-footer" style="flex-shrink: 0; position: sticky; bottom: 0; z-index: 10; background: #080D1C; border-top: 1px solid rgba(255, 255, 255, 0.1);">
         <button class="btn-cancel" id="btnCancelExport">Cancelar</button>
-        <button class="btn-confirm-export" id="btnConfirmExport">Executar Ação</button>
+        <button class="btn-confirm-export" id="btnConfirmExport">Confirmar e Exportar</button>
       </div>
     </div>
   </div>
