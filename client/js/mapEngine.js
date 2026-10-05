@@ -3193,9 +3193,6 @@ window.MapEngine = (function() {
     }
   };
 
-  let selectedSearchUf = '';
-  let selectedSearchCity = '';
-
   /**
    * Configura os eventos de UI do Painel de Busca Regional
    */
