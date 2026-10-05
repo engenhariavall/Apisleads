@@ -691,11 +691,33 @@ try {
       FOREIGN KEY (monitor_id) REFERENCES sparks_monitors(id)
     );
 
+    CREATE TABLE IF NOT EXISTS sparks_alert_recipients (
+      id TEXT PRIMARY KEY,
+      tenant_id TEXT DEFAULT 'tenant-root-default',
+      nome TEXT NOT NULL,
+      telefone TEXT NOT NULL,
+      ativo INTEGER DEFAULT 1,
+      tipos_alertas TEXT DEFAULT 'ALL',
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
+
+    CREATE TABLE IF NOT EXISTS sparks_whatsapp_config (
+      id TEXT PRIMARY KEY,
+      tenant_id TEXT DEFAULT 'tenant-root-default',
+      status_conexao TEXT DEFAULT 'DISCONNECTED',
+      modo_envio TEXT DEFAULT 'AUTO_WEB',
+      qr_code_base64 TEXT,
+      numero_conectado TEXT,
+      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
+
     CREATE INDEX IF NOT EXISTS idx_sparks_signals_type ON sparks_signals(spark_type);
     CREATE INDEX IF NOT EXISTS idx_sparks_signals_doc ON sparks_signals(documento_identificado);
     CREATE INDEX IF NOT EXISTS idx_sparks_signals_loc ON sparks_signals(uf, municipio);
     CREATE INDEX IF NOT EXISTS idx_sparks_signals_status ON sparks_signals(status_processamento);
     CREATE INDEX IF NOT EXISTS idx_sparks_monitors_type ON sparks_monitors(spark_type);
+    CREATE INDEX IF NOT EXISTS idx_sparks_recipients_tenant ON sparks_alert_recipients(tenant_id);
   `);
 
   // Seed idempotente dos 6 Monitores Canônicos (Priorizando Crédito e Outorgas)

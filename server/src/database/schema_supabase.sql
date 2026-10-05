@@ -379,6 +379,27 @@ CREATE TABLE IF NOT EXISTS sparks_signals (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
+CREATE TABLE IF NOT EXISTS sparks_alert_recipients (
+  id TEXT PRIMARY KEY DEFAULT gen_random_uuid()::text,
+  tenant_id TEXT DEFAULT 'tenant-root-default' REFERENCES tenants(id) ON DELETE CASCADE,
+  nome VARCHAR(150) NOT NULL,
+  telefone VARCHAR(50) NOT NULL,
+  ativo BOOLEAN DEFAULT TRUE,
+  tipos_alertas TEXT DEFAULT 'ALL',
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS sparks_whatsapp_config (
+  id TEXT PRIMARY KEY DEFAULT gen_random_uuid()::text,
+  tenant_id TEXT DEFAULT 'tenant-root-default' REFERENCES tenants(id) ON DELETE CASCADE,
+  status_conexao VARCHAR(50) DEFAULT 'DISCONNECTED',
+  modo_envio VARCHAR(50) DEFAULT 'AUTO_WEB',
+  qr_code_base64 TEXT,
+  numero_conectado VARCHAR(50),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
 -- ------------------------------------------------------------------------------
 -- 12. Evolução Cognitiva: Visão Computacional, RL & Fila Assíncrona (Fase 66)
 -- ------------------------------------------------------------------------------

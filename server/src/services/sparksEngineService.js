@@ -13,6 +13,7 @@ import { calculateRuralIntentScore } from './intentScoringService.js';
 import { receitaService } from './receitaService.js';
 import crmService from './crmService.js';
 import cognitiveQueueService from './cognitiveQueueService.js';
+import SparksAlertDispatcherService from './sparksAlertDispatcherService.js';
 
 // Catálogo Canônico de Eventos e Sinais Reais de Mercado
 const AUTHENTIC_SPARKS_FEEDS = {
@@ -725,6 +726,7 @@ export class SparksEngineService {
     const type = monitor.spark_type;
     const feed = AUTHENTIC_SPARKS_FEEDS[type] || [];
     let ingestedCount = 0;
+    const newlyIngestedSignals = [];
 
     const timeWindow = this.deriveTimeWindow();
     const rlPolicy = this.getSparkRlPolicy(type, timeWindow, 'NORMAL', tenantId);
@@ -773,7 +775,31 @@ export class SparksEngineService {
             item.municipio, item.uf, item.lat, item.lng, score,
             item.trigger_texto, tenantId
           );
+
+          const signalPayload = {
+            id: signalId,
+            monitor_id: monitorId,
+            spark_type: type,
+            titulo: item.titulo,
+            resumo: item.resumo,
+            valor_monetario: item.valor_monetario,
+            volume_m3h: item.volume_m3h,
+            documento_identificado: item.documento_identificado,
+            titular_identificado: item.titular_identificado,
+            nome_imovel: item.nome_imovel,
+            municipio: item.municipio,
+            uf: item.uf,
+            trigger_texto: item.trigger_texto,
+            created_at: new Date().toISOString()
+          };
+
+          newlyIngestedSignals.push(signalPayload);
           ingestedCount++;
+
+          // Disparo autônomo gratuito para a lista de gestores no Super Admin
+          SparksAlertDispatcherService.notifySignal(signalPayload, tenantId).catch(err => {
+            console.warn('[SPARKS_ALERT] Falha ao notificar gestor:', err.message);
+          });
         }
       }
 
@@ -811,6 +837,7 @@ export class SparksEngineService {
         monitor_id: monitorId,
         spark_type: type,
         sinais_ingeridos: ingestedCount,
+        novos_sinais: newlyIngestedSignals,
         rl_action_applied: chosenAction,
         next_interval_minutes: nextIntervalMinutes,
         time_window: timeWindow,
