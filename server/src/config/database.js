@@ -641,6 +641,34 @@ try {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// FASE 66: ESTEIRA DE PROSPECÇÃO ATIVA B2B & FUNIL COMERCIAL TERRITORIAL
+// ─────────────────────────────────────────────────────────────────────────────
+try {
+  const leadCols66 = sqliteDb.prepare("PRAGMA table_info(leads)").all();
+  if (leadCols66.length > 0) {
+    if (!leadCols66.some(c => c.name === 'funnel_status')) {
+      sqliteDb.exec("ALTER TABLE leads ADD COLUMN funnel_status TEXT NOT NULL DEFAULT 'NOVOS';");
+      sqliteDb.exec("CREATE INDEX IF NOT EXISTS idx_leads_funnel_status ON leads(funnel_status);");
+    }
+    if (!leadCols66.some(c => c.name === 'funnel_updated_at')) {
+      sqliteDb.exec("ALTER TABLE leads ADD COLUMN funnel_updated_at TEXT DEFAULT NULL;");
+    }
+    // Normaliza leads legados para 'NOVOS' caso o valor seja nulo
+    sqliteDb.exec("UPDATE leads SET funnel_status = 'NOVOS' WHERE funnel_status IS NULL OR funnel_status = '';");
+  }
+
+  const propCols66 = sqliteDb.prepare("PRAGMA table_info(propriedades_rurais)").all();
+  if (propCols66.length > 0) {
+    if (!propCols66.some(c => c.name === 'funnel_status')) {
+      sqliteDb.exec("ALTER TABLE propriedades_rurais ADD COLUMN funnel_status TEXT DEFAULT 'NOVOS';");
+    }
+  }
+  console.log('📦 [DB FASE66] Colunas de Funil Comercial e Esteira Territorial ativas.');
+} catch (err66) {
+  console.warn('⚠️ [DB FASE66] Migração de colunas Funil Comercial:', err66.message);
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // VERSUS SPARKS: RADAR AUTÔNOMO DE INTENÇÃO AGRO & TRIGGER EVENTS (MÁQUINAS & OUTORGAS)
 // ─────────────────────────────────────────────────────────────────────────────
 try {

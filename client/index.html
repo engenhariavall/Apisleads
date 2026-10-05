@@ -554,6 +554,75 @@
         
         <!-- VISÃO 1: TABELA ANALÍTICA -->
         <section class="viewport-view-pane active" id="paneTable">
+          <!-- FASE 66: Barra de Carteiras Territoriais por UF (Cobertura Nacional Integral de todas as 27 UFs) -->
+          <div class="territory-ribbon-bar" id="territoryRibbonBar">
+            <div class="territory-ribbon-label">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00D2FF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+              </svg>
+              <span>CARTEIRAS TERRITORIAIS:</span>
+            </div>
+            <div class="territory-pills-scroll" id="territoryPillsScroll">
+              <button type="button" class="btn-territory-pill active" id="pillTerritoryAll" data-uf="">
+                <span>Todas as Praças (Brasil)</span>
+                <strong id="badgeTerritoryAllCount" class="pill-badge">0</strong>
+              </button>
+              <div id="dynamicTerritoryPills" class="dynamic-territory-pills">
+                <!-- Pills de estados preenchidas dinamicamente via JS -->
+              </div>
+            </div>
+            <div class="territory-quick-select-wrap">
+              <select id="selectNationalTerritoryUf" class="select-national-territory" title="Navegar por qualquer uma das 27 UFs do Brasil">
+                <option value="">Todas as 27 UFs</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- FASE 66: Mini-BI / Funil de Atendimento Comercial da Esteira Ativa -->
+          <div class="funnel-pipeline-bar" id="funnelPipelineBar">
+            <div class="funnel-pipeline-track">
+              <button type="button" class="btn-funnel-step active" id="btnFunnelNovos" data-status="NOVOS">
+                <span class="funnel-step-dot novos"></span>
+                <span class="funnel-step-name">Novos</span>
+                <span class="funnel-step-count" id="countFunnelNovos">0</span>
+              </button>
+              <div class="funnel-connector"></div>
+              <button type="button" class="btn-funnel-step" id="btnFunnelEmAtendimento" data-status="EM_ATENDIMENTO">
+                <span class="funnel-step-dot atendimento"></span>
+                <span class="funnel-step-name">Em Atendimento</span>
+                <span class="funnel-step-count" id="countFunnelEmAtendimento">0</span>
+              </button>
+              <div class="funnel-connector"></div>
+              <button type="button" class="btn-funnel-step" id="btnFunnelDespachados" data-status="DESPACHADOS">
+                <span class="funnel-step-dot despachados"></span>
+                <span class="funnel-step-name">Despachados Tráfego/CRM</span>
+                <span class="funnel-step-count" id="countFunnelDespachados">0</span>
+              </button>
+              <div class="funnel-connector"></div>
+              <button type="button" class="btn-funnel-step descartados" id="btnFunnelDescartados" data-status="DESCARTADOS">
+                <span class="funnel-step-dot descartados"></span>
+                <span class="funnel-step-name">Descartados</span>
+                <span class="funnel-step-count" id="countFunnelDescartados">0</span>
+              </button>
+            </div>
+            <div class="funnel-bulk-actions" id="funnelBulkActions" style="display: none;">
+              <span class="bulk-selected-label"><strong id="bulkSelectedNumber">0</strong> selecionados</span>
+              <button type="button" class="btn-bulk-funnel" id="btnBulkMoveAtendimento" title="Avançar selecionados para Em Atendimento">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                <span>Atendimento</span>
+              </button>
+              <button type="button" class="btn-bulk-funnel discard" id="btnBulkDiscard" title="Mover selecionados para Descartados">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                <span>Descartar</span>
+              </button>
+              <button type="button" class="btn-bulk-funnel delete" id="btnBulkDeletePermanently" title="Excluir permanentemente do banco de dados">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                <span>Excluir</span>
+              </button>
+            </div>
+          </div>
+
           <div class="table-container table-container-custom">
             <div class="table-responsive">
               <table class="leads-table">
@@ -764,6 +833,16 @@
                   </svg>
                   <span id="btnInspectPinToggleLabel">Inspecionar Local</span>
                 </button>
+                <!-- FASE 66: Seleção Espacial por Laço / Polígono Livre (Lasso Tool) -->
+                <button type="button" class="btn-map-control btn-lasso-select" id="btnMapLassoSelect" data-niche="agro" data-tooltip="Desenho Livre / Laço (Lasso): clique e arraste para cercar e selecionar fazendas livremente">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m12 19 7-7 3 3-7 7-3-3z"></path>
+                    <path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
+                    <path d="m2 2 7.586 7.586"></path>
+                    <circle cx="11" cy="11" r="2"></circle>
+                  </svg>
+                  <span id="btnMapLassoSelectLabel">Laço Livre</span>
+                </button>
                 <!-- REFINAMENTO: Injeção em Massa das Fazendas Visíveis como Leads Analíticos -->
                 <button type="button" class="btn-map-control btn-inject-all-farms" id="btnInjectAllVisibleFarms" data-tooltip="Injetar e qualificar apenas as fazendas visíveis neste quadrante do mapa para a Tabela Analítica">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -804,6 +883,39 @@
             <div class="map-stage-viewport" id="mapStageViewport">
               <!-- Container WebGL MapLibre -->
               <div id="webglMapContainer" class="webgl-map-stage"></div>
+
+              <!-- FASE 66: Card Contextual Flutuante de Seleção Espacial por Laço -->
+              <div class="map-lasso-selection-card" id="mapLassoSelectionCard" style="display: none;">
+                <div class="lasso-card-header">
+                  <div class="lasso-card-title">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00D2FF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                      <polyline points="2 17 12 22 22 17"></polyline>
+                      <polyline points="2 12 12 17 22 12"></polyline>
+                    </svg>
+                    <span>SELEÇÃO ESPACIAL DE FAZENDAS</span>
+                  </div>
+                  <button type="button" class="btn-lasso-close" id="btnCloseLassoCard" title="Fechar seleção">&times;</button>
+                </div>
+                <div class="lasso-card-body">
+                  <div class="lasso-metric-highlight">
+                    <span class="lasso-metric-number" id="lassoSpatialCount">0</span>
+                    <span class="lasso-metric-label">fazendas no laço (<span id="lassoSpatialHectares">0</span> ha)</span>
+                  </div>
+                  <div class="lasso-actions-row">
+                    <button type="button" class="btn-lasso-inject-primary" id="btnLassoInjectSelected">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                      <span>Injetar Selecionadas (<strong id="btnLassoSelectedCount">0</strong>)</span>
+                    </button>
+                    <button type="button" class="btn-lasso-inject-all" id="btnLassoInjectAll">
+                      <span>Injetar Município Todo (<strong id="btnLassoAllCount">0</strong>)</span>
+                    </button>
+                    <button type="button" class="btn-lasso-clear" id="btnLassoClear">
+                      <span>Limpar Laço</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
 
               <!-- FASE 46: Painel Flutuante de Busca Regional de Malhas Fundiárias (Padrão SIGEF) -->
               <div class="map-mesh-search-panel" id="mapMeshSearchPanel" data-niche="agro" style="display: none;">

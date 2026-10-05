@@ -7,6 +7,7 @@ const state = {
     cnaes: [],
     estados: [],
     cidades: [],
+    funnel_status: 'NOVOS', // FASE 66: Esteira comercial (NOVOS, EM_ATENDIMENTO, DESPACHADOS, DESCARTADOS)
     target_type: 'BUYER', // Padrão: Apenas Compradores (ICP) ativado para proteger o gestor
     excluir_mei: true,    // Padrão: Excluir MEI ativado para ticket qualificado
     capital_social_min: 0,
@@ -181,6 +182,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   safeInit(initManualLeadModal, 'initManualLeadModal');
   safeInit(initTableCategoryTabs, 'initTableCategoryTabs');
   safeInit(initPhase65Features, 'initPhase65Features');
+  safeInit(initPhase66FunnelAndTerritories, 'initPhase66FunnelAndTerritories');
   safeInit(setupMassActionsScrollArrows, 'setupMassActionsScrollArrows');
 
   // Carrega segmentos e localizações da API
@@ -188,6 +190,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     await loadInitialData();
   } catch (errInit) {
     console.error('Erro em loadInitialData:', errInit);
+  }
+
+  // Carrega resumo do Funil Comercial e das 27 UFs do Brasil (Fase 66)
+  try {
+    if (typeof loadFunnelAndTerritoriesSummary === 'function') {
+      await loadFunnelAndTerritoriesSummary();
+    }
+  } catch (errFunnel) {
+    console.warn('Erro ao carregar resumo do funil:', errFunnel);
   }
 
   // Executa a primeira busca
@@ -332,6 +343,16 @@ function updateUI() {
 
   const vpSelectedEl = document.getElementById('vpSelectedCount');
   if (vpSelectedEl) vpSelectedEl.textContent = formatNumber(count);
+
+  // FASE 66: Barra de Ações em Massa do Funil Comercial
+  const funnelBulk = document.getElementById('funnelBulkActions');
+  const bulkSelectedNumber = document.getElementById('bulkSelectedNumber');
+  if (funnelBulk) {
+    funnelBulk.style.display = count > 0 ? 'inline-flex' : 'none';
+  }
+  if (bulkSelectedNumber) {
+    bulkSelectedNumber.textContent = formatNumber(count);
+  }
 
   const railActiveBadge = document.getElementById('railActiveVerticalBadge');
   if (railActiveBadge) railActiveBadge.textContent = formatNumber(state.totalFiltered);
@@ -887,7 +908,7 @@ function renderTable() {
           <td>
             <div class="cell-whatsapp-wrap" style="display:flex;align-items:center;gap:0.3rem;">
               ${hasValidPhone ? `
-                <a href="https://wa.me/55${cleanPhone}?text=${waText}" target="_blank" rel="noopener noreferrer" class="btn-table-wa-direct" title="Abrir conversa no WhatsApp Web">
+                <a href="https://wa.me/55${cleanPhone}?text=${waText}" target="_blank" rel="noopener noreferrer" class="btn-table-wa-direct" onclick="window.handleWhatsAppContactClick('${lead.id}')" title="Abrir conversa no WhatsApp Web (Avança para Em Atendimento)">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
                     <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
                   </svg>
@@ -909,9 +930,19 @@ function renderTable() {
             </div>
           </td>
           <td>
-            <span class="badge-status-pill ${statusClass}" onclick="window.openLeadFeedbackModal('${lead.id}')" title="Clique para atualizar status comercial e notas">
-              ${statusLabel}
-            </span>
+            <div style="display:flex; align-items:center; gap:4px; justify-content:space-between;">
+              <span class="badge-status-pill ${statusClass}" onclick="window.openLeadFeedbackModal('${lead.id}')" title="Clique para atualizar status comercial e notas">
+                ${statusLabel}
+              </span>
+              <div style="display:inline-flex; align-items:center; gap:2px;">
+                <button type="button" class="btn-table-action-discard" onclick="event.stopPropagation(); window.discardLead('${lead.id}')" title="Descartar este lead (mover para Descartados)">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                </button>
+                <button type="button" class="btn-table-action-delete" onclick="event.stopPropagation(); window.deleteLeadPermanently('${lead.id}')" title="Excluir permanentemente do banco">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+              </div>
+            </div>
           </td>
         </tr>
       `);
@@ -1080,7 +1111,7 @@ function renderTable() {
           <td>
             <div class="cell-whatsapp-wrap" style="display:flex;align-items:center;gap:0.3rem;">
               ${hasValidB2bPhone ? `
-                <a href="https://wa.me/55${cleanB2bPhone}?text=${waB2bText}" target="_blank" rel="noopener noreferrer" class="btn-table-wa-direct" title="Abrir conversa comercial no WhatsApp Web">
+                <a href="https://wa.me/55${cleanB2bPhone}?text=${waB2bText}" target="_blank" rel="noopener noreferrer" class="btn-table-wa-direct" onclick="window.handleWhatsAppContactClick('${lead.id}')" title="Abrir conversa comercial no WhatsApp Web (Avança para Em Atendimento)">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
                     <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
                   </svg>
@@ -1102,9 +1133,19 @@ function renderTable() {
             </div>
           </td>
           <td>
-            <span class="badge-status-pill ${b2bStatusClass}" onclick="window.openLeadFeedbackModal('${lead.id}')" title="Clique para atualizar status comercial e notas">
-              ${b2bStatusLabel}
-            </span>
+            <div style="display:flex; align-items:center; gap:4px; justify-content:space-between;">
+              <span class="badge-status-pill ${b2bStatusClass}" onclick="window.openLeadFeedbackModal('${lead.id}')" title="Clique para atualizar status comercial e notas">
+                ${b2bStatusLabel}
+              </span>
+              <div style="display:inline-flex; align-items:center; gap:2px;">
+                <button type="button" class="btn-table-action-discard" onclick="event.stopPropagation(); window.discardLead('${lead.id}')" title="Descartar este lead (mover para Descartados)">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                </button>
+                <button type="button" class="btn-table-action-delete" onclick="event.stopPropagation(); window.deleteLeadPermanently('${lead.id}')" title="Excluir permanentemente do banco">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+              </div>
+            </div>
           </td>
         </tr>
       `);
@@ -2385,6 +2426,13 @@ async function executeExport(format, buttonEl = null, explicitLeadIds = null) {
     } else {
       showToast('Planilha Comercial B2B baixada com sucesso!');
     }
+
+    // FASE 66: Avanço automático no Funil Comercial para DESPACHADOS
+    const expIds = explicitLeadIds || (state.selectAllFiltered ? [] : Array.from(state.selectedLeadIds || []));
+    if (expIds.length > 0 && typeof window.bulkUpdateFunnelStatusRemote === 'function') {
+      window.bulkUpdateFunnelStatusRemote(expIds, 'DESPACHADOS');
+    }
+
     return true;
   } catch (error) {
     console.error('Erro na exportação:', error);
@@ -2477,6 +2525,9 @@ function initExportModal() {
           throw new Error(result.error || result.message || 'Falha ao sincronizar com Meta Ads');
         }
         showToast(result.message || 'Público criado e sincronizado no Meta Ads com sucesso!');
+        if (leadIds && leadIds.length > 0 && typeof window.bulkUpdateFunnelStatusRemote === 'function') {
+          window.bulkUpdateFunnelStatusRemote(leadIds, 'DESPACHADOS');
+        }
         closeModal();
       } catch (err) {
         console.error('Erro na sincronização Meta Ads:', err);
@@ -2507,6 +2558,9 @@ function initExportModal() {
           throw new Error(result.error || 'Falha no disparo do Webhook');
         }
         showToast(result.message || 'Leads enviados via Webhook com sucesso!');
+        if (leadIds && leadIds.length > 0 && typeof window.bulkUpdateFunnelStatusRemote === 'function') {
+          window.bulkUpdateFunnelStatusRemote(leadIds, 'DESPACHADOS');
+        }
         closeModal();
       } catch (err) {
         console.error('Erro no disparo do Webhook:', err);
@@ -9374,29 +9428,25 @@ function initPhase65Features() {
     updateVisibleFarmsCount(e.detail?.count);
   });
 
-  const performBulkInjection = async (targetBtn) => {
-    let properties = Array.isArray(window.ruralPropertiesData) ? window.ruralPropertiesData : [];
-    
-    // Detecta o polo agro e a coordenada onde o mapa está fisicamente apontando na tela
-    const currentHub = window.MapEngine && typeof window.MapEngine.detectCurrentMapHub === 'function'
-      ? window.MapEngine.detectCurrentMapHub()
-      : null;
+  const performBulkInjection = async (targetBtn, explicitProperties = null) => {
+    let properties = Array.isArray(explicitProperties) && explicitProperties.length > 0
+      ? explicitProperties
+      : (Array.isArray(window.ruralPropertiesData) ? window.ruralPropertiesData : []);
 
-    const memUf = (properties[0]?.uf || '').toUpperCase();
-    const memCity = (properties[0]?.municipio || '').toUpperCase();
-    const hubUf = (currentHub?.uf || state.filters.uf || 'RS').toUpperCase();
-    const hubCity = (currentHub?.city || state.filters.cidade || 'PASSO FUNDO').toUpperCase();
+    // Se nenhuma propriedade estiver em memória, tenta detectar se o mapa possui dados carregados
+    if (properties.length === 0) {
+      const currentHub = window.MapEngine && typeof window.MapEngine.detectCurrentMapHub === 'function'
+        ? window.MapEngine.detectCurrentMapHub()
+        : null;
+      const hubUf = (currentHub?.uf || state.filters.uf || 'GO').toUpperCase();
+      const hubCity = (currentHub?.city || state.filters.cidade || '').toUpperCase();
 
-    // Se as propriedades em memória não forem da região que o usuário está vendo na tela:
-    if (properties.length === 0 || (currentHub && memUf !== hubUf)) {
-      showToast(`🌾 Sincronizando quadrante de ${currentHub?.name || hubCity} (${hubUf})...`);
-      
+      showToast(`🌾 Localizando malha fundiária regional...`);
       try {
         const query = new URLSearchParams();
         query.set('uf', hubUf);
         if (hubCity) query.set('municipio', hubCity);
         query.set('origem', 'TODOS');
-        
         const resGeo = await fetch(`/api/fundiario/car/geojson?${query.toString()}`, { headers: getApiHeaders() });
         if (resGeo.ok) {
           const geojson = await resGeo.json();
@@ -9409,7 +9459,7 @@ function initPhase65Features() {
           updateVisibleFarmsCount(properties.length);
         }
       } catch (errGeo) {
-        console.warn('Não foi possível carregar GeoJSON dinâmico da tela:', errGeo);
+        console.warn('Não foi possível carregar GeoJSON:', errGeo);
       }
     }
 
@@ -9439,22 +9489,39 @@ function initPhase65Features() {
       }
 
       const data = await res.json();
-      showToast(`✅ ${data.count || properties.length} fazendas e produtores rurais sincronizados na Tabela Analítica!`);
+      const injectedCount = data.count || properties.length;
+      showToast(`✅ ${injectedCount} fazendas e produtores rurais sincronizados na Tabela Analítica!`);
 
-      // Alterna automaticamente para a aba de Produtores Rurais e visão de Tabela
+      // Detecta a UF das propriedades injetadas para sincronizar perfeitamente o filtro
+      const propUf = (properties[0]?.uf || 'GO').toUpperCase();
+      state.filters.estados = [propUf];
+      state.filters.cidades = []; // Limpa cidades para garantir visão total do estado/município injetado
+      state.filters.origem = 'RURAL_SIGEF';
+      state.filters.funnel_status = 'NOVOS';
+      state.filters.page = 1;
+      state.currentPage = 1;
+
+      // Sincroniza visualmente as abas de categoria (Empresas vs Rural)
       const tabRural = document.getElementById('btnTabCategoryRural');
+      const tabEmpresas = document.getElementById('btnTabCategoryEmpresas');
+      const tabTodos = document.getElementById('btnTabCategoryTodos');
       if (tabRural) {
-        tabRural.click();
-      } else {
-        state.filters.origem = 'RURAL_SIGEF';
-        state.filters.page = 1;
-        await fetchLeads();
+        [tabRural, tabEmpresas, tabTodos].filter(Boolean).forEach(b => b.classList.remove('active'));
+        tabRural.classList.add('active');
       }
 
       // Garante visão de tabela ativa para visualização
       const tabViewTable = document.getElementById('tabViewTable');
       if (tabViewTable && !tabViewTable.classList.contains('active')) {
         tabViewTable.click();
+      }
+
+      // Recarrega os leads com a ordenação das Pepitas de Ouro no Topo
+      await fetchLeads();
+
+      // Recarrega as carteiras territoriais e o funil comercial
+      if (typeof loadFunnelAndTerritoriesSummary === 'function') {
+        await loadFunnelAndTerritoriesSummary();
       }
     } catch(err) {
       console.error('Erro na injeção em massa:', err);
@@ -9467,6 +9534,8 @@ function initPhase65Features() {
       updateVisibleFarmsCount();
     }
   };
+
+  window.executeFarmInjection = performBulkInjection;
 
   btnInjectBulk?.addEventListener('click', () => performBulkInjection(btnInjectBulk));
   btnInjectTable?.addEventListener('click', () => performBulkInjection(btnInjectTable));
@@ -9632,6 +9701,367 @@ window.bulkEnrichSelectedViaBureau = async function() {
 
 // Event listener para o botão de ação em massa
 document.getElementById('btnBulkEnrichBureau')?.addEventListener('click', window.bulkEnrichSelectedViaBureau);
+
+/* ==========================================================================
+   FASE 66: ESTEIRA DE PROSPECÇÃO B2B, CARTEIRAS TERRITORIAIS (27 UFS) & FUNIL MINI-BI
+   ========================================================================== */
+
+/**
+ * Consulta e sincroniza contadores do Funil Comercial e das 27 UFs do Brasil
+ */
+async function loadFunnelAndTerritoriesSummary() {
+  try {
+    const headers = typeof window.getApiHeaders === 'function' ? window.getApiHeaders() : { 'Content-Type': 'application/json' };
+    const res = await fetch('/api/leads/funnel/summary', { headers });
+    if (!res.ok) return;
+    const json = await res.json();
+    if (!json.success || !json.data) return;
+
+    state.funnelSummary = json.data;
+    renderTerritoryRibbon(json.data);
+    renderFunnelPipeline(json.data);
+  } catch (err) {
+    console.warn('[FASE 66] Erro ao carregar resumo de funil e territórios:', err);
+  }
+}
+window.loadFunnelAndTerritoriesSummary = loadFunnelAndTerritoriesSummary;
+
+/**
+ * Renderiza a Barra de Carteiras Territoriais por UF (Cobertura Nacional Integral de todas as 27 UFs)
+ */
+function renderTerritoryRibbon(summary) {
+  if (!summary) return;
+
+  // Atualiza contador de Todas as Praças (Brasil)
+  const totalCountEl = document.getElementById('badgeTerritoryAllCount');
+  if (totalCountEl && summary.funnel) {
+    totalCountEl.textContent = (summary.funnel.total_carteira || 0).toLocaleString('pt-BR');
+  }
+
+  const selectedUf = (state.filters.estados && state.filters.estados.length === 1) ? state.filters.estados[0] : '';
+
+  // Atualiza botão "Todas as Praças"
+  const pillAll = document.getElementById('pillTerritoryAll');
+  if (pillAll) {
+    pillAll.classList.toggle('active', !selectedUf);
+  }
+
+  // Preenche pills dinâmicas das UFs com registros
+  const container = document.getElementById('dynamicTerritoryPills');
+  if (container) {
+    container.innerHTML = '';
+    const territories = summary.territories || [];
+    territories.forEach(item => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = `btn-territory-pill ${selectedUf === item.uf ? 'active' : ''}`;
+      btn.setAttribute('data-uf', item.uf);
+      btn.title = `${item.name}: ${item.count.toLocaleString('pt-BR')} registros ativos`;
+      btn.innerHTML = `
+        <span>${item.uf}</span>
+        <strong class="pill-badge">${item.count.toLocaleString('pt-BR')}</strong>
+      `;
+      btn.addEventListener('click', () => {
+        selectTerritoryUf(item.uf);
+      });
+      container.appendChild(btn);
+    });
+  }
+
+  // Preenche dropdown com as 27 UFs canônicas do Brasil
+  const selectUf = document.getElementById('selectNationalTerritoryUf');
+  if (selectUf) {
+    const allUfs = summary.all_ufs || [];
+    selectUf.innerHTML = '<option value="">Todas as 27 UFs (Brasil)</option>';
+    allUfs.forEach(u => {
+      const opt = document.createElement('option');
+      opt.value = u.uf;
+      const countLabel = u.count > 0 ? ` (${u.count.toLocaleString('pt-BR')})` : '';
+      opt.textContent = `${u.uf} - ${u.name}${countLabel}`;
+      if (selectedUf === u.uf) opt.selected = true;
+      selectUf.appendChild(opt);
+    });
+    if (selectedUf) selectUf.value = selectedUf;
+  }
+}
+
+/**
+ * Seleciona ou desmarca UF de Carteira Territorial Nacional
+ */
+function selectTerritoryUf(uf) {
+  const normalizedUf = uf ? String(uf).trim().toUpperCase() : '';
+  
+  if (normalizedUf) {
+    state.filters.estados = [normalizedUf];
+  } else {
+    state.filters.estados = [];
+  }
+  // Limpa cidades ao comutar carteira territorial para não haver conflitos regionais
+  state.filters.cidades = [];
+  state.filters.page = 1;
+
+  // Atualiza classe ativa das pills
+  const pillAll = document.getElementById('pillTerritoryAll');
+  if (pillAll) pillAll.classList.toggle('active', !normalizedUf);
+
+  document.querySelectorAll('.btn-territory-pill').forEach(btn => {
+    if (btn.id === 'pillTerritoryAll') return;
+    const btnUf = btn.getAttribute('data-uf');
+    btn.classList.toggle('active', btnUf === normalizedUf);
+  });
+
+  const selectUf = document.getElementById('selectNationalTerritoryUf');
+  if (selectUf) selectUf.value = normalizedUf;
+
+  // Dispara busca e recarrega contadores
+  fetchLeads();
+  loadFunnelAndTerritoriesSummary();
+}
+window.selectTerritoryUf = selectTerritoryUf;
+
+/**
+ * Renderiza o Mini-BI do Funil de Atendimento Comercial
+ */
+function renderFunnelPipeline(summary) {
+  if (!summary || !summary.funnel) return;
+  const f = summary.funnel;
+
+  const countNovos = document.getElementById('countFunnelNovos');
+  if (countNovos) countNovos.textContent = (f.novos || 0).toLocaleString('pt-BR');
+
+  const countAtendimento = document.getElementById('countFunnelEmAtendimento');
+  if (countAtendimento) countAtendimento.textContent = (f.em_atendimento || 0).toLocaleString('pt-BR');
+
+  const countDespachados = document.getElementById('countFunnelDespachados');
+  if (countDespachados) countDespachados.textContent = (f.despachados || 0).toLocaleString('pt-BR');
+
+  const countDescartados = document.getElementById('countFunnelDescartados');
+  if (countDescartados) countDescartados.textContent = (f.descartados || 0).toLocaleString('pt-BR');
+
+  const currentStatus = state.filters.funnel_status || 'NOVOS';
+  document.querySelectorAll('.btn-funnel-step').forEach(btn => {
+    const s = btn.getAttribute('data-status');
+    btn.classList.toggle('active', s === currentStatus);
+  });
+}
+
+/**
+ * Filtra tabela pelo estágio do Funil Comercial
+ */
+function selectFunnelStep(status) {
+  const norm = String(status || 'NOVOS').toUpperCase();
+  state.filters.funnel_status = norm;
+  state.filters.include_discarded = (norm === 'DESCARTADOS');
+  state.filters.page = 1;
+
+  document.querySelectorAll('.btn-funnel-step').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-status') === norm);
+  });
+
+  fetchLeads();
+}
+window.selectFunnelStep = selectFunnelStep;
+
+/**
+ * Disparo ao clicar no contato via WhatsApp: avança lead para EM_ATENDIMENTO
+ */
+window.handleWhatsAppContactClick = async function(leadId) {
+  if (!leadId) return;
+  try {
+    const headers = typeof window.getApiHeaders === 'function' ? window.getApiHeaders() : { 'Content-Type': 'application/json' };
+    await fetch(`/api/leads/${encodeURIComponent(leadId)}/funnel-status`, {
+      method: 'PATCH',
+      headers,
+      body: JSON.stringify({ funnel_status: 'EM_ATENDIMENTO' })
+    });
+    // Atualiza contadores do funil silenciosamente
+    loadFunnelAndTerritoriesSummary();
+  } catch (e) {
+    console.warn('[FASE 66] Erro ao avançar status para Em Atendimento via WhatsApp:', e);
+  }
+};
+
+/**
+ * Descarte individual de lead
+ */
+window.discardLead = async function(leadId) {
+  if (!leadId) return;
+  try {
+    const headers = typeof window.getApiHeaders === 'function' ? window.getApiHeaders() : { 'Content-Type': 'application/json' };
+    const res = await fetch(`/api/leads/${encodeURIComponent(leadId)}/funnel-status`, {
+      method: 'PATCH',
+      headers,
+      body: JSON.stringify({ funnel_status: 'DESCARTADOS' })
+    });
+    const data = await res.json();
+    if (!res.ok || !data.success) {
+      if (typeof showToast === 'function') showToast(data.error || 'Erro ao descartar lead');
+      return;
+    }
+    if (typeof showToast === 'function') {
+      showToast('Lead descartado com sucesso.');
+    }
+    state.selectedLeadIds.delete(leadId);
+    await fetchLeads();
+    loadFunnelAndTerritoriesSummary();
+  } catch (err) {
+    console.error('Erro ao descartar lead:', err);
+    if (typeof showToast === 'function') showToast('Falha na comunicação com o servidor');
+  }
+};
+
+/**
+ * Exclusão permanente de lead
+ */
+window.deleteLeadPermanently = async function(leadId) {
+  if (!leadId) return;
+  const ok = window.confirm('Deseja realmente excluir este lead de forma permanente do banco de dados?');
+  if (!ok) return;
+
+  try {
+    const headers = typeof window.getApiHeaders === 'function' ? window.getApiHeaders() : { 'Content-Type': 'application/json' };
+    const res = await fetch(`/api/leads/${encodeURIComponent(leadId)}`, {
+      method: 'DELETE',
+      headers
+    });
+    const data = await res.json();
+    if (!res.ok || !data.success) {
+      if (typeof showToast === 'function') showToast(data.error || 'Erro ao excluir lead');
+      return;
+    }
+    if (typeof showToast === 'function') {
+      showToast('Lead excluído permanentemente.');
+    }
+    state.selectedLeadIds.delete(leadId);
+    await fetchLeads();
+    loadFunnelAndTerritoriesSummary();
+  } catch (err) {
+    console.error('Erro ao excluir lead:', err);
+    if (typeof showToast === 'function') showToast('Falha na comunicação ao excluir lead');
+  }
+};
+
+/**
+ * Helper para atualização remota de status de funil em massa (usado por exportações)
+ */
+window.bulkUpdateFunnelStatusRemote = async function(ids, newStatus) {
+  if (!ids || ids.length === 0 || !newStatus) return;
+  try {
+    const headers = typeof window.getApiHeaders === 'function' ? window.getApiHeaders() : { 'Content-Type': 'application/json' };
+    await fetch('/api/leads/bulk-funnel-status', {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ ids, funnel_status: newStatus })
+    });
+    loadFunnelAndTerritoriesSummary();
+  } catch (e) {
+    console.warn('[FASE 66] Erro em bulkUpdateFunnelStatusRemote:', e);
+  }
+};
+
+/**
+ * Inicialização dos controles e eventos da Fase 66
+ */
+function initPhase66FunnelAndTerritories() {
+  // Listener do botão "Todas as Praças"
+  document.getElementById('pillTerritoryAll')?.addEventListener('click', () => {
+    selectTerritoryUf('');
+  });
+
+  // Listener do Select Nacional de 27 UFs
+  document.getElementById('selectNationalTerritoryUf')?.addEventListener('change', (e) => {
+    selectTerritoryUf(e.target.value);
+  });
+
+  // Listeners dos passos do Funil Mini-BI
+  document.querySelectorAll('.btn-funnel-step').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const status = btn.getAttribute('data-status');
+      if (status) selectFunnelStep(status);
+    });
+  });
+
+  // Ações em Lote: Mover para Em Atendimento
+  document.getElementById('btnBulkMoveAtendimento')?.addEventListener('click', async () => {
+    const ids = Array.from(state.selectedLeadIds || []);
+    if (ids.length === 0) {
+      if (typeof showToast === 'function') showToast('Selecione ao menos um lead na tabela.');
+      return;
+    }
+    try {
+      const headers = typeof window.getApiHeaders === 'function' ? window.getApiHeaders() : { 'Content-Type': 'application/json' };
+      const res = await fetch('/api/leads/bulk-funnel-status', {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({ ids, funnel_status: 'EM_ATENDIMENTO' })
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        if (typeof showToast === 'function') showToast(`${data.updated_count || ids.length} leads movidos para Em Atendimento.`);
+        state.selectedLeadIds.clear();
+        await fetchLeads();
+        loadFunnelAndTerritoriesSummary();
+      }
+    } catch (e) {
+      console.error('Erro na ação em lote de atendimento:', e);
+    }
+  });
+
+  // Ações em Lote: Descartar
+  document.getElementById('btnBulkDiscard')?.addEventListener('click', async () => {
+    const ids = Array.from(state.selectedLeadIds || []);
+    if (ids.length === 0) {
+      if (typeof showToast === 'function') showToast('Selecione ao menos um lead na tabela.');
+      return;
+    }
+    try {
+      const headers = typeof window.getApiHeaders === 'function' ? window.getApiHeaders() : { 'Content-Type': 'application/json' };
+      const res = await fetch('/api/leads/bulk-funnel-status', {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({ ids, funnel_status: 'DESCARTADOS' })
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        if (typeof showToast === 'function') showToast(`${data.updated_count || ids.length} leads descartados da esteira ativa.`);
+        state.selectedLeadIds.clear();
+        await fetchLeads();
+        loadFunnelAndTerritoriesSummary();
+      }
+    } catch (e) {
+      console.error('Erro na ação em lote de descarte:', e);
+    }
+  });
+
+  // Ações em Lote: Excluir Permanentemente
+  document.getElementById('btnBulkDeletePermanently')?.addEventListener('click', async () => {
+    const ids = Array.from(state.selectedLeadIds || []);
+    if (ids.length === 0) {
+      if (typeof showToast === 'function') showToast('Selecione ao menos um lead na tabela.');
+      return;
+    }
+    const ok = window.confirm(`Atenção: Deseja realmente excluir permanentemente ${ids.length} leads do banco de dados? Esta ação não pode ser desfeita.`);
+    if (!ok) return;
+
+    try {
+      const headers = typeof window.getApiHeaders === 'function' ? window.getApiHeaders() : { 'Content-Type': 'application/json' };
+      const res = await fetch('/api/leads/bulk-delete', {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({ ids })
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        if (typeof showToast === 'function') showToast(`${data.deleted_count || ids.length} leads excluídos permanentemente.`);
+        state.selectedLeadIds.clear();
+        await fetchLeads();
+        loadFunnelAndTerritoriesSummary();
+      }
+    } catch (e) {
+      console.error('Erro na ação em lote de exclusão:', e);
+    }
+  });
+}
 
 
 

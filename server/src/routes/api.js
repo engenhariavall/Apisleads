@@ -2,7 +2,24 @@ import { Router } from 'express';
 import multer from 'multer';
 import { getChecklist } from '../controllers/checklistController.js';
 import { getSegments, getCnaes } from '../controllers/segmentsController.js';
-import { filterLeads, getLocations, getLeadDetails, auditLead, updateLeadFeedbackController, getLeadEconomicGroup, discoverLeadAddress, applyDiscoveredLeadAddress, createManualLeadController, createRuralLeadController, bulkCreateRuralLeadsController } from '../controllers/leadsController.js';
+import { 
+  filterLeads, 
+  getLocations, 
+  getLeadDetails, 
+  auditLead, 
+  updateLeadFeedbackController, 
+  getLeadEconomicGroup, 
+  discoverLeadAddress, 
+  applyDiscoveredLeadAddress, 
+  createManualLeadController, 
+  createRuralLeadController, 
+  bulkCreateRuralLeadsController,
+  getFunnelSummaryController,
+  updateLeadFunnelStatusController,
+  bulkUpdateFunnelStatusController,
+  deleteLeadController,
+  bulkDeleteLeadsController
+} from '../controllers/leadsController.js';
 import { exportLeads, exportCompetitorGeofencing } from '../controllers/exportController.js';
 import { importRealDataController, reSyncAllLeadsController } from '../controllers/importController.js';
 import { syncMetaAudiences, dispatchWebhooks, getIntegrationsStatus } from '../controllers/integrationsController.js';
@@ -132,6 +149,14 @@ router.get('/locations', optionalAuth, getLocations);
 // Rotas Core de Leads (Filtros, Detalhes, Auditoria de Campo e Exportação)
 router.get('/leads/filter', optionalAuth, auditLogger('LEADS_FILTER'), filterLeads);
 router.post('/leads/filter', optionalAuth, auditLogger('LEADS_FILTER'), filterLeads);
+
+// FASE 66: Esteira de Prospecção Ativa B2B, Funil Comercial e Higiene da Base
+router.get('/leads/funnel/summary', optionalAuth, getFunnelSummaryController);
+router.patch('/leads/:id/funnel-status', optionalAuth, auditLogger('LEAD_FUNNEL_STATUS_UPDATE'), updateLeadFunnelStatusController);
+router.post('/leads/bulk-funnel-status', optionalAuth, auditLogger('LEAD_BULK_FUNNEL_STATUS_UPDATE'), bulkUpdateFunnelStatusController);
+router.delete('/leads/:id', optionalAuth, auditLogger('LEAD_DELETE'), deleteLeadController);
+router.post('/leads/bulk-delete', optionalAuth, auditLogger('LEAD_BULK_DELETE'), bulkDeleteLeadsController);
+
 // FASE 47: Injeção Manual de Leads (Warm-up Audiences)
 router.post('/leads/manual', optionalAuth, auditLogger('LEAD_MANUAL_CREATE'), createManualLeadController);
 router.post('/leads/rural', optionalAuth, auditLogger('LEAD_RURAL_CREATE'), createRuralLeadController);

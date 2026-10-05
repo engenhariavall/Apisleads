@@ -1,4 +1,18 @@
-import { queryLeads, getLocationsData, getLeadByIdOrCnpj, updateLeadAudit, updateLeadCommercialFeedback, applyDiscoveredAddressToLead, createManualLead, createRuralPropertyLead } from '../services/leadsService.js';
+import { 
+  queryLeads, 
+  getLocationsData, 
+  getLeadByIdOrCnpj, 
+  updateLeadAudit, 
+  updateLeadCommercialFeedback, 
+  applyDiscoveredAddressToLead, 
+  createManualLead, 
+  createRuralPropertyLead,
+  getFunnelAndTerritoriesSummary,
+  updateLeadFunnelStatus,
+  bulkUpdateFunnelStatus,
+  deleteLead,
+  bulkDeleteLeads
+} from '../services/leadsService.js';
 import { getEconomicGroupDossier } from '../modules/intelligence/index.js';
 import { resolveRealAddress } from '../services/addressResolverService.js';
 import { getTenantFromRequest } from '../middleware/authMiddleware.js';
@@ -236,5 +250,130 @@ export async function bulkCreateRuralLeadsController(req, res) {
     return res.status(500).json({ success: false, error: error.message || 'Falha ao injetar propriedades rurais' });
   }
 }
+
+/**
+ * FASE 66: Resumo do Funil Comercial e Carteiras Territoriais por UF (27 Estados)
+ * GET /api/leads/funnel/summary
+ */
+export function getFunnelSummaryController(req, res) {
+  try {
+    const tenantId = getTenantFromRequest(req);
+    const summary = getFunnelAndTerritoriesSummary(tenantId);
+    res.json({ success: true, data: summary, ...summary });
+  } catch (error) {
+    console.error('Erro ao buscar resumo do funil e carteiras:', error);
+    res.status(500).json({ success: false, error: 'Falha ao buscar resumo do funil comercial' });
+  }
+}
+
+/**
+ * FASE 66: Atualização do Status de Funil Comercial de um Lead (ex: clique no WhatsApp)
+ * PATCH /api/leads/:id/funnel-status
+ */
+export function updateLeadFunnelStatusController(req, res) {
+  try {
+    const { id } = req.params;
+    const status = req.body?.status || req.body?.funnel_status;
+    const tenantId = getTenantFromRequest(req);
+
+    if (!status) {
+      return res.status(400).json({ success: false, error: 'Campo "status" ou "funnel_status" é obrigatório.' });
+    }
+
+    const updatedLead = updateLeadFunnelStatus(id, status, tenantId);
+    if (!updatedLead) {
+      return res.status(404).json({ success: false, error: 'Lead não encontrado.' });
+    }
+
+    res.json({
+      success: true,
+      message: `Status do lead atualizado para "${status}".`,
+      data: updatedLead
+    });
+  } catch (error) {
+    console.error('Erro ao atualizar status de funil do lead:', error);
+    res.status(500).json({ success: false, error: error.message || 'Falha ao atualizar status de funil' });
+  }
+}
+
+/**
+ * FASE 66: Atualização em lote de Status de Funil
+ * POST /api/leads/bulk-funnel-status
+ */
+export function bulkUpdateFunnelStatusController(req, res) {
+  try {
+    const { ids } = req.body || {};
+    const status = req.body?.status || req.body?.funnel_status;
+    const tenantId = getTenantFromRequest(req);
+
+    if (!Array.isArray(ids) || ids.length === 0) {
+      return res.status(400).json({ success: false, error: 'Lista de IDs obrigatória.' });
+    }
+    if (!status) {
+      return res.status(400).json({ success: false, error: 'Status obrigatório ("status" ou "funnel_status").' });
+    }
+
+    const result = bulkUpdateFunnelStatus(ids, status, tenantId);
+    res.json({
+      success: true,
+      message: `${result.updated} leads atualizados para "${status}".`,
+      updated: result.updated,
+      updated_count: result.updated
+    });
+  } catch (error) {
+    console.error('Erro ao atualizar status em lote:', error);
+    res.status(500).json({ success: false, error: error.message || 'Falha ao atualizar status em lote' });
+  }
+}
+
+/**
+ * FASE 66: Exclusão definitiva de um lead
+ * DELETE /api/leads/:id
+ */
+export function deleteLeadController(req, res) {
+  try {
+    const { id } = req.params;
+    const tenantId = getTenantFromRequest(req);
+
+    const deleted = deleteLead(id, tenantId);
+    if (!deleted) {
+      return res.status(404).json({ success: false, error: 'Lead não encontrado para exclusão.' });
+    }
+
+    res.json({
+      success: true,
+      message: 'Lead removido definitivamente da carteira.'
+    });
+  } catch (error) {
+    console.error('Erro ao excluir lead:', error);
+    res.status(500).json({ success: false, error: error.message || 'Falha ao excluir lead' });
+  }
+}
+
+/**
+ * FASE 66: Exclusão definitiva de múltiplos leads em lote
+ * POST /api/leads/bulk-delete
+ */
+export function bulkDeleteLeadsController(req, res) {
+  try {
+    const { ids } = req.body || {};
+    const tenantId = getTenantFromRequest(req);
+
+    if (!Array.isArray(ids) || ids.length === 0) {
+      return res.status(400).json({ success: false, error: 'Lista de IDs obrigatória.' });
+    }
+
+    const result = bulkDeleteLeads(ids, tenantId);
+    res.json({
+      success: true,
+      message: `${result.deleted} leads removidos definitivamente da carteira.`,
+      deleted: result.deleted
+    });
+  } catch (error) {
+    console.error('Erro ao excluir leads em lote:', error);
+    res.status(500).json({ success: false, error: error.message || 'Falha ao excluir leads em lote' });
+  }
+}
+
 
 

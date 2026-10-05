@@ -23,9 +23,17 @@ window.MapEngine = (function() {
   let gapLayerVisible = true;     // FASE 57: toggle granular GAPS FUNDIÁRIOS (Sem Geo / Urgência HOT)
   let tipoPessoaFilter = 'ALL';   // FASE 60: segmentação tática de entidade ('ALL' | 'PJ' | 'PF')
   let currentFundiarioGeoJson = { type: 'FeatureCollection', features: [] };
-  let tacticalPopup = null;
   let isInspectPinActive = false;
   let currentBaseMapMode = 'vector'; // 'vector' | 'satellite'
+
+  // FASE 66: Ferramenta de Seleção Espacial por Laço (Lasso Tool) e Trava Regional
+  let isLassoActive = false;
+  let isLassoDrawing = false;
+  let lassoCoordinates = [];
+  let selectedFarmsByLasso = [];
+  let isRegionalGridLocked = false;
+  let selectedSearchUf = '';
+  let selectedSearchCity = '';
 
   // Centro padrão do Brasil
   const BRAZIL_CENTER = [-51.9253, -14.2350];
@@ -225,6 +233,8 @@ window.MapEngine = (function() {
         setupRadiusBufferLayer(); // Geomarketing Enterprise
         setupCompetitorsAndGapsLayers(); // Fase 23
         setupFundiarioLayers(); // Fases 44/45: Motor Fundiário B2B
+        setupLassoLayers(); // FASE 66: Camadas do Laço de Seleção Espacial
+        setupLassoEvents(); // FASE 66: Interação e Card de Seleção por Laço
         fetchAndRenderFundiarioGeoJson();
       });
 
@@ -439,6 +449,7 @@ window.MapEngine = (function() {
       moveEndDebounceTimer = setTimeout(async () => {
         const zoom = map.getZoom();
         if (zoom < 8) return; // Não recarrega no nível Brasil macro
+        if (isRegionalGridLocked) return; // Não sobrescreve malha regional carregada pelo operador (ex: Rio Verde 3.000)
 
         const hub = detectCurrentMapHub();
         if (!hub) return;
@@ -2553,6 +2564,269 @@ window.MapEngine = (function() {
   }
 
   /**
+   * FASE 66: Ferramenta de Seleção Espacial por Laço Contínuo (Lasso)
+   */
+  function setupLassoLayers() {
+    if (!map) return;
+
+    // Fonte de traçado do laço desenhado
+    if (!map.getSource('lasso-draw-source')) {
+      map.addSource('lasso-draw-source', {
+        type: 'geojson',
+        data: { type: 'FeatureCollection', features: [] }
+      });
+
+      map.addLayer({
+        id: 'lasso-draw-fill',
+        type: 'fill',
+        source: 'lasso-draw-source',
+        paint: {
+          'fill-color': '#00D2FF',
+          'fill-opacity': 0.15
+        }
+      });
+
+      map.addLayer({
+        id: 'lasso-draw-line',
+        type: 'line',
+        source: 'lasso-draw-source',
+        paint: {
+          'line-color': '#00D2FF',
+          'line-width': 2.5,
+          'line-dasharray': [2, 2]
+        }
+      });
+    }
+
+    // Fonte e camadas de destaque das fazendas selecionadas pelo laço
+    if (!map.getSource('lasso-selected-farms-source')) {
+      map.addSource('lasso-selected-farms-source', {
+        type: 'geojson',
+        data: { type: 'FeatureCollection', features: [] }
+      });
+
+      map.addLayer({
+        id: 'lasso-selected-farms-fill',
+        type: 'fill',
+        source: 'lasso-selected-farms-source',
+        paint: {
+          'fill-color': '#00D2FF',
+          'fill-opacity': 0.40
+        }
+      });
+
+      map.addLayer({
+        id: 'lasso-selected-farms-stroke',
+        type: 'line',
+        source: 'lasso-selected-farms-source',
+        paint: {
+          'line-color': '#FFFFFF',
+          'line-width': 3.0
+        }
+      });
+    }
+  }
+
+  function setupLassoEvents() {
+    const btnLasso = document.getElementById('btnMapLassoSelect');
+    const lassoCard = document.getElementById('mapLassoSelectionCard');
+    const btnCloseCard = document.getElementById('btnCloseLassoCard');
+    const btnInjectSelected = document.getElementById('btnLassoInjectSelected');
+    const btnInjectAll = document.getElementById('btnLassoInjectAll');
+    const btnClearLasso = document.getElementById('btnLassoClear');
+    const countEl = document.getElementById('lassoSpatialCount');
+    const haEl = document.getElementById('lassoSpatialHectares');
+    const btnSelectedCountEl = document.getElementById('btnLassoSelectedCount');
+    const btnAllCountEl = document.getElementById('btnLassoAllCount');
+
+    if (!btnLasso) return;
+
+    btnLasso.addEventListener('click', () => {
+      isLassoActive = !isLassoActive;
+      btnLasso.classList.toggle('active', isLassoActive);
+
+      if (isLassoActive) {
+        if (map) map.getCanvas().style.cursor = 'crosshair';
+        if (typeof showToast === 'function') {
+          showToast('Modo Laço Ativo: clique e arraste no mapa para cercar as fazendas que deseja selecionar.');
+        }
+      } else {
+        if (map) map.getCanvas().style.cursor = '';
+      }
+    });
+
+    const clearLassoSelection = () => {
+      selectedFarmsByLasso = [];
+      lassoCoordinates = [];
+      if (lassoCard) lassoCard.style.display = 'none';
+
+      if (map) {
+        if (map.getSource('lasso-draw-source')) {
+          map.getSource('lasso-draw-source').setData({ type: 'FeatureCollection', features: [] });
+        }
+        if (map.getSource('lasso-selected-farms-source')) {
+          map.getSource('lasso-selected-farms-source').setData({ type: 'FeatureCollection', features: [] });
+        }
+      }
+    };
+
+    btnCloseCard?.addEventListener('click', clearLassoSelection);
+    btnClearLasso?.addEventListener('click', clearLassoSelection);
+
+    // Eventos de clique e arraste no MapLibre GL
+    if (map) {
+      map.on('mousedown', (e) => {
+        if (!isLassoActive || e.originalEvent.button !== 0) return;
+        isLassoDrawing = true;
+        lassoCoordinates = [[e.lngLat.lng, e.lngLat.lat]];
+        map.dragPan.disable();
+      });
+
+      map.on('mousemove', (e) => {
+        if (!isLassoActive || !isLassoDrawing) return;
+        const currentCoord = [e.lngLat.lng, e.lngLat.lat];
+        lassoCoordinates.push(currentCoord);
+
+        const drawSrc = map.getSource('lasso-draw-source');
+        if (drawSrc) {
+          drawSrc.setData({
+            type: 'FeatureCollection',
+            features: [{
+              type: 'Feature',
+              geometry: {
+                type: 'LineString',
+                coordinates: lassoCoordinates
+              }
+            }]
+          });
+        }
+      });
+
+      map.on('mouseup', () => {
+        if (!isLassoActive || !isLassoDrawing) return;
+        isLassoDrawing = false;
+        map.dragPan.enable();
+
+        if (lassoCoordinates.length < 3) {
+          clearLassoSelection();
+          return;
+        }
+
+        const closedRing = [...lassoCoordinates, lassoCoordinates[0]];
+        const polygonFeature = {
+          type: 'Feature',
+          geometry: {
+            type: 'Polygon',
+            coordinates: [closedRing]
+          }
+        };
+
+        const drawSrc = map.getSource('lasso-draw-source');
+        if (drawSrc) {
+          drawSrc.setData({
+            type: 'FeatureCollection',
+            features: [polygonFeature]
+          });
+        }
+
+        const allProperties = Array.isArray(window.ruralPropertiesData) ? window.ruralPropertiesData : [];
+        const polygonForRayCast = closedRing.map(c => [c[1], c[0]]); // [lat, lng]
+
+        const insideFarms = allProperties.filter(p => {
+          let lat = p.lat || p.centroide_lat;
+          let lng = p.lng || p.centroide_lng;
+
+          if ((!lat || !lng) && p.geometry?.coordinates) {
+            try {
+              const coords = p.geometry.coordinates;
+              const flat = Array.isArray(coords[0]) && Array.isArray(coords[0][0]) ? coords[0][0] : coords[0];
+              if (Array.isArray(flat) && flat.length >= 2) {
+                lng = flat[0];
+                lat = flat[1];
+              }
+            } catch (_) {}
+          }
+
+          if (lat && lng && !isNaN(lat) && !isNaN(lng)) {
+            return isPointInPolygon(Number(lat), Number(lng), polygonForRayCast);
+          }
+          return false;
+        });
+
+        selectedFarmsByLasso = insideFarms;
+
+        const highlightFeatures = insideFarms.map(f => ({
+          type: 'Feature',
+          properties: f,
+          geometry: f.geometry || {
+            type: 'Point',
+            coordinates: [Number(f.lng || f.centroide_lng), Number(f.lat || f.centroide_lat)]
+          }
+        })).filter(f => f.geometry);
+
+        const selSrc = map.getSource('lasso-selected-farms-source');
+        if (selSrc) {
+          selSrc.setData({
+            type: 'FeatureCollection',
+            features: highlightFeatures
+          });
+        }
+
+        let totalHa = 0;
+        insideFarms.forEach(f => {
+          totalHa += Number(f.area_lavoura_util_ha) || Number(f.area_hectares) || 0;
+        });
+
+        if (countEl) countEl.textContent = insideFarms.length;
+        if (haEl) haEl.textContent = Math.round(totalHa).toLocaleString('pt-BR');
+        if (btnSelectedCountEl) btnSelectedCountEl.textContent = insideFarms.length;
+        if (btnAllCountEl) btnAllCountEl.textContent = allProperties.length;
+
+        if (lassoCard) {
+          lassoCard.style.display = insideFarms.length > 0 ? 'block' : 'none';
+        }
+
+        isLassoActive = false;
+        btnLasso.classList.remove('active');
+        map.getCanvas().style.cursor = '';
+
+        if (insideFarms.length > 0) {
+          if (typeof showToast === 'function') {
+            showToast(`Área delimitada: ${insideFarms.length} fazendas isoladas (${Math.round(totalHa).toLocaleString('pt-BR')} ha).`);
+          }
+        } else {
+          if (typeof showToast === 'function') {
+            showToast('Nenhuma fazenda encontrada dentro da área desenhada.');
+          }
+        }
+      });
+    }
+
+    btnInjectSelected?.addEventListener('click', async () => {
+      if (selectedFarmsByLasso.length === 0) {
+        if (typeof showToast === 'function') showToast('Nenhuma fazenda selecionada no laço.');
+        return;
+      }
+      if (typeof window.executeFarmInjection === 'function') {
+        await window.executeFarmInjection(selectedFarmsByLasso, btnInjectSelected);
+        clearLassoSelection();
+      }
+    });
+
+    btnInjectAll?.addEventListener('click', async () => {
+      const allProps = Array.isArray(window.ruralPropertiesData) ? window.ruralPropertiesData : [];
+      if (allProps.length === 0) {
+        if (typeof showToast === 'function') showToast('Nenhuma fazenda carregada na região.');
+        return;
+      }
+      if (typeof window.executeFarmInjection === 'function') {
+        await window.executeFarmInjection(allProps, btnInjectAll);
+        clearLassoSelection();
+      }
+    });
+  }
+
+  /**
    * Consome GET /api/fundiario/geojson e plota no WebGL
    * @param {Object} [options] Opções de renderização ({ autoFit: boolean })
    */
@@ -3285,6 +3559,9 @@ window.MapEngine = (function() {
 
       const geojson = await res.json();
       currentFundiarioGeoJson = geojson;
+      selectedSearchUf = targetUf;
+      selectedSearchCity = targetCity;
+      isRegionalGridLocked = true;
 
       // FASE 2: Sincroniza dados com o barramento de propriedades rurais global
       window.ruralPropertiesData = (geojson.features || []).map(f => {

@@ -320,6 +320,15 @@ export function buildFilterQuery(filters = {}) {
     )`);
   }
 
+  // 18. FASE 66: Status de Funil Comercial (NOVOS, EM_ATENDIMENTO, DESPACHADOS, DESCARTADOS)
+  if (filters.funnel_status && filters.funnel_status !== 'TODOS' && filters.funnel_status !== 'todos') {
+    whereClauses.push("funnel_status = ?");
+    params.push(String(filters.funnel_status).toUpperCase());
+  } else if (!filters.include_discarded && filters.funnel_status !== 'DESCARTADOS') {
+    // Por padrão esconde da esteira ativa os descartados
+    whereClauses.push("(funnel_status != 'DESCARTADOS' OR funnel_status IS NULL)");
+  }
+
   const whereSql = whereClauses.length > 0 ? `WHERE ${whereClauses.join(' AND ')}` : '';
   return { whereSql, params, _icp_tier_filter: filters._icp_tier_filter || null };
 }
@@ -420,7 +429,9 @@ export function enrichSingleLead(lead, geoRadius = null) {
     vertical_type: lead.vertical_type || 'GERAL',
     vertical_data: verticalDataObj,
     vertical_summary_metric: verticalSummaryMetric,
-    city_macro_data: cityMacroData
+    city_macro_data: cityMacroData,
+    funnel_status: lead.funnel_status || 'NOVOS',
+    funnel_updated_at: lead.funnel_updated_at || null
   };
 
   // Fase 20: ICP Fit Score Preditivo
@@ -469,10 +480,17 @@ export function queryLeads(filters = {}) {
         audit_status, audited_at, audited_by,
         origem, tag, contato_nome,
         feedback_comercial, feedback_status, interesse_maquinario, decisor_nome, whatsapp,
-        intent_stage, dados_fundiarios, area_lavoura_util_ha, dados_hidrograficos, dados_maquinario, sefaz_ie_pf
+        intent_stage, dados_fundiarios, area_lavoura_util_ha, dados_hidrograficos, dados_maquinario, sefaz_ie_pf,
+        funnel_status, funnel_updated_at
       FROM leads
       ${whereSql}
-      ORDER BY capital_social DESC, razao_social ASC
+      ORDER BY (
+        CASE 
+          WHEN area_lavoura_util_ha IS NOT NULL AND area_lavoura_util_ha > 0 THEN area_lavoura_util_ha * 10000 
+          WHEN capital_social IS NOT NULL AND capital_social > 0 THEN capital_social 
+          ELSE 0 
+        END
+      ) DESC, razao_social ASC
     `);
     const allRawRows = allStmt.all(...params);
     let allEnriched = allRawRows.map(lead => enrichSingleLead(lead, filters.geo_radius));
@@ -512,7 +530,7 @@ export function queryLeads(filters = {}) {
   const countStmt = db.prepare(`SELECT COUNT(*) as total FROM leads ${whereSql}`);
   const { total } = countStmt.get(...params);
 
-  // 2. Busca paginada ordenada por capital social e razão social
+  // 2. Busca paginada ordenada por Pepitas de Ouro no Topo (área de lavoura e capital social)
   const dataStmt = db.prepare(`
     SELECT 
       id, cnpj, razao_social, nome_fantasia,
@@ -524,10 +542,17 @@ export function queryLeads(filters = {}) {
       visualizacoes_dossie, ultimo_acesso_dossie, ip_acesso,
       origem, tag, contato_nome,
       feedback_comercial, feedback_status, interesse_maquinario, decisor_nome, whatsapp,
-      intent_stage, dados_fundiarios, area_lavoura_util_ha, dados_hidrograficos, dados_maquinario, sefaz_ie_pf
+      intent_stage, dados_fundiarios, area_lavoura_util_ha, dados_hidrograficos, dados_maquinario, sefaz_ie_pf,
+      funnel_status, funnel_updated_at
     FROM leads
     ${whereSql}
-    ORDER BY capital_social DESC, razao_social ASC
+    ORDER BY (
+      CASE 
+        WHEN area_lavoura_util_ha IS NOT NULL AND area_lavoura_util_ha > 0 THEN area_lavoura_util_ha * 10000 
+        WHEN capital_social IS NOT NULL AND capital_social > 0 THEN capital_social 
+        ELSE 0 
+      END
+    ) DESC, razao_social ASC
     LIMIT ? OFFSET ?
   `);
 
@@ -1485,5 +1510,188 @@ export async function bulkCreateRuralPropertyLeads(properties = [], tenantId = n
   }
   return { count: results.length, leads: results };
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// FASE 66: ESTEIRA DE PROSPECÇÃO ATIVA B2B & GESTÃO TERRITORIAL NACIONAL (27 UFS)
+// ─────────────────────────────────────────────────────────────────────────────
+
+const BRAZIL_27_UFS = {
+  AC: 'Acre', AL: 'Alagoas', AP: 'Amapá', AM: 'Amazonas', BA: 'Bahia', CE: 'Ceará',
+  DF: 'Distrito Federal', ES: 'Espírito Santo', GO: 'Goiás', MA: 'Maranhão',
+  MT: 'Mato Grosso', MS: 'Mato Grosso do Sul', MG: 'Minas Gerais', PA: 'Pará',
+  PB: 'Paraíba', PR: 'Paraná', PE: 'Pernambuco', PI: 'Piauí', RJ: 'Rio de Janeiro',
+  RN: 'Rio Grande do Norte', RS: 'Rio Grande do Sul', RO: 'Rondônia', RR: 'Roraima',
+  SC: 'Santa Catarina', SP: 'São Paulo', SE: 'Sergipe', TO: 'Tocantins'
+};
+
+/**
+ * Agrega métricas consolidadas do Funil Comercial e Carteiras de todo o território nacional
+ */
+export function getFunnelAndTerritoriesSummary(tenantId = null) {
+  const resolvedTenant = tenantId || 'tenant-root-default';
+  const tenantFilter = resolvedTenant === 'tenant-root-default' 
+    ? 'tenant_id = ?' 
+    : "(tenant_id = ? OR tenant_id = 'tenant-root-default')";
+  const tenantParams = [resolvedTenant];
+
+  // 1. Contagens das fases do Funil Comercial
+  const funnelRows = db.prepare(`
+    SELECT 
+      COALESCE(NULLIF(funnel_status, ''), 'NOVOS') as status, 
+      COUNT(*) as count 
+    FROM leads 
+    WHERE ${tenantFilter} AND (is_competitor = 0 OR is_competitor IS NULL)
+    GROUP BY COALESCE(NULLIF(funnel_status, ''), 'NOVOS')
+  `).all(...tenantParams);
+
+  const funnelMap = {
+    NOVOS: 0,
+    EM_ATENDIMENTO: 0,
+    DESPACHADOS: 0,
+    DESCARTADOS: 0
+  };
+
+  funnelRows.forEach(row => {
+    const s = String(row.status || '').toUpperCase();
+    if (funnelMap[s] !== undefined) {
+      funnelMap[s] = Number(row.count) || 0;
+    } else {
+      funnelMap.NOVOS += Number(row.count) || 0;
+    }
+  });
+
+  const totalAtivo = funnelMap.NOVOS + funnelMap.EM_ATENDIMENTO + funnelMap.DESPACHADOS;
+  const totalGeral = totalAtivo + funnelMap.DESCARTADOS;
+
+  // 2. Contagens de Carteiras Territoriais por Estado (UF) cobrindo todo o Brasil
+  const ufRows = db.prepare(`
+    SELECT 
+      UPPER(TRIM(uf)) as uf, 
+      COUNT(*) as count 
+    FROM leads 
+    WHERE ${tenantFilter} 
+      AND (is_competitor = 0 OR is_competitor IS NULL)
+      AND (funnel_status != 'DESCARTADOS' OR funnel_status IS NULL)
+      AND uf IS NOT NULL AND TRIM(uf) != ''
+    GROUP BY UPPER(TRIM(uf))
+    ORDER BY count DESC, uf ASC
+  `).all(...tenantParams);
+
+  const ufCountsMap = {};
+  ufRows.forEach(r => {
+    if (r.uf) ufCountsMap[r.uf] = Number(r.count) || 0;
+  });
+
+  // Carteiras ativas com registros
+  const activeTerritories = ufRows.map(r => ({
+    uf: r.uf,
+    name: BRAZIL_27_UFS[r.uf] || r.uf,
+    count: Number(r.count) || 0
+  }));
+
+  // Lista canônica de todas as 27 UFs do Brasil
+  const allUfs = Object.keys(BRAZIL_27_UFS).sort().map(sigla => ({
+    uf: sigla,
+    name: BRAZIL_27_UFS[sigla],
+    count: ufCountsMap[sigla] || 0
+  }));
+
+  return {
+    funnel: {
+      novos: funnelMap.NOVOS,
+      em_atendimento: funnelMap.EM_ATENDIMENTO,
+      despachados: funnelMap.DESPACHADOS,
+      descartados: funnelMap.DESCARTADOS,
+      total_carteira: totalAtivo,
+      total_universo: totalGeral
+    },
+    territories: activeTerritories,
+    all_ufs: allUfs
+  };
+}
+
+/**
+ * Atualiza o status de funil comercial de um lead individual
+ */
+export function updateLeadFunnelStatus(id, newStatus, tenantId = null) {
+  if (!id || !newStatus) return null;
+  const validStatuses = ['NOVOS', 'EM_ATENDIMENTO', 'DESPACHADOS', 'DESCARTADOS'];
+  const statusUpper = String(newStatus).toUpperCase();
+  if (!validStatuses.includes(statusUpper)) {
+    throw new Error(`Status de funil inválido: ${newStatus}`);
+  }
+
+  const resolvedTenant = tenantId || 'tenant-root-default';
+  const tenantFilter = resolvedTenant === 'tenant-root-default' 
+    ? 'tenant_id = ?' 
+    : "(tenant_id = ? OR tenant_id = 'tenant-root-default')";
+
+  const stmt = db.prepare(`
+    UPDATE leads 
+    SET funnel_status = ?, funnel_updated_at = datetime('now', 'localtime')
+    WHERE id = ? AND ${tenantFilter}
+  `);
+  stmt.run(statusUpper, id, resolvedTenant);
+
+  return getLeadByIdOrCnpj(id, resolvedTenant);
+}
+
+/**
+ * Atualiza o status de funil de leads em lote
+ */
+export function bulkUpdateFunnelStatus(ids = [], newStatus, tenantId = null) {
+  if (!Array.isArray(ids) || ids.length === 0) return { updated: 0 };
+  const validStatuses = ['NOVOS', 'EM_ATENDIMENTO', 'DESPACHADOS', 'DESCARTADOS'];
+  const statusUpper = String(newStatus).toUpperCase();
+  if (!validStatuses.includes(statusUpper)) {
+    throw new Error(`Status de funil inválido: ${newStatus}`);
+  }
+
+  const resolvedTenant = tenantId || 'tenant-root-default';
+  const placeholders = ids.map(() => '?').join(',');
+  const tenantFilter = resolvedTenant === 'tenant-root-default' 
+    ? 'tenant_id = ?' 
+    : "(tenant_id = ? OR tenant_id = 'tenant-root-default')";
+
+  const stmt = db.prepare(`
+    UPDATE leads 
+    SET funnel_status = ?, funnel_updated_at = datetime('now', 'localtime')
+    WHERE id IN (${placeholders}) AND ${tenantFilter}
+  `);
+  const result = stmt.run(statusUpper, ...ids, resolvedTenant);
+  return { updated: result.changes || 0 };
+}
+
+/**
+ * Exclusão definitiva de lead individual
+ */
+export function deleteLead(id, tenantId = null) {
+  if (!id) return false;
+  const resolvedTenant = tenantId || 'tenant-root-default';
+  const tenantFilter = resolvedTenant === 'tenant-root-default' 
+    ? 'tenant_id = ?' 
+    : "(tenant_id = ? OR tenant_id = 'tenant-root-default')";
+
+  const stmt = db.prepare(`DELETE FROM leads WHERE id = ? AND ${tenantFilter}`);
+  const result = stmt.run(id, resolvedTenant);
+  return result.changes > 0;
+}
+
+/**
+ * Exclusão definitiva de múltiplos leads em lote
+ */
+export function bulkDeleteLeads(ids = [], tenantId = null) {
+  if (!Array.isArray(ids) || ids.length === 0) return { deleted: 0 };
+  const resolvedTenant = tenantId || 'tenant-root-default';
+  const placeholders = ids.map(() => '?').join(',');
+  const tenantFilter = resolvedTenant === 'tenant-root-default' 
+    ? 'tenant_id = ?' 
+    : "(tenant_id = ? OR tenant_id = 'tenant-root-default')";
+
+  const stmt = db.prepare(`DELETE FROM leads WHERE id IN (${placeholders}) AND ${tenantFilter}`);
+  const result = stmt.run(...ids, resolvedTenant);
+  return { deleted: result.changes || 0 };
+}
+
 
 
