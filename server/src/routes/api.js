@@ -1041,6 +1041,7 @@ router.get('/admin/audit/scope-deviations', optionalAuth, async (req, res) => {
 // ─────────────────────────────────────────────────────────────────────────────
 router.get('/sparks/monitors', optionalAuth, sparksController.getSparksMonitors);
 router.get('/sparks/signals', optionalAuth, sparksController.getSparksSignals);
+router.get('/sparks/signals/latest', optionalAuth, sparksController.getLatestSparksSignals);
 router.get('/sparks/stats', optionalAuth, sparksController.getSparksStats);
 router.post('/sparks/monitors/:id/trigger', optionalAuth, sparksController.triggerSparkMonitor);
 router.get('/sparks/signals/export-b2b', optionalAuth, sparksController.exportSignalsB2b);
@@ -1050,6 +1051,15 @@ router.get('/sparks/signals/:id/dossier', optionalAuth, sparksController.getSign
 router.post('/sparks/signals/:id/boost', optionalAuth, sparksController.boostSignalLead);
 router.post('/sparks/signals/:id/dispatch-crm', optionalAuth, sparksController.dispatchSignalToCrm);
 router.post('/sparks/signals/:id/enrich-bureau', optionalAuth, sparksController.enrichSignalBureau);
+
+// Gestão de Destinatários de Alertas WhatsApp (Super Admin) & Simulação
+router.get('/sparks/recipients', optionalAuth, sparksController.getSparksAlertRecipients);
+router.post('/sparks/recipients', optionalAuth, sparksController.addSparksAlertRecipient);
+router.put('/sparks/recipients/:id', optionalAuth, sparksController.updateSparksAlertRecipient);
+router.delete('/sparks/recipients/:id', optionalAuth, sparksController.deleteSparksAlertRecipient);
+router.patch('/sparks/recipients/:id/toggle', optionalAuth, sparksController.toggleSparksAlertRecipient);
+router.post('/sparks/recipients/:id/test', optionalAuth, sparksController.testSparksAlertRecipient);
+router.post('/sparks/signals/simulate', optionalAuth, sparksController.simulateNewSparkSignal);
 
 // ─────────────────────────────────────────────────────────────────────────────
 // FASE 66.A/B/C: EVOLUÇÃO COGNITIVA — VISÃO COMPUTACIONAL, RL & WEBHOOK CRM

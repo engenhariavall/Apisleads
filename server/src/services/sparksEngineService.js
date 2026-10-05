@@ -572,6 +572,31 @@ export class SparksEngineService {
   }
 
   /**
+   * Retorna os sinais mais recentes para o polling em tempo real do frontend
+   */
+  static getLatestSignals({ since = null, limit = 15 } = {}, tenantId = 'tenant-root-default') {
+    let sql = `
+      SELECT 
+        s.*,
+        m.nome as monitor_nome
+      FROM sparks_signals s
+      JOIN sparks_monitors m ON s.monitor_id = m.id
+      WHERE s.tenant_id = ?
+    `;
+    const params = [tenantId];
+
+    if (since) {
+      sql += ` AND datetime(s.created_at) > datetime(?)`;
+      params.push(since);
+    }
+
+    sql += ` ORDER BY s.created_at DESC LIMIT ?`;
+    params.push(Number(limit) || 15);
+
+    return db.prepare(sql).all(...params);
+  }
+
+  /**
    * Consolida métricas executivas do painel de telemetria do Radar Sparks
    */
   static getAggregatedStats(tenantId = 'tenant-root-default') {

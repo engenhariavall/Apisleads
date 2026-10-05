@@ -43,6 +43,7 @@ Desktop.ini
 *.sublime-workspace
 
 # Mídias locais e temporárias
-WhatsApp*
+WhatsApp Image*
+WhatsApp Video*
 *.mp4
 
