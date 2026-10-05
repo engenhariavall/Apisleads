@@ -11,7 +11,7 @@
     "db:geocode-remaining": "node server/scripts/syncRemainingGeocoding.js",
     "test:phase25": "node tests/test_phase25.js",
     "test:phase26": "node tests/test_phase26.js",
-    "deploy:vps": "ssh -i \"$HOME/.ssh/id_ed25519\" root@179.236.237.116 \"cd /var/www/versus-api && git pull origin main && pm2 restart versus-api && pm2 status\""
+    "deploy:vps": "ssh root@179.236.237.116 \"cd /var/www/versus-api && git pull origin main && pm2 restart versus-api && pm2 status\""
   },
   "keywords": [
     "leads",
