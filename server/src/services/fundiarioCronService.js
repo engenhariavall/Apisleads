@@ -97,6 +97,7 @@ export class FundiarioCronService {
             } else {
               upToDateCount++;
             }
+          } else {
             // Imóvel novo no lote público - Exige geometria oficial autêntica
             if (!reg.geometria_poligono) {
               console.warn(`⚠️ [CRON] Imóvel ${reg.id_sigef || reg.nome_imovel} sem geometria autêntica descartado (Zero Mocks).`);
@@ -108,6 +109,7 @@ export class FundiarioCronService {
               geometria_poligono: reg.geometria_poligono
             }, tenantId);
             newlyIngested++;
+          }
         }
       } else {
         // 2. Modo Varredura Automática Territorial (padrão de cron: varre SEED_RURAL_PROPERTIES ou município)
