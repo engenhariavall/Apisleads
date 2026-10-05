@@ -914,6 +914,12 @@ function renderTable() {
                   </svg>
                   <span>Chamar</span>
                 </a>
+                ${lead.bureau_status === 'VERIFICADO_ASSERTIVA' ? `
+                  <span class="badge-bureau-verified" style="display:inline-flex; align-items:center; gap:0.25rem; font-size:0.58rem; font-weight:800; color:#10B981; background:rgba(16,185,129,0.12); padding:1px 5px; border-radius:3px; border:1px solid rgba(16,185,129,0.3); text-transform:uppercase;" title="Contato validado via Assertiva Soluções v3">
+                    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    VERIFICADO
+                  </span>
+                ` : ''}
                 <button type="button" class="btn-table-bureau-sm" id="btnBureauRow-${lead.id}" onclick="event.stopPropagation(); window.enrichLeadViaBureau('${lead.id}')" title="Reconsultar novos telefones no Bureau (Assertiva)">
                   <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                   <span>Bureau</span>
@@ -1117,6 +1123,12 @@ function renderTable() {
                   </svg>
                   <span>Chamar</span>
                 </a>
+                ${lead.bureau_status === 'VERIFICADO_ASSERTIVA' ? `
+                  <span class="badge-bureau-verified" style="display:inline-flex; align-items:center; gap:0.25rem; font-size:0.58rem; font-weight:800; color:#10B981; background:rgba(16,185,129,0.12); padding:1px 5px; border-radius:3px; border:1px solid rgba(16,185,129,0.3); text-transform:uppercase;" title="Contato validado via Assertiva Soluções v3">
+                    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    VERIFICADO
+                  </span>
+                ` : ''}
                 <button type="button" class="btn-table-bureau-sm" id="btnBureauRow-${lead.id}" onclick="event.stopPropagation(); window.enrichLeadViaBureau('${lead.id}')" title="Reconsultar novos telefones no Bureau (Assertiva)">
                   <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                   <span>Bureau</span>
@@ -9594,13 +9606,17 @@ window.enrichLeadViaBureau = async function(leadId) {
       if (targetLead) {
         targetLead.whatsapp = data.whatsapp;
         targetLead.telefone = data.whatsapp;
+        targetLead.bureau_status = 'VERIFICADO_ASSERTIVA';
+        if (data.score_credito) targetLead.score_credito = data.score_credito;
       }
       if (typeof showToast === 'function') {
-        const prodName = targetLead?.decisor_nome || 'Produtor';
-        showToast(`✅ WhatsApp de ${prodName} revelado: ${data.whatsapp}!`);
+        const prodName = targetLead?.decisor_nome || 'Contato';
+        showToast(`WhatsApp de ${prodName} revelado e validado via Bureau: ${data.whatsapp}!`);
       }
-      // Re-renderiza a tabela para atualizar a célula com o botão Chamar
-      if (typeof renderLeadsTable === 'function') {
+      // Re-renderiza a tabela para atualizar a célula com o botão Chamar e selo Verificado
+      if (typeof renderTable === 'function') {
+        renderTable();
+      } else if (typeof renderLeadsTable === 'function') {
         renderLeadsTable();
       }
     } else {

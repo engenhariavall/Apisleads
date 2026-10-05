@@ -465,6 +465,79 @@ router.post('/bureau/lookup', optionalAuth, async (req, res) => {
   }
 });
 
+// FASE ASSERTIVA v3: CONSULTA COMPLETA CADASTRAL & CRÉDITO BUREAU (ESTILO SERASA)
+router.post('/bureau/credit-lookup', optionalAuth, async (req, res) => {
+  try {
+    const { bureauService } = await import('../services/bureauService.js');
+    const { doc, cpf, cnpj, cpf_cnpj, forceRefresh, maxAgeDays } = req.body || {};
+    const targetDoc = doc || cpf || cnpj || cpf_cnpj;
+    const tenantId = getTenantFromRequest(req);
+
+    if (!targetDoc) {
+      return res.status(400).json({
+        success: false,
+        error: 'DOCUMENT_REQUIRED',
+        message: 'Informe o CPF (11 dígitos) ou CNPJ (14 dígitos) para consulta.'
+      });
+    }
+
+    const result = await bureauService.consultarBureauCompleto(targetDoc, {
+      tenantId,
+      forceRefresh: Boolean(forceRefresh),
+      maxAgeDays: maxAgeDays ? Number(maxAgeDays) : 30
+    });
+
+    return res.json(result);
+  } catch (error) {
+    const httpStatus = error.statusCode || error.status;
+    if (httpStatus === 403 || httpStatus === 400 || error.code === 'TEST_DRIVE_EXPIRED' || error.code === 'TENANT_KEY_MISSING') {
+      return res.status(httpStatus || 403).json({
+        success: false,
+        error: error.code || 'TEST_DRIVE_EXPIRED',
+        message: error.friendlyMessage || error.message,
+        statusCode: httpStatus || 403
+      });
+    }
+    console.error('❌ [API /bureau/credit-lookup ERROR]:', error.message);
+    return res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// FASE ASSERTIVA v3: CHECAGEM RÁPIDA DE CACHE ANTI-DESPERDÍCIO (CUSTO ZERO)
+router.get('/bureau/check-cache/:doc', optionalAuth, async (req, res) => {
+  try {
+    const { bureauService } = await import('../services/bureauService.js');
+    const cleanDoc = String(req.params.doc || '').replace(/\D/g, '');
+    const tenantId = getTenantFromRequest(req);
+    const cached = bureauService.getCachedConsultation(cleanDoc, tenantId, 30);
+    if (cached) {
+      return res.json({
+        hasCache: true,
+        ageInDays: cached.ageInDays,
+        created_at: cached.created_at,
+        data: cached.data
+      });
+    }
+    return res.json({ hasCache: false });
+  } catch (error) {
+    return res.status(500).json({ hasCache: false, error: error.message });
+  }
+});
+
+// FASE ASSERTIVA v3: SINCRONIZAÇÃO FORÇADA DE LEAD COM DADOS DO BUREAU
+router.post('/bureau/sync-lead', optionalAuth, async (req, res) => {
+  try {
+    const { bureauService } = await import('../services/bureauService.js');
+    const { doc, bureauData } = req.body || {};
+    const tenantId = getTenantFromRequest(req);
+    const cleanDoc = String(doc || '').replace(/\D/g, '');
+    const result = await bureauService.syncLeadWithBureauData(cleanDoc, bureauData, tenantId);
+    return res.json(result);
+  } catch (error) {
+    return res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 // FASE 51 (ETAPA 4): COST CONTROL & ENRIQUECIMENTO MANUAL SOB DEMANDA VIA BUREAU
 router.post('/osint/enrich-whatsapp-bureau', optionalAuth, async (req, res) => {
   try {

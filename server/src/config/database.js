@@ -138,6 +138,23 @@ try {
     if (!leadCols.some(c => c.name === 'updated_at')) {
       sqliteDb.exec("ALTER TABLE leads ADD COLUMN updated_at TEXT DEFAULT NULL;");
     }
+    // FASE ASSERTIVA v3: Colunas para Score de Crédito e Procedência de Bureau
+    if (!leadCols.some(c => c.name === 'score_credito')) {
+      sqliteDb.exec("ALTER TABLE leads ADD COLUMN score_credito INTEGER DEFAULT NULL;");
+      sqliteDb.exec("CREATE INDEX IF NOT EXISTS idx_leads_score_credito ON leads(score_credito);");
+    }
+    if (!leadCols.some(c => c.name === 'faixa_risco_credito')) {
+      sqliteDb.exec("ALTER TABLE leads ADD COLUMN faixa_risco_credito TEXT DEFAULT NULL;");
+    }
+    if (!leadCols.some(c => c.name === 'bureau_status')) {
+      sqliteDb.exec("ALTER TABLE leads ADD COLUMN bureau_status TEXT DEFAULT NULL;");
+    }
+    if (!leadCols.some(c => c.name === 'bureau_updated_at')) {
+      sqliteDb.exec("ALTER TABLE leads ADD COLUMN bureau_updated_at TEXT DEFAULT NULL;");
+    }
+    if (!leadCols.some(c => c.name === 'bureau_payload')) {
+      sqliteDb.exec("ALTER TABLE leads ADD COLUMN bureau_payload TEXT DEFAULT NULL;");
+    }
     sqliteDb.exec("CREATE INDEX IF NOT EXISTS idx_leads_cnpj_raw ON leads(cnpj_raw);");
   }
 } catch (err) {
@@ -483,6 +500,30 @@ sqliteDb.exec(`
 
   CREATE INDEX IF NOT EXISTS idx_tenant_api_configs_tenant ON tenant_api_configs(tenant_id);
   CREATE INDEX IF NOT EXISTS idx_tenant_api_configs_test_drive ON tenant_api_configs(use_master_key, test_drive_expires_at);
+
+  -- FASE ASSERTIVA v3: Tabela de Cache Anti-Desperdício para Consultas de Bureau
+  CREATE TABLE IF NOT EXISTS bureau_cache_consultas (
+    id TEXT PRIMARY KEY,
+    documento_limpo TEXT NOT NULL,
+    tipo_documento TEXT NOT NULL,
+    tipo_consulta TEXT NOT NULL DEFAULT 'COMPLETA',
+    score_credito INTEGER,
+    faixa_risco TEXT,
+    renda_faturamento_presumido REAL,
+    qtd_protestos INTEGER DEFAULT 0,
+    valor_protestos REAL DEFAULT 0,
+    situacao_cadastral TEXT,
+    telefones_json TEXT,
+    whatsapp_principal TEXT,
+    dados_completos_json TEXT,
+    tenant_id TEXT DEFAULT 'tenant-root-default',
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    updated_at TEXT DEFAULT CURRENT_TIMESTAMP
+  );
+
+  CREATE INDEX IF NOT EXISTS idx_bureau_cache_doc ON bureau_cache_consultas(documento_limpo);
+  CREATE INDEX IF NOT EXISTS idx_bureau_cache_tenant ON bureau_cache_consultas(tenant_id);
+  CREATE INDEX IF NOT EXISTS idx_bureau_cache_created ON bureau_cache_consultas(created_at DESC);
 `);
 
 

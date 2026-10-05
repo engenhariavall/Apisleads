@@ -928,19 +928,24 @@ function pagesPortfolio(doc, { leads, timestamp, operator, recorte, totalPages, 
       const rawTel = lead.whatsapp || lead.telefone_sanitized || lead.telefone;
       const telFmt = formatPhoneForDisplay(rawTel) || 'Canal comercial em enriquecimento';
       const hasWa = Boolean(rawTel);
+      const isBureauVerified = lead.bureau_status === 'VERIFICADO_ASSERTIVA' || Boolean(lead.score_credito);
 
       doc.font('Helvetica-Bold').fontSize(6.5).fillColor(hexRgb(C.TEXT_MAIN))
          .text(`Decisor: ${decisor}`, 58, currentY + 54, { width: 230, ellipsis: true, lineBreak: false });
 
-      doc.font('Helvetica-Bold').fontSize(6.5).fillColor(hexRgb(hasWa ? C.GREEN : C.TEXT_LIGHT))
-         .text(hasWa ? `WhatsApp: ${telFmt}` : telFmt, 300, currentY + 54, { width: 235, align: 'right', ellipsis: true, lineBreak: false });
+      const waLabel = hasWa ? (isBureauVerified ? `WhatsApp: ${telFmt} [VERIFICADO BUREAU]` : `WhatsApp: ${telFmt}`) : telFmt;
+      doc.font('Helvetica-Bold').fontSize(6.5).fillColor(hexRgb(hasWa ? (isBureauVerified ? C.GREEN : C.BLUE) : C.TEXT_LIGHT))
+         .text(waLabel, 260, currentY + 54, { width: 275, align: 'right', ellipsis: true, lineBreak: false });
 
-      // LINHA 5: Gatilho de Venda / Status Comercial
+      // LINHA 5: Gatilho de Venda / Status Comercial & Score Bureau
       let statusComercial = 'Disponível para abordagem outbound';
       if (lead.feedback_status && lead.feedback_status !== 'NAO_CONTATADO') {
         statusComercial = `Status: ${lead.feedback_status} | Interesse: ${lead.interesse_maquinario || 'Padrão'}`;
       } else if (lead.intent_stage) {
         statusComercial = `Fase de Intenção: ${lead.intent_stage} (Aquecido)`;
+      }
+      if (lead.score_credito) {
+        statusComercial += ` | Score Crédito Bureau: ${lead.score_credito}/1000 (${lead.faixa_risco_credito || 'Baixo Risco'})`;
       }
 
       cardBox(doc, 58, currentY + 68, 477, 14, C.CARD_ALT, C.BORDER, 2);

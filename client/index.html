@@ -1431,12 +1431,38 @@
           </div>
         </section>
 
-        <!-- VISÃO 4: INTELIGÊNCIA COMPETITIVA & CONCORRÊNCIA (AMBIENTE ISOLADO) -->
+        <!-- VISÃO 4: INTELIGÊNCIA COMPETITIVA & CONSULTA BUREAU (ESTILO SERASA) -->
         <section class="viewport-view-pane" id="paneCompetitors" style="display: none; flex-direction: column; height: 100%; overflow-y: auto; padding: 1.5rem;">
           <div class="competitor-stage-container" style="max-width: 1400px; width: 100%; margin: 0 auto; display: flex; flex-direction: column; gap: 1.25rem;">
             
-            <!-- Header Tático do Módulo -->
-            <div class="competitor-header-card" style="background: #0B1224; border: 1px solid rgba(148, 163, 184, 0.15); border-radius: 8px; padding: 1.25rem 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <!-- Barra de Sub-Abas Táticas: Concorrência vs Bureau de Crédito (Assertiva) -->
+            <div class="competitor-module-subtabs" style="display: flex; gap: 0.65rem; border-bottom: 1px solid rgba(148, 163, 184, 0.15); padding-bottom: 0.75rem;">
+              <button type="button" id="subtabCompetitorIntelligence" class="btn-subtab-switch" style="padding: 0.6rem 1.15rem; background: #0055FF; color: #FFFFFF; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 6px; font-size: 0.78rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="22" y1="12" x2="18" y2="12"></line>
+                  <line x1="6" y1="12" x2="2" y2="12"></line>
+                  <line x1="12" y1="6" x2="12" y2="2"></line>
+                  <line x1="12" y1="22" x2="12" y2="18"></line>
+                </svg>
+                <span>Inteligência de Concorrência & Scouting</span>
+              </button>
+
+              <button type="button" id="subtabBureauCredit" class="btn-subtab-switch" style="padding: 0.6rem 1.15rem; background: rgba(148, 163, 184, 0.08); color: #94A3B8; border: 1px solid rgba(148, 163, 184, 0.2); border-radius: 6px; font-size: 0.78rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                  <polyline points="9 12 11 14 15 10"></polyline>
+                </svg>
+                <span>Consulta Cadastral & Crédito Bureau (Assertiva)</span>
+                <span style="background: rgba(16, 185, 129, 0.15); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.3); font-size: 0.62rem; font-weight: 800; padding: 0.1rem 0.45rem; border-radius: 4px; text-transform: uppercase;">OAuth2 v3</span>
+              </button>
+            </div>
+
+            <!-- SUB-VISÃO A: INTELIGÊNCIA COMPETITIVA (EXISTENTE) -->
+            <div id="subviewCompetitorsContent" style="display: flex; flex-direction: column; gap: 1.25rem;">
+              
+              <!-- Header Tático do Módulo -->
+              <div class="competitor-header-card" style="background: #0B1224; border: 1px solid rgba(148, 163, 184, 0.15); border-radius: 8px; padding: 1.25rem 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
               <div>
                 <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.35rem;">
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1635,8 +1661,86 @@
                     </tr>
                   </tbody>
                 </table>
-              </div>
             </div>
+            <!-- FIM SUB-VISÃO A: INTELIGÊNCIA COMPETITIVA -->
+
+            <!-- SUB-VISÃO B: CONSULTA CADASTRAL & CRÉDITO BUREAU (ESTILO SERASA / ASSERTIVA v3) -->
+            <div id="subviewBureauContent" style="display: none; flex-direction: column; gap: 1.25rem;">
+              
+              <!-- Header Tático da Consulta Bureau -->
+              <div class="bureau-header-card" style="background: #0B1224; border: 1px solid rgba(148, 163, 184, 0.15); border-radius: 8px; padding: 1.25rem 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.25rem;">
+                <div>
+                  <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.35rem;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                      <polyline points="9 12 11 14 15 10"></polyline>
+                    </svg>
+                    <h3 style="font-size: 1.05rem; font-weight: 800; color: #FFFFFF; letter-spacing: 0.04em; text-transform: uppercase; margin: 0;">MÓDULO DE CONSULTA CADASTRAL & CRÉDITO BUREAU (ASSERTIVA v3)</h3>
+                    <span style="background: rgba(16, 185, 129, 0.12); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.3); font-size: 0.65rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: 4px; text-transform: uppercase;">Anti-Desperdício Ativo</span>
+                  </div>
+                  <p style="font-size: 0.78rem; color: #94A3B8; margin: 0; line-height: 1.4;">
+                    Consulte CPF ou CNPJ para avaliação de Score de Crédito (0-1000), protestos em cartório, renda presumida e telefones com WhatsApp validado.
+                    <strong style="color: #34D399;">Consultas recorrentes são servidas do cache interno a Custo R$ 0,00 sem consumir créditos da API.</strong>
+                  </p>
+                </div>
+
+                <!-- Formulário Tático de Consulta de Documento -->
+                <div class="bureau-lookup-box" style="display: flex; flex-direction: column; gap: 0.5rem; min-width: 420px;">
+                  <div style="display: flex; align-items: center; gap: 0.6rem;">
+                    <input type="text" id="inputBureauDoc" placeholder="Digite CPF (11 dígitos) ou CNPJ (14 dígitos)" style="flex: 1; padding: 0.65rem 0.9rem; background: #070D1E; border: 1px solid rgba(148, 163, 184, 0.2); border-radius: 4px; color: #FFFFFF; font-size: 0.82rem; font-family: monospace; outline: none; transition: border 0.2s;" onfocus="this.style.borderColor='#10B981'" onblur="this.style.borderColor='rgba(148, 163, 184, 0.2)'">
+                    <button type="button" id="btnLookupBureau" style="padding: 0.65rem 1.25rem; background: #10B981; color: #FFFFFF; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 4px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; cursor: pointer; display: flex; align-items: center; gap: 0.45rem; white-space: nowrap; transition: opacity 0.2s;" onmouseenter="this.style.opacity='0.9'" onmouseleave="this.style.opacity='1'">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                      </svg>
+                      <span id="labelLookupBureau">Consultar Bureau Oficial</span>
+                      <span id="spinnerLookupBureau" style="display: none; animation: spin 1s linear infinite;">⟳</span>
+                    </button>
+                  </div>
+                  
+                  <!-- Opções Avançadas e Trava Anti-Desperdício -->
+                  <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.72rem; color: #94A3B8;">
+                    <label style="display: flex; align-items: center; gap: 0.4rem; cursor: pointer;">
+                      <input type="checkbox" id="chkBureauForceRefresh" style="accent-color: #EF4444;">
+                      <span>Forçar re-consulta na API Assertiva (ignora cache local)</span>
+                    </label>
+                    <button type="button" id="btnCheckBureauCache" style="background: transparent; border: none; color: #34D399; cursor: pointer; text-decoration: underline; font-size: 0.72rem; padding: 0;">
+                      Verificar Base Local
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Banner de Aviso de Cache Anti-Desperdício -->
+              <div id="bureauNoticeBanner" style="display: none; padding: 0.75rem 1.15rem; border-radius: 6px; border: 1px solid; align-items: center; gap: 0.65rem; font-size: 0.8rem;"></div>
+
+              <!-- Área de Resultados Dinâmicos do Bureau -->
+              <div id="bureauResultArea">
+                <!-- Estado Inicial / Convite à Consulta -->
+                <div style="background: #0B1224; border: 1px dashed rgba(148, 163, 184, 0.22); border-radius: 10px; padding: 3.5rem 2rem; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem;">
+                  <div style="width: 52px; height: 52px; border-radius: 50%; background: #070D1E; border: 1px solid rgba(16, 185, 129, 0.3); display: flex; align-items: center; justify-content: center; color: #10B981;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                      <polyline points="9 12 11 14 15 10"></polyline>
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 style="font-size: 1.05rem; font-weight: 800; color: #FFFFFF; margin: 0 0 0.4rem 0;">Nenhuma Consulta de Bureau Realizada</h4>
+                    <p style="font-size: 0.82rem; color: #94A3B8; max-width: 540px; margin: 0; line-height: 1.5;">
+                      Digite um CPF de decisor ou CNPJ empresarial no campo acima para carregar o Dossiê de Crédito, histórico de inadimplência, capacidade financeira e contatos oficiais certificados.
+                    </p>
+                  </div>
+                  <div style="display: flex; gap: 1.5rem; margin-top: 0.5rem; font-size: 0.75rem; color: #64748B;">
+                    <span>• Score de Crédito (0 a 1000)</span>
+                    <span>• Protestos & Restrições</span>
+                    <span>• WhatsApps Validados</span>
+                    <span>• Quadro Societário (QSA)</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <!-- FIM SUB-VISÃO B: CONSULTA CADASTRAL & CRÉDITO BUREAU -->
 
           </div>
         </section>
@@ -3933,6 +4037,8 @@ Carregando script de abordagem...
   <script src="/js/sparksRadar.js?v=1.3.0"></script>
   <!-- VERSUS SPARKS: Central Global de Notificações, Áudio Executivo & Deep Linking -->
   <script src="/js/sparksNotificationCenter.js?v=1.0.0"></script>
+  <!-- FASE ASSERTIVA v3: Motor Executivo de Consulta Cadastral & Crédito Bureau -->
+  <script src="/js/bureauConsultation.js?v=1.0.0"></script>
 </body>
 </html>
 
