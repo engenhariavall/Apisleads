@@ -10491,6 +10491,521 @@ input:checked + .slider:before {
   box-shadow: 0 0 10px rgba(0, 210, 255, 0.3);
 }
 
+/* ==========================================================================
+   FASE ASSERTIVA v3 & FASE 66: MÓDULO EXECUTIVO DE CONSULTA CADASTRAL & BUREAU
+   Espelhamento de Alto Padrão do Assertiva Localize
+   ========================================================================== */
+
+.assertiva-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+}
+
+/* 1. Sub-Navegação de Abas do Bureau (Consultas, Histórico, Lote) */
+.assertiva-subtabs-bar {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.assertiva-subtab-btn {
+  background: transparent;
+  border: none;
+  padding: 0.5rem 0.85rem;
+  color: #94A3B8;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.assertiva-subtab-btn:hover {
+  color: #FFFFFF;
+}
+
+.assertiva-subtab-btn.active {
+  color: #10B981;
+}
+
+.assertiva-subtab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -0.55rem;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #10B981;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+}
+
+/* 2. Barra de Busca Superior Estilo Assertiva Localize */
+.assertiva-search-header-card {
+  background: #0B1224;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 10px;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+}
+
+.assertiva-search-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  background: #070D1E;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  border-radius: 8px;
+  padding: 0.4rem 0.85rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.assertiva-search-input-wrap:focus-within {
+  border-color: #10B981;
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+}
+
+.assertiva-search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #FFFFFF;
+  font-size: 0.92rem;
+  outline: none;
+  font-family: inherit;
+  padding: 0.4rem 0;
+}
+
+.assertiva-search-input::placeholder {
+  color: #64748B;
+}
+
+.btn-assertiva-search {
+  padding: 0.65rem 1.4rem;
+  background: #10B981;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.btn-assertiva-search:hover {
+  background: #059669;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
+}
+
+/* 3. Barra de Protocolo, LGPD e Impressão */
+.assertiva-protocol-bar {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  border-radius: 8px;
+  padding: 0.75rem 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  font-size: 0.75rem;
+}
+
+.assertiva-protocol-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: #94A3B8;
+  flex-wrap: wrap;
+}
+
+.assertiva-protocol-code {
+  font-family: monospace;
+  color: #38BDF8;
+  font-weight: 700;
+}
+
+.assertiva-actions-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.btn-assertiva-action {
+  padding: 0.45rem 0.85rem;
+  background: #070D1E;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  border-radius: 6px;
+  color: #E2E8F0;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.2s ease;
+}
+
+.btn-assertiva-action:hover {
+  border-color: #10B981;
+  color: #10B981;
+  background: rgba(16, 185, 129, 0.08);
+}
+
+.btn-assertiva-print {
+  background: #B45309;
+  border-color: #F59E0B;
+  color: #FFFFFF;
+}
+
+.btn-assertiva-print:hover {
+  background: #D97706;
+  border-color: #FBBF24;
+  color: #FFFFFF;
+}
+
+/* 4. Cards do Dossiê */
+.assertiva-dossier-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.assertiva-card {
+  background: #0B1224;
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  border-radius: 10px;
+  padding: 1.35rem 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+}
+
+.assertiva-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+  padding-bottom: 0.85rem;
+}
+
+.assertiva-card-title-group {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.assertiva-card-icon-wrap {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: rgba(16, 185, 129, 0.15);
+  color: #10B981;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.assertiva-card-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  letter-spacing: 0.02em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+/* 5. Seção de Contatos e Telefones Priorizados */
+.assertiva-phone-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #070D1E;
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  border-radius: 8px;
+  padding: 0.65rem 1rem;
+  margin-bottom: 0.5rem;
+  transition: border-color 0.2s;
+}
+
+.assertiva-phone-row:hover {
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+.assertiva-phone-main {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.assertiva-phone-number {
+  font-family: monospace;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  letter-spacing: 0.03em;
+}
+
+.assertiva-chance-badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 0.18rem 0.55rem;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border: 1px solid;
+}
+
+.assertiva-chance-badge.alta {
+  background: rgba(16, 185, 129, 0.12);
+  color: #10B981;
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.assertiva-chance-badge.media {
+  background: rgba(245, 158, 11, 0.12);
+  color: #F59E0B;
+  border-color: rgba(245, 158, 11, 0.3);
+}
+
+.assertiva-chance-badge.baixa {
+  background: rgba(148, 163, 184, 0.12);
+  color: #94A3B8;
+  border-color: rgba(148, 163, 184, 0.25);
+}
+
+.assertiva-chance-badge.procon {
+  background: rgba(245, 158, 11, 0.15);
+  color: #FBBF24;
+  border-color: rgba(245, 158, 11, 0.4);
+}
+
+.assertiva-carrier-tag {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #64748B;
+  background: rgba(148, 163, 184, 0.08);
+  padding: 0.15rem 0.45rem;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+
+.assertiva-phone-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.btn-assertiva-wa {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.75rem;
+  background: rgba(16, 185, 129, 0.18);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  border-radius: 5px;
+  color: #34D399;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.btn-assertiva-wa:hover {
+  background: rgba(16, 185, 129, 0.3);
+  border-color: #10B981;
+}
+
+/* 6. Score de Crédito e Indicadores Financeiros */
+.assertiva-score-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
+
+.assertiva-score-box {
+  background: #070D1E;
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  border-radius: 8px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+
+.assertiva-gauge-svg {
+  width: 170px;
+  height: 95px;
+}
+
+.assertiva-score-number {
+  font-size: 2.4rem;
+  font-weight: 900;
+  font-family: monospace;
+  line-height: 1;
+  margin-top: -30px;
+}
+
+.assertiva-score-class {
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  margin-top: 0.45rem;
+}
+
+.assertiva-negotiation-scale {
+  display: flex;
+  width: 100%;
+  height: 10px;
+  border-radius: 5px;
+  overflow: hidden;
+  margin: 0.75rem 0 0.45rem 0;
+  background: rgba(148, 163, 184, 0.15);
+}
+
+.assertiva-scale-step {
+  flex: 1;
+  text-align: center;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #94A3B8;
+  padding-top: 0.35rem;
+}
+
+.assertiva-scale-step.active {
+  color: #10B981;
+  font-weight: 800;
+}
+
+/* 7. Relacionamentos: Toggle Tabela / Grafo */
+.assertiva-toggle-btn-group {
+  display: inline-flex;
+  background: #070D1E;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.assertiva-toggle-opt {
+  background: transparent;
+  border: none;
+  padding: 0.35rem 0.8rem;
+  color: #94A3B8;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.2s;
+}
+
+.assertiva-toggle-opt.active {
+  background: #10B981;
+  color: #FFFFFF;
+}
+
+.assertiva-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+
+.assertiva-table th {
+  text-align: left;
+  padding: 0.65rem 0.85rem;
+  background: rgba(148, 163, 184, 0.06);
+  color: #94A3B8;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+}
+
+.assertiva-table td {
+  padding: 0.65rem 0.85rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+  color: #E2E8F0;
+}
+
+.assertiva-table tr:hover td {
+  background: rgba(148, 163, 184, 0.03);
+}
+
+/* 8. Botão de Cópia e Interação */
+.btn-assertiva-copy {
+  background: transparent;
+  border: none;
+  color: #64748B;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 3px;
+  display: inline-flex;
+  align-items: center;
+  transition: color 0.15s, background 0.15s;
+}
+
+.btn-assertiva-copy:hover {
+  color: #10B981;
+  background: rgba(16, 185, 129, 0.1);
+}
+
+/* 9. Estilo Oficial de Impressão A4 Limpo */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  #bureauPrintableArea, #bureauPrintableArea * {
+    visibility: visible;
+  }
+
+  #bureauPrintableArea {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background: #FFFFFF !important;
+    color: #000000 !important;
+    padding: 20mm;
+    font-family: Arial, sans-serif !important;
+  }
+
+  .assertiva-card {
+    background: #FFFFFF !important;
+    color: #000000 !important;
+    border: 1px solid #CCCCCC !important;
+    box-shadow: none !important;
+    page-break-inside: avoid;
+  }
+
+  .btn-assertiva-action, .assertiva-subtabs-bar, .assertiva-search-header-card {
+    display: none !important;
+  }
+}
+
+
 
 
 

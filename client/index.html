@@ -1669,78 +1669,218 @@
           <!-- SUB-VISÃO B: CONSULTA CADASTRAL & CRÉDITO BUREAU (ESTILO SERASA / ASSERTIVA v3) -->
           <div id="subviewBureauContent" style="display: none; flex-direction: column; gap: 1.25rem;">
               
-              <!-- Header Tático da Consulta Bureau -->
-              <div class="bureau-header-card" style="background: #0B1224; border: 1px solid rgba(148, 163, 184, 0.15); border-radius: 8px; padding: 1.25rem 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.25rem;">
-                <div>
-                  <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.35rem;">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                      <polyline points="9 12 11 14 15 10"></polyline>
-                    </svg>
-                    <h3 style="font-size: 1.05rem; font-weight: 800; color: #FFFFFF; letter-spacing: 0.04em; text-transform: uppercase; margin: 0;">MÓDULO DE CONSULTA CADASTRAL & CRÉDITO BUREAU (ASSERTIVA v3)</h3>
-                    <span style="background: rgba(16, 185, 129, 0.12); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.3); font-size: 0.65rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: 4px; text-transform: uppercase;">Anti-Desperdício Ativo</span>
-                  </div>
-                  <p style="font-size: 0.78rem; color: #94A3B8; margin: 0; line-height: 1.4;">
-                    Consulte CPF ou CNPJ para avaliação de Score de Crédito (0-1000), protestos em cartório, renda presumida e telefones com WhatsApp validado.
-                    <strong style="color: #34D399;">Consultas recorrentes são servidas do cache interno a Custo R$ 0,00 sem consumir créditos da API.</strong>
-                  </p>
-                </div>
+              <!-- 1. SUB-NAVEGAÇÃO DO BUREAU (ESTILO ASSERTIVA LOCALIZE) -->
+              <div class="assertiva-subtabs-bar">
+                <button type="button" class="assertiva-subtab-btn active" id="btnBureauSubnavConsultas">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                  </svg>
+                  <span>Consultas</span>
+                </button>
+                <button type="button" class="assertiva-subtab-btn" id="btnBureauSubnavHistory">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                  <span>Histórico</span>
+                </button>
+                <button type="button" class="assertiva-subtab-btn" id="btnBureauSubnavBatch">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <polyline points="10 9 9 9 8 9"></polyline>
+                  </svg>
+                  <span>Consulta em Lote</span>
+                </button>
+              </div>
 
-                <!-- Formulário Tático de Consulta de Documento -->
-                <div class="bureau-lookup-box" style="display: flex; flex-direction: column; gap: 0.5rem; min-width: 420px;">
-                  <div style="display: flex; align-items: center; gap: 0.6rem;">
-                    <input type="text" id="inputBureauDoc" placeholder="Digite CPF (11 dígitos) ou CNPJ (14 dígitos)" style="flex: 1; padding: 0.65rem 0.9rem; background: #070D1E; border: 1px solid rgba(148, 163, 184, 0.2); border-radius: 4px; color: #FFFFFF; font-size: 0.82rem; font-family: monospace; outline: none; transition: border 0.2s;" onfocus="this.style.borderColor='#10B981'" onblur="this.style.borderColor='rgba(148, 163, 184, 0.2)'">
-                    <button type="button" id="btnLookupBureau" style="padding: 0.65rem 1.25rem; background: #10B981; color: #FFFFFF; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 4px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; cursor: pointer; display: flex; align-items: center; gap: 0.45rem; white-space: nowrap; transition: opacity 0.2s;" onmouseenter="this.style.opacity='0.9'" onmouseleave="this.style.opacity='1'">
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                      </svg>
-                      <span id="labelLookupBureau">Consultar Bureau Oficial</span>
+              <!-- SUB-VIEW 1: CONSULTAS ATIVAS & BUSCADOR -->
+              <div id="bureauViewConsultas" style="display: flex; flex-direction: column; gap: 1.25rem;">
+                
+                <!-- BARRA DE BUSCA SUPERIOR ESTILO ASSERTIVA LOCALIZE -->
+                <div class="assertiva-search-header-card">
+                  <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                    <div>
+                      <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.35rem;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                          <polyline points="9 12 11 14 15 10"></polyline>
+                        </svg>
+                        <h3 style="font-size: 1.05rem; font-weight: 800; color: #FFFFFF; letter-spacing: 0.04em; text-transform: uppercase; margin: 0;">BUREAU DE INTELIGÊNCIA CADASTRAL & CRÉDITO (ASSERTIVA LOCALIZE)</h3>
+                        <span style="background: rgba(16, 185, 129, 0.12); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.3); font-size: 0.65rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: 4px; text-transform: uppercase;">OAuth2 v3 Ativo</span>
+                      </div>
+                      <p style="font-size: 0.78rem; color: #94A3B8; margin: 0; line-height: 1.4;">
+                        Busca oficial unificada por CPF, CNPJ, Razão Social, E-mail ou Telefone.
+                        <strong style="color: #34D399;">Consultas salvas no Supabase são servidas a Custo R$ 0,00 sem consumir créditos da API.</strong>
+                      </p>
+                    </div>
+
+                    <!-- Botões de Ação Auxiliares -->
+                    <div class="assertiva-actions-bar">
+                      <button type="button" class="btn-assertiva-action" id="btnBureauAuditPayload" title="Inspecionar retorno bruto JSON da API da Assertiva">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                          <polyline points="16 18 22 12 16 6"></polyline>
+                          <polyline points="8 6 2 12 8 18"></polyline>
+                        </svg>
+                        <span>Auditoria JSON</span>
+                      </button>
+                      <button type="button" class="btn-assertiva-action btn-assertiva-print" id="btnBureauPrint" title="Imprimir dossiê em folha A4 oficial">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                          <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                          <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                          <rect x="6" y="14" width="12" height="8"></rect>
+                        </svg>
+                        <span>Imprimir Dossiê</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Campo de Busca Polimórfico Amplo -->
+                  <div class="assertiva-search-input-wrap">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="11" cy="11" r="8"></circle>
+                      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <input type="text" id="inputBureauDoc" class="assertiva-search-input" placeholder="Busque por CPF, CNPJ, e-mail, telefone ou nome...">
+                    <button type="button" class="btn-assertiva-search" id="btnLookupBureau">
+                      <span id="labelLookupBureau">Consultar</span>
                       <span id="spinnerLookupBureau" style="display: none; animation: spin 1s linear infinite;">⟳</span>
                     </button>
                   </div>
-                  
-                  <!-- Opções Avançadas e Trava Anti-Desperdício -->
-                  <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.72rem; color: #94A3B8;">
+
+                  <!-- Trava Anti-Desperdício e Atalhos -->
+                  <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.72rem; color: #94A3B8; flex-wrap: wrap; gap: 0.5rem;">
                     <label style="display: flex; align-items: center; gap: 0.4rem; cursor: pointer;">
                       <input type="checkbox" id="chkBureauForceRefresh" style="accent-color: #EF4444;">
-                      <span>Forçar re-consulta na API Assertiva (ignora cache local)</span>
+                      <span>Forçar re-consulta na API Assertiva (ignorar cache local do Supabase)</span>
                     </label>
-                    <button type="button" id="btnCheckBureauCache" style="background: transparent; border: none; color: #34D399; cursor: pointer; text-decoration: underline; font-size: 0.72rem; padding: 0;">
-                      Verificar Base Local
+                    <div style="display: flex; gap: 1rem;">
+                      <button type="button" id="btnCheckBureauCache" style="background: transparent; border: none; color: #34D399; cursor: pointer; text-decoration: underline; font-size: 0.72rem; padding: 0;">
+                        Verificar se já foi consultado
+                      </button>
+                      <span style="color: #64748B;">Exemplo oficial: <strong style="color: #38BDF8; cursor: pointer;" onclick="document.getElementById('inputBureauDoc').value='123.456.789-01'; document.getElementById('btnLookupBureau').click();">123.456.789-01</strong></span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Banner de Aviso de Cache Anti-Desperdício -->
+                <div id="bureauNoticeBanner" style="display: none; padding: 0.75rem 1.15rem; border-radius: 6px; border: 1px solid; align-items: center; gap: 0.65rem; font-size: 0.8rem;"></div>
+
+                <!-- ÁREA PRINCIPAL DINÂMICA DO DOSSIÊ (10 SEÇÕES ASSERTIVA) -->
+                <div id="bureauResultArea">
+                  <!-- Estado Inicial / Convite à Consulta -->
+                  <div style="background: #0B1224; border: 1px dashed rgba(148, 163, 184, 0.22); border-radius: 10px; padding: 3.5rem 2rem; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem;">
+                    <div style="width: 56px; height: 56px; border-radius: 50%; background: #070D1E; border: 1px solid rgba(16, 185, 129, 0.3); display: flex; align-items: center; justify-content: center; color: #10B981;">
+                      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        <polyline points="9 12 11 14 15 10"></polyline>
+                      </svg>
+                    </div>
+                    <div>
+                      <h4 style="font-size: 1.1rem; font-weight: 800; color: #FFFFFF; margin: 0 0 0.4rem 0;">Buscador de Inteligência Cadastral & Crédito</h4>
+                      <p style="font-size: 0.82rem; color: #94A3B8; max-width: 560px; margin: 0; line-height: 1.5;">
+                        Digite um CPF de titular, CNPJ de revenda/fornecedor ou nome no campo acima para gerar o Dossiê Estratégico com Score de Crédito, Probabilidade de Negociação, Telefones Validados e Vínculos Societários.
+                      </p>
+                    </div>
+                    <div style="display: flex; gap: 1.5rem; margin-top: 0.5rem; font-size: 0.75rem; color: #64748B; flex-wrap: wrap; justify-content: center;">
+                      <span>• Score Assertiva (0-1000)</span>
+                      <span>• Telefones com Chance & WhatsApp</span>
+                      <span>• Relacionamentos (Tabela/Grafo)</span>
+                      <span>• Protestos & Cheques em Cartório</span>
+                      <span>• Vínculos Empregatícios & CREA/CRM</span>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <!-- FIM SUB-VIEW 1: CONSULTAS -->
+
+              <!-- SUB-VIEW 2: HISTÓRICO DE CONSULTAS DO SISTEMA -->
+              <div id="bureauViewHistory" style="display: none; flex-direction: column; gap: 1rem;">
+                <div style="background: #0B1224; border: 1px solid rgba(148, 163, 184, 0.16); border-radius: 10px; padding: 1.25rem 1.5rem;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <div>
+                      <h4 style="font-size: 0.95rem; font-weight: 800; color: #FFFFFF; text-transform: uppercase; margin: 0;">HISTÓRICO DE CONSULTAS SALVAS (SUPABASE)</h4>
+                      <div style="font-size: 0.75rem; color: #94A3B8; margin-top: 0.25rem;">Auditoria completa de consultas com persistência e custo R$ 0,00 para reabertura</div>
+                    </div>
+                    <button type="button" class="btn-assertiva-action" id="btnRefreshBureauHistory">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M23 4v6h-6"></path><path d="M1 20v-6h6"></path><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                      <span>Atualizar Histórico</span>
                     </button>
                   </div>
-                </div>
-              </div>
-
-              <!-- Banner de Aviso de Cache Anti-Desperdício -->
-              <div id="bureauNoticeBanner" style="display: none; padding: 0.75rem 1.15rem; border-radius: 6px; border: 1px solid; align-items: center; gap: 0.65rem; font-size: 0.8rem;"></div>
-
-              <!-- Área de Resultados Dinâmicos do Bureau -->
-              <div id="bureauResultArea">
-                <!-- Estado Inicial / Convite à Consulta -->
-                <div style="background: #0B1224; border: 1px dashed rgba(148, 163, 184, 0.22); border-radius: 10px; padding: 3.5rem 2rem; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem;">
-                  <div style="width: 52px; height: 52px; border-radius: 50%; background: #070D1E; border: 1px solid rgba(16, 185, 129, 0.3); display: flex; align-items: center; justify-content: center; color: #10B981;">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                      <polyline points="9 12 11 14 15 10"></polyline>
-                    </svg>
-                  </div>
-                  <div>
-                    <h4 style="font-size: 1.05rem; font-weight: 800; color: #FFFFFF; margin: 0 0 0.4rem 0;">Nenhuma Consulta de Bureau Realizada</h4>
-                    <p style="font-size: 0.82rem; color: #94A3B8; max-width: 540px; margin: 0; line-height: 1.5;">
-                      Digite um CPF de decisor ou CNPJ empresarial no campo acima para carregar o Dossiê de Crédito, histórico de inadimplência, capacidade financeira e contatos oficiais certificados.
-                    </p>
-                  </div>
-                  <div style="display: flex; gap: 1.5rem; margin-top: 0.5rem; font-size: 0.75rem; color: #64748B;">
-                    <span>• Score de Crédito (0 a 1000)</span>
-                    <span>• Protestos & Restrições</span>
-                    <span>• WhatsApps Validados</span>
-                    <span>• Quadro Societário (QSA)</span>
+                  <div class="table-responsive" style="max-height: 480px; overflow-y: auto;">
+                    <table class="assertiva-table">
+                      <thead>
+                        <tr>
+                          <th>DATA/HORA</th>
+                          <th>DOCUMENTO</th>
+                          <th>TITULAR / RAZÃO SOCIAL</th>
+                          <th>SCORE</th>
+                          <th>RISCO</th>
+                          <th>PROTESTOS</th>
+                          <th>SITUAÇÃO</th>
+                          <th style="text-align: center;">AÇÃO</th>
+                        </tr>
+                      </thead>
+                      <tbody id="bureauHistoryTableBody">
+                        <tr>
+                          <td colspan="8" style="text-align: center; padding: 2rem; color: #94A3B8;">Carregando histórico do Supabase...</td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
+              <!-- FIM SUB-VIEW 2: HISTÓRICO -->
 
+              <!-- SUB-VIEW 3: CONSULTA EM LOTE -->
+              <div id="bureauViewBatch" style="display: none; flex-direction: column; gap: 1rem;">
+                <div style="background: #0B1224; border: 1px solid rgba(148, 163, 184, 0.16); border-radius: 10px; padding: 2rem; text-align: center;">
+                  <h4 style="font-size: 1rem; font-weight: 800; color: #FFFFFF; text-transform: uppercase; margin: 0 0 0.5rem 0;">ENRIQUECIMENTO CADASTRAL EM LOTE</h4>
+                  <p style="font-size: 0.8rem; color: #94A3B8; max-width: 500px; margin: 0 auto 1.5rem auto; line-height: 1.5;">
+                    Faça upload de uma planilha CSV com colunas de CPF ou CNPJ para enriquecimento massivo de telefones, WhatsApps e Scores de Crédito via fila assíncrona.
+                  </p>
+                  <div style="border: 2px dashed rgba(148, 163, 184, 0.25); border-radius: 8px; padding: 2.5rem; background: #070D1E; max-width: 540px; margin: 0 auto; cursor: pointer;" onclick="document.getElementById('fileBureauBatch').click()">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" style="margin-bottom: 0.75rem;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                    <div style="font-size: 0.85rem; font-weight: 700; color: #FFFFFF;">Clique para selecionar arquivo CSV</div>
+                    <div style="font-size: 0.72rem; color: #64748B; margin-top: 0.25rem;">Suporta arquivos com até 10.000 linhas</div>
+                    <input type="file" id="fileBureauBatch" accept=".csv" style="display: none;">
+                  </div>
+                </div>
+              </div>
+              <!-- FIM SUB-VIEW 3: LOTE -->
+
+            </div>
+            <!-- FIM SUB-VISÃO B: CONSULTA CADASTRAL & CRÉDITO BUREAU -->
+
+            <!-- MODAL DE AUDITORIA DE PAYLOAD JSON (TRANSPARÊNCIA TÉCNICA) -->
+            <div id="modalBureauPayloadAudit" style="display: none; position: fixed; inset: 0; z-index: 10000; background: rgba(3, 7, 18, 0.82); backdrop-filter: blur(8px); align-items: center; justify-content: center; padding: 1.5rem;">
+              <div style="background: #0B1224; border: 1px solid rgba(148, 163, 184, 0.25); border-radius: 12px; width: 100%; max-width: 780px; max-height: 85vh; display: flex; flex-direction: column; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.85); overflow: hidden;">
+                <div style="padding: 1.25rem 1.5rem; border-bottom: 1px solid rgba(148, 163, 184, 0.15); display: flex; justify-content: space-between; align-items: center; background: #070D1E;">
+                  <div style="display: flex; align-items: center; gap: 0.65rem;">
+                    <div style="width: 24px; height: 24px; border-radius: 4px; background: rgba(16, 185, 129, 0.15); color: #10B981; display: flex; align-items: center; justify-content: center;">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                    </div>
+                    <div>
+                      <h4 style="font-size: 0.95rem; font-weight: 800; color: #FFFFFF; text-transform: uppercase; margin: 0;">Auditoria de Resposta da API Assertiva (Payload JSON)</h4>
+                      <div style="font-size: 0.72rem; color: #94A3B8;">Estrutura bruta e normalizada retornada pela integração oficial</div>
+                    </div>
+                  </div>
+                  <button type="button" id="btnCloseAuditModal" style="background: transparent; border: none; color: #94A3B8; font-size: 1.3rem; cursor: pointer; line-height: 1;" onmouseenter="this.style.color='#FFFFFF'" onmouseleave="this.style.color='#94A3B8'">✕</button>
+                </div>
+                <div style="padding: 1.25rem 1.5rem; flex: 1; overflow-y: auto;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem;">
+                    <span id="auditStatusCode" style="font-size: 0.75rem; font-weight: 800; color: #10B981; background: rgba(16, 185, 129, 0.12); padding: 0.15rem 0.5rem; border-radius: 4px; border: 1px solid rgba(16, 185, 129, 0.3);">HTTP 200 OK</span>
+                    <button type="button" class="btn-assertiva-copy" id="btnCopyAuditJson" style="font-size: 0.75rem; color: #38BDF8;">
+                      Copiar JSON
+                    </button>
+                  </div>
+                  <pre id="preAuditPayloadJson" style="background: #030712; border: 1px solid rgba(148, 163, 184, 0.18); border-radius: 8px; padding: 1rem; color: #34D399; font-family: monospace; font-size: 0.75rem; line-height: 1.45; overflow-x: auto; max-height: 480px; margin: 0;"></pre>
+                </div>
+              </div>
             </div>
             <!-- FIM SUB-VISÃO B: CONSULTA CADASTRAL & CRÉDITO BUREAU -->
 

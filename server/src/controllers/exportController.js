@@ -56,7 +56,7 @@ function formatPhoneForExcel(phone) {
 
 export function exportLeads(req, res) {
   try {
-    const { lead_ids, filters, format = 'standard', include_manual = true } = req.body || {};
+    const { lead_ids, filters, format = 'standard', include_manual = true, lead_data } = req.body || {};
     const tenantId = getTenantFromRequest(req);
 
     let leads = [];
@@ -64,17 +64,84 @@ export function exportLeads(req, res) {
     // BLINDAGEM COMERCIAL ABSOLUTA: Concorrentes NUNCA participam de exportação B2B ou Meta Ads
     const safeFilters = { ...(filters || {}), tenant_id: tenantId, include_competitors: false, only_competitors: false };
 
-    // Se foram passados IDs específicos (ex: seleção na tabela), exporta esses IDs com trava estrita anti-concorrente e por tenant
+    // Se foram passados IDs específicos (ex: seleção na tabela ou mapa), busca em leads e em propriedades_rurais
     if (Array.isArray(lead_ids) && lead_ids.length > 0) {
       leads = getLeadsByIds(lead_ids, false, tenantId); // allowCompetitors = false, tenantId
+
+      // Se algum ID não foi encontrado em leads, busca na tabela propriedades_rurais
+      const foundIds = new Set(leads.map(l => String(l.id)));
+      const missingIds = lead_ids.filter(id => !foundIds.has(String(id)));
+
+      if (missingIds.length > 0) {
+        try {
+          const placeholders = missingIds.map(() => '?').join(',');
+          const ruralRows = db.prepare(`
+            SELECT * FROM propriedades_rurais 
+            WHERE id IN (${placeholders}) 
+               OR id_sigef IN (${placeholders}) 
+               OR codigo_imovel IN (${placeholders})
+          `).all(...missingIds, ...missingIds, ...missingIds);
+
+          if (ruralRows && ruralRows.length > 0) {
+            const mappedRural = ruralRows.map(r => ({
+              ...r,
+              id: r.id || r.id_sigef || r.codigo_imovel,
+              razao_social: r.nome_imovel || r.nome_titular || 'Propriedade Rural',
+              nome_fantasia: r.nome_imovel,
+              nome_titular: r.nome_titular,
+              cnpj: r.cpf_cnpj_titular,
+              cpf_cnpj_titular: r.cpf_cnpj_titular,
+              telefone: r.whatsapp_validado,
+              whatsapp: r.whatsapp_validado,
+              email: r.email_validado,
+              municipio: r.municipio,
+              uf: r.uf,
+              area_hectares: r.area_hectares || 0,
+              area_lavoura_util_ha: Math.round((r.area_hectares || 0) * 0.75),
+              vertical_type: 'AGRO',
+              origem: 'RURAL_CAR',
+              target_type: 'BUYER',
+              is_competitor: 0
+            }));
+            leads.push(...mappedRural);
+          }
+        } catch (ruralErr) {
+          console.warn('Busca de IDs em propriedades_rurais:', ruralErr.message);
+        }
+      }
     } else {
       // Caso contrário, exporta todos os que batem com os filtros ativos com blindagem
       leads = getAllLeadsMatchingFilter(safeFilters);
     }
 
+    // FASE 67: Fallback de Alta Fidelidade para Lead Inspecionado em Memória (CAR GeoJSON / SICAR / Imóvel Rural)
+    if (leads.length === 0 && lead_data && typeof lead_data === 'object') {
+      const normalizedLead = {
+        ...lead_data,
+        id: lead_data.id || lead_data.id_sigef || lead_data.codigo_car || 'rural-lead',
+        razao_social: lead_data.nome_imovel || lead_data.razao_social || lead_data.nome_fantasia || lead_data.nome_titular || 'Imóvel Rural',
+        nome_fantasia: lead_data.nome_imovel || lead_data.nome_fantasia || lead_data.razao_social,
+        nome_titular: lead_data.nome_titular || lead_data.decisor_nome,
+        cnpj: lead_data.cpf_cnpj_titular || lead_data.cnpj || lead_data.decisor_cpf || '',
+        cpf_cnpj_titular: lead_data.cpf_cnpj_titular || lead_data.cnpj || '',
+        telefone: lead_data.whatsapp_validado || lead_data.telefone || lead_data.whatsapp || '',
+        whatsapp: lead_data.whatsapp_validado || lead_data.whatsapp || lead_data.telefone || '',
+        email: lead_data.email_validado || lead_data.email || '',
+        municipio: lead_data.municipio || lead_data.cidade || '',
+        uf: lead_data.uf || lead_data.estado || '',
+        area_hectares: lead_data.area_hectares || 0,
+        area_lavoura_util_ha: lead_data.area_lavoura_util_ha || Math.round((lead_data.area_hectares || 0) * 0.75),
+        vertical_type: lead_data.vertical_type || 'AGRO',
+        origem: lead_data.origem || 'RURAL_CAR',
+        target_type: lead_data.target_type || 'BUYER',
+        is_competitor: 0
+      };
+      leads.push(normalizedLead);
+    }
+
     // FASE 47: Injeção de Contatos Quentes Manuais (Warm-up Audiences para Tráfego Pago)
-    // Apenas injeta se NÃO foram fornecidos IDs explícitos (ex: exportação de lead individual ou seleção específica)
-    if (include_manual !== false && (!Array.isArray(lead_ids) || lead_ids.length === 0)) {
+    // Apenas injeta se NÃO foram fornecidos IDs explícitos nem lead_data individual
+    if (include_manual !== false && (!Array.isArray(lead_ids) || lead_ids.length === 0) && !lead_data) {
       try {
         const manualStmt = db.prepare(`
           SELECT * FROM leads 

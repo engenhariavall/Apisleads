@@ -538,6 +538,35 @@ router.post('/bureau/sync-lead', optionalAuth, async (req, res) => {
   }
 });
 
+// FASE ASSERTIVA v3: HISTÓRICO DE CONSULTAS DO BUREAU
+router.get('/bureau/history', optionalAuth, async (req, res) => {
+  try {
+    const { bureauService } = await import('../services/bureauService.js');
+    const tenantId = getTenantFromRequest(req);
+    const limit = req.query.limit ? Number(req.query.limit) : 50;
+    const history = bureauService.getConsultationHistory(tenantId, limit);
+    return res.json({ success: true, count: history.length, data: history });
+  } catch (error) {
+    return res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// FASE ASSERTIVA v3: ADICIONAR COMENTÁRIO AO HISTÓRICO DE CONSULTA
+router.post('/bureau/comments', optionalAuth, async (req, res) => {
+  try {
+    const { bureauService } = await import('../services/bureauService.js');
+    const { doc, autor, texto } = req.body || {};
+    const tenantId = getTenantFromRequest(req);
+    if (!doc || !texto) {
+      return res.status(400).json({ success: false, error: 'Documento e texto do comentário são obrigatórios.' });
+    }
+    const result = bureauService.addConsultationComment(doc, autor, texto, tenantId);
+    return res.json(result);
+  } catch (error) {
+    return res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 // FASE 51 (ETAPA 4): COST CONTROL & ENRIQUECIMENTO MANUAL SOB DEMANDA VIA BUREAU
 router.post('/osint/enrich-whatsapp-bureau', optionalAuth, async (req, res) => {
   try {

@@ -2382,15 +2382,22 @@ async function executeExport(format, buttonEl = null, explicitLeadIds = null) {
   }
 
   try {
+    const inspected = window.currentInspectedLead || window.currentInspectedRuralProperty;
+    const finalLeadIds = explicitLeadIds !== null
+      ? explicitLeadIds
+      : (state.selectAllFiltered ? [] : Array.from(state.selectedLeadIds));
+
     const payload = {
       format,
-      lead_ids: explicitLeadIds !== null
-        ? explicitLeadIds
-        : (state.selectAllFiltered ? [] : Array.from(state.selectedLeadIds)),
+      lead_ids: finalLeadIds,
       filters: explicitLeadIds !== null
         ? null
         : (state.selectAllFiltered || state.selectedLeadIds.size === 0 ? state.filters : null)
     };
+
+    if (finalLeadIds && finalLeadIds.length === 1 && inspected) {
+      payload.lead_data = inspected;
+    }
 
     const headers = { 'Content-Type': 'application/json' };
     if (state.auth && state.auth.token) {

@@ -524,6 +524,17 @@ sqliteDb.exec(`
   CREATE INDEX IF NOT EXISTS idx_bureau_cache_doc ON bureau_cache_consultas(documento_limpo);
   CREATE INDEX IF NOT EXISTS idx_bureau_cache_tenant ON bureau_cache_consultas(tenant_id);
   CREATE INDEX IF NOT EXISTS idx_bureau_cache_created ON bureau_cache_consultas(created_at DESC);
+
+  -- FASE ASSERTIVA v3: Tabela de Comentarios / Anotacoes do CRM de Consulta
+  CREATE TABLE IF NOT EXISTS bureau_comments (
+    id TEXT PRIMARY KEY,
+    documento TEXT NOT NULL,
+    autor TEXT DEFAULT 'operador@sistema.local',
+    texto TEXT NOT NULL,
+    tenant_id TEXT DEFAULT 'tenant-root-default',
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP
+  );
+  CREATE INDEX IF NOT EXISTS idx_bureau_comments_doc ON bureau_comments(documento);
 `);
 
 
