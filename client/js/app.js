@@ -944,6 +944,10 @@ function renderTable() {
                   <span>Revelar Bureau</span>
                 </button>
               `}
+              <button type="button" class="btn-table-bureau-dossier" onclick="event.stopPropagation(); window.consultarBureauPorDocumento('${lead.decisor_cpf || lead.cnpj || lead.cpf || ''}')" title="Consultar Dossiê Completo no Bureau Assertiva">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <span>Dossiê</span>
+              </button>
             </div>
           </td>
           <td>
@@ -1153,6 +1157,10 @@ function renderTable() {
                   <span>Revelar Bureau</span>
                 </button>
               `}
+              <button type="button" class="btn-table-bureau-dossier" onclick="event.stopPropagation(); window.consultarBureauPorDocumento('${lead.cnpj || lead.cpf || ''}')" title="Consultar Dossiê Completo no Bureau Assertiva">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <span>Dossiê</span>
+              </button>
             </div>
           </td>
           <td>
@@ -2500,6 +2508,25 @@ window.exportCurrentInspectedLeadCsv = async function(btnEl = null) {
     return;
   }
   await executeExport('comercial_b2b_maquinas', btnEl, [leadId]);
+};
+
+/**
+ * FASE ASSERTIVA v3: Invocação direta do Bureau a partir do Inspetor Lateral
+ */
+window.consultarBureauDoLeadAtual = function() {
+  const lead = window.currentInspectedLead || window.currentInspectedRuralProperty;
+  if (!lead) {
+    if (typeof showToast === 'function') showToast('Nenhum lead ou imóvel inspecionado no momento.');
+    return;
+  }
+  const doc = lead.cnpj || lead.cpf || lead.decisor_cpf || lead.produtor_cpf || lead.produtor_pf_cpf || (lead.dados_fundiarios && lead.dados_fundiarios.cpf_cnpj_titular) || '';
+  if (!doc) {
+    if (typeof showToast === 'function') showToast('Este registro não possui CPF ou CNPJ cadastrado para consulta no Bureau.');
+    return;
+  }
+  if (typeof window.consultarBureauPorDocumento === 'function') {
+    window.consultarBureauPorDocumento(doc);
+  }
 };
 
 // 10. Modal de Exportação e Download de Arquivos / Sincronizações (Frente 2)

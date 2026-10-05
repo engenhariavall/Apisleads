@@ -8640,6 +8640,34 @@ input:checked + .slider:before {
   transform: none;
 }
 
+.btn-table-bureau-dossier {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  background: rgba(16, 185, 129, 0.12);
+  color: #10B981;
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  padding: 3px 6px;
+  border-radius: 4px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-table-bureau-dossier:hover {
+  background: #10B981;
+  color: #FFFFFF;
+  border-color: #10B981;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.35);
+  transform: translateY(-1px);
+}
+
+.btn-table-bureau-dossier svg {
+  stroke: currentColor;
+}
+
 /* ==========================================================================
    REFINAMENTO TÉCNICO: TABELA ANALÍTICA AGRO & MÁQUINAS (CONTEXT-AWARE)
    ========================================================================== */

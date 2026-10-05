@@ -2151,8 +2151,14 @@
               <strong id="inspectorLeadCnpj">00.000.000/0000-00</strong>
             </div>
 
-            <!-- Ação Rápida de Exportação Individual 1-Click -->
-            <div class="sheet-lead-quick-actions" style="margin-top: 0.65rem; margin-bottom: 0.5rem;">
+            <!-- Ação Rápida de Exportação Individual 1-Click & Bureau -->
+            <div class="sheet-lead-quick-actions" style="margin-top: 0.65rem; margin-bottom: 0.5rem; display: flex; flex-direction: column; gap: 0.4rem;">
+              <button type="button" id="btnQuickBureauLead" class="btn-quick-bureau-lead" onclick="window.consultarBureauDoLeadAtual()" style="width: 100%; padding: 0.5rem 0.75rem; background: rgba(16, 185, 129, 0.12); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 6px; font-size: 0.72rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.45rem; transition: all 0.2s;" onmouseover="this.style.background='rgba(16, 185, 129, 0.22)'; this.style.borderColor='#10B981';" onmouseout="this.style.background='rgba(16, 185, 129, 0.12)'; this.style.borderColor='rgba(16, 185, 129, 0.4)';">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                <span>CONSULTAR DOSSIÊ NO BUREAU ASSERTIVA</span>
+              </button>
               <button type="button" id="btnQuickExportLeadCsv" class="btn-quick-export-lead" onclick="window.exportCurrentInspectedLeadCsv(this)" style="width: 100%; padding: 0.5rem 0.75rem; background: rgba(56, 189, 248, 0.12); color: #38BDF8; border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 6px; font-size: 0.72rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.45rem; transition: all 0.2s;" onmouseover="this.style.background='rgba(56, 189, 248, 0.22)'; this.style.borderColor='#38BDF8';" onmouseout="this.style.background='rgba(56, 189, 248, 0.12)'; this.style.borderColor='rgba(56, 189, 248, 0.4)';">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -2821,6 +2827,16 @@ Carregando script de abordagem...
             <div class="sheet-cnpj-row">
               <span>Código SIGEF:</span>
               <strong id="ruralCodigoSigef">--</strong>
+            </div>
+
+            <!-- Ação Rápida de Consulta ao Bureau do Titular -->
+            <div class="sheet-rural-quick-actions" style="margin-top: 0.65rem; margin-bottom: 0.5rem; display: flex; flex-direction: column; gap: 0.4rem;">
+              <button type="button" id="btnQuickBureauRural" class="btn-quick-bureau-lead" onclick="window.consultarBureauDoLeadAtual()" style="width: 100%; padding: 0.5rem 0.75rem; background: rgba(16, 185, 129, 0.12); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 6px; font-size: 0.72rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.45rem; transition: all 0.2s;" onmouseover="this.style.background='rgba(16, 185, 129, 0.22)'; this.style.borderColor='#10B981';" onmouseout="this.style.background='rgba(16, 185, 129, 0.12)'; this.style.borderColor='rgba(16, 185, 129, 0.4)';">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                <span>CONSULTAR DOSSIÊ DO TITULAR NO BUREAU ASSERTIVA</span>
+              </button>
             </div>
 
             <!-- FASE 57: Alerta Tático de Gap Fundiário / Oportunidade ICP HOT -->
