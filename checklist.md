@@ -3268,29 +3268,30 @@ Este documento rastreia de forma contínua, estruturada e duradoura todo o hist�
 
 > 🎯 **Foco Central:** Automação do Sensoriamento Orbital sem cliques manuais e validação em produção da Taxonomia Econômica Dinâmica por CNAE no Trade Flow.
 
-- [ ] **ITEM 1: AUTOMAÇÃO TOTAL DA AUDITORIA ORBITAL & COGNIÇÃO NEURAL (ON-OPEN)**
+- [x] **ITEM 1: AUTOMAÇÃO TOTAL DA AUDITORIA ORBITAL & COGNIÇÃO NEURAL (ON-OPEN)**
   - **Contexto:** Eliminar a necessidade de clique manual no botão *"Executar Auditoria Orbital (Pivôs, Silos & NDVI)"* no Inspetor (Raio-X), tornando a varredura 100% automática ao inspecionar qualquer propriedade rural.
   - **Escopo Técnico:**
-    - [ ] No `client/js/app.js` (`renderCognitiveVisionUI`), se a fazenda ainda não possui dados em memória, acionar automaticamente o endpoint `POST /api/cognitive/vision/satellite-audit` em background com spinner sutil de sensoriamento.
-    - [ ] Se a propriedade já possui cache criptográfico SHA-256 de 60 dias gravado no banco, carregar instantaneamente (< 20ms) os Pivôs Centrais, Silos, Açudes e NDVI.
-    - [ ] Se for nova propriedade, receber o retorno da rede neural e renderizar diretamente o bloco completo sem requerer ação do operador.
-    - [ ] Adicionar botão/link discreto `↻ Re-escanear Órbita` para permitir atualização forçada opcional caso o analista deseje.
-  - **Status:** ⏳ Agendado para Segunda-feira.
+    - [x] No `client/js/app.js` (`renderCognitiveVisionUI`), se a fazenda ainda não possui dados em memória, acionar automaticamente o endpoint `POST /api/cognitive/vision/satellite-audit` em background com spinner sutil de sensoriamento.
+    - [x] Se a propriedade já possui cache criptográfico SHA-256 de 60 dias gravado no banco, carregar instantaneamente (< 20ms) os Pivôs Centrais, Silos, Açudes e NDVI.
+    - [x] Se for nova propriedade, receber o retorno da rede neural e renderizar diretamente o bloco completo sem requerer ação do operador.
+    - [x] Adicionar botão/link discreto `↻ Re-escanear` no cabeçalho do bloco auditado para permitir atualização forçada opcional (`force_refresh: true`).
+    - [x] Salvar o resultado da auditoria no objeto `propData` em memória para persistência instantânea durante a navegação.
+  - **Status:** ✅ Concluído e Homologado (05/10/2026 - Segunda-feira).
 
-- [ ] **ITEM 2: VALIDAÇÃO EM PRODUÇÃO DA TAXONOMIA ECONÔMICA DINÂMICA POR CNAE (TRADE FLOW)**
+- [x] **ITEM 2: VALIDAÇÃO EM PRODUÇÃO DA TAXONOMIA ECONÔMICA DINÂMICA POR CNAE (TRADE FLOW)**
   - **Contexto:** Verificar se as alterações de inteligência econômica por CNAE implantadas no backend (`competitorTradeFlowService.js`) e no frontend (`app.js`) estão refletindo perfeitamente no ambiente de produção da nuvem.
   - **Checklist de Validação:**
-    - [ ] **Elétrica e Instalações (CNAE 4321):** Mix de Instalações Elétricas Industriais/Comerciais (45%), Manutenção de Quadros (30%), Projetos/Automação (15%) e Materiais (10%) com ticket calibrado (ex: R$ 14.000 a R$ 65.000).
-    - [ ] **Construção Civil e Obras (CNAE 41, 42, 43):** Mix de Obras Civis, Estruturas, Reformas e Gerenciamento.
-    - [ ] **Tecnologia & Software (CNAE 62, 63):** Licenciamento SaaS, Customização de Sistemas e Cloud.
-    - [ ] **Publicidade e Marketing (CNAE 73):** Tráfego Pago, Branding, Redes Sociais e Vendas.
-    - [ ] **Contabilidade e Jurídico (CNAE 69, 70, 74):** Honorários, Planejamento Tributário e Consultoria.
-    - [ ] **Transporte e Logística (CNAE 49, 52, 53):** Fretes fracionados, lotados e armazenagem.
-    - [ ] **Comércio e Serviços Gerais:** Fallback universal com extração da descrição cadastral real do CNPJ.
-    - [ ] **Setor Agropecuário Puro (CNAE 01, 4661, 4683, Cooperativas):** Preservar máquinas, tratores, colheitadeiras e insumos exclusivamente para quem é do agro.
-    - [ ] **Alvos Reais:** Confirmar que empresas não-agro cruzam com empresas compradoras B2B da praça (ex: 54 empresas B2B em Passo Fundo) e não com fazendas de grãos.
-    - [ ] **Anúncios de Contra-Ataque:** No modal de Cerco de Tráfego Pago, validar cópias focadas em atendimento corporativo com NF e faturamento PJ em vez de mensagens rurais.
-  - **Status:** ⏳ Agendado para Segunda-feira.
+    - [x] **Elétrica e Instalações (CNAE 4321):** Mix de Instalações Elétricas Industriais/Comerciais (45%), Manutenção de Quadros (30%), Projetos/Automação (15%) e Materiais (10%) com ticket calibrado (ex: R$ 14.000 a R$ 65.000).
+    - [x] **Construção Civil e Obras (CNAE 41, 42, 43):** Mix de Obras Civis, Estruturas, Reformas e Gerenciamento.
+    - [x] **Tecnologia & Software (CNAE 62, 63):** Licenciamento SaaS, Customização de Sistemas e Cloud.
+    - [x] **Publicidade e Marketing (CNAE 73):** Tráfego Pago, Branding, Redes Sociais e Vendas.
+    - [x] **Contabilidade e Jurídico (CNAE 69, 70, 74):** Honorários, Planejamento Tributário e Consultoria.
+    - [x] **Transporte e Logística (CNAE 49, 52, 53):** Fretes fracionados, lotados e armazenagem.
+    - [x] **Comércio e Serviços Gerais:** Fallback universal com extração da descrição cadastral real do CNPJ.
+    - [x] **Setor Agropecuário Puro (CNAE 01, 4661, 4683, Cooperativas):** Preservar máquinas, tratores, colheitadeiras e insumos exclusivamente para quem é do agro.
+    - [x] **Alvos Reais:** Confirmar que empresas não-agro cruzam com empresas compradoras B2B da praça (ex: 54 empresas B2B em Passo Fundo) e não com fazendas de grãos.
+    - [x] **Anúncios de Contra-Ataque:** No modal de Cerco de Tráfego Pago, validar cópias focadas em atendimento corporativo com NF e faturamento PJ em vez de mensagens rurais.
+  - **Status:** ✅ Validado e Confirmado na Nuvem (`origin/main`, VPS e Vercel).
 
 
 

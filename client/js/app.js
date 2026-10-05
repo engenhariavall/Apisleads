@@ -5064,14 +5064,98 @@ _Gerado por VERSUS INTELLIGENCE B2B_`;
 
   // ── FASE 66: Renderizador do Bloco de Inteligência Visual Neural & Sensoriamento de Satélite (YOLOv8 + Pivôs/Silos + LinUCB) ──
   const cognitiveBlock = document.getElementById('cognitiveVisionAuditBlock');
+
+  const executeSatelliteAudit = async (forceRefresh = false) => {
+    try {
+      const headers = typeof window.getApiHeaders === 'function' ? window.getApiHeaders() : { 'Content-Type': 'application/json' };
+      let lat = Number(propData.centroide_lat || propData.latitude || 0);
+      let lng = Number(propData.centroide_lng || propData.longitude || 0);
+
+      // Fallback para coordenadas de Passo Fundo/RS se a fazenda do teste estiver com 0,0
+      if (!lat || !lng || (lat === 0 && lng === 0)) {
+        lat = -28.2612;
+        lng = -52.4083;
+      }
+
+      const res = await fetch('/api/cognitive/vision/satellite-audit', {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({
+          entity_id: propData.id || propData.id_sigef || propData.codigo_car || 'rural-lead',
+          property_id: propData.id,
+          entity_type: 'RURAL_PROPERTY',
+          latitude: lat,
+          longitude: lng,
+          area_ha: propData.area_hectares || propData.area_total_ha || 1000,
+          crop_type: propData.crop_type || 'soja',
+          force_refresh: Boolean(forceRefresh)
+        })
+      });
+      const resJson = await res.json();
+      if (res.ok && resJson.success && resJson.data) {
+        const fullData = {
+          ...resJson.data,
+          ...(resJson.data.audit || {}),
+          satellite_audit_at: resJson.data.satellite_audit_at || new Date().toISOString()
+        };
+
+        // Persiste no propData local para acesso instantâneo na navegação
+        propData.cognitive_audit = fullData;
+        propData.pivots_detected = fullData.pivots_count ?? fullData.pivots_detected ?? fullData.pivot_count;
+        propData.pivots_count = propData.pivots_detected;
+        propData.silos_detected = fullData.silos_count ?? fullData.silos_detected ?? fullData.silo_count;
+        propData.silos_count = propData.silos_detected;
+        propData.dams_detected = fullData.dams_count ?? fullData.dams_detected ?? fullData.dam_count;
+        propData.vegetative_vigor_index = fullData.vegetative_vigor_index;
+        propData.satellite_audit_at = fullData.satellite_audit_at;
+
+        renderCognitiveVisionUI(fullData);
+
+        if (forceRefresh && typeof showToast === 'function') {
+          const piv = fullData.pivots_detected ?? fullData.pivots_count ?? fullData.pivot_count ?? 0;
+          const sil = fullData.silos_detected ?? fullData.silos_count ?? fullData.silo_count ?? 0;
+          showToast(`Auditoria Orbital atualizada! Pivôs: ${piv} | Silos: ${sil}`);
+        }
+      } else {
+        throw new Error(resJson.error || 'Erro na auditoria orbital');
+      }
+    } catch (auditErr) {
+      console.warn('⚠️ [COGNITIVE_UI] Falha no sensoriamento orbital:', auditErr.message);
+      if (cognitiveBlock) {
+        cognitiveBlock.innerHTML = `
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+            <div style="display:flex;align-items:center;gap:0.35rem;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#C084FC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M12 2a10 10 0 0 1 10 10"></path><path d="M12 6a6 6 0 0 1 6 6"></path><circle cx="12" cy="12" r="2"></circle><path d="M4.93 19.07a10 10 0 0 1 0-14.14"></path><path d="M7.76 16.24a6 6 0 0 1 0-8.48"></path></svg>
+              <span style="font-size:0.7rem;font-weight:800;color:#C084FC;text-transform:uppercase;letter-spacing:0.04em;">SENSORIAMENTO ORBITAL</span>
+            </div>
+          </div>
+          <div style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);border-radius:4px;padding:0.4rem 0.55rem;display:flex;align-items:center;justify-content:space-between;gap:0.4rem;">
+            <span style="font-size:0.62rem;color:#FCA5A5;">Sensoriamento em espera ou sinal orbital oscilante.</span>
+            <button type="button" id="btnRetrySatelliteAudit" style="background:rgba(168,85,247,0.2);border:1px solid rgba(168,85,247,0.4);color:#E9D5FF;padding:0.2rem 0.5rem;border-radius:3px;font-size:0.58rem;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:0.2rem;">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+              <span>Reconectar Órbita</span>
+            </button>
+          </div>
+        `;
+        const btnRetry = document.getElementById('btnRetrySatelliteAudit');
+        if (btnRetry) {
+          btnRetry.onclick = (e) => {
+            e.preventDefault();
+            renderCognitiveVisionUI(null);
+          };
+        }
+      }
+    }
+  };
+
   const renderCognitiveVisionUI = async (data) => {
     if (!cognitiveBlock) return;
 
     let auditData = null;
     if (data && (data.pivots_detected !== undefined || data.pivots_count !== undefined || data.pivot_count !== undefined || data.vegetative_vigor_index !== undefined || data.satellite_audit_at)) {
       auditData = data;
-    } else if (propData && (propData.pivots_detected !== undefined || propData.vegetative_vigor_index !== undefined || propData.satellite_audit_at)) {
-      auditData = propData;
+    } else if (propData && (propData.cognitive_audit || propData.pivots_detected !== undefined || propData.pivots_count !== undefined || propData.pivot_count !== undefined || propData.vegetative_vigor_index !== undefined || propData.satellite_audit_at)) {
+      auditData = propData.cognitive_audit || propData;
     }
 
     cognitiveBlock.style.display = 'block';
@@ -5086,83 +5170,25 @@ _Gerado por VERSUS INTELLIGENCE B2B_`;
     );
 
     if (!hasCompletedAudit) {
-      // Estado Inicial: Botão de Inspeção On-Demand (Cost Protection)
+      // Estado de Carregamento Automático Transparente em Segundo Plano
       cognitiveBlock.innerHTML = `
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.35rem;">
           <div style="display:flex;align-items:center;gap:0.35rem;">
-            <span style="font-size:0.85rem;">🛰️</span>
-            <span style="font-size:0.7rem;font-weight:800;color:#C084FC;text-transform:uppercase;letter-spacing:0.04em;">AUDITORIA ORBITAL & COGNIÇÃO NEURAL</span>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#C084FC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="anim-spin" style="animation: spin 2s linear infinite;flex-shrink:0;"><path d="M12 2a10 10 0 0 1 10 10"></path><path d="M12 6a6 6 0 0 1 6 6"></path><circle cx="12" cy="12" r="2"></circle><path d="M4.93 19.07a10 10 0 0 1 0-14.14"></path><path d="M7.76 16.24a6 6 0 0 1 0-8.48"></path></svg>
+            <span style="font-size:0.7rem;font-weight:800;color:#C084FC;text-transform:uppercase;letter-spacing:0.04em;">SENSORIAMENTO ORBITAL & COGNIÇÃO</span>
           </div>
           <span style="font-size:0.56rem;font-weight:700;color:#C084FC;background:rgba(168,85,247,0.15);padding:0.1rem 0.35rem;border-radius:3px;">
             YOLOv8 + SATÉLITE
           </span>
         </div>
-        <p style="font-size:0.62rem;color:#CBD5E1;line-height:1.35;margin-bottom:0.45rem;">
-          Rastreamento por satélite de pivôs de irrigação, baterias de silos, açudes e cálculo de vigor vegetativo (NDVI) com cache SHA-256 de 60 dias.
-        </p>
-        <button type="button" id="btnExecuteSatelliteAudit" style="width:100%;display:inline-flex;align-items:center;justify-content:center;gap:0.4rem;background:linear-gradient(135deg, rgba(168,85,247,0.25), rgba(126,34,206,0.35));border:1px solid rgba(168,85,247,0.5);color:#E9D5FF;padding:0.4rem 0.6rem;border-radius:4px;font-size:0.66rem;font-weight:700;cursor:pointer;transition:all 0.2s;">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0 1 10 10"></path><path d="M12 6a6 6 0 0 1 6 6"></path><circle cx="12" cy="12" r="2"></circle><path d="M4.93 19.07a10 10 0 0 1 0-14.14"></path><path d="M7.76 16.24a6 6 0 0 1 0-8.48"></path></svg>
-          <span>Executar Auditoria Orbital (Pivôs, Silos & NDVI)</span>
-        </button>
+        <div style="background:rgba(168,85,247,0.08);border:1px dashed rgba(168,85,247,0.3);border-radius:4px;padding:0.4rem 0.6rem;display:flex;align-items:center;gap:0.45rem;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#C084FC" stroke-width="2.2" class="anim-spin" style="animation: spin 1s linear infinite;flex-shrink:0;"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 10 10"/></svg>
+          <span style="font-size:0.62rem;color:#E9D5FF;font-weight:600;">Sensoriando Órbita, Pivôs Centrais & Vigor Vegetativo...</span>
+        </div>
       `;
 
-      const btnExec = document.getElementById('btnExecuteSatelliteAudit');
-      if (btnExec) {
-        btnExec.onclick = async (e) => {
-          e.preventDefault();
-          btnExec.disabled = true;
-          btnExec.innerHTML = '<span style="display:inline-flex;align-items:center;gap:0.35rem;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" class="anim-spin" style="animation: spin 1s linear infinite;"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 10 10"/></svg>Sensoriando Órbita & Pivôs...</span>';
-
-          try {
-            const headers = typeof window.getApiHeaders === 'function' ? window.getApiHeaders() : { 'Content-Type': 'application/json' };
-            let lat = Number(propData.centroide_lat || propData.latitude || 0);
-            let lng = Number(propData.centroide_lng || propData.longitude || 0);
-
-            // Fallback para coordenadas de Passo Fundo/RS se a fazenda do teste estiver com 0,0
-            if (!lat || !lng || (lat === 0 && lng === 0)) {
-              lat = -28.2612;
-              lng = -52.4083;
-            }
-
-            const res = await fetch('/api/cognitive/vision/satellite-audit', {
-              method: 'POST',
-              headers,
-              body: JSON.stringify({
-                entity_id: propData.id || propData.id_sigef || propData.codigo_car || 'rural-lead',
-                property_id: propData.id,
-                entity_type: 'RURAL_PROPERTY',
-                latitude: lat,
-                longitude: lng,
-                area_ha: propData.area_hectares || propData.area_total_ha || 1000,
-                crop_type: propData.crop_type || 'soja'
-              })
-            });
-            const resJson = await res.json();
-            if (res.ok && resJson.success && resJson.data) {
-              const fullData = {
-                ...resJson.data,
-                ...(resJson.data.audit || {}),
-                satellite_audit_at: resJson.data.satellite_audit_at || new Date().toISOString()
-              };
-              renderCognitiveVisionUI(fullData);
-              const piv = fullData.pivots_detected ?? fullData.pivots_count ?? fullData.pivot_count ?? 0;
-              const sil = fullData.silos_detected ?? fullData.silos_count ?? fullData.silo_count ?? 0;
-              if (typeof showToast === 'function') {
-                showToast(`Auditoria Orbital concluída! Pivôs: ${piv} | Silos: ${sil}`);
-              }
-            } else {
-              throw new Error(resJson.error || 'Erro na auditoria orbital');
-            }
-          } catch (auditErr) {
-            console.error('Erro na auditoria orbital:', auditErr);
-            btnExec.disabled = false;
-            btnExec.innerHTML = '<span style="display:inline-flex;align-items:center;gap:0.35rem;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"></circle><path d="M4.93 4.93a10 10 0 0 1 14.14 0"></path></svg>Tentar Auditoria Novamente</span>';
-            if (typeof showToast === 'function') {
-              showToast(`Falha na auditoria: ${auditErr.message}`);
-            }
-          }
-        };
-      }
+      // Dispara o sensoriamento automaticamente sem exigir clique manual
+      executeSatelliteAudit(false);
       return;
     }
 
@@ -5181,11 +5207,17 @@ _Gerado por VERSUS INTELLIGENCE B2B_`;
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#C084FC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M12 2a10 10 0 0 1 10 10"></path><path d="M12 6a6 6 0 0 1 6 6"></path><circle cx="12" cy="12" r="2"></circle><path d="M4.93 19.07a10 10 0 0 1 0-14.14"></path><path d="M7.76 16.24a6 6 0 0 1 0-8.48"></path></svg>
           <span style="font-size:0.7rem;font-weight:800;color:#C084FC;text-transform:uppercase;letter-spacing:0.04em;">SENSORIAMENTO ORBITAL & COGNIÇÃO</span>
         </div>
-        <span style="font-size:0.56rem;font-weight:800;color:#E9D5FF;background:rgba(168,85,247,0.25);border:1px solid rgba(168,85,247,0.4);padding:0.1rem 0.4rem;border-radius:3px;display:inline-flex;align-items:center;gap:0.25rem;">
-          ${isCached 
-            ? '<svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg><span>CACHE 60D (SHA-256)</span>' 
-            : '<span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#10B981;"></span><span>ÓRBITA ATIVA</span>'}
-        </span>
+        <div style="display:flex;align-items:center;gap:0.35rem;">
+          <span style="font-size:0.56rem;font-weight:800;color:#E9D5FF;background:rgba(168,85,247,0.25);border:1px solid rgba(168,85,247,0.4);padding:0.1rem 0.4rem;border-radius:3px;display:inline-flex;align-items:center;gap:0.25rem;">
+            ${isCached 
+              ? '<svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg><span>CACHE 60D</span>' 
+              : '<span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#10B981;"></span><span>ÓRBITA ATIVA</span>'}
+          </span>
+          <button type="button" id="btnRefreshSatelliteAudit" title="Forçar re-escaneamento orbital" style="background:transparent;border:1px solid rgba(168,85,247,0.35);color:#C084FC;padding:0.1rem 0.35rem;border-radius:3px;font-size:0.56rem;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:0.2rem;transition:all 0.15s;">
+            <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+            <span>Re-escanear</span>
+          </button>
+        </div>
       </div>
 
       <!-- Grid de Destaques Orbitais -->
@@ -5234,6 +5266,16 @@ _Gerado por VERSUS INTELLIGENCE B2B_`;
         <span><strong>IA Cognitiva (LinUCB):</strong> Perfil fundiário correlacionado a negociações de maquinário pesado e pivôs centrais.</span>
       </div>
     `;
+
+    const btnRefresh = document.getElementById('btnRefreshSatelliteAudit');
+    if (btnRefresh) {
+      btnRefresh.onclick = async (e) => {
+        e.preventDefault();
+        btnRefresh.disabled = true;
+        btnRefresh.innerHTML = '<svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="anim-spin" style="animation: spin 1s linear infinite;"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg><span>Escanear...</span>';
+        await executeSatelliteAudit(true);
+      };
+    }
   };
 
   renderSefazPfUI(propData.produtor_rural_pf || null);
