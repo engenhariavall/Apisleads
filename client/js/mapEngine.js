@@ -12,6 +12,7 @@ window.MapEngine = (function() {
   let draw = null;
   let currentGeoJson = { type: 'FeatureCollection', features: [] };
   let hoverPopup = null;
+  let tacticalPopup = null;
   let activeDrawnPolygon = null;
   let isMapInitialized = false;
   let pofLayerActive = false;
@@ -381,7 +382,7 @@ window.MapEngine = (function() {
 
     // Hover sobre pin individual
     map.on('mousemove', 'unclustered-point', (e) => {
-      if (isInspectPinActive) return;
+      if (isInspectPinActive || isLassoActive || isLassoDrawing) return;
       if (!e.features || e.features.length === 0) return;
       map.getCanvas().style.cursor = 'pointer';
 
@@ -413,7 +414,7 @@ window.MapEngine = (function() {
     });
 
     map.on('mouseleave', 'unclustered-point', () => {
-      if (isInspectPinActive) {
+      if (isInspectPinActive || isLassoActive || isLassoDrawing) {
         map.getCanvas().style.cursor = 'crosshair';
         if (hoverPopup) hoverPopup.remove();
         return;
@@ -423,12 +424,12 @@ window.MapEngine = (function() {
     });
 
     map.on('mouseenter', 'clusters', () => {
-      if (isInspectPinActive) return;
+      if (isInspectPinActive || isLassoActive || isLassoDrawing) return;
       map.getCanvas().style.cursor = 'pointer';
     });
 
     map.on('mouseleave', 'clusters', () => {
-      if (isInspectPinActive) {
+      if (isInspectPinActive || isLassoActive || isLassoDrawing) {
         map.getCanvas().style.cursor = 'crosshair';
         return;
       }
@@ -2494,7 +2495,7 @@ window.MapEngine = (function() {
     let lastFundiarioClickKey = null;
 
     const handleFundiarioPolygonClick = (e) => {
-      if (isInspectPinActive) return;
+      if (isInspectPinActive || isLassoActive || isLassoDrawing) return;
 
       let feat = (e.features && e.features.length > 0) ? e.features[0] : null;
       if (!feat && e.point && map) {
@@ -2536,7 +2537,7 @@ window.MapEngine = (function() {
 
     // Fallback defensivo no clique geral do mapa
     map.on('click', (e) => {
-      if (isInspectPinActive) return;
+      if (isInspectPinActive || isLassoActive || isLassoDrawing) return;
       if (!map) return;
       const hits = map.queryRenderedFeatures(e.point, { layers: ['fundiario-polygon-fill', 'fundiario-polygon-stroke'] });
       if (hits && hits.length > 0) {
@@ -2546,15 +2547,21 @@ window.MapEngine = (function() {
 
     // Hover com cursor pointer
     const setPointer = () => {
-      if (isInspectPinActive) return;
+      if (isInspectPinActive || isLassoActive || isLassoDrawing) return;
       if (map) map.getCanvas().style.cursor = 'pointer';
     };
     const resetPointer = () => {
-      if (isInspectPinActive) {
-        if (map) map.getCanvas().style.cursor = 'crosshair';
+      if (isInspectPinActive || isLassoActive || isLassoDrawing) {
+        if (map) {
+          map.getCanvas().style.cursor = 'crosshair';
+          if (map.getCanvasContainer()) map.getCanvasContainer().style.cursor = 'crosshair';
+        }
         return;
       }
-      if (map) map.getCanvas().style.cursor = '';
+      if (map) {
+        map.getCanvas().style.cursor = '';
+        if (map.getCanvasContainer()) map.getCanvasContainer().style.cursor = '';
+      }
     };
 
     map.on('mouseenter', 'fundiario-polygon-fill', setPointer);
@@ -2627,7 +2634,12 @@ window.MapEngine = (function() {
     }
   }
 
+  let lassoEventsInitialized = false;
+
   function setupLassoEvents() {
+    if (lassoEventsInitialized) return;
+    lassoEventsInitialized = true;
+
     const btnLasso = document.getElementById('btnMapLassoSelect');
     const lassoCard = document.getElementById('mapLassoSelectionCard');
     const btnCloseCard = document.getElementById('btnCloseLassoCard');
@@ -2639,20 +2651,63 @@ window.MapEngine = (function() {
     const btnSelectedCountEl = document.getElementById('btnLassoSelectedCount');
     const btnAllCountEl = document.getElementById('btnLassoAllCount');
 
-    if (!btnLasso) return;
+    if (!btnLasso || !map) return;
 
-    btnLasso.addEventListener('click', () => {
-      isLassoActive = !isLassoActive;
-      btnLasso.classList.toggle('active', isLassoActive);
+    function activateLassoMode() {
+      if (!map) return;
+      if (isInspectPinActive && typeof deactivateInspectPinTool === 'function') {
+        deactivateInspectPinTool();
+      }
 
+      isLassoActive = true;
+      isLassoDrawing = false;
+      btnLasso?.classList.add('active');
+
+      // Trava navegação para que o arraste do mouse seja 100% capturado pelo laço
+      map.dragPan.disable();
+      map.boxZoom.disable();
+      map.doubleClickZoom.disable();
+
+      map.getCanvas().style.cursor = 'crosshair';
+      if (map.getCanvasContainer()) map.getCanvasContainer().style.cursor = 'crosshair';
+      const container = document.getElementById('webglMapContainer');
+      if (container) container.style.cursor = 'crosshair';
+
+      if (typeof showToast === 'function') {
+        showToast('Modo Laço Ativo: clique e arraste no mapa para cercar as fazendas que deseja selecionar.');
+      }
+    }
+
+    function deactivateLassoMode() {
+      isLassoActive = false;
+      isLassoDrawing = false;
+      btnLasso?.classList.remove('active');
+
+      if (map) {
+        map.dragPan.enable();
+        map.boxZoom.enable();
+        map.doubleClickZoom.enable();
+        map.getCanvas().style.cursor = '';
+        if (map.getCanvasContainer()) map.getCanvasContainer().style.cursor = '';
+      }
+      const container = document.getElementById('webglMapContainer');
+      if (container) container.style.cursor = '';
+    }
+
+    function toggleLassoMode() {
       if (isLassoActive) {
-        if (map) map.getCanvas().style.cursor = 'crosshair';
+        deactivateLassoMode();
         if (typeof showToast === 'function') {
-          showToast('Modo Laço Ativo: clique e arraste no mapa para cercar as fazendas que deseja selecionar.');
+          showToast('Modo Laço desativado.');
         }
       } else {
-        if (map) map.getCanvas().style.cursor = '';
+        activateLassoMode();
       }
+    }
+
+    btnLasso.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleLassoMode();
     });
 
     const clearLassoSelection = () => {
@@ -2673,134 +2728,168 @@ window.MapEngine = (function() {
     btnCloseCard?.addEventListener('click', clearLassoSelection);
     btnClearLasso?.addEventListener('click', clearLassoSelection);
 
-    // Eventos de clique e arraste no MapLibre GL
-    if (map) {
-      map.on('mousedown', (e) => {
-        if (!isLassoActive || e.originalEvent.button !== 0) return;
-        isLassoDrawing = true;
-        lassoCoordinates = [[e.lngLat.lng, e.lngLat.lat]];
-        map.dragPan.disable();
-      });
+    // Eventos de clique e arraste direto no Canvas do MapLibre GL
+    const canvas = map.getCanvas();
 
-      map.on('mousemove', (e) => {
-        if (!isLassoActive || !isLassoDrawing) return;
-        const currentCoord = [e.lngLat.lng, e.lngLat.lat];
-        lassoCoordinates.push(currentCoord);
+    const onMouseDown = (e) => {
+      if (!isLassoActive || e.button !== 0) return;
+      e.preventDefault();
+      e.stopPropagation();
 
+      isLassoDrawing = true;
+
+      const rect = canvas.getBoundingClientRect();
+      const point = [e.clientX - rect.left, e.clientY - rect.top];
+      const lngLat = map.unproject(point);
+
+      lassoCoordinates = [[lngLat.lng, lngLat.lat]];
+
+      // Limpa traço anterior no início de um novo desenho
+      const drawSrc = map.getSource('lasso-draw-source');
+      if (drawSrc) {
+        drawSrc.setData({ type: 'FeatureCollection', features: [] });
+      }
+    };
+
+    const onMouseMove = (e) => {
+      if (!isLassoActive || !isLassoDrawing) return;
+      e.preventDefault();
+
+      const rect = canvas.getBoundingClientRect();
+      const point = [e.clientX - rect.left, e.clientY - rect.top];
+      const lngLat = map.unproject(point);
+
+      // Evita acumular pontos idênticos
+      const last = lassoCoordinates[lassoCoordinates.length - 1];
+      if (last) {
+        const dx = Math.abs(lngLat.lng - last[0]);
+        const dy = Math.abs(lngLat.lat - last[1]);
+        if (dx < 0.00003 && dy < 0.00003) return;
+      }
+
+      lassoCoordinates.push([lngLat.lng, lngLat.lat]);
+
+      const drawSrc = map.getSource('lasso-draw-source');
+      if (drawSrc) {
+        drawSrc.setData({
+          type: 'FeatureCollection',
+          features: [{
+            type: 'Feature',
+            geometry: {
+              type: 'LineString',
+              coordinates: lassoCoordinates
+            }
+          }]
+        });
+      }
+    };
+
+    const onMouseUp = () => {
+      if (!isLassoActive || !isLassoDrawing) return;
+      isLassoDrawing = false;
+
+      // Se o usuário apenas deu um clique rápido sem arrastar (menos de 4 pontos),
+      // mantém o modo laço ativo para que não precise desmarcar e remarcar o botão!
+      if (lassoCoordinates.length < 4) {
+        lassoCoordinates = [];
         const drawSrc = map.getSource('lasso-draw-source');
         if (drawSrc) {
-          drawSrc.setData({
-            type: 'FeatureCollection',
-            features: [{
-              type: 'Feature',
-              geometry: {
-                type: 'LineString',
-                coordinates: lassoCoordinates
-              }
-            }]
-          });
+          drawSrc.setData({ type: 'FeatureCollection', features: [] });
         }
+        return;
+      }
+
+      const closedRing = [...lassoCoordinates, lassoCoordinates[0]];
+      const polygonFeature = {
+        type: 'Feature',
+        geometry: {
+          type: 'Polygon',
+          coordinates: [closedRing]
+        }
+      };
+
+      const drawSrc = map.getSource('lasso-draw-source');
+      if (drawSrc) {
+        drawSrc.setData({
+          type: 'FeatureCollection',
+          features: [polygonFeature]
+        });
+      }
+
+      const allProperties = Array.isArray(window.ruralPropertiesData) ? window.ruralPropertiesData : [];
+      const polygonForRayCast = closedRing.map(c => [c[1], c[0]]); // [lat, lng]
+
+      const insideFarms = allProperties.filter(p => {
+        let lat = p.lat || p.centroide_lat;
+        let lng = p.lng || p.centroide_lng;
+
+        if ((!lat || !lng) && p.geometry?.coordinates) {
+          try {
+            const coords = p.geometry.coordinates;
+            const flat = Array.isArray(coords[0]) && Array.isArray(coords[0][0]) ? coords[0][0] : coords[0];
+            if (Array.isArray(flat) && flat.length >= 2) {
+              lng = flat[0];
+              lat = flat[1];
+            }
+          } catch (_) {}
+        }
+
+        if (lat && lng && !isNaN(lat) && !isNaN(lng)) {
+          return isPointInPolygon(Number(lat), Number(lng), polygonForRayCast);
+        }
+        return false;
       });
 
-      map.on('mouseup', () => {
-        if (!isLassoActive || !isLassoDrawing) return;
-        isLassoDrawing = false;
-        map.dragPan.enable();
+      selectedFarmsByLasso = insideFarms;
 
-        if (lassoCoordinates.length < 3) {
-          clearLassoSelection();
-          return;
+      const highlightFeatures = insideFarms.map(f => ({
+        type: 'Feature',
+        properties: f,
+        geometry: f.geometry || {
+          type: 'Point',
+          coordinates: [Number(f.lng || f.centroide_lng), Number(f.lat || f.centroide_lat)]
         }
+      })).filter(f => f.geometry);
 
-        const closedRing = [...lassoCoordinates, lassoCoordinates[0]];
-        const polygonFeature = {
-          type: 'Feature',
-          geometry: {
-            type: 'Polygon',
-            coordinates: [closedRing]
-          }
-        };
-
-        const drawSrc = map.getSource('lasso-draw-source');
-        if (drawSrc) {
-          drawSrc.setData({
-            type: 'FeatureCollection',
-            features: [polygonFeature]
-          });
-        }
-
-        const allProperties = Array.isArray(window.ruralPropertiesData) ? window.ruralPropertiesData : [];
-        const polygonForRayCast = closedRing.map(c => [c[1], c[0]]); // [lat, lng]
-
-        const insideFarms = allProperties.filter(p => {
-          let lat = p.lat || p.centroide_lat;
-          let lng = p.lng || p.centroide_lng;
-
-          if ((!lat || !lng) && p.geometry?.coordinates) {
-            try {
-              const coords = p.geometry.coordinates;
-              const flat = Array.isArray(coords[0]) && Array.isArray(coords[0][0]) ? coords[0][0] : coords[0];
-              if (Array.isArray(flat) && flat.length >= 2) {
-                lng = flat[0];
-                lat = flat[1];
-              }
-            } catch (_) {}
-          }
-
-          if (lat && lng && !isNaN(lat) && !isNaN(lng)) {
-            return isPointInPolygon(Number(lat), Number(lng), polygonForRayCast);
-          }
-          return false;
+      const selSrc = map.getSource('lasso-selected-farms-source');
+      if (selSrc) {
+        selSrc.setData({
+          type: 'FeatureCollection',
+          features: highlightFeatures
         });
+      }
 
-        selectedFarmsByLasso = insideFarms;
-
-        const highlightFeatures = insideFarms.map(f => ({
-          type: 'Feature',
-          properties: f,
-          geometry: f.geometry || {
-            type: 'Point',
-            coordinates: [Number(f.lng || f.centroide_lng), Number(f.lat || f.centroide_lat)]
-          }
-        })).filter(f => f.geometry);
-
-        const selSrc = map.getSource('lasso-selected-farms-source');
-        if (selSrc) {
-          selSrc.setData({
-            type: 'FeatureCollection',
-            features: highlightFeatures
-          });
-        }
-
-        let totalHa = 0;
-        insideFarms.forEach(f => {
-          totalHa += Number(f.area_lavoura_util_ha) || Number(f.area_hectares) || 0;
-        });
-
-        if (countEl) countEl.textContent = insideFarms.length;
-        if (haEl) haEl.textContent = Math.round(totalHa).toLocaleString('pt-BR');
-        if (btnSelectedCountEl) btnSelectedCountEl.textContent = insideFarms.length;
-        if (btnAllCountEl) btnAllCountEl.textContent = allProperties.length;
-
-        if (lassoCard) {
-          lassoCard.style.display = insideFarms.length > 0 ? 'block' : 'none';
-        }
-
-        isLassoActive = false;
-        btnLasso.classList.remove('active');
-        map.getCanvas().style.cursor = '';
-
-        if (insideFarms.length > 0) {
-          if (typeof showToast === 'function') {
-            showToast(`Área delimitada: ${insideFarms.length} fazendas isoladas (${Math.round(totalHa).toLocaleString('pt-BR')} ha).`);
-          }
-        } else {
-          if (typeof showToast === 'function') {
-            showToast('Nenhuma fazenda encontrada dentro da área desenhada.');
-          }
-        }
+      let totalHa = 0;
+      insideFarms.forEach(f => {
+        totalHa += Number(f.area_lavoura_util_ha) || Number(f.area_hectares) || 0;
       });
-    }
+
+      if (countEl) countEl.textContent = insideFarms.length;
+      if (haEl) haEl.textContent = Math.round(totalHa).toLocaleString('pt-BR');
+      if (btnSelectedCountEl) btnSelectedCountEl.textContent = insideFarms.length;
+      if (btnAllCountEl) btnAllCountEl.textContent = allProperties.length;
+
+      if (lassoCard) {
+        lassoCard.style.display = insideFarms.length > 0 ? 'block' : 'none';
+      }
+
+      // Concluiu o laço com sucesso -> devolve o mapa para navegação padrão
+      deactivateLassoMode();
+
+      if (insideFarms.length > 0) {
+        if (typeof showToast === 'function') {
+          showToast(`Área delimitada: ${insideFarms.length} fazendas isoladas (${Math.round(totalHa).toLocaleString('pt-BR')} ha).`);
+        }
+      } else {
+        if (typeof showToast === 'function') {
+          showToast('Nenhuma fazenda encontrada dentro da área desenhada.');
+        }
+      }
+    };
+
+    canvas.addEventListener('mousedown', onMouseDown);
+    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mouseup', onMouseUp);
 
     btnInjectSelected?.addEventListener('click', async () => {
       if (selectedFarmsByLasso.length === 0) {
