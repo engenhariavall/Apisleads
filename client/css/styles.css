@@ -8874,6 +8874,22 @@ input:checked + .slider:before {
   z-index: 70;
 }
 
+.google-maps-company-pin.selected-highlight {
+  z-index: 85 !important;
+  transform: scale(1.15) translateY(-6px) !important;
+}
+
+.google-maps-company-pin.selected-highlight .gm-pin-bubble {
+  border: 2px solid #38BDF8 !important;
+  box-shadow: 0 0 25px rgba(56, 189, 248, 0.9), 0 4px 16px rgba(0, 0, 0, 0.7) !important;
+}
+
+.google-maps-company-pin.selected-highlight .gm-pin-pulse-ring {
+  opacity: 1 !important;
+  border-color: #38BDF8 !important;
+  animation: gmPinPulse 1.2s ease-out infinite !important;
+}
+
 .gm-pin-bubble {
   display: flex;
   align-items: center;

@@ -73,7 +73,8 @@ export function exportLeads(req, res) {
     }
 
     // FASE 47: Injeção de Contatos Quentes Manuais (Warm-up Audiences para Tráfego Pago)
-    if (include_manual !== false) {
+    // Apenas injeta se NÃO foram fornecidos IDs explícitos (ex: exportação de lead individual ou seleção específica)
+    if (include_manual !== false && (!Array.isArray(lead_ids) || lead_ids.length === 0)) {
       try {
         const manualStmt = db.prepare(`
           SELECT * FROM leads 

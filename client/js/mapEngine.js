@@ -1850,6 +1850,9 @@ window.MapEngine = (function() {
                      String(p.razao_social || '').match(/(agro|máquinas|tratores|insumos|slc|macponta|agrofel)/i);
       el.className = `google-maps-company-pin ${isAgro ? 'agro-revenda' : ''}`;
       el.setAttribute('data-id', p.id);
+      if (window.state && window.state.selectedLeadIds && window.state.selectedLeadIds.has(p.id)) {
+        el.classList.add('selected-highlight');
+      }
 
       const icon = isAgro 
         ? `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;"><circle cx="7" cy="17" r="3.5"></circle><circle cx="18" cy="18" r="2"></circle><path d="M10.5 17h5.5"></path><path d="M3.5 17H2v-5l4-2h5l3 7"></path><path d="M10 10V5h4"></path><path d="M14 7h4l2 5v3"></path></svg>`
@@ -1867,6 +1870,8 @@ window.MapEngine = (function() {
 
       el.addEventListener('click', (e) => {
         e.stopPropagation();
+        document.querySelectorAll('.google-maps-company-pin').forEach(pEl => pEl.classList.remove('selected-highlight'));
+        el.classList.add('selected-highlight');
         if (p.id && window.inspectLeadInDrawer) {
           window.inspectLeadInDrawer(p.id);
         } else if (p.id && window.openLeadModal) {
@@ -4207,7 +4212,46 @@ window.MapEngine = (function() {
     isInspectPinActive: () => isInspectPinActive,
     handleInspectPinMapClick,
     applyActiveFiltersToFundiario,
-    detectCurrentMapHub
+    detectCurrentMapHub,
+    applySelectionFilter: function(isActive, selectedIdsSet) {
+      if (!map) return;
+      const ids = selectedIdsSet ? Array.from(selectedIdsSet) : [];
+
+      // 1. Filtragem nos markers HTML comerciais B2B
+      if (commercialB2bMarkers && commercialB2bMarkers.length > 0) {
+        commercialB2bMarkers.forEach(marker => {
+          const el = marker.getElement();
+          const id = el ? el.getAttribute('data-id') : null;
+          if (!isActive || ids.length === 0) {
+            el.style.display = '';
+            if (id && ids.includes(id)) {
+              el.classList.add('selected-highlight');
+            } else {
+              el.classList.remove('selected-highlight');
+            }
+          } else {
+            if (id && ids.includes(id)) {
+              el.style.display = '';
+              el.classList.add('selected-highlight');
+            } else {
+              el.style.display = 'none';
+              el.classList.remove('selected-highlight');
+            }
+          }
+        });
+      }
+
+      // 2. Filtragem na camada nativa MapLibre unclustered-point
+      try {
+        if (map.getLayer('unclustered-point')) {
+          if (isActive && ids.length > 0) {
+            map.setFilter('unclustered-point', ['in', ['get', 'id'], ['literal', ids]]);
+          } else {
+            map.setFilter('unclustered-point', ['!', ['has', 'point_count']]);
+          }
+        }
+      } catch (_) {}
+    }
   };
 })();
 

@@ -337,6 +337,17 @@ function updateUI() {
   const count = state.selectAllFiltered ? state.totalFiltered : state.selectedLeadIds.size;
   if (selectedCountEl) selectedCountEl.textContent = formatNumber(count);
 
+  const btnExpLabel = document.getElementById('btnExportCsvLabel');
+  if (btnExpLabel) {
+    if (count === 1) {
+      btnExpLabel.textContent = 'EXPORTAR CSV (1 LEAD)';
+    } else if (count > 1 && !state.selectAllFiltered) {
+      btnExpLabel.textContent = `EXPORTAR CSV (${formatNumber(count)} LEADS)`;
+    } else {
+      btnExpLabel.textContent = 'EXPORTAR CSV';
+    }
+  }
+
   // 1.1 Indicadores no Central Viewport e Left Rail
   const vpTotalEl = document.getElementById('vpTotalCount');
   if (vpTotalEl) vpTotalEl.textContent = formatNumber(state.totalFiltered);
@@ -1754,6 +1765,9 @@ function initMasksAndInputs() {
   toggleSelected?.addEventListener('change', (e) => {
     state.viewOnlySelected = e.target.checked;
     renderTable();
+    if (window.MapEngine && typeof window.MapEngine.applySelectionFilter === 'function') {
+      window.MapEngine.applySelectionFilter(state.viewOnlySelected, state.selectedLeadIds);
+    }
   });
 
   // Botão Limpar Filtros
@@ -2468,6 +2482,19 @@ window.exportCustomAudiencesAction = async function() {
   await executeExport('meta_ads', btn);
 };
 
+/**
+ * FASE 67: Exportação rápida de lead individual inspecionado (1-Click CSV)
+ */
+window.exportCurrentInspectedLeadCsv = async function(btnEl = null) {
+  const lead = window.currentInspectedLead || window.currentInspectedRuralProperty;
+  const leadId = lead ? (lead.id || lead.id_sigef || lead.codigo_car) : null;
+  if (!leadId) {
+    showToast('Nenhum lead selecionado no momento para exportação individual.');
+    return;
+  }
+  await executeExport('comercial_b2b_maquinas', btnEl, [leadId]);
+};
+
 // 10. Modal de Exportação e Download de Arquivos / Sincronizações (Frente 2)
 function initExportModal() {
   const modal = document.getElementById('exportModal');
@@ -2481,19 +2508,73 @@ function initExportModal() {
   const metaFields = document.getElementById('metaSyncFields');
   const crmFields = document.getElementById('crmWebhookFields');
 
+  const radioScopeSingle = document.getElementById('scopeSingleLead');
+  const radioScopeAll = document.getElementById('scopeAllFiltered');
+  const scopeBadge = document.getElementById('exportScopeStatusBadge');
+  const scopeLeadNameTarget = document.getElementById('scopeLeadNameTarget');
+  const scopeAllCountTarget = document.getElementById('scopeAllCountTarget');
+  const labelScopeSingleWrap = document.getElementById('labelScopeSingleWrap');
+
   function updateOptionFields() {
     const selected = document.querySelector('input[name="exportFormat"]:checked')?.value;
     if (metaFields) metaFields.style.display = (selected === 'meta_ads' || selected === 'meta_sync') ? 'block' : 'none';
     if (crmFields) crmFields.style.display = selected === 'crm_webhook' ? 'block' : 'none';
   }
 
+  function updateScopeUI() {
+    const inspectedLead = window.currentInspectedLead || window.currentInspectedRuralProperty;
+    const selectedCount = state.selectedLeadIds ? state.selectedLeadIds.size : 0;
+    const totalFiltered = state.totalFiltered || 0;
+
+    if (scopeAllCountTarget) scopeAllCountTarget.textContent = formatNumber(totalFiltered);
+
+    const isScopeSingle = radioScopeSingle?.checked;
+
+    if (selectedCount > 1) {
+      if (scopeLeadNameTarget) scopeLeadNameTarget.textContent = `${selectedCount} Leads Selecionados`;
+      if (radioScopeSingle) radioScopeSingle.disabled = false;
+      if (labelScopeSingleWrap) labelScopeSingleWrap.style.opacity = '1';
+      if (scopeBadge) scopeBadge.textContent = `${selectedCount} SELECIONADOS`;
+      if (countSpan) countSpan.textContent = isScopeSingle ? `${selectedCount} leads selecionados` : `${formatNumber(totalFiltered)} leads filtrados`;
+    } else if (selectedCount === 1 || inspectedLead) {
+      const targetName = inspectedLead ? (inspectedLead.nome_fantasia || inspectedLead.razao_social || inspectedLead.nome_imovel || 'Lead Individual') : '1 Lead Selecionado';
+      if (scopeLeadNameTarget) scopeLeadNameTarget.textContent = targetName;
+      if (radioScopeSingle) radioScopeSingle.disabled = false;
+      if (labelScopeSingleWrap) labelScopeSingleWrap.style.opacity = '1';
+      if (scopeBadge) scopeBadge.textContent = isScopeSingle ? 'LEAD INDIVIDUAL (1)' : `TODOS (${totalFiltered})`;
+      if (countSpan) countSpan.textContent = isScopeSingle ? `1 lead individual (${targetName})` : `${formatNumber(totalFiltered)} leads filtrados`;
+    } else {
+      if (scopeLeadNameTarget) scopeLeadNameTarget.textContent = 'Nenhum lead individual selecionado';
+      if (radioScopeSingle) radioScopeSingle.disabled = true;
+      if (labelScopeSingleWrap) labelScopeSingleWrap.style.opacity = '0.5';
+      if (radioScopeAll) radioScopeAll.checked = true;
+      if (scopeBadge) scopeBadge.textContent = `TODOS (${totalFiltered})`;
+      if (countSpan) countSpan.textContent = `${formatNumber(totalFiltered)} leads filtrados`;
+    }
+  }
+
+  radioScopeSingle?.addEventListener('change', updateScopeUI);
+  radioScopeAll?.addEventListener('change', updateScopeUI);
+
   radioButtons.forEach(radio => {
     radio.addEventListener('change', updateOptionFields);
   });
 
   btnOpen?.addEventListener('click', () => {
-    const count = state.selectAllFiltered ? state.totalFiltered : state.selectedLeadIds.size || state.totalFiltered;
-    if (countSpan) countSpan.textContent = formatNumber(count);
+    // Se há um lead inspecionado ativo e nada selecionado, seleciona o lead inspecionado
+    if (state.selectedLeadIds.size === 0 && (window.currentInspectedLead?.id || window.currentInspectedRuralProperty?.id)) {
+      const activeId = window.currentInspectedLead?.id || window.currentInspectedRuralProperty?.id;
+      state.selectedLeadIds.add(activeId);
+      updateUI();
+    }
+
+    if (state.selectedLeadIds.size > 0 && !state.selectAllFiltered) {
+      if (radioScopeSingle) radioScopeSingle.checked = true;
+    } else {
+      if (radioScopeAll) radioScopeAll.checked = true;
+    }
+
+    updateScopeUI();
     updateOptionFields();
     modal?.classList.add('open');
   });
@@ -2506,8 +2587,23 @@ function initExportModal() {
     const formatRadio = document.querySelector('input[name="exportFormat"]:checked');
     const format = formatRadio ? formatRadio.value : 'meta_ads';
 
-    const leadIds = state.selectAllFiltered ? [] : Array.from(state.selectedLeadIds);
-    const filters = (state.selectAllFiltered || state.selectedLeadIds.size === 0) ? state.filters : null;
+    const isScopeSingle = document.getElementById('scopeSingleLead')?.checked;
+    let leadIds = [];
+    let filters = null;
+
+    if (isScopeSingle) {
+      if (state.selectedLeadIds.size > 0) {
+        leadIds = Array.from(state.selectedLeadIds);
+      } else if (window.currentInspectedLead?.id) {
+        leadIds = [window.currentInspectedLead.id];
+      } else if (window.currentInspectedRuralProperty?.id) {
+        leadIds = [window.currentInspectedRuralProperty.id];
+      }
+      filters = null;
+    } else {
+      leadIds = [];
+      filters = state.filters;
+    }
 
     const isDirectGraphApi = document.getElementById('checkSyncDirectGraphApi')?.checked;
 
@@ -2582,7 +2678,7 @@ function initExportModal() {
         btnConfirm.innerHTML = originalText;
       }
     } else {
-      const success = await executeExport(format, btnConfirm);
+      const success = await executeExport(format, btnConfirm, leadIds.length > 0 ? leadIds : null);
       if (success) {
         closeModal();
       }
@@ -3934,6 +4030,20 @@ window.inspectRuralPropertyInDrawer = function(propData) {
   if (!rightDrawer) return;
 
   window.currentInspectedRuralProperty = propData;
+
+  // Auto-seleciona a propriedade rural se não houver seleção múltipla ativa
+  if (propData && (propData.id || propData.id_sigef || propData.codigo_car)) {
+    const pId = propData.id || propData.id_sigef || propData.codigo_car;
+    if (state.selectedLeadIds.size <= 1) {
+      state.selectedLeadIds.clear();
+      state.selectedLeadIds.add(pId);
+      state.selectAllFiltered = false;
+      updateUI();
+      if (state.viewOnlySelected && window.MapEngine && typeof window.MapEngine.applySelectionFilter === 'function') {
+        window.MapEngine.applySelectionFilter(true, state.selectedLeadIds);
+      }
+    }
+  }
 
   // Garante abertura da gaveta direita
   rightDrawer.classList.remove('collapsed');
@@ -5913,6 +6023,19 @@ window.inspectLeadInDrawer = async function(leadId, forceCompetitor = false) {
   const drawerTerritorialSheet = document.getElementById('drawerTerritorialSheet');
   if (!rightDrawer) return;
 
+  // Auto-seleção individual: ao inspecionar no mapa ou tabela, seleciona o lead (SELECIONADOS: 1)
+  if (leadId) {
+    if (state.selectedLeadIds.size <= 1) {
+      state.selectedLeadIds.clear();
+      state.selectedLeadIds.add(leadId);
+      state.selectAllFiltered = false;
+      updateUI();
+      if (state.viewOnlySelected && window.MapEngine && typeof window.MapEngine.applySelectionFilter === 'function') {
+        window.MapEngine.applySelectionFilter(true, state.selectedLeadIds);
+      }
+    }
+  }
+
   // Garante que o Drawer está aberto
   rightDrawer.classList.remove('collapsed');
   document.getElementById('btnToggleRightDrawer')?.classList.add('active');
@@ -5923,9 +6046,13 @@ window.inspectLeadInDrawer = async function(leadId, forceCompetitor = false) {
   if (drawerEmptyHint) drawerEmptyHint.style.display = 'none';
   if (drawerLeadSheet) drawerLeadSheet.style.display = 'block';
 
-  // Destaca a linha clicada na tabela
+  // Destaca a linha clicada na tabela e sincroniza checkbox
   document.querySelectorAll('.leads-table tbody tr').forEach(r => r.classList.remove('active-inspect'));
   document.querySelector(`.leads-table tbody tr[data-id="${leadId}"]`)?.classList.add('active-inspect');
+  document.querySelectorAll('.lead-check').forEach(chk => {
+    const cid = chk.getAttribute('data-id');
+    chk.checked = state.selectAllFiltered || state.selectedLeadIds.has(cid);
+  });
 
   // Limpa o estado da descoberta anterior para evitar dados de lead prévio
   window.lastDiscoveredAddressData = null;

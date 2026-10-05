@@ -1972,7 +1972,7 @@
             <polyline points="7 10 12 15 17 10"></polyline>
             <line x1="12" y1="15" x2="12" y2="3"></line>
           </svg>
-          <span>EXPORTAR CSV</span>
+          <span id="btnExportCsvLabel">EXPORTAR CSV</span>
         </button>
       </div>
 
@@ -2009,6 +2009,18 @@
             <div class="sheet-cnpj-row">
               <span>CNPJ:</span>
               <strong id="inspectorLeadCnpj">00.000.000/0000-00</strong>
+            </div>
+
+            <!-- Ação Rápida de Exportação Individual 1-Click -->
+            <div class="sheet-lead-quick-actions" style="margin-top: 0.65rem; margin-bottom: 0.5rem;">
+              <button type="button" id="btnQuickExportLeadCsv" class="btn-quick-export-lead" onclick="window.exportCurrentInspectedLeadCsv(this)" style="width: 100%; padding: 0.5rem 0.75rem; background: rgba(56, 189, 248, 0.12); color: #38BDF8; border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 6px; font-size: 0.72rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.45rem; transition: all 0.2s;" onmouseover="this.style.background='rgba(56, 189, 248, 0.22)'; this.style.borderColor='#38BDF8';" onmouseout="this.style.background='rgba(56, 189, 248, 0.12)'; this.style.borderColor='rgba(56, 189, 248, 0.4)';">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                <span>Exportar Apenas Este Lead (CSV)</span>
+              </button>
             </div>
 
             <!-- Card Destaque: Categoria Real (Padrão VERSUS) -->
@@ -3190,8 +3202,32 @@ Carregando script de abordagem...
         <button class="modal-close" id="btnCloseExportModal">&times;</button>
       </div>
       <div class="modal-body">
+        <!-- Seletor de Escopo de Exportação Inteligente -->
+        <div class="export-scope-card" id="exportScopeContainer" style="margin-bottom: 1.15rem; padding: 0.75rem 0.95rem; background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 8px;">
+          <div style="font-size: 0.68rem; font-weight: 800; color: #94A3B8; text-transform: uppercase; margin-bottom: 0.55rem; letter-spacing: 0.05em; display: flex; align-items: center; justify-content: space-between;">
+            <span style="display: flex; align-items: center; gap: 0.4rem;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2.2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polygon points="12 8 8 12 12 16 12 8"></polygon>
+              </svg>
+              ESCOPO DE EXPORTAÇÃO
+            </span>
+            <span id="exportScopeStatusBadge" style="font-size: 0.65rem; font-weight: 700; padding: 0.12rem 0.5rem; border-radius: 4px; background: rgba(56, 189, 248, 0.15); color: #38BDF8; border: 1px solid rgba(56, 189, 248, 0.35);">LEAD INDIVIDUAL (1)</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 0.45rem;">
+            <label id="labelScopeSingleWrap" style="display: flex; align-items: center; gap: 0.6rem; cursor: pointer; font-size: 0.8rem; color: #F8FAFC; background: rgba(255,255,255,0.03); padding: 0.4rem 0.6rem; border-radius: 6px; border: 1px solid rgba(56, 189, 248, 0.2); transition: all 0.15s;">
+              <input type="radio" name="exportScope" id="scopeSingleLead" value="selected" checked style="accent-color: #38BDF8; width: 15px; height: 15px;">
+              <span id="labelScopeSelectedLead">Apenas o lead individual inspecionado: <strong id="scopeLeadNameTarget" style="color: #38BDF8;">-</strong></span>
+            </label>
+            <label id="labelScopeAllWrap" style="display: flex; align-items: center; gap: 0.6rem; cursor: pointer; font-size: 0.8rem; color: #94A3B8; background: rgba(255,255,255,0.02); padding: 0.4rem 0.6rem; border-radius: 6px; border: 1px solid transparent; transition: all 0.15s;">
+              <input type="radio" name="exportScope" id="scopeAllFiltered" value="all" style="accent-color: #38BDF8; width: 15px; height: 15px;">
+              <span id="labelScopeAllFiltered">Todos os <strong id="scopeAllCountTarget" style="color: #F8FAFC;">0</strong> leads filtrados da busca atual</span>
+            </label>
+          </div>
+        </div>
+
         <p style="font-size: 0.85rem; color: #94A3B8; margin-bottom: 1.25rem;">
-          Selecione a ação desejada para os <strong id="exportLeadsCount" style="color: #fff;">0</strong> leads selecionados/filtrados:
+          Selecione o formato desejado para exportar <strong id="exportLeadsCount" style="color: #38BDF8;">0</strong>:
         </p>
 
         <div class="export-options">
