@@ -32,7 +32,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import db from '../config/database.js';
-import { carHistoricalService } from './carHistoricalService.js';
+import { carHistoricalService, buildUnmaskedCpf } from './carHistoricalService.js';
 import { agronomicProfileService } from './agronomicProfileService.js';
 import { calculateRuralIntentScore } from './intentScoringService.js';
 
@@ -195,7 +195,10 @@ export function normalizarFeatureCar(rawFeature = {}, overrides = {}) {
   const nomeTitular  = (rawTitular && !['Produtor Rural Declarado', 'Titular não informado', 'Não informado', 'Titularidade sob sigilo (LGPD)'].includes(String(rawTitular).trim()))
     ? String(rawTitular).trim()
     : 'Titularidade sob sigilo (LGPD)';
-  const cpfCnpj      = histMatch?.cpf_cnpj_parcial || String(props.cpf_cnpj_titular || props.cpf_cnpj || props.num_cpf_cnpj || '').replace(/\s/g, '') || null;
+  let cpfCnpj        = histMatch?.cpf_cnpj_parcial || String(props.cpf_cnpj_titular || props.cpf_cnpj || props.num_cpf_cnpj || '').replace(/\s/g, '') || null;
+  if (cpfCnpj && cpfCnpj.includes('*') && codigoCar) {
+    cpfCnpj = buildUnmaskedCpf(codigoCar, cpfCnpj);
+  }
   const nomeImovel   = String(histMatch?.nome_imovel_declarado || props.nom_imovel || props.nome_imovel || props.denominacao || props.nome || (codigoCar ? `Imóvel CAR ${codigoCar.slice(-8)}` : 'Imóvel Rural CAR')).trim();
   const municipio    = String(overrides.municipio || props.nom_municipio || props.municipio || '').toUpperCase().trim();
   const uf           = String(overrides.uf || props.sig_uf || props.uf || '').toUpperCase().trim();

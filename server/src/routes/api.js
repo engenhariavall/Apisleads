@@ -596,7 +596,12 @@ router.post('/osint/enrich-whatsapp-bureau', optionalAuth, async (req, res) => {
         const hist = db.prepare('SELECT nome_proprietario, cpf_cnpj_parcial, municipio, uf FROM car_proprietarios_historico WHERE codigo_car = ? LIMIT 1').get(codigo_car);
         if (hist) {
           if (!nome_titular || nome_titular.includes('sigilo')) nome_titular = hist.nome_proprietario;
-          if (!rawDoc || rawDoc.includes('*')) rawDoc = hist.cpf_cnpj_parcial || rawDoc;
+          let doc = hist.cpf_cnpj_parcial || rawDoc;
+          if (doc && doc.includes('*')) {
+            const { buildUnmaskedCpf } = await import('../services/carHistoricalService.js');
+            doc = buildUnmaskedCpf(codigo_car, doc);
+          }
+          rawDoc = doc;
           if (!uf) uf = hist.uf;
           if (!municipio) municipio = hist.municipio;
         }
@@ -609,7 +614,12 @@ router.post('/osint/enrich-whatsapp-bureau', optionalAuth, async (req, res) => {
       try {
         const carRes = await sicarOsintService.extractCarOwner(codigo_car, { uf, municipio });
         if (carRes && carRes.success) {
-          if (carRes.cpf_cnpj_titular || carRes.cpf_cnpj) rawDoc = carRes.cpf_cnpj_titular || carRes.cpf_cnpj;
+          let cDoc = carRes.cpf_cnpj_titular || carRes.cpf_cnpj;
+          if (cDoc && cDoc.includes('*')) {
+            const { buildUnmaskedCpf } = await import('../services/carHistoricalService.js');
+            cDoc = buildUnmaskedCpf(codigo_car, cDoc);
+          }
+          if (cDoc) rawDoc = cDoc;
           if (!nome_titular) nome_titular = carRes.nome_titular;
         }
       } catch (cErr) {

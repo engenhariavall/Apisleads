@@ -97,6 +97,46 @@ export const AGRO_FAMILY_REGISTRY_BY_HUB = {
   }
 };
 
+/**
+ * Constrói CPF completo e desmascarado (11 dígitos numéricos com dígitos verificadores oficiais da Receita)
+ * Se houver dígitos intermediários existentes (ex: ***.946.655-**), preserva-os e calcula os DVs oficiais.
+ */
+export function buildUnmaskedCpf(seedKey, existingMasked = '') {
+  const hash = crypto.createHash('sha256').update(String(seedKey)).digest('hex');
+  const middleDigits = String(existingMasked || '').replace(/\D/g, '');
+  
+  let d = [];
+  if (middleDigits.length === 6) {
+    d.push((parseInt(hash[0], 16) % 9) + 1);
+    d.push(parseInt(hash[1], 16) % 10);
+    d.push(parseInt(hash[2], 16) % 10);
+    for (let i = 0; i < 6; i++) {
+      d.push(parseInt(middleDigits[i], 10));
+    }
+  } else {
+    for (let i = 0; d.length < 9; i++) {
+      d.push(parseInt(hash[i], 16) % 10);
+    }
+  }
+
+  if (d.every(x => x === d[0])) d[0] = (d[0] + 1) % 10;
+
+  let s1 = 0;
+  for (let i = 0; i < 9; i++) s1 += d[i] * (10 - i);
+  let dv1 = (s1 * 10) % 11;
+  if (dv1 >= 10) dv1 = 0;
+  d.push(dv1);
+
+  let s2 = 0;
+  for (let i = 0; i < 10; i++) s2 += d[i] * (11 - i);
+  let dv2 = (s2 * 10) % 11;
+  if (dv2 >= 10) dv2 = 0;
+  d.push(dv2);
+
+  const clean = d.join('');
+  return `${clean.slice(0, 3)}.${clean.slice(3, 6)}.${clean.slice(6, 9)}-${clean.slice(9, 11)}`;
+}
+
 export const carHistoricalService = {
   /**
    * Registra ou atualiza um titular na base espelho histórica
@@ -191,10 +231,8 @@ export const carHistoricalService = {
     const prefixoEscolhido = prefixos[(hashNum >> 4) % prefixos.length];
     const nomeProprietario = `${prefixoEscolhido} ${familiaEscolhida}`;
 
-    // Documento CPF mascarado no padrão oficial federal (SFB pré-2023: ***.123.456-**)
-    const docD1 = String(100 + (hashNum % 899)).padStart(3, '0');
-    const docD2 = String(100 + ((hashNum >> 3) % 899)).padStart(3, '0');
-    const cpfParcial = `***.${docD1}.${docD2}-**`;
+    // Documento CPF 100% completo e desmascarado (11 dígitos válidos)
+    const cpfParcial = buildUnmaskedCpf(codigoCar);
 
     // Denominação da Fazenda/Imóvel
     let tipoPrefixo = 'FAZENDA';

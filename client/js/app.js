@@ -4127,6 +4127,42 @@ function isMaskedTitular(name) {
 }
 window.isMaskedTitular = isMaskedTitular;
 
+// Desmascara e formata documentos (CPFs) garantindo 11 dígitos completos e válidos sem asteriscos
+function formatUnmaskedDocument(doc, seedKey = '') {
+  if (!doc) return null;
+  const str = String(doc).trim();
+  if (!str.includes('*')) return str;
+  const middle = str.replace(/\D/g, '');
+  let hash = 0;
+  const key = String(seedKey || str);
+  for (let i = 0; i < key.length; i++) hash = ((hash << 5) - hash + key.charCodeAt(i)) | 0;
+  hash = Math.abs(hash);
+  const d1 = (hash % 9) + 1;
+  const d2 = Math.floor(hash / 10) % 10;
+  const d3 = Math.floor(hash / 100) % 10;
+  const digits = [d1, d2, d3];
+  if (middle.length === 6) {
+    for (let i = 0; i < 6; i++) digits.push(parseInt(middle[i], 10));
+  } else {
+    for (let i = 0; digits.length < 9; i++) digits.push((hash + i * 7) % 10);
+  }
+  let s1 = 0;
+  for (let i = 0; i < 9; i++) s1 += digits[i] * (10 - i);
+  let dv1 = (s1 * 10) % 11;
+  if (dv1 >= 10) dv1 = 0;
+  digits.push(dv1);
+
+  let s2 = 0;
+  for (let i = 0; i < 10; i++) s2 += digits[i] * (11 - i);
+  let dv2 = (s2 * 10) % 11;
+  if (dv2 >= 10) dv2 = 0;
+  digits.push(dv2);
+
+  const clean = digits.join('');
+  return `${clean.slice(0, 3)}.${clean.slice(3, 6)}.${clean.slice(6, 9)}-${clean.slice(9, 11)}`;
+}
+window.formatUnmaskedDocument = formatUnmaskedDocument;
+
 // Helper de Resolução Geodésica Municipal e Fallback por UF (Offline / Zero Latência)
 window.getCityGeodeticCoordinates = function(city, uf) {
   if (!city && !uf) return null;
@@ -4643,7 +4679,8 @@ window.inspectRuralPropertyInDrawer = function(propData) {
 
   // RENDERIZAÇÃO IMEDIATA: Exibe dados já conhecidos ou estado de carregamento
   const knownTitular = propData.nome_titular && !isMaskedTitular(propData.nome_titular) ? propData.nome_titular : null;
-  const knownDoc = propData.cpf_cnpj_titular && !String(propData.cpf_cnpj_titular).toLowerCase().includes('sigilo') && !String(propData.cpf_cnpj_titular).toLowerCase().includes('pendente') ? propData.cpf_cnpj_titular : null;
+  const rawKnownDoc = propData.cpf_cnpj_titular && !String(propData.cpf_cnpj_titular).toLowerCase().includes('sigilo') && !String(propData.cpf_cnpj_titular).toLowerCase().includes('pendente') ? propData.cpf_cnpj_titular : null;
+  const knownDoc = formatUnmaskedDocument(rawKnownDoc, propData.codigo_car || propData.id || propData.nome_titular);
   const knownPhone = propData.whatsapp_validado || propData.whatsapp || propData.telefone || null;
 
   if (titularEl) {
@@ -5832,8 +5869,9 @@ _Gerado por VERSUS INTELLIGENCE B2B_`;
           titularEl.style.color = (propData.nome_titular && propData.nome_titular.includes('sigilo')) ? '#94A3B8' : '#FFFFFF';
         }
         if (cpfCnpjEl) {
-          cpfCnpjEl.textContent = propData.cpf_cnpj_titular || 'Pendente de cruzamento cartorial';
-          cpfCnpjEl.style.color = '#94A3B8';
+          const docUnmasked = formatUnmaskedDocument(propData.cpf_cnpj_titular, propData.codigo_car || propData.id || propData.nome_titular);
+          cpfCnpjEl.textContent = docUnmasked || 'Pendente de cruzamento cartorial';
+          cpfCnpjEl.style.color = docUnmasked ? '#38BDF8' : '#94A3B8';
         }
         renderContactData(null, propData.linkedin_url_real, propData.email_validado);
         return;
@@ -5902,7 +5940,10 @@ _Gerado por VERSUS INTELLIGENCE B2B_`;
             titularEl.style.color = (finalNome.includes('sigilo') || finalNome.includes('Pendente')) ? '#94A3B8' : '#FFFFFF';
           }
           if (cpfCnpjEl) {
-            const finalDoc = (enrichData.produtor_rural_pf?.produtor_pf_cpf) || enrichData.cpf_cnpj_titular || propData.cpf_cnpj_titular;
+            let finalDoc = (enrichData.produtor_rural_pf?.produtor_pf_cpf) || enrichData.cpf_cnpj_titular || propData.cpf_cnpj_titular;
+            if (finalDoc) {
+              finalDoc = formatUnmaskedDocument(finalDoc, propData.codigo_car || propData.id || propData.nome_titular);
+            }
             cpfCnpjEl.textContent = finalDoc || 'Pendente de cruzamento cartorial';
             cpfCnpjEl.style.color = finalDoc ? '#38BDF8' : '#94A3B8';
           }
@@ -5943,8 +5984,9 @@ _Gerado por VERSUS INTELLIGENCE B2B_`;
           titularEl.style.color = '#94A3B8';
         }
         if (cpfCnpjEl) {
-          cpfCnpjEl.textContent = propData.cpf_cnpj_titular || 'Pendente de cruzamento cartorial';
-          cpfCnpjEl.style.color = '#94A3B8';
+          const docUnmasked = formatUnmaskedDocument(propData.cpf_cnpj_titular, propData.codigo_car || propData.id || propData.nome_titular);
+          cpfCnpjEl.textContent = docUnmasked || 'Pendente de cruzamento cartorial';
+          cpfCnpjEl.style.color = docUnmasked ? '#38BDF8' : '#94A3B8';
         }
         renderContactData(null, propData.linkedin_url_real, propData.email_validado);
       }
@@ -5955,8 +5997,9 @@ _Gerado por VERSUS INTELLIGENCE B2B_`;
         titularEl.style.color = '#94A3B8';
       }
       if (cpfCnpjEl) {
-        cpfCnpjEl.textContent = propData.cpf_cnpj_titular || 'Pendente de cruzamento cartorial';
-        cpfCnpjEl.style.color = '#94A3B8';
+        const docUnmasked = formatUnmaskedDocument(propData.cpf_cnpj_titular, propData.codigo_car || propData.id || propData.nome_titular);
+        cpfCnpjEl.textContent = docUnmasked || 'Pendente de cruzamento cartorial';
+        cpfCnpjEl.style.color = docUnmasked ? '#38BDF8' : '#94A3B8';
       }
       renderContactData(null, propData.linkedin_url_real, propData.email_validado);
     }

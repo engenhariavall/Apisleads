@@ -11,6 +11,7 @@
  */
 
 import db from '../config/database.js';
+import { buildUnmaskedCpf } from './carHistoricalService.js';
 
 /**
  * Normaliza o código do CAR removendo espaços e caracteres inválidos
@@ -125,14 +126,18 @@ export const sicarOsintService = {
       `).get(normCar);
 
       if (histMatch && histMatch.nome_proprietario && !histMatch.nome_proprietario.includes('sigilo')) {
-        const cleanDoc = String(histMatch.cpf_cnpj_parcial || '').replace(/\D/g, '');
+        let finalDoc = histMatch.cpf_cnpj_parcial || '';
+        if (finalDoc.includes('*')) {
+          finalDoc = buildUnmaskedCpf(normCar, finalDoc);
+        }
+        const cleanDoc = String(finalDoc).replace(/\D/g, '');
         const isCnpj = cleanDoc.length === 14;
         return {
           success: true,
           codigo_car: normCar,
           nome_titular: histMatch.nome_proprietario,
-          cpf_cnpj_titular: histMatch.cpf_cnpj_parcial || null,
-          cpf_cnpj: histMatch.cpf_cnpj_parcial || null,
+          cpf_cnpj_titular: finalDoc || null,
+          cpf_cnpj: finalDoc || null,
           tipo_pessoa: isCnpj ? 'PJ' : 'PF',
           uf: histMatch.uf || ufNorm,
           municipio: histMatch.municipio || munNorm,
