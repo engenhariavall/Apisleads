@@ -3321,4 +3321,58 @@ Este documento rastreia de forma contínua, estruturada e duradoura todo o hist�
     - [ ] **Passo 4 (Deploy & Validação):** Atualizar VPS Hostinger, reiniciar cluster PM2 e validar visualmente a abertura do dossiê no mapa.
   - **Status:** ⏸️ **Pausado para retomada amanhã.** Causa identificada e plano 100% estruturado.
 
+- [x] **ITEM 3: INTEGRAÇÃO OFICIAL DA API ASSERTIVA v3 (OAUTH2 & LOCALIZE)**
+  - **Objetivo:** Conectar a API oficial da Assertiva com blindagem de credenciais, handshake sem consumo de créditos e espelhamento no padrão Localize V3.
+  - **Entregas Realizadas:**
+    - [x] **Segurança das Credenciais:** `ASSERTIVA_CLIENT_ID` e `ASSERTIVA_CLIENT_SECRET` salvos estritamente no `.env` (bloqueado no `.gitignore`), tanto localmente quanto na VPS.
+    - [x] **Handshake OAuth2 Validado:** Endpoint oficial `POST https://api.assertivasolucoes.com.br/oauth2/v3/token` respondendo com `HTTP 200 OK`, `token_type: bearer`, `expires_in: 1799` e `scope: ALL` sem consumir nenhum crédito de CPF.
+    - [x] **Endpoint Localize V3 Conforme Swagger:** Alinhado para `GET https://api.assertivasolucoes.com.br/localize/v3/cpf?cpf=...&idFinalidade=1` com o parâmetro de finalidade da LGPD.
+    - [x] **Mapeamento de Dados Reais:** Extração de telefones celulares, WhatsApp verificado, telefones fixos, dados cadastrais e endereços reais retornados pelo Localize V3.
+    - [x] **Trava de Custo Zero (Anti-Desperdício):** Cache em banco SQLite (`bureau_cache_consultas`) que impede requisições duplicadas e reaproveita consultas anteriores sem gastar créditos de API.
+    - [x] **Deploy na VPS:** Código comitado, sincronizado no GitHub e processo PM2 reiniciado na VPS (`179.236.237.116`).
+  - **Status:** ✅ Concluído e Validado em Produção (06/10/2026).
+
+---
+
+## 📅 PAUTA DE RETOMADA PARA AMANHÃ (07/10/2026): EXPORTAÇÃO CSV EM MASSA, PLANILHA COMERCIAL & FERRAMENTA LAÇO
+
+> 🎯 **Foco Central:** Ajustar a exportação em massa para descarregar o total de leads selecionados (sem limite de 50), organizar e alinhar as colunas da planilha Excel/CSV e sincronizar os contatos interceptados pelo Laço Livre com a Tabela Analítica.
+
+- [ ] **ITEM 1: CORREÇÃO DO LIMITE DE EXPORTAÇÃO CSV (DESCARGA DO TOTAL SELECIONADO)**
+  - **Diagnóstico:** Ao filtrar 1.083 contatos e clicar em "Selecionar Tudo (1.083)" / "Exportar CSV", o sistema gerou um arquivo com apenas 50 contatos (restringindo-se à página visível).
+  - **Solução a Aplicar:**
+    - Ajustar a lógica de exportação em `client/js/app.js` e na rota do backend para exportar todos os IDs contidos no conjunto `state.selectedLeadIds` e quando `state.selectAllFiltered` estiver ativo, buscando a lista completa no banco sem paginação (limite de 50 removido).
+
+- [ ] **ITEM 2: ALINHAMENTO E ESTRUTURAÇÃO COMPLETA DAS COLUNAS DO CSV (EXCEL)**
+  - **Diagnóstico:** A planilha gerada apresentou colunas deslocadas (coluna D com número solto, coluna E com hash, coluna F com texto cortado), dificultando a leitura humana no Excel.
+  - **Solução a Aplicar:**
+    - Padronizar o layout oficial do CSV com delimitador compatível com o Excel brasileiro (ponto e vírgula `;` ou aspas sanitizadas com UTF-8 BOM `\uFEFF`).
+    - Colunas obrigatórias e ordenadas:
+      1. `Nome do Produtor / Razão Social`
+      2. `Documento (CPF / CNPJ)`
+      3. `WhatsApp Validado`
+      4. `Telefone Alternativo / Fixo`
+      5. `Código CAR`
+      6. `Código SIGEF / INCRA`
+      7. `Nome do Imóvel / Fazenda`
+      8. `Município`
+      9. `UF`
+      10. `Área de Lavoura Útil (ha)`
+      11. `Cultura Principal (ex: Soja)`
+      12. `Máquina Estimada (Dimensionamento Agronômico)`
+      13. `Potencial Hídrico / Irrigação`
+      14. `Status Fundiário (Regular / GAP Cartorial)`
+      15. `Tier ICP (Tier A / B / C)`
+      16. `Momento de Compra (Score Intent)`
+
+- [ ] **ITEM 3: INTEGRAÇÃO DOS CONTATOS DA FERRAMENTA LAÇO LIVRE COM A TABELA ANALÍTICA**
+  - **Diagnóstico:** Quando o usuário desenha o polígono no mapa com o "Laço Livre", os contatos aparecem no Inspetor Fundiário lateral, mas a Tabela Analítica exibe "Sem contato" para algumas linhas e a exportação perde dados.
+  - **Solução a Aplicar:**
+    - Garantir que as propriedades rurais capturadas pelo polígono espacial do laço injetem seus telefones, nomes do titular e recibos do CAR diretamente na estrutura de dados da Tabela Analítica (`state.leads`) e no buffer de despacho.
+
+- [ ] **ITEM 4: SANEAMENTO DE REGISTROS COM PREFIXO "undefined" NO BANCO**
+  - **Diagnóstico:** Casos de nomes como `"undefined BATTISTI"` e `"undefined SCORTEGAGNA"` no CAR.
+  - **Solução a Aplicar:**
+    - Rodar script SQL de higienização no SQLite local e na VPS substituindo `"undefined "` pelo nome limpo e adicionando fallback no frontend.
+
 ---
