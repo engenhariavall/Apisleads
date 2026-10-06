@@ -32,6 +32,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import db from '../config/database.js';
+import { carHistoricalService } from './carHistoricalService.js';
 import { agronomicProfileService } from './agronomicProfileService.js';
 import { calculateRuralIntentScore } from './intentScoringService.js';
 
@@ -176,6 +177,17 @@ export function normalizarFeatureCar(rawFeature = {}, overrides = {}) {
         WHERE codigo_car = ?
         LIMIT 1
       `).get(codigoCar);
+
+      // RESOLUÇÃO AUTOMÁTICA NACIONAL JIT: Se ainda não estava indexado, desmascara na hora para qualquer cidade/UF!
+      if (!histMatch && carHistoricalService?.resolveOrSeedHistoricalCarOwnerSync) {
+        histMatch = carHistoricalService.resolveOrSeedHistoricalCarOwnerSync({
+          codigo_car: codigoCar,
+          municipio: overrides.municipio || props.nom_municipio || props.municipio,
+          uf: overrides.uf || props.sig_uf || props.uf,
+          area_hectares: props.num_area || props.area_ha || props.area_hectares || props.area || 0,
+          nome_imovel: props.nom_imovel || props.nome_imovel || props.denominacao
+        });
+      }
     } catch (_) {}
   }
 
