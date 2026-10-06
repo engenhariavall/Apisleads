@@ -739,14 +739,14 @@ export const bureauService = {
 
     const tenantId = options.tenantId || 'tenant-root-default';
 
-    // Se o usuário digitou texto (Nome, E-mail ou Razão Social), busca na base de dados para resolver o documento
+    // Se o usuário digitou texto (Nome, E-mail, Razão Social ou Imóvel do CAR), busca na base de dados para resolver o documento
     if (!isCpf && !isCnpj) {
       const searchStr = `%${String(rawDoc).trim()}%`;
       const matchedLead = db.prepare(`
         SELECT cnpj, cnpj_raw FROM leads
-        WHERE razao_social LIKE ? OR nome_fantasia LIKE ? OR email LIKE ? OR telefone LIKE ?
+        WHERE razao_social LIKE ? OR nome_fantasia LIKE ? OR email LIKE ? OR telefone LIKE ? OR decisor_nome LIKE ?
         LIMIT 1
-      `).get(searchStr, searchStr, searchStr, searchStr);
+      `).get(searchStr, searchStr, searchStr, searchStr, searchStr);
 
       if (matchedLead) {
         cleanDoc = String(matchedLead.cnpj_raw || matchedLead.cnpj).replace(/\D/g, '');
@@ -754,15 +754,39 @@ export const bureauService = {
         isCnpj = cleanDoc.length === 14;
       } else {
         const matchedProp = db.prepare(`
-          SELECT produtor_pf_cpf, nome_imovel FROM propriedades_rurais
-          WHERE produtor_pf_nome LIKE ? OR nome_imovel LIKE ?
+          SELECT produtor_pf_cpf, nome_imovel, cpf_cnpj_titular FROM propriedades_rurais
+          WHERE produtor_pf_nome LIKE ? OR nome_imovel LIKE ? OR nome_titular LIKE ? OR codigo_car LIKE ?
           LIMIT 1
-        `).get(searchStr, searchStr);
+        `).get(searchStr, searchStr, searchStr, searchStr);
 
-        if (matchedProp && matchedProp.produtor_pf_cpf) {
-          cleanDoc = String(matchedProp.produtor_pf_cpf).replace(/\D/g, '');
+        if (matchedProp && (matchedProp.produtor_pf_cpf || matchedProp.cpf_cnpj_titular)) {
+          cleanDoc = String(matchedProp.produtor_pf_cpf || matchedProp.cpf_cnpj_titular).replace(/\D/g, '');
           isCpf = cleanDoc.length === 11;
           isCnpj = cleanDoc.length === 14;
+        } else {
+          // Busca nos proprietários históricos e rurais do CAR
+          let matchedCar = db.prepare(`
+            SELECT codigo_car, nome_proprietario, cpf_cnpj_parcial, municipio, uf 
+            FROM car_proprietarios_historico
+            WHERE nome_proprietario LIKE ? OR nome_imovel_declarado LIKE ? OR codigo_car LIKE ?
+            LIMIT 1
+          `).get(searchStr, searchStr, searchStr);
+
+          // Se digitou os dígitos parciais do CPF (ex: 946655 ou ***.946.655-**)
+          if (!matchedCar && cleanDoc.length >= 6) {
+            matchedCar = db.prepare(`
+              SELECT codigo_car, nome_proprietario, cpf_cnpj_parcial, municipio, uf 
+              FROM car_proprietarios_historico
+              WHERE REPLACE(REPLACE(REPLACE(cpf_cnpj_parcial, '.', ''), '-', ''), '/', '') LIKE ?
+              LIMIT 1
+            `).get(`%${cleanDoc}%`);
+          }
+
+          if (matchedCar && matchedCar.cpf_cnpj_parcial) {
+            cleanDoc = String(matchedCar.cpf_cnpj_parcial).replace(/\D/g, '');
+            isCpf = cleanDoc.length === 11;
+            isCnpj = cleanDoc.length === 14;
+          }
         }
       }
     }
@@ -892,16 +916,18 @@ export const bureauService = {
       try {
         const hist = db.prepare(`
           SELECT * FROM car_proprietarios_historico
-          WHERE REPLACE(REPLACE(REPLACE(cpf_cnpj, '.', ''), '-', ''), '/', '') = ?
+          WHERE REPLACE(REPLACE(REPLACE(cpf_cnpj_parcial, '.', ''), '-', ''), '/', '') = ?
+             OR REPLACE(REPLACE(REPLACE(codigo_car, '.', ''), '-', ''), '/', '') = ?
           LIMIT 1
-        `).get(cleanDoc);
+        `).get(cleanDoc, cleanDoc);
         if (hist) {
           sefazProducerFallback = {
             produtor_pf_nome: hist.nome_proprietario,
             produtor_pf_cpf: cleanDoc,
             municipio: hist.municipio || 'PASSO FUNDO',
             uf: hist.uf || 'RS',
-            inscricao_estadual: null
+            inscricao_estadual: null,
+            nome_imovel: hist.nome_imovel_declarado
           };
         }
       } catch (_) {}
