@@ -552,8 +552,40 @@ sqliteDb.exec(`
     created_at TEXT DEFAULT CURRENT_TIMESTAMP
   );
   CREATE INDEX IF NOT EXISTS idx_bureau_comments_doc ON bureau_comments(documento);
+
+  -- FASE CAR HISTÓRICO: Tabela Espelho Pré-Maio/2023 de Titulares Rurais (SICAR Open Data)
+  CREATE TABLE IF NOT EXISTS car_proprietarios_historico (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    codigo_car TEXT UNIQUE NOT NULL,
+    nome_proprietario TEXT NOT NULL,
+    cpf_cnpj_parcial TEXT,
+    municipio TEXT NOT NULL,
+    uf TEXT NOT NULL DEFAULT 'RS',
+    condicao TEXT DEFAULT 'PROPRIETÁRIO',
+    area_hectares REAL DEFAULT 0,
+    matricula_declarada TEXT,
+    nome_imovel_declarado TEXT,
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    updated_at TEXT DEFAULT CURRENT_TIMESTAMP
+  );
+  CREATE INDEX IF NOT EXISTS idx_car_hist_codigo ON car_proprietarios_historico(codigo_car);
+  CREATE INDEX IF NOT EXISTS idx_car_hist_mun_uf ON car_proprietarios_historico(uf, municipio);
+  CREATE INDEX IF NOT EXISTS idx_car_hist_proprietario ON car_proprietarios_historico(nome_proprietario);
 `);
 
+try {
+  const carHistCols = sqliteDb.prepare("PRAGMA table_info(car_proprietarios_historico)").all();
+  if (carHistCols.length > 0) {
+    if (!carHistCols.some(c => c.name === 'nome_imovel_declarado')) {
+      sqliteDb.exec("ALTER TABLE car_proprietarios_historico ADD COLUMN nome_imovel_declarado TEXT DEFAULT NULL;");
+    }
+    if (!carHistCols.some(c => c.name === 'updated_at')) {
+      sqliteDb.exec("ALTER TABLE car_proprietarios_historico ADD COLUMN updated_at TEXT DEFAULT CURRENT_TIMESTAMP;");
+    }
+  }
+} catch (err) {
+  console.warn('Verificação de colunas car_proprietarios_historico:', err.message);
+}
 
 // Fase 44 Etapa 3 & Fase 49: Migração de Colunas de Enriquecimento OSINT e Agronômico em propriedades_rurais
 try {

@@ -2,7 +2,7 @@
   "type": "FeatureCollection",
   "name": "sigef_RS_PASSO_FUNDO",
   "total_features": 50,
-  "updated_at": "2026-09-29T18:02:27.848Z",
+  "updated_at": "2026-10-06T14:34:57.703Z",
   "features": [
     {
       "type": "Feature",
@@ -507,35 +507,16 @@
         "id_sigef": "50838517-ad49-4675-b7e8-c1221fede444",
         "codigo_imovel": "8710520320934",
         "nome_imovel": "AGROPECUARIA SANTA FÉ - GLEBA 1.4",
-        "nome_titular": "AGROPECUARIA SANTA FÉ LTDA",
-        "cpf_cnpj_titular": "92.040.002/0651-78",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 147.714 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 102.18,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.158620239669425,
-        "centroide_lng": -52.353666066115714,
-        "cnpj_raw": "92040002065178",
-        "razao_social": "AGROPECUARIA SANTA FÉ LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1890000,
-        "qsa": [
-          {
-            "nome": "Rodrigo Dall Agnol",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Fernanda Dall Agnol",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433167550",
-        "telefone": "(54) 3316-7550",
-        "email": "contato@agropecuariasantaf.agr.br"
+        "centroide_lng": -52.353666066115714
       }
     },
     {
@@ -745,35 +726,16 @@
         "id_sigef": "c11898a9-e07c-416b-83eb-25b2f79b3112",
         "codigo_imovel": "8710520455430",
         "nome_imovel": "Matricula 41351 - Parte 1",
-        "nome_titular": "MATRICULA 41351 LTDA",
-        "cpf_cnpj_titular": "92.040.002/0788-22",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 152.683 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 16.96,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.196420170212768,
-        "centroide_lng": -52.392166276595745,
-        "cnpj_raw": "92040002078822",
-        "razao_social": "MATRICULA 41351 LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Guilherme Augusto Tedesco",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Tatiana Tedesco",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433167587",
-        "telefone": "(54) 3316-7587",
-        "email": "contato@matricula41351.agr.br"
+        "centroide_lng": -52.392166276595745
       }
     },
     {
@@ -2567,35 +2529,16 @@
         "id_sigef": "561b0ddc-12a0-4d79-a1c7-d2173f7023d0",
         "codigo_imovel": "8710520218730",
         "nome_imovel": "Fazenda Nossa Senhora Aparecida - Parte 1",
-        "nome_titular": "FAZENDA NOSSA SENHORA APARECIDA S.A.",
-        "cpf_cnpj_titular": "92.040.002/0925-74",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 65373 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 573.26,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.221547022573358,
-        "centroide_lng": -52.336603927765246,
-        "cnpj_raw": "92040002092574",
-        "razao_social": "FAZENDA NOSSA SENHORA APARECIDA S.A.",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 10610000,
-        "qsa": [
-          {
-            "nome": "Cláudio Roberto Scortegagna",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Vanessa Scortegagna",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433167624",
-        "telefone": "(54) 3316-7624",
-        "email": "contato@fazendanossasenhoraaparecida.agr.br"
+        "centroide_lng": -52.336603927765246
       }
     },
     {
@@ -2657,35 +2600,16 @@
         "id_sigef": "717f8d39-6fde-4323-8030-8a33aa465b36",
         "codigo_imovel": "9501819913686",
         "nome_imovel": "SEM DENOMINAÇÃO - Parte 1",
-        "nome_titular": "AGROPECUARIA SERRA DOURADA LTDA",
-        "cpf_cnpj_titular": "92.040.002/1062-06",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 110.380 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 7.88,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.329710799999997,
-        "centroide_lng": -52.398622599999996,
-        "cnpj_raw": "92040002106206",
-        "razao_social": "AGROPECUARIA SERRA DOURADA LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Mauro Cézar Zaffari",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Luciana Zaffari",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433167661",
-        "telefone": "(54) 3316-7661",
-        "email": "contato@agropecuariaserradourada.agr.br"
+        "centroide_lng": -52.398622599999996
       }
     },
     {
@@ -2743,35 +2667,16 @@
         "id_sigef": "980323d7-c50b-404d-938b-301955f976df",
         "codigo_imovel": "8710520398615",
         "nome_imovel": "SDE - GLEBA B",
-        "nome_titular": "SDE GLEBA B LTDA",
-        "cpf_cnpj_titular": "92.040.002/1199-52",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 149.960 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 0.77,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.369979777777772,
-        "centroide_lng": -52.387210444444456,
-        "cnpj_raw": "92040002119952",
-        "razao_social": "SDE GLEBA B LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Valter Luiz Rizzardi",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Carla Rizzardi",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433167698",
-        "telefone": "(54) 3316-7698",
-        "email": "contato@sdeglebab.agr.br"
+        "centroide_lng": -52.387210444444456
       }
     },
     {
@@ -3145,35 +3050,16 @@
         "id_sigef": "b00dd5a2-506f-49f7-91d1-4b10fa9485f6",
         "codigo_imovel": "8710520247595",
         "nome_imovel": "CENTRO DE PESQUISAS AGRONÔMICAS - MAT-103227",
-        "nome_titular": "CENTRO DE PESQUISAS AGRONÔMICAS LTDA",
-        "cpf_cnpj_titular": "92.040.002/1336-02",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 103227,38227 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 169.79,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.227406943181816,
-        "centroide_lng": -52.39308009090908,
-        "cnpj_raw": "92040002133602",
-        "razao_social": "CENTRO DE PESQUISAS AGRONÔMICAS LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 3140000,
-        "qsa": [
-          {
-            "nome": "Otávio Augusto Canabarro",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Letícia Canabarro",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433167735",
-        "telefone": "(54) 3316-7735",
-        "email": "contato@centrodepesquisasagronmicas.agr.br"
+        "centroide_lng": -52.39308009090908
       }
     },
     {
@@ -3411,35 +3297,16 @@
         "id_sigef": "bbef2dec-2cdd-40a3-8096-5c4aac1cbd93",
         "codigo_imovel": "8710520071616",
         "nome_imovel": "SDE - Parte 1",
-        "nome_titular": "AGROINDUSTRIAL CAMPO LIMPO LTDA",
-        "cpf_cnpj_titular": "92.040.002/1473-01",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 152.887 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 24.67,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.361047259259266,
-        "centroide_lng": -52.323943481481464,
-        "cnpj_raw": "92040002147301",
-        "razao_social": "AGROINDUSTRIAL CAMPO LIMPO LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Ricardo Luís Meneguzzi",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Sandra Meneguzzi",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433167772",
-        "telefone": "(54) 3316-7772",
-        "email": "contato@agroindustrialcampolimpo.agr.br"
+        "centroide_lng": -52.323943481481464
       }
     },
     {
@@ -3689,35 +3556,16 @@
         "id_sigef": "732ad60f-7057-4212-80d3-e7acf3319f08",
         "codigo_imovel": "8710520321078",
         "nome_imovel": "FAZENDA ALVORADA IG - Gleba 4",
-        "nome_titular": "FAZENDA ALVORADA IG LTDA",
-        "cpf_cnpj_titular": "92.040.002/1610-53",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 129.936 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 51.42,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.168251140350883,
-        "centroide_lng": -52.354606526315806,
-        "cnpj_raw": "92040002161053",
-        "razao_social": "FAZENDA ALVORADA IG LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Bernardo Della Mea",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Giovana Della Mea",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433167809",
-        "telefone": "(54) 3316-7809",
-        "email": "contato@fazendaalvoradaig.agr.br"
+        "centroide_lng": -52.354606526315806
       }
     },
     {
@@ -3783,35 +3631,16 @@
         "id_sigef": "52a8b6a8-ede5-4801-aa24-bdf217681263",
         "codigo_imovel": "8710520215472",
         "nome_imovel": "Fazenda Paiquere - Fazenda Paiquere – 1",
-        "nome_titular": "FAZENDA PAIQUERE FAZENDA PAIQUERE 1 LTDA",
-        "cpf_cnpj_titular": "92.040.002/1747-08",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 132.421 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 3.98,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.22217790909091,
-        "centroide_lng": -52.379638909090914,
-        "cnpj_raw": "92040002174708",
-        "razao_social": "FAZENDA PAIQUERE FAZENDA PAIQUERE 1 LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Felipe Antônio Rubin",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Larissa Rubin",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433167846",
-        "telefone": "(54) 3316-7846",
-        "email": "contato@fazendapaiquerefazendapaiquere1.agr.br"
+        "centroide_lng": -52.379638909090914
       }
     },
     {
@@ -3981,35 +3810,16 @@
         "id_sigef": "3b722636-cc5d-4088-b6ad-e31e2600bfe8",
         "codigo_imovel": "8710520222924",
         "nome_imovel": "MATRÍCULA 2014 - Matrícula 2.014",
-        "nome_titular": ".014 LTDA",
-        "cpf_cnpj_titular": "92.040.002/1884-15",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 136.493 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 21.96,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.341873405405405,
-        "centroide_lng": -52.46050370270271,
-        "cnpj_raw": "92040002188415",
-        "razao_social": ".014 LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Henrique Dornelles",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Carolina Dornelles",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433167883",
-        "telefone": "(54) 3316-7883",
-        "email": "contato@014.agr.br"
+        "centroide_lng": -52.46050370270271
       }
     },
     {
@@ -4315,35 +4125,16 @@
         "id_sigef": "ee83ef45-2e89-47cb-a153-96b363696986",
         "codigo_imovel": "8710520068232",
         "nome_imovel": "Sem denominação -",
-        "nome_titular": "AGROPECUARIA RIO BRANCO LTDA",
-        "cpf_cnpj_titular": "92.040.002/2021-83",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 149722 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 10.02,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.322871521126753,
-        "centroide_lng": -52.343834112676035,
-        "cnpj_raw": "92040002202183",
-        "razao_social": "AGROPECUARIA RIO BRANCO LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Carlos Alberto Fontana",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Mariana Fontana",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433167920",
-        "telefone": "(54) 3316-7920",
-        "email": "contato@agropecuariariobranco.agr.br"
+        "centroide_lng": -52.343834112676035
       }
     },
     {
@@ -4469,35 +4260,16 @@
         "id_sigef": "87ae4304-1e02-4802-b58b-c6f614be25b8",
         "codigo_imovel": "9502381010366",
         "nome_imovel": "USUCAPIÃO – MARLENE - Parte 1",
-        "nome_titular": "USUCAPIÃO MARLENE LTDA",
-        "cpf_cnpj_titular": "92.040.002/2158-38",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 151.399 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 22.51,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.16195092307692,
-        "centroide_lng": -52.513147576923075,
-        "cnpj_raw": "92040002215838",
-        "razao_social": "USUCAPIÃO MARLENE LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Eduardo Grazziotin",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Patrícia Grazziotin",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433167957",
-        "telefone": "(54) 3316-7957",
-        "email": "contato@usucapiomarlene.agr.br"
+        "centroide_lng": -52.513147576923075
       }
     },
     {
@@ -4579,35 +4351,16 @@
         "id_sigef": "1e57fae1-5e9b-4dc7-b977-1e90f8fa41da",
         "codigo_imovel": "0000355180778",
         "nome_imovel": "SDE - SDE",
-        "nome_titular": "SDE SDE LTDA",
-        "cpf_cnpj_titular": "92.040.002/2295-45",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 129.880 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 9.04,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.18892486666667,
-        "centroide_lng": -52.54686340000001,
-        "cnpj_raw": "92040002229545",
-        "razao_social": "SDE SDE LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Fernando Silveira",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Roberto Silveira",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433167994",
-        "telefone": "(54) 3316-7994",
-        "email": "contato@sdesde.agr.br"
+        "centroide_lng": -52.54686340000001
       }
     },
     {
@@ -4685,35 +4438,16 @@
         "id_sigef": "e6be5e87-d2e5-4980-a18d-0f7dcf683b23",
         "codigo_imovel": "8711090049014",
         "nome_imovel": "SDE - Parte 1",
-        "nome_titular": "AGROPECUARIA SANTO ANTONIO LTDA",
-        "cpf_cnpj_titular": "92.040.002/2432-97",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 113.214 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 8.93,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.33304478571429,
-        "centroide_lng": -52.50427392857143,
-        "cnpj_raw": "92040002243297",
-        "razao_social": "AGROPECUARIA SANTO ANTONIO LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Gilberto Estrela",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Helena Estrela",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433168031",
-        "telefone": "(54) 3316-8031",
-        "email": "contato@agropecuariasantoantonio.agr.br"
+        "centroide_lng": -52.50427392857143
       }
     },
     {
@@ -4763,35 +4497,16 @@
         "id_sigef": "8b7e284c-0d73-4376-b088-ec4987364d8b",
         "codigo_imovel": "9500509669401",
         "nome_imovel": "SDE - Única",
-        "nome_titular": "SDE ÚNICA LTDA",
-        "cpf_cnpj_titular": "92.040.002/2569-41",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 146.778 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 21.05,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.317183857142858,
-        "centroide_lng": -52.33478057142856,
-        "cnpj_raw": "92040002256941",
-        "razao_social": "SDE ÚNICA LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Paulo Renato Laimer",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Juliana Laimer",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433168068",
-        "telefone": "(54) 3316-8068",
-        "email": "contato@sdenica.agr.br"
+        "centroide_lng": -52.33478057142856
       }
     },
     {
@@ -4845,35 +4560,16 @@
         "id_sigef": "02988ea7-8e14-4170-82a5-84d1f2812056",
         "codigo_imovel": "8710520326037",
         "nome_imovel": "Fazenda Potreiro Grande - Parte 1",
-        "nome_titular": "FAZENDA POTREIRO GRANDE LTDA",
-        "cpf_cnpj_titular": "92.040.002/2706-93",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 5549 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 10.03,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.156122875,
-        "centroide_lng": -52.379364499999994,
-        "cnpj_raw": "92040002270693",
-        "razao_social": "FAZENDA POTREIRO GRANDE LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Marcos Vinicius Witte",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Renata Witte",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433168105",
-        "telefone": "(54) 3316-8105",
-        "email": "contato@fazendapotreirogrande.agr.br"
+        "centroide_lng": -52.379364499999994
       }
     },
     {
@@ -4959,35 +4655,16 @@
         "id_sigef": "5af3f15c-149a-4542-9120-75c9624abd7e",
         "codigo_imovel": "8710520189455",
         "nome_imovel": "FAZENDA SÃO JOSÉ I - Parte 1",
-        "nome_titular": "FAZENDA SÃO JOSÉ I LTDA",
-        "cpf_cnpj_titular": "92.040.002/2843-09",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 148.044 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 26.22,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.208139187499995,
-        "centroide_lng": -52.5149475,
-        "cnpj_raw": "92040002284309",
-        "razao_social": "FAZENDA SÃO JOSÉ I LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "José Francisco Gehn",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Beatriz Gehn",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433168142",
-        "telefone": "(54) 3316-8142",
-        "email": "contato@fazendasojosi.agr.br"
+        "centroide_lng": -52.5149475
       }
     },
     {
@@ -5513,35 +5190,16 @@
         "id_sigef": "deadba87-b8e2-41a4-9b60-cdd9b4661e93",
         "codigo_imovel": "9999386717460",
         "nome_imovel": "SDE - Parte 1",
-        "nome_titular": "AGROPECUARIA SERRA DOURADA LTDA",
-        "cpf_cnpj_titular": "92.040.002/2980-08",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 5229 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 96.16,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.17706281746034,
-        "centroide_lng": -52.372435634920656,
-        "cnpj_raw": "92040002298008",
-        "razao_social": "AGROPECUARIA SERRA DOURADA LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1780000,
-        "qsa": [
-          {
-            "nome": "Antônio Carlos Sebben",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Clara Sebben",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433168179",
-        "telefone": "(54) 3316-8179",
-        "email": "contato@agropecuariaserradourada.agr.br"
+        "centroide_lng": -52.372435634920656
       }
     },
     {
@@ -5715,35 +5373,16 @@
         "id_sigef": "e4bb180a-564d-4f6e-a6fe-4d596cfed636",
         "codigo_imovel": "8710520331898",
         "nome_imovel": "Campo do Valinho - Valinho RIO",
-        "nome_titular": "CAMPO DO VALINHO VALINHO RIO LTDA",
-        "cpf_cnpj_titular": "92.040.002/3117-13",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 24966 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 26.7,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.210028526315778,
-        "centroide_lng": -52.45799907894737,
-        "cnpj_raw": "92040002311713",
-        "razao_social": "CAMPO DO VALINHO VALINHO RIO LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Luiz Henrique Biazus",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Camila Biazus",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433168216",
-        "telefone": "(54) 3316-8216",
-        "email": "contato@campodovalinhovalinhorio.agr.br"
+        "centroide_lng": -52.45799907894737
       }
     },
     {
@@ -5829,35 +5468,16 @@
         "id_sigef": "b809e3cc-380a-42fb-85cb-5ce6172ab4c9",
         "codigo_imovel": "8710520320934",
         "nome_imovel": "SDE - GLEBA A",
-        "nome_titular": "SDE GLEBA A LTDA",
-        "cpf_cnpj_titular": "92.040.002/3254-20",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 147716 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 21.06,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.1637471875,
-        "centroide_lng": -52.35793249999999,
-        "cnpj_raw": "92040002325420",
-        "razao_social": "SDE GLEBA A LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Sérgio Murilo Trevisan",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Aline Trevisan",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433168253",
-        "telefone": "(54) 3316-8253",
-        "email": "contato@sdeglebaa.agr.br"
+        "centroide_lng": -52.35793249999999
       }
     },
     {
@@ -5939,35 +5559,16 @@
         "id_sigef": "0fbdb1b3-9999-4740-9dd2-68a797c47562",
         "codigo_imovel": "8711090049014",
         "nome_imovel": "INOMINADA - Parte 1",
-        "nome_titular": "AGROINDUSTRIAL CAMPO LIMPO LTDA",
-        "cpf_cnpj_titular": "92.040.002/3391-38",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 152.650 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 8.8,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.339564666666668,
-        "centroide_lng": -52.508541,
-        "cnpj_raw": "92040002339138",
-        "razao_social": "AGROINDUSTRIAL CAMPO LIMPO LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Rodrigo Dall Agnol",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Fernanda Dall Agnol",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433168290",
-        "telefone": "(54) 3316-8290",
-        "email": "contato@agroindustrialcampolimpo.agr.br"
+        "centroide_lng": -52.508541
       }
     },
     {
@@ -6029,35 +5630,16 @@
         "id_sigef": "79b11878-61b3-4e87-98c2-9a97d4f7d507",
         "codigo_imovel": "8710520503770",
         "nome_imovel": "SDE - Parte 3",
-        "nome_titular": "AGROPECUARIA OURO VERDE LTDA",
-        "cpf_cnpj_titular": "92.040.002/3528-27",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 131588 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 3.15,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.230361999999996,
-        "centroide_lng": -52.4920006,
-        "cnpj_raw": "92040002352827",
-        "razao_social": "AGROPECUARIA OURO VERDE LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Guilherme Augusto Tedesco",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Tatiana Tedesco",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433168327",
-        "telefone": "(54) 3316-8327",
-        "email": "contato@agropecuariaouroverde.agr.br"
+        "centroide_lng": -52.4920006
       }
     },
     {
@@ -6167,35 +5749,16 @@
         "id_sigef": "271609e3-468c-4801-b9b7-6a9fd5189b77",
         "codigo_imovel": "9500685042385",
         "nome_imovel": "Vista Alegre - Vista Alegre",
-        "nome_titular": "VISTA ALEGRE VISTA ALEGRE LTDA",
-        "cpf_cnpj_titular": "92.040.002/3665-34",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 3529 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 16.54,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.280495409090904,
-        "centroide_lng": -52.332793954545444,
-        "cnpj_raw": "92040002366534",
-        "razao_social": "VISTA ALEGRE VISTA ALEGRE LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Cláudio Roberto Scortegagna",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Vanessa Scortegagna",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433168364",
-        "telefone": "(54) 3316-8364",
-        "email": "contato@vistaalegrevistaalegre.agr.br"
+        "centroide_lng": -52.332793954545444
       }
     },
     {
@@ -6321,35 +5884,16 @@
         "id_sigef": "67ae1381-7e69-4563-90a9-5800911b91f3",
         "codigo_imovel": "8600340410412",
         "nome_imovel": "Propriedade de Juarez Laimer - Perímetro",
-        "nome_titular": "PROPRIEDADE DE JUAREZ LAIMER LTDA",
-        "cpf_cnpj_titular": "92.040.002/3802-86",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 2909 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 4.81,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.318120384615387,
-        "centroide_lng": -52.394694269230776,
-        "cnpj_raw": "92040002380286",
-        "razao_social": "PROPRIEDADE DE JUAREZ LAIMER LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Mauro Cézar Zaffari",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Luciana Zaffari",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433168401",
-        "telefone": "(54) 3316-8401",
-        "email": "contato@propriedadedejuarezlaimer.agr.br"
+        "centroide_lng": -52.394694269230776
       }
     },
     {
@@ -6411,35 +5955,16 @@
         "id_sigef": "7666dcaa-4697-44af-891e-d5e028e42060",
         "codigo_imovel": "9510305223507",
         "nome_imovel": "Posse Witte - Posse Witte",
-        "nome_titular": "POSSE WITTE POSSE WITTE LTDA",
-        "cpf_cnpj_titular": "92.040.002/3939-30",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": null,
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 1.24,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.3323532,
-        "centroide_lng": -52.493729300000005,
-        "cnpj_raw": "92040002393930",
-        "razao_social": "POSSE WITTE POSSE WITTE LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Valter Luiz Rizzardi",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Carla Rizzardi",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433168438",
-        "telefone": "(54) 3316-8438",
-        "email": "contato@possewittepossewitte.agr.br"
+        "centroide_lng": -52.493729300000005
       }
     },
     {
@@ -6493,35 +6018,16 @@
         "id_sigef": "ba21883b-3410-4b8e-a1cc-fa7eca2f6929",
         "codigo_imovel": "9510992254018",
         "nome_imovel": "SEM DENOMINAÇÃO - GLEBA A",
-        "nome_titular": "AGROINDUSTRIAL SÃO PEDRO LTDA",
-        "cpf_cnpj_titular": "92.040.002/4076-64",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 136.016 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 4.49,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.316348,
-        "centroide_lng": -52.332601625,
-        "cnpj_raw": "92040002407664",
-        "razao_social": "AGROINDUSTRIAL SÃO PEDRO LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Otávio Augusto Canabarro",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Letícia Canabarro",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433168475",
-        "telefone": "(54) 3316-8475",
-        "email": "contato@agroindustrialsopedro.agr.br"
+        "centroide_lng": -52.332601625
       }
     },
     {
@@ -6623,35 +6129,16 @@
         "id_sigef": "3e46fa1a-bdff-4934-becb-c536f5059f33",
         "codigo_imovel": "8710520059080",
         "nome_imovel": "Sem denominação - Parte 1",
-        "nome_titular": "AGROPECUARIA BELA VISTA LTDA",
-        "cpf_cnpj_titular": "92.040.002/4213-06",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 147709 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 7.02,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.32862685,
-        "centroide_lng": -52.335561299999995,
-        "cnpj_raw": "92040002421306",
-        "razao_social": "AGROPECUARIA BELA VISTA LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Ricardo Luís Meneguzzi",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Sandra Meneguzzi",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433168512",
-        "telefone": "(54) 3316-8512",
-        "email": "contato@agropecuariabelavista.agr.br"
+        "centroide_lng": -52.335561299999995
       }
     },
     {
@@ -6805,35 +6292,16 @@
         "id_sigef": "7cec3370-5fc8-4800-8a54-4e8bad697760",
         "codigo_imovel": "8710520263108",
         "nome_imovel": "Passo da Raiz - Gleba 4",
-        "nome_titular": "PASSO DA RAIZ LTDA",
-        "cpf_cnpj_titular": "92.040.002/4350-13",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 148.769 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 121.31,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.28533336363636,
-        "centroide_lng": -52.50417942424241,
-        "cnpj_raw": "92040002435013",
-        "razao_social": "PASSO DA RAIZ LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 2240000,
-        "qsa": [
-          {
-            "nome": "Bernardo Della Mea",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Giovana Della Mea",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433168549",
-        "telefone": "(54) 3316-8549",
-        "email": "contato@passodaraiz.agr.br"
+        "centroide_lng": -52.50417942424241
       }
     },
     {
@@ -6879,35 +6347,16 @@
         "id_sigef": "323b5263-d21c-4c54-9f5e-572bf853d2c5",
         "codigo_imovel": "9500336250949",
         "nome_imovel": "SÃO JOÃO DA BELA VISTA - .",
-        "nome_titular": "SÃO JOÃO DA BELA VISTA . LTDA",
-        "cpf_cnpj_titular": "92.040.002/4487-78",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 154.532 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 6.02,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.33018366666667,
-        "centroide_lng": -52.34003233333333,
-        "cnpj_raw": "92040002448778",
-        "razao_social": "SÃO JOÃO DA BELA VISTA . LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Felipe Antônio Rubin",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Larissa Rubin",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433168586",
-        "telefone": "(54) 3316-8586",
-        "email": "contato@sojoodabelavista.agr.br"
+        "centroide_lng": -52.34003233333333
       }
     },
     {
@@ -7005,35 +6454,16 @@
         "id_sigef": "8eb624f6-d79f-414a-8b17-7a63e1ee8804",
         "codigo_imovel": "8710520408866",
         "nome_imovel": "Chácara das Edras - Matrícula 4.168",
-        "nome_titular": "CHÁCARA DAS EDRAS .168 LTDA",
-        "cpf_cnpj_titular": "92.040.002/4624-10",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 4168 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 3.73,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.298142315789477,
-        "centroide_lng": -52.4359687368421,
-        "cnpj_raw": "92040002462410",
-        "razao_social": "CHÁCARA DAS EDRAS .168 LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Henrique Dornelles",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Carolina Dornelles",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433168623",
-        "telefone": "(54) 3316-8623",
-        "email": "contato@chcaradasedras168.agr.br"
+        "centroide_lng": -52.4359687368421
       }
     },
     {
@@ -7235,35 +6665,16 @@
         "id_sigef": "95e2a090-2ece-4e57-9e9b-a80ac0627d07",
         "codigo_imovel": "8710520455198",
         "nome_imovel": "GRANJA DESCANSO - Parcela 1",
-        "nome_titular": "GRANJA DESCANSO LTDA",
-        "cpf_cnpj_titular": "92.040.002/4761-27",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 13122 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 78.86,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.362577044444443,
-        "centroide_lng": -52.49386740000002,
-        "cnpj_raw": "92040002476127",
-        "razao_social": "GRANJA DESCANSO LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1460000,
-        "qsa": [
-          {
-            "nome": "Carlos Alberto Fontana",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Mariana Fontana",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433168660",
-        "telefone": "(54) 3316-8660",
-        "email": "contato@granjadescanso.agr.br"
+        "centroide_lng": -52.49386740000002
       }
     },
     {
@@ -7701,35 +7112,16 @@
         "id_sigef": "61cdf8fd-e6fe-4c21-930b-3f9bb632cb46",
         "codigo_imovel": "8710520455007",
         "nome_imovel": "GRANJA SÃO SEBASTIÃO - Parte 2",
-        "nome_titular": "GRANJA SÃO SEBASTIÃO LTDA",
-        "cpf_cnpj_titular": "92.040.002/4898-81",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 138.194 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 24.45,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.370163855769224,
-        "centroide_lng": -52.514402798076944,
-        "cnpj_raw": "92040002489881",
-        "razao_social": "GRANJA SÃO SEBASTIÃO LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Eduardo Grazziotin",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Patrícia Grazziotin",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433168697",
-        "telefone": "(54) 3316-8697",
-        "email": "contato@granjasosebastio.agr.br"
+        "centroide_lng": -52.514402798076944
       }
     },
     {
@@ -7771,35 +7163,16 @@
         "id_sigef": "9f778ccf-8525-4e24-bc3a-d3645f6360d0",
         "codigo_imovel": "9502706174409",
         "nome_imovel": "SDE - GLEBA D",
-        "nome_titular": "SDE GLEBA D LTDA",
-        "cpf_cnpj_titular": "92.040.002/5035-40",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 154.268 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 2.03,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.323936600000003,
-        "centroide_lng": -52.360743,
-        "cnpj_raw": "92040002503540",
-        "razao_social": "SDE GLEBA D LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Fernando Silveira",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Roberto Silveira",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433168734",
-        "telefone": "(54) 3316-8734",
-        "email": "contato@sdeglebad.agr.br"
+        "centroide_lng": -52.360743
       }
     },
     {
@@ -7905,35 +7278,16 @@
         "id_sigef": "cd248048-8d44-4e9f-9138-744d81bfa754",
         "codigo_imovel": "8710520503770",
         "nome_imovel": "GLEBA A - PARCELA 4",
-        "nome_titular": "GLEBA A LTDA",
-        "cpf_cnpj_titular": "92.040.002/5172-57",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 151585 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 2.71,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.23352204761904,
-        "centroide_lng": -52.499165666666656,
-        "cnpj_raw": "92040002517257",
-        "razao_social": "GLEBA A LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Gilberto Estrela",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Helena Estrela",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433168771",
-        "telefone": "(54) 3316-8771",
-        "email": "contato@glebaa.agr.br"
+        "centroide_lng": -52.499165666666656
       }
     },
     {
@@ -7971,35 +7325,16 @@
         "id_sigef": "b5a596de-54cc-4fc3-b057-946ea45d152b",
         "codigo_imovel": "0000355180344",
         "nome_imovel": "SDE - Parte 1",
-        "nome_titular": "AGROINDUSTRIAL CAMPO LIMPO LTDA",
-        "cpf_cnpj_titular": "92.040.002/5309-46",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 58254 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 4.27,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.254668499999998,
-        "centroide_lng": -52.47898725,
-        "cnpj_raw": "92040002530946",
-        "razao_social": "AGROINDUSTRIAL CAMPO LIMPO LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Paulo Renato Laimer",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Juliana Laimer",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433168808",
-        "telefone": "(54) 3316-8808",
-        "email": "contato@agroindustrialcampolimpo.agr.br"
+        "centroide_lng": -52.47898725
       }
     },
     {
@@ -8041,35 +7376,16 @@
         "id_sigef": "37e713f9-54f5-44a6-857c-763ae54bff74",
         "codigo_imovel": "9501067340045",
         "nome_imovel": "SEM DENOMINAÇÃO - Parte 1",
-        "nome_titular": "AGROPECUARIA OURO VERDE LTDA",
-        "cpf_cnpj_titular": "92.040.002/5446-53",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 133491 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 2.11,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.246374199999998,
-        "centroide_lng": -52.5300028,
-        "cnpj_raw": "92040002544653",
-        "razao_social": "AGROPECUARIA OURO VERDE LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Marcos Vinicius Witte",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Renata Witte",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433168845",
-        "telefone": "(54) 3316-8845",
-        "email": "contato@agropecuariaouroverde.agr.br"
+        "centroide_lng": -52.5300028
       }
     },
     {
@@ -8107,35 +7423,16 @@
         "id_sigef": "759e294a-46c3-40a6-b2da-15e973bec309",
         "codigo_imovel": "8710520456402",
         "nome_imovel": "SÃO MIGUEL - GLEBA B1",
-        "nome_titular": "SÃO MIGUEL GLEBA B1 LTDA",
-        "cpf_cnpj_titular": "92.040.002/5583-60",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 138316 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 2.01,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.25385525,
-        "centroide_lng": -52.47485775,
-        "cnpj_raw": "92040002558360",
-        "razao_social": "SÃO MIGUEL GLEBA B1 LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "José Francisco Gehn",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Beatriz Gehn",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433168882",
-        "telefone": "(54) 3316-8882",
-        "email": "contato@somiguelglebab1.agr.br"
+        "centroide_lng": -52.47485775
       }
     },
     {
@@ -8205,35 +7502,16 @@
         "id_sigef": "a3bb5161-01b6-4979-a220-7ef25a3e64ca",
         "codigo_imovel": "8600340404609",
         "nome_imovel": "SDE - GLEBA C",
-        "nome_titular": "SDE GLEBA C LTDA",
-        "cpf_cnpj_titular": "92.040.002/5720-02",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 128673; 1476 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 16.82,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.265757000000004,
-        "centroide_lng": -52.546426000000004,
-        "cnpj_raw": "92040002572002",
-        "razao_social": "SDE GLEBA C LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Antônio Carlos Sebben",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Clara Sebben",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433168919",
-        "telefone": "(54) 3316-8919",
-        "email": "contato@sdeglebac.agr.br"
+        "centroide_lng": -52.546426000000004
       }
     },
     {
@@ -9631,35 +8909,16 @@
         "id_sigef": "b175fa7e-7607-41e7-92e1-641d5658f71d",
         "codigo_imovel": "8710520232644",
         "nome_imovel": "Clara Gehn e Outros - Clara Gehn e Outros",
-        "nome_titular": "CLARA GEHN E OUTROS CLARA GEHN E OUTROS S.A.",
-        "cpf_cnpj_titular": "92.040.002/5857-67",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 5068 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 542.45,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.1887728982558,
-        "centroide_lng": -52.43418586046514,
-        "cnpj_raw": "92040002585767",
-        "razao_social": "CLARA GEHN E OUTROS CLARA GEHN E OUTROS S.A.",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 10040000,
-        "qsa": [
-          {
-            "nome": "Luiz Henrique Biazus",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Camila Biazus",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433168956",
-        "telefone": "(54) 3316-8956",
-        "email": "contato@claragehneoutrosclaragehneoutros.agr.br"
+        "centroide_lng": -52.43418586046514
       }
     },
     {
@@ -9781,35 +9040,16 @@
         "id_sigef": "66fe6a5c-b32e-4913-8e36-fe34fa368492",
         "codigo_imovel": "9501570759061",
         "nome_imovel": "Matrícula 148.164 -",
-        "nome_titular": ".164 LTDA",
-        "cpf_cnpj_titular": "92.040.002/5994-74",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 148.164 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 14.01,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.321684760000004,
-        "centroide_lng": -52.39026432000001,
-        "cnpj_raw": "92040002599474",
-        "razao_social": ".164 LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Sérgio Murilo Trevisan",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Aline Trevisan",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433168993",
-        "telefone": "(54) 3316-8993",
-        "email": "contato@164.agr.br"
+        "centroide_lng": -52.39026432000001
       }
     },
     {
@@ -9923,35 +9163,16 @@
         "id_sigef": "ff5f759c-67a3-4548-b2db-2190e32944d3",
         "codigo_imovel": "9501658696787",
         "nome_imovel": "SDE - Parte 1",
-        "nome_titular": "AGROPECUARIA BELA VISTA LTDA",
-        "cpf_cnpj_titular": "92.040.002/6131-32",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 158.236 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 23.27,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.297034217391303,
-        "centroide_lng": -52.45605108695653,
-        "cnpj_raw": "92040002613132",
-        "razao_social": "AGROPECUARIA BELA VISTA LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Rodrigo Dall Agnol",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Fernanda Dall Agnol",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433169030",
-        "telefone": "(54) 3316-9030",
-        "email": "contato@agropecuariabelavista.agr.br"
+        "centroide_lng": -52.45605108695653
       }
     },
     {
@@ -9997,35 +9218,16 @@
         "id_sigef": "704a441d-2a51-4cc7-8c20-47c9ee92e462",
         "codigo_imovel": "8710520263108",
         "nome_imovel": "Passo da Raiz - Gleba 7",
-        "nome_titular": "PASSO DA RAIZ LTDA",
-        "cpf_cnpj_titular": "92.040.002/6268-97",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 1582 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 1.21,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.286959833333338,
-        "centroide_lng": -52.50306533333333,
-        "cnpj_raw": "92040002626897",
-        "razao_social": "PASSO DA RAIZ LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Guilherme Augusto Tedesco",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Tatiana Tedesco",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433169067",
-        "telefone": "(54) 3316-9067",
-        "email": "contato@passodaraiz.agr.br"
+        "centroide_lng": -52.50306533333333
       }
     },
     {
@@ -10251,35 +9453,16 @@
         "id_sigef": "dd8f311c-cb7b-4ee0-a4ad-51b297d0dce4",
         "codigo_imovel": "9500503401970",
         "nome_imovel": "Dolce Villa - Parte 1",
-        "nome_titular": "DOLCE VILLA LTDA",
-        "cpf_cnpj_titular": "92.040.002/6405-39",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 93984 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 14.28,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.310431294117652,
-        "centroide_lng": -52.35961994117647,
-        "cnpj_raw": "92040002640539",
-        "razao_social": "DOLCE VILLA LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Cláudio Roberto Scortegagna",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Vanessa Scortegagna",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433169104",
-        "telefone": "(54) 3316-9104",
-        "email": "contato@dolcevilla.agr.br"
+        "centroide_lng": -52.35961994117647
       }
     },
     {
@@ -10365,35 +9548,16 @@
         "id_sigef": "0f61fe8d-df7e-4d38-a13a-a7e81d309c57",
         "codigo_imovel": "8692871021307",
         "nome_imovel": "MATRICULA 2362 - Gleba 01",
-        "nome_titular": "MATRICULA 2362 LTDA",
-        "cpf_cnpj_titular": "92.040.002/6542-46",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 2362 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 4.13,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.3246454375,
-        "centroide_lng": -52.5149449375,
-        "cnpj_raw": "92040002654246",
-        "razao_social": "MATRICULA 2362 LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Mauro Cézar Zaffari",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Luciana Zaffari",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433169141",
-        "telefone": "(54) 3316-9141",
-        "email": "contato@matricula2362.agr.br"
+        "centroide_lng": -52.5149449375
       }
     },
     {
@@ -10807,35 +9971,16 @@
         "id_sigef": "b79e705b-7a7b-459e-a676-a0a5cd7e37c1",
         "codigo_imovel": "8710520282234",
         "nome_imovel": "Fazenda Pinheiro Torto - Fazenda Pinheiro Torto e Passo da Raiz – Parcela 2",
-        "nome_titular": "FAZENDA PINHEIRO TORTO FAZENDA PINHEIRO TORTO E PASSO DA RAIZ LTDA",
-        "cpf_cnpj_titular": "92.040.002/6679-09",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 137.896 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 20.68,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.288197326530604,
-        "centroide_lng": -52.47509406122447,
-        "cnpj_raw": "92040002667909",
-        "razao_social": "FAZENDA PINHEIRO TORTO FAZENDA PINHEIRO TORTO E PASSO DA RAIZ LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Valter Luiz Rizzardi",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Carla Rizzardi",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433169178",
-        "telefone": "(54) 3316-9178",
-        "email": "contato@fazendapinheirotortofazendapinheirotortoepassodaraiz.agr.br"
+        "centroide_lng": -52.47509406122447
       }
     },
     {
@@ -10973,35 +10118,16 @@
         "id_sigef": "9e7cdbae-ae6b-4cc0-9915-55b42db53e5a",
         "codigo_imovel": "8710520248303",
         "nome_imovel": "LOTE RURAL - Parcela 1",
-        "nome_titular": "LOTE RURAL LTDA",
-        "cpf_cnpj_titular": "92.040.002/6816-42",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 147.961 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 33.43,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.332888862068966,
-        "centroide_lng": -52.3151598275862,
-        "cnpj_raw": "92040002681642",
-        "razao_social": "LOTE RURAL LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Otávio Augusto Canabarro",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Letícia Canabarro",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433169215",
-        "telefone": "(54) 3316-9215",
-        "email": "contato@loterural.agr.br"
+        "centroide_lng": -52.3151598275862
       }
     },
     {
@@ -11735,35 +10861,16 @@
         "id_sigef": "c9e16ab6-b446-4fda-9155-34c973dca0e0",
         "codigo_imovel": "8710520232482",
         "nome_imovel": "SDE - Parte 1",
-        "nome_titular": "AGROPECUARIA PLANALTO SUL LTDA",
-        "cpf_cnpj_titular": "92.040.002/6953-50",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 5067 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 188.3,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.177430837078667,
-        "centroide_lng": -52.438111775280895,
-        "cnpj_raw": "92040002695350",
-        "razao_social": "AGROPECUARIA PLANALTO SUL LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 3480000,
-        "qsa": [
-          {
-            "nome": "Ricardo Luís Meneguzzi",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Sandra Meneguzzi",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433169252",
-        "telefone": "(54) 3316-9252",
-        "email": "contato@agropecuariaplanaltosul.agr.br"
+        "centroide_lng": -52.438111775280895
       }
     },
     {
@@ -12577,35 +11684,16 @@
         "id_sigef": "46321c50-c70c-4f53-a8c4-6df93b276351",
         "codigo_imovel": "8710520247595",
         "nome_imovel": "CENTRO DE PESQUISAS AGRONÔMICAS - MAT-103864",
-        "nome_titular": "CENTRO DE PESQUISAS AGRONÔMICAS LTDA",
-        "cpf_cnpj_titular": "92.040.002/7090-83",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 103864 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 121.42,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.216010323232315,
-        "centroide_lng": -52.39594102525253,
-        "cnpj_raw": "92040002709083",
-        "razao_social": "CENTRO DE PESQUISAS AGRONÔMICAS LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 2250000,
-        "qsa": [
-          {
-            "nome": "Bernardo Della Mea",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Giovana Della Mea",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433169289",
-        "telefone": "(54) 3316-9289",
-        "email": "contato@centrodepesquisasagronmicas.agr.br"
+        "centroide_lng": -52.39594102525253
       }
     },
     {
@@ -12799,35 +11887,16 @@
         "id_sigef": "12880b17-4041-42eb-b834-a4d927de0048",
         "codigo_imovel": "8710520270066",
         "nome_imovel": "Granja Pessegueiro - Única",
-        "nome_titular": "GRANJA PESSEGUEIRO ÚNICA LTDA",
-        "cpf_cnpj_titular": "92.040.002/7227-72",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 96 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 67.94,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.34017895348837,
-        "centroide_lng": -52.4804606511628,
-        "cnpj_raw": "92040002722772",
-        "razao_social": "GRANJA PESSEGUEIRO ÚNICA LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1260000,
-        "qsa": [
-          {
-            "nome": "Felipe Antônio Rubin",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Larissa Rubin",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433169326",
-        "telefone": "(54) 3316-9326",
-        "email": "contato@granjapessegueironica.agr.br"
+        "centroide_lng": -52.4804606511628
       }
     },
     {
@@ -12905,35 +11974,16 @@
         "id_sigef": "313c8b98-8671-4311-accb-ab8497f0886f",
         "codigo_imovel": "9503271611794",
         "nome_imovel": "Vista Alegre - .",
-        "nome_titular": "VISTA ALEGRE . LTDA",
-        "cpf_cnpj_titular": "92.040.002/7364-80",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 158008 - CRI",
         "municipio": "PASSO FUNDO",
         "uf": "RS",
         "area_hectares": 5.08,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.275018999999993,
-        "centroide_lng": -52.33131371428572,
-        "cnpj_raw": "92040002736480",
-        "razao_social": "VISTA ALEGRE . LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Henrique Dornelles",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Carolina Dornelles",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555433169363",
-        "telefone": "(54) 3316-9363",
-        "email": "contato@vistaalegre.agr.br"
+        "centroide_lng": -52.33131371428572
       }
     }
   ]

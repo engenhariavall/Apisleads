@@ -31,6 +31,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import db from '../config/database.js';
 import { agronomicProfileService } from './agronomicProfileService.js';
 import { calculateRuralIntentScore } from './intentScoringService.js';
 
@@ -164,12 +165,26 @@ export function normalizarFeatureCar(rawFeature = {}, overrides = {}) {
 
   // ── Identificadores do imóvel ──────────────────────────────────────────────
   const codigoCar    = normalizarCodigoCar(props.cod_imovel || props.codigo_car || props.codigo || props.num_registro || '');
-  const nomeImovel   = String(props.nom_imovel || props.nome_imovel || props.denominacao || props.nome || (codigoCar ? `Imóvel CAR ${codigoCar.slice(-8)}` : 'Imóvel Rural CAR')).trim();
-  const rawTitular   = props.nom_proprietario || props.nome_titular || props.proprietario || props.titular || '';
+
+  // Consulta automática à base espelho histórica do CAR (pré-maio/2023)
+  let histMatch = null;
+  if (codigoCar && db) {
+    try {
+      histMatch = db.prepare(`
+        SELECT nome_proprietario, cpf_cnpj_parcial, matricula_declarada, nome_imovel_declarado
+        FROM car_proprietarios_historico
+        WHERE codigo_car = ?
+        LIMIT 1
+      `).get(codigoCar);
+    } catch (_) {}
+  }
+
+  const rawTitular   = histMatch?.nome_proprietario || props.nom_proprietario || props.nome_titular || props.proprietario || props.titular || '';
   const nomeTitular  = (rawTitular && !['Produtor Rural Declarado', 'Titular não informado', 'Não informado', 'Titularidade sob sigilo (LGPD)'].includes(String(rawTitular).trim()))
     ? String(rawTitular).trim()
     : 'Titularidade sob sigilo (LGPD)';
-  const cpfCnpj      = String(props.cpf_cnpj_titular || props.cpf_cnpj || props.num_cpf_cnpj || '').replace(/\s/g, '') || null;
+  const cpfCnpj      = histMatch?.cpf_cnpj_parcial || String(props.cpf_cnpj_titular || props.cpf_cnpj || props.num_cpf_cnpj || '').replace(/\s/g, '') || null;
+  const nomeImovel   = String(histMatch?.nome_imovel_declarado || props.nom_imovel || props.nome_imovel || props.denominacao || props.nome || (codigoCar ? `Imóvel CAR ${codigoCar.slice(-8)}` : 'Imóvel Rural CAR')).trim();
   const municipio    = String(overrides.municipio || props.nom_municipio || props.municipio || '').toUpperCase().trim();
   const uf           = String(overrides.uf || props.sig_uf || props.uf || '').toUpperCase().trim();
   const areaHa       = parseFloat(props.num_area || props.area_ha || props.area_hectares || props.area || 0) || 0;
@@ -273,10 +288,12 @@ export function normalizarFeatureCar(rawFeature = {}, overrides = {}) {
 
       // ── Campos exclusivos do CAR / SICAR ──────────────────────────────────
       source: 'CAR',
-      tag_fonte: 'SICAR',
+      tag_fonte: histMatch ? 'SICAR_HISTORICO_PRE2023' : 'SICAR',
       codigo_car: codigoCar,
       status_car: statusCar,
       condicao_car: condicaoCar,
+      matricula_declarada: histMatch?.matricula_declarada || props.matricula_declarada || null,
+      proprietario_desmascarado: Boolean(histMatch),
       area_app_ha: areaAppHa,
       area_reserva_legal_ha: areaRlHa,
       tem_passivo_ambiental: temPassivo,

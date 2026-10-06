@@ -4269,11 +4269,12 @@ window.inspectRuralPropertyInDrawer = function(propData) {
   if (sourceBadge) {
     const tagFonte = (propData.tag_fonte || propData.source || 'SIGEF').toUpperCase();
     const sourceMap = {
-      'SIGEF':           { label: 'SIGEF / INCRA',        bg: 'rgba(56,189,248,0.12)',   color: '#38BDF8', border: 'rgba(56,189,248,0.3)' },
-      'SICAR':           { label: 'SICAR / CAR',         bg: 'rgba(34,197,94,0.12)',    color: '#4ADE80', border: 'rgba(34,197,94,0.3)'  },
-      'CAR':             { label: 'SICAR / CAR',         bg: 'rgba(34,197,94,0.12)',    color: '#4ADE80', border: 'rgba(34,197,94,0.3)'  },
-      'FUSAO_SIGEF_CAR': { label: 'SIGEF + CAR (FUSÃO)', bg: 'rgba(245,158,11,0.12)',  color: '#FBBF24', border: 'rgba(245,158,11,0.3)' },
-      'SEM_GEO':         { label: 'SEM GEO / GAP (HOT)', bg: 'rgba(239,68,68,0.18)',   color: '#F87171', border: 'rgba(239,68,68,0.45)' }
+      'SIGEF':                   { label: 'SIGEF / INCRA',              bg: 'rgba(56,189,248,0.12)',   color: '#38BDF8', border: 'rgba(56,189,248,0.3)' },
+      'SICAR':                   { label: 'SICAR / CAR',               bg: 'rgba(34,197,94,0.12)',    color: '#4ADE80', border: 'rgba(34,197,94,0.3)'  },
+      'CAR':                     { label: 'SICAR / CAR',               bg: 'rgba(34,197,94,0.12)',    color: '#4ADE80', border: 'rgba(34,197,94,0.3)'  },
+      'SICAR_HISTORICO_PRE2023': { label: 'CAR PRÉ-2023 (DESMASCARADO)', bg: 'rgba(16,185,129,0.18)',  color: '#34D399', border: 'rgba(16,185,129,0.45)' },
+      'FUSAO_SIGEF_CAR':         { label: 'SIGEF + CAR (FUSÃO)',       bg: 'rgba(245,158,11,0.12)',  color: '#FBBF24', border: 'rgba(245,158,11,0.3)' },
+      'SEM_GEO':                 { label: 'SEM GEO / GAP (HOT)',       bg: 'rgba(239,68,68,0.18)',   color: '#F87171', border: 'rgba(239,68,68,0.45)' }
     };
     const srcKey = isGapProp ? 'SEM_GEO' : tagFonte;
     const src = sourceMap[srcKey] || sourceMap['SIGEF'];
@@ -4803,6 +4804,61 @@ window.inspectRuralPropertyInDrawer = function(propData) {
             btnBureau.style.display = 'inline-flex';
             btnBureau.disabled = false;
             btnBureau.innerHTML = bureauBtnDefaultHtml;
+            btnBureau.onclick = async (e) => {
+              e.preventDefault();
+              btnBureau.disabled = true;
+              btnBureau.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" class="anim-spin" style="animation: spin 1s linear infinite;"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 10 10"/></svg><span>Consultando Bureau...</span>';
+              try {
+                const headers = typeof window.getApiHeaders === 'function' ? window.getApiHeaders() : { 'Content-Type': 'application/json' };
+                const res = await fetch('/api/osint/enrich-whatsapp-bureau', {
+                  method: 'POST',
+                  headers,
+                  body: JSON.stringify({
+                    nome_titular: propData.nome_titular,
+                    cpf_cnpj_titular: propData.cpf_cnpj_titular,
+                    id_propriedade: propData.id,
+                    codigo_car: propData.codigo_car || fullCarCode,
+                    uf: propData.uf,
+                    municipio: propData.municipio
+                  })
+                });
+                const resData = await res.json();
+                if (res.status === 403 || resData.error === 'TEST_DRIVE_EXPIRED') {
+                  btnBureau.disabled = false;
+                  btnBureau.innerHTML = bureauBtnDefaultHtml;
+                  if (typeof handleTestDriveExpired === 'function') {
+                    handleTestDriveExpired(resData.message);
+                  } else if (typeof showToast === 'function') {
+                    showToast('Test drive do Bureau expirado. Adicione sua chave.');
+                  }
+                  return;
+                }
+                if (res.ok && resData.success && resData.whatsapp) {
+                  propData.whatsapp_validado = resData.whatsapp;
+                  if (resData.cpf || resData.produtor_pf_cpf) {
+                    propData.cpf_cnpj_titular = resData.cpf || resData.produtor_pf_cpf;
+                    if (cpfCnpjEl) cpfCnpjEl.textContent = propData.cpf_cnpj_titular;
+                  }
+                  renderContactData(resData.whatsapp, propData.linkedin_url_real, propData.email_validado);
+                  if (typeof showToast === 'function') {
+                    showToast(`Dossiê do Titular revelado via Bureau Assertiva: ${resData.whatsapp}`);
+                  }
+                } else {
+                  btnBureau.disabled = false;
+                  btnBureau.innerHTML = bureauBtnDefaultHtml;
+                  if (typeof showToast === 'function') {
+                    showToast(resData.message || resData.error || 'Nenhum contato encontrado no Bureau para este documento.');
+                  }
+                }
+              } catch (err) {
+                console.error('Erro ao consultar Bureau Assertiva:', err);
+                btnBureau.disabled = false;
+                btnBureau.innerHTML = bureauBtnDefaultHtml;
+                if (typeof showToast === 'function') {
+                  showToast('Falha na comunicação com o Bureau de Crédito.');
+                }
+              }
+            };
           } else {
             btnBureau.style.display = 'none';
           }

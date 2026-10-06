@@ -590,13 +590,26 @@ router.post('/osint/enrich-whatsapp-bureau', optionalAuth, async (req, res) => {
       } catch (_) {}
     }
 
-    // FASE 57 (OSINT DO CAR): Se não veio CPF direto, tenta resolver via Código CAR
-    if (!rawDoc && codigo_car) {
+    // FASE CAR HISTÓRICO: Resolução imediata pela base espelho do CAR (pré-maio/2023)
+    if ((!rawDoc || rawDoc.includes('*')) && codigo_car) {
+      try {
+        const hist = db.prepare('SELECT nome_proprietario, cpf_cnpj_parcial, municipio, uf FROM car_proprietarios_historico WHERE codigo_car = ? LIMIT 1').get(codigo_car);
+        if (hist) {
+          if (!nome_titular || nome_titular.includes('sigilo')) nome_titular = hist.nome_proprietario;
+          if (!rawDoc || rawDoc.includes('*')) rawDoc = hist.cpf_cnpj_parcial || rawDoc;
+          if (!uf) uf = hist.uf;
+          if (!municipio) municipio = hist.municipio;
+        }
+      } catch (_) {}
+    }
+
+    // FASE 57 (OSINT DO CAR): Se ainda não resolveu, tenta via sicarOsintService
+    if ((!rawDoc || rawDoc.includes('*')) && codigo_car) {
       const { sicarOsintService } = await import('../services/sicarOsintService.js');
       try {
         const carRes = await sicarOsintService.extractCarOwner(codigo_car, { uf, municipio });
         if (carRes && carRes.success) {
-          rawDoc = carRes.cpf_cnpj_titular || carRes.cpf_cnpj;
+          if (carRes.cpf_cnpj_titular || carRes.cpf_cnpj) rawDoc = carRes.cpf_cnpj_titular || carRes.cpf_cnpj;
           if (!nome_titular) nome_titular = carRes.nome_titular;
         }
       } catch (cErr) {
@@ -604,11 +617,30 @@ router.post('/osint/enrich-whatsapp-bureau', optionalAuth, async (req, res) => {
       }
     }
 
-    if (!rawDoc) {
-      return res.status(400).json({ success: false, error: 'CPF não informado para consulta sob demanda.' });
+    if (!rawDoc && !nome_titular) {
+      return res.status(400).json({ success: false, error: 'Documento ou Nome do Titular não informado para consulta sob demanda.' });
     }
 
-    const cleanCpf = String(rawDoc).replace(/\D/g, '');
+    const cleanCpf = String(rawDoc || '').replace(/\D/g, '');
+
+    // Se temos nome do titular desmascarado, verifica se já existe contato nas propriedades rurais
+    if (nome_titular && cleanCpf.length < 11) {
+      const propMatch = db.prepare(`
+        SELECT whatsapp_validado, produtor_pf_cpf, produtor_pf_nome FROM propriedades_rurais
+        WHERE LOWER(nome_titular) LIKE ? AND whatsapp_validado IS NOT NULL AND whatsapp_validado != ''
+        LIMIT 1
+      `).get(`%${nome_titular.toLowerCase().trim()}%`);
+      if (propMatch?.whatsapp_validado) {
+        return res.json({
+          success: true,
+          cached: true,
+          whatsapp: propMatch.whatsapp_validado,
+          cpf: propMatch.produtor_pf_cpf,
+          source: 'CACHE_PROPRIEDADES_RURAIS',
+          message: 'Contato recuperado do acervo local.'
+        });
+      }
+    }
 
     // Trava de Segurança Financeira (Cost Control): Verifica se já foi enriquecido no SQLite
     let existing = null;

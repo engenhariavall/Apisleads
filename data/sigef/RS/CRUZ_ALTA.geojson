@@ -2,7 +2,7 @@
   "type": "FeatureCollection",
   "name": "sigef_RS_CRUZ_ALTA",
   "total_features": 50,
-  "updated_at": "2026-09-29T18:02:28.586Z",
+  "updated_at": "2026-10-06T14:34:57.706Z",
   "features": [
     {
       "type": "Feature",
@@ -143,35 +143,16 @@
         "id_sigef": "e387491e-2e02-424b-ba34-8eab0a26a261",
         "codigo_imovel": "8671520297937",
         "nome_imovel": "Granja Alvorada - Parte 2",
-        "nome_titular": "GRANJA ALVORADA LTDA",
-        "cpf_cnpj_titular": "92.040.000/6951-07",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 51123 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 7.57,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.56461316666666,
-        "centroide_lng": -53.60053283333334,
-        "cnpj_raw": "92040000695107",
-        "razao_social": "GRANJA ALVORADA LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Rodrigo Dall Agnol",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Fernanda Dall Agnol",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533163850",
-        "telefone": "(55) 3316-3850",
-        "email": "contato@granjaalvorada.agr.br"
+        "centroide_lng": -53.60053283333334
       }
     },
     {
@@ -225,35 +206,16 @@
         "id_sigef": "f0625832-280d-4b0e-a678-06fc70803080",
         "codigo_imovel": "8650100360563",
         "nome_imovel": "SDE - Parte 1",
-        "nome_titular": "AGROPECUARIA SANTO ANTONIO LTDA",
-        "cpf_cnpj_titular": "92.040.000/7088-70",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 52608 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 14.54,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.668859,
-        "centroide_lng": -53.52226625,
-        "cnpj_raw": "92040000708870",
-        "razao_social": "AGROPECUARIA SANTO ANTONIO LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Guilherme Augusto Tedesco",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Tatiana Tedesco",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533163887",
-        "telefone": "(55) 3316-3887",
-        "email": "contato@agropecuariasantoantonio.agr.br"
+        "centroide_lng": -53.52226625
       }
     },
     {
@@ -323,35 +285,16 @@
         "id_sigef": "354df038-a0e9-4d39-8d10-3b7da586dc6f",
         "codigo_imovel": "8671520297937",
         "nome_imovel": "Granja Alvorada - Parte 3",
-        "nome_titular": "GRANJA ALVORADA LTDA",
-        "cpf_cnpj_titular": "92.040.000/7225-11",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 51120 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 10.03,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.561488166666667,
-        "centroide_lng": -53.58316008333333,
-        "cnpj_raw": "92040000722511",
-        "razao_social": "GRANJA ALVORADA LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Cláudio Roberto Scortegagna",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Vanessa Scortegagna",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533163924",
-        "telefone": "(55) 3316-3924",
-        "email": "contato@granjaalvorada.agr.br"
+        "centroide_lng": -53.58316008333333
       }
     },
     {
@@ -733,35 +676,16 @@
         "id_sigef": "e5c1e68f-2a62-45dd-95d3-cea93ff97d0a",
         "codigo_imovel": "9500330990312",
         "nome_imovel": "Imóvel rural sem denominação - Matrícula 43220",
-        "nome_titular": "AGROPECUARIA VALE DOS GRAOS LTDA",
-        "cpf_cnpj_titular": "92.040.000/7362-29",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 52449 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 99.6,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.74988644444445,
-        "centroide_lng": -53.59163185555554,
-        "cnpj_raw": "92040000736229",
-        "razao_social": "AGROPECUARIA VALE DOS GRAOS LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1840000,
-        "qsa": [
-          {
-            "nome": "Mauro Cézar Zaffari",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Luciana Zaffari",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533163961",
-        "telefone": "(55) 3316-3961",
-        "email": "contato@agropecuariavaledosgraos.agr.br"
+        "centroide_lng": -53.59163185555554
       }
     },
     {
@@ -911,35 +835,16 @@
         "id_sigef": "ad9a1907-d67b-45e3-b385-8473c6b7bd2b",
         "codigo_imovel": "9999622614596",
         "nome_imovel": "Sem denominação - Parte 1",
-        "nome_titular": "AGROINDUSTRIAL CERRADO BOM LTDA",
-        "cpf_cnpj_titular": "92.040.000/7499-83",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 47659 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 28.82,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.507977125,
-        "centroide_lng": -53.694492906250005,
-        "cnpj_raw": "92040000749983",
-        "razao_social": "AGROINDUSTRIAL CERRADO BOM LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Valter Luiz Rizzardi",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Carla Rizzardi",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533163998",
-        "telefone": "(55) 3316-3998",
-        "email": "contato@agroindustrialcerradobom.agr.br"
+        "centroide_lng": -53.694492906250005
       }
     },
     {
@@ -1317,35 +1222,16 @@
         "id_sigef": "00e9faea-2386-45be-9bea-ff15a33239a5",
         "codigo_imovel": "8650103083315",
         "nome_imovel": "Durigon Lemes Agropecuaria Ltda. - Parcela 3",
-        "nome_titular": "DURIGON LEMES AGROPECUARIA LTDA.",
-        "cpf_cnpj_titular": "92.040.000/7636-25",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 48831 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 109.2,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.62947578651686,
-        "centroide_lng": -53.48385004494382,
-        "cnpj_raw": "92040000763625",
-        "razao_social": "DURIGON LEMES AGROPECUARIA LTDA.",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 2020000,
-        "qsa": [
-          {
-            "nome": "Otávio Augusto Canabarro",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Letícia Canabarro",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533164035",
-        "telefone": "(55) 3316-4035",
-        "email": "contato@durigonlemesagropecuarialtda.agr.br"
+        "centroide_lng": -53.48385004494382
       }
     },
     {
@@ -1391,35 +1277,16 @@
         "id_sigef": "c0d5582b-2490-48f4-bbb6-b058283cd233",
         "codigo_imovel": "8650100165515",
         "nome_imovel": "- Matrícula 41.482",
-        "nome_titular": ".482 LTDA",
-        "cpf_cnpj_titular": "92.040.000/7773-32",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 48772 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 128.53,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.645810666666666,
-        "centroide_lng": -53.457823999999995,
-        "cnpj_raw": "92040000777332",
-        "razao_social": ".482 LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 2380000,
-        "qsa": [
-          {
-            "nome": "Ricardo Luís Meneguzzi",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Sandra Meneguzzi",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533164072",
-        "telefone": "(55) 3316-4072",
-        "email": "contato@482.agr.br"
+        "centroide_lng": -53.457823999999995
       }
     },
     {
@@ -3065,35 +2932,16 @@
         "id_sigef": "389713de-a60b-4683-9a78-37646c829130",
         "codigo_imovel": "8650100042782",
         "nome_imovel": "SDE - Parcela 1",
-        "nome_titular": "AGROPECUARIA VALE DO PINHEIRO S.A.",
-        "cpf_cnpj_titular": "92.040.000/7910-84",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 50491 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 275.38,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.598824657635475,
-        "centroide_lng": -53.750632421182225,
-        "cnpj_raw": "92040000791084",
-        "razao_social": "AGROPECUARIA VALE DO PINHEIRO S.A.",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 5090000,
-        "qsa": [
-          {
-            "nome": "Bernardo Della Mea",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Giovana Della Mea",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533164109",
-        "telefone": "(55) 3316-4109",
-        "email": "contato@agropecuariavaledopinheiro.agr.br"
+        "centroide_lng": -53.750632421182225
       }
     },
     {
@@ -3311,35 +3159,16 @@
         "id_sigef": "31233a10-60ce-4ec8-add6-7b4cae5b8fe3",
         "codigo_imovel": "9510803926507",
         "nome_imovel": "Gleba 03 - Mat. 3.659; 11.482; 42.174 - Gleba 03",
-        "nome_titular": "MAT. 3.659; 11.482; 42.174 LTDA",
-        "cpf_cnpj_titular": "92.040.000/8047-55",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 3659 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 53.73,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.752226734693867,
-        "centroide_lng": -53.50976969387757,
-        "cnpj_raw": "92040000804755",
-        "razao_social": "MAT. 3.659; 11.482; 42.174 LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Felipe Antônio Rubin",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Larissa Rubin",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533164146",
-        "telefone": "(55) 3316-4146",
-        "email": "contato@mat36591148242174.agr.br"
+        "centroide_lng": -53.50976969387757
       }
     },
     {
@@ -3449,35 +3278,16 @@
         "id_sigef": "aa01356e-6b38-4978-b609-64b4da25dac5",
         "codigo_imovel": "8130440356966",
         "nome_imovel": "Matrícula 24.387 - Única",
-        "nome_titular": ".387 ÚNICA LTDA",
-        "cpf_cnpj_titular": "92.040.000/8184-62",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 51866 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 15.03,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.740301090909096,
-        "centroide_lng": -53.48529031818182,
-        "cnpj_raw": "92040000818462",
-        "razao_social": ".387 ÚNICA LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Henrique Dornelles",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Carolina Dornelles",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533164183",
-        "telefone": "(55) 3316-4183",
-        "email": "contato@387nica.agr.br"
+        "centroide_lng": -53.48529031818182
       }
     },
     {
@@ -3651,35 +3461,16 @@
         "id_sigef": "ad7b457a-c7a1-4f93-a7a0-82de3f2c35c3",
         "codigo_imovel": "8650100347702",
         "nome_imovel": "Santa Isabel II - Matrícula 38.475 Área 2",
-        "nome_titular": "SANTA ISABEL II .475 ÁREA 2 LTDA",
-        "cpf_cnpj_titular": "92.040.000/8321-04",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 49121 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 106.69,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.613366763157888,
-        "centroide_lng": -53.564812421052636,
-        "cnpj_raw": "92040000832104",
-        "razao_social": "SANTA ISABEL II .475 ÁREA 2 LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1970000,
-        "qsa": [
-          {
-            "nome": "Carlos Alberto Fontana",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Mariana Fontana",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533164220",
-        "telefone": "(55) 3316-4220",
-        "email": "contato@santaisabelii475rea2.agr.br"
+        "centroide_lng": -53.564812421052636
       }
     },
     {
@@ -3749,35 +3540,16 @@
         "id_sigef": "9c69af49-2b3e-46c4-ae80-9eb810cb47fe",
         "codigo_imovel": "8650100226751",
         "nome_imovel": "SDE - Parte 4",
-        "nome_titular": "AGROPECUARIA CAMINHO DAS PEDRAS LTDA",
-        "cpf_cnpj_titular": "92.040.000/8458-69",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 51202 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 11.53,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.57247033333333,
-        "centroide_lng": -53.55414349999999,
-        "cnpj_raw": "92040000845869",
-        "razao_social": "AGROPECUARIA CAMINHO DAS PEDRAS LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Eduardo Grazziotin",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Patrícia Grazziotin",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533164257",
-        "telefone": "(55) 3316-4257",
-        "email": "contato@agropecuariacaminhodaspedras.agr.br"
+        "centroide_lng": -53.55414349999999
       }
     },
     {
@@ -3847,35 +3619,16 @@
         "id_sigef": "272b1a63-4492-4c76-b5df-9b4127694ef1",
         "codigo_imovel": "9501903000122",
         "nome_imovel": "SDE - GLEBA A",
-        "nome_titular": "SDE GLEBA A LTDA",
-        "cpf_cnpj_titular": "92.040.000/8595-76",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 53677 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 81.6,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.734825583333333,
-        "centroide_lng": -53.605764,
-        "cnpj_raw": "92040000859576",
-        "razao_social": "SDE GLEBA A LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1510000,
-        "qsa": [
-          {
-            "nome": "Fernando Silveira",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Roberto Silveira",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533164294",
-        "telefone": "(55) 3316-4294",
-        "email": "contato@sdeglebaa.agr.br"
+        "centroide_lng": -53.605764
       }
     },
     {
@@ -3985,35 +3738,16 @@
         "id_sigef": "f4dfac83-9f69-43fb-bc90-c8ca07fb5578",
         "codigo_imovel": "8650100355640",
         "nome_imovel": "Casa Branca Cereais - Parcela 2",
-        "nome_titular": "CASA BRANCA CEREAIS LTDA",
-        "cpf_cnpj_titular": "92.040.000/8732-18",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 48833 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 93.13,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.535494409090905,
-        "centroide_lng": -53.6579348181818,
-        "cnpj_raw": "92040000873218",
-        "razao_social": "CASA BRANCA CEREAIS LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1720000,
-        "qsa": [
-          {
-            "nome": "Gilberto Estrela",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Helena Estrela",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533164331",
-        "telefone": "(55) 3316-4331",
-        "email": "contato@casabrancacereais.agr.br"
+        "centroide_lng": -53.6579348181818
       }
     },
     {
@@ -4063,35 +3797,16 @@
         "id_sigef": "b63e6981-894b-4db9-b682-0268c4bf751e",
         "codigo_imovel": "8560960224978",
         "nome_imovel": "Matrícula 44.322 - Matrícula 44.322",
-        "nome_titular": ".322 .322 LTDA",
-        "cpf_cnpj_titular": "92.040.000/8869-72",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 53975 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 2.02,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.678227285714286,
-        "centroide_lng": -53.61432871428571,
-        "cnpj_raw": "92040000886972",
-        "razao_social": ".322 .322 LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Paulo Renato Laimer",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Juliana Laimer",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533164368",
-        "telefone": "(55) 3316-4368",
-        "email": "contato@322322.agr.br"
+        "centroide_lng": -53.61432871428571
       }
     },
     {
@@ -4241,35 +3956,16 @@
         "id_sigef": "c02728bb-d62a-4e78-86d6-6ccbbee361c9",
         "codigo_imovel": "8650440297424",
         "nome_imovel": "Matrícula 30.902 - Matrícula 30.902",
-        "nome_titular": ".902 .902 LTDA",
-        "cpf_cnpj_titular": "92.040.000/9006-30",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 54116 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 61.62,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.642905031249995,
-        "centroide_lng": -53.662850375,
-        "cnpj_raw": "92040000900630",
-        "razao_social": ".902 .902 LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Marcos Vinicius Witte",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Renata Witte",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533164405",
-        "telefone": "(55) 3316-4405",
-        "email": "contato@902902.agr.br"
+        "centroide_lng": -53.662850375
       }
     },
     {
@@ -4519,35 +4215,16 @@
         "id_sigef": "a72f3371-f10f-4926-9932-b7fd53d77239",
         "codigo_imovel": "9500176664245",
         "nome_imovel": "SDE - Parte 1",
-        "nome_titular": "AGROPECUARIA HORIZONTE VERDE LTDA",
-        "cpf_cnpj_titular": "92.040.000/9143-48",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 48759 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 69.84,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.55630373684211,
-        "centroide_lng": -53.686098596491235,
-        "cnpj_raw": "92040000914348",
-        "razao_social": "AGROPECUARIA HORIZONTE VERDE LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1290000,
-        "qsa": [
-          {
-            "nome": "José Francisco Gehn",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Beatriz Gehn",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533164442",
-        "telefone": "(55) 3316-4442",
-        "email": "contato@agropecuariahorizonteverde.agr.br"
+        "centroide_lng": -53.686098596491235
       }
     },
     {
@@ -4621,35 +4298,16 @@
         "id_sigef": "271470c5-58d5-4872-9e52-f766c7462cbe",
         "codigo_imovel": "8650100186350",
         "nome_imovel": "Sem Denominação - Parcela 1",
-        "nome_titular": "AGROPECUARIA VALE DOS GRAOS LTDA",
-        "cpf_cnpj_titular": "92.040.000/9280-55",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 15212,15213 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 48.13,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.618323999999994,
-        "centroide_lng": -53.637894,
-        "cnpj_raw": "92040000928055",
-        "razao_social": "AGROPECUARIA VALE DOS GRAOS LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Antônio Carlos Sebben",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Clara Sebben",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533164479",
-        "telefone": "(55) 3316-4479",
-        "email": "contato@agropecuariavaledosgraos.agr.br"
+        "centroide_lng": -53.637894
       }
     },
     {
@@ -4707,35 +4365,16 @@
         "id_sigef": "8d791750-4f60-44ae-9367-f6276cc05cbb",
         "codigo_imovel": "8650100184064",
         "nome_imovel": "Imóvel rural sem denominação - Gleba “A”",
-        "nome_titular": "AGROINDUSTRIAL CERRADO BOM LTDA",
-        "cpf_cnpj_titular": "92.040.000/9417-44",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 7176 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 54.15,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.605949555555558,
-        "centroide_lng": -53.465678,
-        "cnpj_raw": "92040000941744",
-        "razao_social": "AGROINDUSTRIAL CERRADO BOM LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Luiz Henrique Biazus",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Camila Biazus",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533164516",
-        "telefone": "(55) 3316-4516",
-        "email": "contato@agroindustrialcerradobom.agr.br"
+        "centroide_lng": -53.465678
       }
     },
     {
@@ -4773,35 +4412,16 @@
         "id_sigef": "a3f5781f-0a1e-42b0-a3de-061766d999f9",
         "codigo_imovel": "9999548462100",
         "nome_imovel": "SED - Parte 1",
-        "nome_titular": "SED LTDA",
-        "cpf_cnpj_titular": "92.040.000/9554-51",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 42.012 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 6.02,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.66160525,
-        "centroide_lng": -53.71952675,
-        "cnpj_raw": "92040000955451",
-        "razao_social": "SED LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Sérgio Murilo Trevisan",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Aline Trevisan",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533164553",
-        "telefone": "(55) 3316-4553",
-        "email": "contato@sed.agr.br"
+        "centroide_lng": -53.71952675
       }
     },
     {
@@ -4855,35 +4475,16 @@
         "id_sigef": "6476acf3-5f36-4f83-9379-123149c276d4",
         "codigo_imovel": "8650100360482",
         "nome_imovel": "Fazenda São Juvenal - Fazenda São Juvenal G",
-        "nome_titular": "FAZENDA SÃO JUVENAL FAZENDA SÃO JUVENAL G LTDA",
-        "cpf_cnpj_titular": "92.040.000/9691-69",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 48549 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 129.16,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.707780749999998,
-        "centroide_lng": -53.479896374999996,
-        "cnpj_raw": "92040000969169",
-        "razao_social": "FAZENDA SÃO JUVENAL FAZENDA SÃO JUVENAL G LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 2390000,
-        "qsa": [
-          {
-            "nome": "Rodrigo Dall Agnol",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Fernanda Dall Agnol",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533164590",
-        "telefone": "(55) 3316-4590",
-        "email": "contato@fazendasojuvenalfazendasojuvenalg.agr.br"
+        "centroide_lng": -53.479896374999996
       }
     },
     {
@@ -4925,35 +4526,16 @@
         "id_sigef": "6129da46-bd93-4584-b345-9c391972273c",
         "codigo_imovel": "8650100360482",
         "nome_imovel": "Fazenda São Juvenal - Fazenda São Juvenal D",
-        "nome_titular": "FAZENDA SÃO JUVENAL FAZENDA SÃO JUVENAL D LTDA",
-        "cpf_cnpj_titular": "92.040.000/9828-58",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 48559 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 34.89,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.6953232,
-        "centroide_lng": -53.451559399999994,
-        "cnpj_raw": "92040000982858",
-        "razao_social": "FAZENDA SÃO JUVENAL FAZENDA SÃO JUVENAL D LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Guilherme Augusto Tedesco",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Tatiana Tedesco",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533164627",
-        "telefone": "(55) 3316-4627",
-        "email": "contato@fazendasojuvenalfazendasojuvenald.agr.br"
+        "centroide_lng": -53.451559399999994
       }
     },
     {
@@ -6471,35 +6053,16 @@
         "id_sigef": "84e18658-bc75-4a27-87f7-13720ed21ecc",
         "codigo_imovel": "9501140910904",
         "nome_imovel": "Santa Isabel - Única",
-        "nome_titular": "SANTA ISABEL ÚNICA S.A.",
-        "cpf_cnpj_titular": "92.040.000/9965-65",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 48908 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 265.46,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.676938176470596,
-        "centroide_lng": -53.50708044385026,
-        "cnpj_raw": "92040000996565",
-        "razao_social": "SANTA ISABEL ÚNICA S.A.",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 4910000,
-        "qsa": [
-          {
-            "nome": "Cláudio Roberto Scortegagna",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Vanessa Scortegagna",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533164664",
-        "telefone": "(55) 3316-4664",
-        "email": "contato@santaisabelnica.agr.br"
+        "centroide_lng": -53.50708044385026
       }
     },
     {
@@ -6577,35 +6140,16 @@
         "id_sigef": "3145938d-49c5-4a60-a282-9233406dceed",
         "codigo_imovel": "8650100323447",
         "nome_imovel": "Fazenda Bela Vista - Parte 1",
-        "nome_titular": "FAZENDA BELA VISTA S.A.",
-        "cpf_cnpj_titular": "92.040.001/0102-21",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 47052 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 437.58,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.589278571428572,
-        "centroide_lng": -53.52580999999999,
-        "cnpj_raw": "92040001010221",
-        "razao_social": "FAZENDA BELA VISTA S.A.",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 8100000,
-        "qsa": [
-          {
-            "nome": "Mauro Cézar Zaffari",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Luciana Zaffari",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533164701",
-        "telefone": "(55) 3316-4701",
-        "email": "contato@fazendabelavista.agr.br"
+        "centroide_lng": -53.52580999999999
       }
     },
     {
@@ -6671,35 +6215,16 @@
         "id_sigef": "b6ef3238-9d15-4085-a94f-d518d6e864a7",
         "codigo_imovel": "9501146064134",
         "nome_imovel": "Granja Trés Coqueiros - Parcela 2",
-        "nome_titular": "GRANJA TRÉS COQUEIROS LTDA",
-        "cpf_cnpj_titular": "92.040.001/0239-86",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 48805 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 10.03,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.572119090909094,
-        "centroide_lng": -53.68901600000001,
-        "cnpj_raw": "92040001023986",
-        "razao_social": "GRANJA TRÉS COQUEIROS LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Valter Luiz Rizzardi",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Carla Rizzardi",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533164738",
-        "telefone": "(55) 3316-4738",
-        "email": "contato@granjatrscoqueiros.agr.br"
+        "centroide_lng": -53.68901600000001
       }
     },
     {
@@ -6753,35 +6278,16 @@
         "id_sigef": "0b0aa5cb-e0bf-44ae-8d08-2a83e51f3ff9",
         "codigo_imovel": "8650103092900",
         "nome_imovel": "Agropecuária Thomaz Fanfa - Parcela 03",
-        "nome_titular": "AGROPECUÁRIA THOMAZ FANFA LTDA",
-        "cpf_cnpj_titular": "92.040.001/0376-93",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 52317 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 137.53,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.654497375,
-        "centroide_lng": -53.44429724999999,
-        "cnpj_raw": "92040001037693",
-        "razao_social": "AGROPECUÁRIA THOMAZ FANFA LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 2540000,
-        "qsa": [
-          {
-            "nome": "Otávio Augusto Canabarro",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Letícia Canabarro",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533164775",
-        "telefone": "(55) 3316-4775",
-        "email": "contato@agropecuriathomazfanfa.agr.br"
+        "centroide_lng": -53.44429724999999
       }
     },
     {
@@ -6915,35 +6421,16 @@
         "id_sigef": "0e913463-a0e2-4fcc-89f7-b4b267cacbd2",
         "codigo_imovel": "8650100222500",
         "nome_imovel": "SDE - Parte 02",
-        "nome_titular": "AGROPECUARIA RIO BRANCO LTDA",
-        "cpf_cnpj_titular": "92.040.001/0513-35",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula Reg 47.160 Liv. 3-AJ - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 21.01,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.53540932142857,
-        "centroide_lng": -53.71041617857143,
-        "cnpj_raw": "92040001051335",
-        "razao_social": "AGROPECUARIA RIO BRANCO LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Ricardo Luís Meneguzzi",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Sandra Meneguzzi",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533164812",
-        "telefone": "(55) 3316-4812",
-        "email": "contato@agropecuariariobranco.agr.br"
+        "centroide_lng": -53.71041617857143
       }
     },
     {
@@ -6981,35 +6468,16 @@
         "id_sigef": "80da6995-3330-4b54-82f4-e694c1da5e4c",
         "codigo_imovel": "9501148962920",
         "nome_imovel": "- Matrícula 34.771",
-        "nome_titular": ".771 LTDA",
-        "cpf_cnpj_titular": "92.040.001/0650-42",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 51391 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 10.03,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.638183500000004,
-        "centroide_lng": -53.487935500000006,
-        "cnpj_raw": "92040001065042",
-        "razao_social": ".771 LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Bernardo Della Mea",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Giovana Della Mea",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533164849",
-        "telefone": "(55) 3316-4849",
-        "email": "contato@771.agr.br"
+        "centroide_lng": -53.487935500000006
       }
     },
     {
@@ -7139,35 +6607,16 @@
         "id_sigef": "e151e5fa-c55f-4131-8c18-04c2b68d04d1",
         "codigo_imovel": "9500928045507",
         "nome_imovel": "Granja Alberto Rosa - Parcela 02",
-        "nome_titular": "GRANJA ALBERTO ROSA LTDA",
-        "cpf_cnpj_titular": "92.040.001/0787-05",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 52063 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 51.65,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.626241037037033,
-        "centroide_lng": -53.59719485185186,
-        "cnpj_raw": "92040001078705",
-        "razao_social": "GRANJA ALBERTO ROSA LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Felipe Antônio Rubin",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Larissa Rubin",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533164886",
-        "telefone": "(55) 3316-4886",
-        "email": "contato@granjaalbertorosa.agr.br"
+        "centroide_lng": -53.59719485185186
       }
     },
     {
@@ -7257,35 +6706,16 @@
         "id_sigef": "88abaf2d-8c16-44e1-87b8-08d36c0a7722",
         "codigo_imovel": "8650100023800",
         "nome_imovel": "Matricula 14474 - Parcela 1",
-        "nome_titular": "MATRICULA 14474 LTDA",
-        "cpf_cnpj_titular": "92.040.001/0924-49",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 14474 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 25.58,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.601236647058823,
-        "centroide_lng": -53.636741,
-        "cnpj_raw": "92040001092449",
-        "razao_social": "MATRICULA 14474 LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Henrique Dornelles",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Carolina Dornelles",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533164923",
-        "telefone": "(55) 3316-4923",
-        "email": "contato@matricula14474.agr.br"
+        "centroide_lng": -53.636741
       }
     },
     {
@@ -7335,35 +6765,16 @@
         "id_sigef": "50395290-cf2a-4451-89a8-eaf9dba8b72b",
         "codigo_imovel": "0000355237125",
         "nome_imovel": "Taboão Agropecuária - Parte 1",
-        "nome_titular": "TABOÃO AGROPECUÁRIA LTDA",
-        "cpf_cnpj_titular": "92.040.001/1061-72",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 31.411 e 44.333 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 67.96,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.666079857142854,
-        "centroide_lng": -53.72155585714285,
-        "cnpj_raw": "92040001106172",
-        "razao_social": "TABOÃO AGROPECUÁRIA LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1260000,
-        "qsa": [
-          {
-            "nome": "Carlos Alberto Fontana",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Mariana Fontana",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533164960",
-        "telefone": "(55) 3316-4960",
-        "email": "contato@tabooagropecuria.agr.br"
+        "centroide_lng": -53.72155585714285
       }
     },
     {
@@ -7401,35 +6812,16 @@
         "id_sigef": "263bd49a-f651-4063-a9c4-a248cef40bac",
         "codigo_imovel": "8680270133401",
         "nome_imovel": "Imóvel rural sem denominação - Matrícula 47.711",
-        "nome_titular": "AGROPECUARIA VALE DOS GRAOS LTDA",
-        "cpf_cnpj_titular": "92.040.001/1198-27",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 47954 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 12.04,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.692428,
-        "centroide_lng": -53.4902785,
-        "cnpj_raw": "92040001119827",
-        "razao_social": "AGROPECUARIA VALE DOS GRAOS LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Eduardo Grazziotin",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Patrícia Grazziotin",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533164997",
-        "telefone": "(55) 3316-4997",
-        "email": "contato@agropecuariavaledosgraos.agr.br"
+        "centroide_lng": -53.4902785
       }
     },
     {
@@ -7467,35 +6859,16 @@
         "id_sigef": "2cc9b60f-511c-4763-989b-28916f421a71",
         "codigo_imovel": "9510647983120",
         "nome_imovel": "sem denominação - Parcela 1",
-        "nome_titular": "AGROINDUSTRIAL CERRADO BOM LTDA",
-        "cpf_cnpj_titular": "92.040.001/1335-79",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 8679 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 0.4,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.73329375,
-        "centroide_lng": -53.620963,
-        "cnpj_raw": "92040001133579",
-        "razao_social": "AGROINDUSTRIAL CERRADO BOM LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Fernando Silveira",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Roberto Silveira",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533165034",
-        "telefone": "(55) 3316-5034",
-        "email": "contato@agroindustrialcerradobom.agr.br"
+        "centroide_lng": -53.620963
       }
     },
     {
@@ -7565,35 +6938,16 @@
         "id_sigef": "bdb3efbd-6375-49b6-93e6-e569692cfcb4",
         "codigo_imovel": "9510480074476",
         "nome_imovel": "Imóvel rural sem denominação - Gleba Legal",
-        "nome_titular": "AGROPECUARIA SERRA DOURADA LTDA",
-        "cpf_cnpj_titular": "92.040.001/1472-86",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 22753 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 3.01,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.701688416666666,
-        "centroide_lng": -53.58909175,
-        "cnpj_raw": "92040001147286",
-        "razao_social": "AGROPECUARIA SERRA DOURADA LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Gilberto Estrela",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Helena Estrela",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533165071",
-        "telefone": "(55) 3316-5071",
-        "email": "contato@agropecuariaserradourada.agr.br"
+        "centroide_lng": -53.58909175
       }
     },
     {
@@ -7759,35 +7113,16 @@
         "id_sigef": "9eea703c-3296-4d83-91b8-04e43cf46604",
         "codigo_imovel": "8650100364712",
         "nome_imovel": "Matrícula 5.947 - Matrícula 5.947",
-        "nome_titular": ".947 .947 LTDA",
-        "cpf_cnpj_titular": "92.040.001/1609-75",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 54059 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 56.36,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.65353244444444,
-        "centroide_lng": -53.64800488888889,
-        "cnpj_raw": "92040001160975",
-        "razao_social": ".947 .947 LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Paulo Renato Laimer",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Juliana Laimer",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533165108",
-        "telefone": "(55) 3316-5108",
-        "email": "contato@947947.agr.br"
+        "centroide_lng": -53.64800488888889
       }
     },
     {
@@ -7889,35 +7224,16 @@
         "id_sigef": "bb07e6bd-176b-4c23-90ae-45b3f668315c",
         "codigo_imovel": "8700720037514",
         "nome_imovel": "Sem Denominação - Parte 1",
-        "nome_titular": "AGROPECUARIA VALE DO PINHEIRO LTDA",
-        "cpf_cnpj_titular": "92.040.001/1746-82",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 28076 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 23.72,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.5282426,
-        "centroide_lng": -53.52996985000001,
-        "cnpj_raw": "92040001174682",
-        "razao_social": "AGROPECUARIA VALE DO PINHEIRO LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Marcos Vinicius Witte",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Renata Witte",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533165145",
-        "telefone": "(55) 3316-5145",
-        "email": "contato@agropecuariavaledopinheiro.agr.br"
+        "centroide_lng": -53.52996985000001
       }
     },
     {
@@ -8155,35 +7471,16 @@
         "id_sigef": "a2e64ed8-3bf9-4186-bf64-7a32e85b1454",
         "codigo_imovel": "8650100377105",
         "nome_imovel": "Granja Magni - Parte 1",
-        "nome_titular": "GRANJA MAGNI LTDA",
-        "cpf_cnpj_titular": "92.040.001/1883-90",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 48464 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 34.87,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.71660683333334,
-        "centroide_lng": -53.49723831481482,
-        "cnpj_raw": "92040001188390",
-        "razao_social": "GRANJA MAGNI LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "José Francisco Gehn",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Beatriz Gehn",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533165182",
-        "telefone": "(55) 3316-5182",
-        "email": "contato@granjamagni.agr.br"
+        "centroide_lng": -53.49723831481482
       }
     },
     {
@@ -8229,35 +7526,16 @@
         "id_sigef": "f4029a50-6c48-42bf-bcec-20442e4502ca",
         "codigo_imovel": "9501905431600",
         "nome_imovel": "Terraboa Agrícola Mat. 53.777; 53.779 - Perímetro Geral",
-        "nome_titular": "TERRABOA AGRÍCOLA MAT. 53.777; 53.779  GERAL LTDA",
-        "cpf_cnpj_titular": "92.040.001/2020-58",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 53779; 53777 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 8.82,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.638491,
-        "centroide_lng": -53.5355525,
-        "cnpj_raw": "92040001202058",
-        "razao_social": "TERRABOA AGRÍCOLA MAT. 53.777; 53.779  GERAL LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Antônio Carlos Sebben",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Clara Sebben",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533165219",
-        "telefone": "(55) 3316-5219",
-        "email": "contato@terraboaagrcolamat5377753779geral.agr.br"
+        "centroide_lng": -53.5355525
       }
     },
     {
@@ -8331,35 +7609,16 @@
         "id_sigef": "21e43912-961f-4414-9cc2-d097bead09c0",
         "codigo_imovel": "9500848384700",
         "nome_imovel": "Iria I E II - Parte 1",
-        "nome_titular": "IRIA I E II LTDA",
-        "cpf_cnpj_titular": "92.040.001/2157-02",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 46715 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 17.43,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.738126769230764,
-        "centroide_lng": -53.61524415384615,
-        "cnpj_raw": "92040001215702",
-        "razao_social": "IRIA I E II LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Luiz Henrique Biazus",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Camila Biazus",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533165256",
-        "telefone": "(55) 3316-5256",
-        "email": "contato@iriaieii.agr.br"
+        "centroide_lng": -53.61524415384615
       }
     },
     {
@@ -9737,35 +8996,16 @@
         "id_sigef": "e4a33ced-244f-48a6-85ac-8ca5f4ccf753",
         "codigo_imovel": "8650100370283",
         "nome_imovel": "Granja Bela Vista - Granja Bela Vista I",
-        "nome_titular": "GRANJA BELA VISTA GRANJA BELA VISTA I S.A.",
-        "cpf_cnpj_titular": "92.040.001/2294-10",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 3.983, 4.362 e 4.363 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 277.26,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.652523657817124,
-        "centroide_lng": -53.566998545722704,
-        "cnpj_raw": "92040001229410",
-        "razao_social": "GRANJA BELA VISTA GRANJA BELA VISTA I S.A.",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 5130000,
-        "qsa": [
-          {
-            "nome": "Sérgio Murilo Trevisan",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Aline Trevisan",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533165293",
-        "telefone": "(55) 3316-5293",
-        "email": "contato@granjabelavistagranjabelavistai.agr.br"
+        "centroide_lng": -53.566998545722704
       }
     },
     {
@@ -9923,35 +9163,16 @@
         "id_sigef": "65fecc14-0475-4c10-af3c-1740f1874969",
         "codigo_imovel": "8671520297937",
         "nome_imovel": "Granja Alvorada - Parte 2",
-        "nome_titular": "GRANJA ALVORADA LTDA",
-        "cpf_cnpj_titular": "92.040.001/2431-61",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 51124 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 15.59,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.561898882352942,
-        "centroide_lng": -53.60385379411765,
-        "cnpj_raw": "92040001243161",
-        "razao_social": "GRANJA ALVORADA LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Rodrigo Dall Agnol",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Fernanda Dall Agnol",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533165330",
-        "telefone": "(55) 3316-5330",
-        "email": "contato@granjaalvorada.agr.br"
+        "centroide_lng": -53.60385379411765
       }
     },
     {
@@ -9993,35 +9214,16 @@
         "id_sigef": "df1ac94f-f842-40be-b29e-b50887b29312",
         "codigo_imovel": "0000278500551",
         "nome_imovel": "Imóvel rural sem denominação - Matrícula 30.412",
-        "nome_titular": "AGROINDUSTRIAL SÃO PEDRO LTDA",
-        "cpf_cnpj_titular": "92.040.001/2568-16",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 30412 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 40.13,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.6920986,
-        "centroide_lng": -53.7487512,
-        "cnpj_raw": "92040001256816",
-        "razao_social": "AGROINDUSTRIAL SÃO PEDRO LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Guilherme Augusto Tedesco",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Tatiana Tedesco",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533165367",
-        "telefone": "(55) 3316-5367",
-        "email": "contato@agroindustrialsopedro.agr.br"
+        "centroide_lng": -53.7487512
       }
     },
     {
@@ -10119,35 +9321,16 @@
         "id_sigef": "c0fd9c46-b3a4-4337-8931-34fedd43fac4",
         "codigo_imovel": "8700720039053",
         "nome_imovel": "Sem denominação - Parte 1",
-        "nome_titular": "AGROPECUARIA BELA VISTA LTDA",
-        "cpf_cnpj_titular": "92.040.001/2705-68",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 48203 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 2.63,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.513761473684205,
-        "centroide_lng": -53.54968310526316,
-        "cnpj_raw": "92040001270568",
-        "razao_social": "AGROPECUARIA BELA VISTA LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Cláudio Roberto Scortegagna",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Vanessa Scortegagna",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533165404",
-        "telefone": "(55) 3316-5404",
-        "email": "contato@agropecuariabelavista.agr.br"
+        "centroide_lng": -53.54968310526316
       }
     },
     {
@@ -10261,35 +9444,16 @@
         "id_sigef": "b6b79584-ab2a-40fa-8470-90a36deb9a8b",
         "codigo_imovel": "8650100226751",
         "nome_imovel": "SDE - Parte 6",
-        "nome_titular": "AGROPECUARIA SANTO ANTONIO LTDA",
-        "cpf_cnpj_titular": "92.040.001/2842-75",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 51204 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 54.65,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.57700191304347,
-        "centroide_lng": -53.55970939130434,
-        "cnpj_raw": "92040001284275",
-        "razao_social": "AGROPECUARIA SANTO ANTONIO LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Mauro Cézar Zaffari",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Luciana Zaffari",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533165441",
-        "telefone": "(55) 3316-5441",
-        "email": "contato@agropecuariasantoantonio.agr.br"
+        "centroide_lng": -53.55970939130434
       }
     },
     {
@@ -10327,35 +9491,16 @@
         "id_sigef": "0ffecea9-d08b-41cd-8d1f-fd036dc5dd6f",
         "codigo_imovel": "8650100339602",
         "nome_imovel": "Fazenda São Juvenal - Única",
-        "nome_titular": "FAZENDA SÃO JUVENAL ÚNICA LTDA",
-        "cpf_cnpj_titular": "92.040.001/2979-20",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 15534 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 70.19,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.709289000000002,
-        "centroide_lng": -53.4487695,
-        "cnpj_raw": "92040001297920",
-        "razao_social": "FAZENDA SÃO JUVENAL ÚNICA LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1300000,
-        "qsa": [
-          {
-            "nome": "Valter Luiz Rizzardi",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Carla Rizzardi",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533165478",
-        "telefone": "(55) 3316-5478",
-        "email": "contato@fazendasojuvenalnica.agr.br"
+        "centroide_lng": -53.4487695
       }
     },
     {
@@ -10401,35 +9546,16 @@
         "id_sigef": "3af27555-1b28-4897-a80c-760b14cc7cab",
         "codigo_imovel": "9500508306666",
         "nome_imovel": "Sem Denominação - Parcela 1",
-        "nome_titular": "AGROPECUARIA VALE DOS GRAOS LTDA",
-        "cpf_cnpj_titular": "92.040.001/3116-98",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 35513 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 9.53,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.563161666666662,
-        "centroide_lng": -53.54739316666667,
-        "cnpj_raw": "92040001311698",
-        "razao_social": "AGROPECUARIA VALE DOS GRAOS LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Otávio Augusto Canabarro",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Letícia Canabarro",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533165515",
-        "telefone": "(55) 3316-5515",
-        "email": "contato@agropecuariavaledosgraos.agr.br"
+        "centroide_lng": -53.54739316666667
       }
     },
     {
@@ -10607,35 +9733,16 @@
         "id_sigef": "3ace2fad-57cd-473b-992c-168670de84ce",
         "codigo_imovel": "194083874",
         "nome_imovel": "sem denominação - PARTE 1",
-        "nome_titular": "AGROINDUSTRIAL CERRADO BOM LTDA",
-        "cpf_cnpj_titular": "92.040.001/3253-03",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 5152; 5154 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 6.56,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.696993769230765,
-        "centroide_lng": -53.6267341025641,
-        "cnpj_raw": "92040001325303",
-        "razao_social": "AGROINDUSTRIAL CERRADO BOM LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Ricardo Luís Meneguzzi",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Sandra Meneguzzi",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533165552",
-        "telefone": "(55) 3316-5552",
-        "email": "contato@agroindustrialcerradobom.agr.br"
+        "centroide_lng": -53.6267341025641
       }
     },
     {
@@ -10705,35 +9812,16 @@
         "id_sigef": "a27eab76-0afb-4c2c-a71a-11471d475dbb",
         "codigo_imovel": "8700720069041",
         "nome_imovel": "Sem Denominação - Parte 1",
-        "nome_titular": "AGROPECUARIA SERRA DOURADA LTDA",
-        "cpf_cnpj_titular": "92.040.001/3390-02",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 20476 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 20.04,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.525662666666673,
-        "centroide_lng": -53.53219708333333,
-        "cnpj_raw": "92040001339002",
-        "razao_social": "AGROPECUARIA SERRA DOURADA LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Bernardo Della Mea",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Giovana Della Mea",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533165589",
-        "telefone": "(55) 3316-5589",
-        "email": "contato@agropecuariaserradourada.agr.br"
+        "centroide_lng": -53.53219708333333
       }
     },
     {
@@ -10803,35 +9891,16 @@
         "id_sigef": "53df6100-57d1-4dfd-9a0b-1e5fcccb20e1",
         "codigo_imovel": "9500508653382",
         "nome_imovel": "SDE - Parcela 01",
-        "nome_titular": "AGROPECUARIA PLANALTO SUL LTDA",
-        "cpf_cnpj_titular": "92.040.001/3527-00",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 13649 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 185.32,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.641774749999996,
-        "centroide_lng": -53.73264858333334,
-        "cnpj_raw": "92040001352700",
-        "razao_social": "AGROPECUARIA PLANALTO SUL LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 3430000,
-        "qsa": [
-          {
-            "nome": "Felipe Antônio Rubin",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Larissa Rubin",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533165626",
-        "telefone": "(55) 3316-5626",
-        "email": "contato@agropecuariaplanaltosul.agr.br"
+        "centroide_lng": -53.73264858333334
       }
     },
     {
@@ -10921,35 +9990,16 @@
         "id_sigef": "04ff49d7-d6bb-47f2-99ba-5a6241996dfa",
         "codigo_imovel": "8650440296886",
         "nome_imovel": "Imóvel rural sem denominação - Matrícula 44404",
-        "nome_titular": "AGROPECUARIA VALE DO PINHEIRO LTDA",
-        "cpf_cnpj_titular": "92.040.001/3664-09",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 53705 - CRI",
         "municipio": "CRUZ ALTA",
         "uf": "RS",
         "area_hectares": 2.37,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -28.56926329411765,
-        "centroide_lng": -53.649684588235296,
-        "cnpj_raw": "92040001366409",
-        "razao_social": "AGROPECUARIA VALE DO PINHEIRO LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Henrique Dornelles",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Carolina Dornelles",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+555533165663",
-        "telefone": "(55) 3316-5663",
-        "email": "contato@agropecuariavaledopinheiro.agr.br"
+        "centroide_lng": -53.649684588235296
       }
     }
   ]
