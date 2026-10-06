@@ -2512,20 +2512,161 @@ window.exportCurrentInspectedLeadCsv = async function(btnEl = null) {
 
 /**
  * FASE ASSERTIVA v3: Invocação direta do Bureau a partir do Inspetor Lateral
+ * Efeito Cascata: Se o imóvel rural não possuir CPF direto, consulta a SEFAZ para desmascarar o titular e abre o Bureau.
  */
-window.consultarBureauDoLeadAtual = function() {
+window.consultarBureauDoLeadAtual = async function() {
   const lead = window.currentInspectedLead || window.currentInspectedRuralProperty;
   if (!lead) {
     if (typeof showToast === 'function') showToast('Nenhum lead ou imóvel inspecionado no momento.');
     return;
   }
-  const doc = lead.cnpj || lead.cpf || lead.decisor_cpf || lead.produtor_cpf || lead.produtor_pf_cpf || (lead.dados_fundiarios && lead.dados_fundiarios.cpf_cnpj_titular) || '';
-  if (!doc) {
-    if (typeof showToast === 'function') showToast('Este registro não possui CPF ou CNPJ cadastrado para consulta no Bureau.');
+
+  // 1. Tenta extrair CPF/CNPJ já existente no objeto ou no DOM
+  let targetDoc = '';
+
+  const candidates = [
+    lead.produtor_pf_cpf_clean,
+    lead.produtor_pf_cpf,
+    lead.produtor_rural_pf?.produtor_pf_cpf_clean,
+    lead.produtor_rural_pf?.produtor_pf_cpf,
+    lead.cpf,
+    lead.decisor_cpf,
+    lead.produtor_cpf,
+    lead.cpf_cnpj_titular,
+    lead.dados_fundiarios?.cpf_cnpj_titular,
+    lead.cnpj
+  ];
+
+  for (const c of candidates) {
+    if (!c) continue;
+    const clean = String(c).replace(/\D/g, '');
+    if (clean.length === 11 || clean.length === 14) {
+      targetDoc = clean;
+      break;
+    }
+  }
+
+  // 1.1 Se não encontrou nas propriedades do objeto, verifica se o bloco SEFAZ na tela já renderizou o CPF
+  if (!targetDoc) {
+    const sefazBlock = document.getElementById('ruralSefazPfBlock');
+    if (sefazBlock) {
+      const strongs = sefazBlock.querySelectorAll('strong');
+      for (const s of strongs) {
+        const text = s.textContent || '';
+        const clean = text.replace(/\D/g, '');
+        if (clean.length === 11) {
+          targetDoc = clean;
+          break;
+        }
+      }
+    }
+  }
+
+  // 2. Se já temos um documento válido (CPF 11 ou CNPJ 14), abre o Bureau imediatamente
+  if (targetDoc) {
+    if (typeof window.consultarBureauPorDocumento === 'function') {
+      window.consultarBureauPorDocumento(targetDoc);
+    }
     return;
   }
-  if (typeof window.consultarBureauPorDocumento === 'function') {
-    window.consultarBureauPorDocumento(doc);
+
+  // 3. EFEITO CASCATA: Se for imóvel rural (CAR/SIGEF) sem CPF resolvido, aciona a SEFAZ primeiro
+  const isRural = Boolean(
+    lead.codigo_car ||
+    lead.id_sigef ||
+    lead.nome_imovel ||
+    lead.produtor_rural_pf ||
+    (typeof lead.cnpj === 'string' && (lead.cnpj.includes('-') || lead.cnpj.length > 18))
+  );
+
+  if (isRural) {
+    if (typeof showToast === 'function') {
+      showToast('Acionando cascata: consultando SEFAZ para desmascarar titular do CAR...');
+    }
+
+    const btnQuick = document.getElementById('btnQuickBureauRural') || document.getElementById('btnQuickBureauLead');
+    const origHtml = btnQuick ? btnQuick.innerHTML : '';
+    if (btnQuick) {
+      btnQuick.disabled = true;
+      btnQuick.innerHTML = '<span style="display:inline-flex;align-items:center;gap:0.35rem;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" class="anim-spin" style="animation: spin 1s linear infinite;"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 10 10"/></svg>Consultando SEFAZ...</span>';
+    }
+
+    try {
+      const headers = typeof window.getApiHeaders === 'function' ? window.getApiHeaders() : { 'Content-Type': 'application/json' };
+      const res = await fetch('/api/fundiario/verify-sefaz-ie', {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({
+          id: lead.id,
+          codigo_car: lead.codigo_car || lead.cnpj,
+          id_sigef: lead.id_sigef,
+          municipio: lead.municipio,
+          uf: lead.uf || 'RS'
+        })
+      });
+
+      const json = await res.json();
+      if (json.success && json.data) {
+        const pf = json.data;
+        lead.produtor_rural_pf = pf;
+        lead.produtor_pf_nome = pf.produtor_pf_nome;
+        lead.produtor_pf_cpf = pf.produtor_pf_cpf;
+        lead.produtor_pf_cpf_clean = pf.produtor_pf_cpf_clean;
+
+        // Atualiza a UI do SEFAZ no drawer
+        const sefazBlock = document.getElementById('ruralSefazPfBlock');
+        if (sefazBlock) {
+          const ieNum = pf.inscricao_estadual || 'ATIVA / SINTEGRA';
+          const sefazUf = pf.sefaz_uf || lead.uf || 'RS';
+          const produtorNome = pf.produtor_pf_nome || lead.nome_titular || 'PRODUTOR RURAL ATIVO';
+          const produtorCpf = pf.produtor_pf_cpf || '';
+          sefazBlock.style.display = 'block';
+          sefazBlock.innerHTML = `
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:0.4rem;margin-bottom:0.45rem;flex-wrap:wrap;">
+              <div style="display:flex;align-items:center;gap:0.4rem;">
+                <span style="font-size:0.85rem;">🏛️</span>
+                <span style="font-size:0.7rem;font-weight:800;color:#34D399;letter-spacing:0.04em;text-transform:uppercase;">CADASTRO FISCAL SEFAZ (PRODUTOR RURAL PF)</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:0.3rem;">
+                <span style="font-size:0.58rem;font-weight:800;color:#A7F3D0;background:rgba(5,150,105,0.25);border:1px solid rgba(52,211,153,0.4);padding:0.12rem 0.4rem;border-radius:3px;">IE: ${ieNum}</span>
+                <span style="font-size:0.58rem;font-weight:800;color:#34D399;background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.35);padding:0.12rem 0.4rem;border-radius:3px;">🟢 ATIVA (NFP-e)</span>
+              </div>
+            </div>
+            <div style="font-size:0.60rem;color:#A7F3D0;line-height:1.35;margin-bottom:0.45rem;background:rgba(255,255,255,0.02);padding:0.3rem 0.5rem;border-radius:4px;border-left:2px solid #10B981;">
+              <em>Identidade do produtor desmascarada via fé pública tributária estadual (SEFAZ-${sefazUf} / Sintegra).</em>
+            </div>
+            <div style="font-size:0.68rem;color:#E2E8F0;margin-bottom:0.32rem;">
+              <span style="color:#94A3B8;font-weight:600;">Produtor Titular (PF):</span> <strong style="color:#F8FAFC;">${produtorNome}</strong>
+            </div>
+            <div style="font-size:0.68rem;color:#E2E8F0;margin-bottom:0.32rem;display:flex;align-items:center;gap:0.4rem;">
+              <span style="color:#94A3B8;font-weight:600;">CPF (Receita/SEFAZ):</span> <strong style="color:#38BDF8;font-family:monospace;">${produtorCpf}</strong>
+            </div>
+          `;
+        }
+
+        const resolvedDoc = pf.produtor_pf_cpf_clean || (pf.produtor_pf_cpf && pf.produtor_pf_cpf.replace(/\D/g, ''));
+        if (resolvedDoc && (resolvedDoc.length === 11 || resolvedDoc.length === 14)) {
+          if (typeof showToast === 'function') {
+            showToast(`Titular desmascarado na SEFAZ: ${pf.produtor_pf_nome || 'Produtor Rural'}. Abrindo Bureau...`);
+          }
+          if (typeof window.consultarBureauPorDocumento === 'function') {
+            window.consultarBureauPorDocumento(resolvedDoc);
+          }
+          return;
+        }
+      }
+    } catch (err) {
+      console.error('Erro na cascata SEFAZ -> Bureau:', err);
+    } finally {
+      if (btnQuick) {
+        btnQuick.disabled = false;
+        btnQuick.innerHTML = origHtml;
+      }
+    }
+  }
+
+  if (typeof showToast === 'function') {
+    showToast('Este registro não possui CPF ou CNPJ cadastrado e não foi possível obter na SEFAZ.');
   }
 };
 

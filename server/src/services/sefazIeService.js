@@ -21,7 +21,7 @@ import { validatePhoneChannel } from '../modules/intent/phoneValidator.js';
  * Tabela canônica de agricultores de referência por polo agropecuário
  * para correspondência determinística com fé pública tributária.
  */
-const CANONICAL_PRODUCERS_BY_UF = {
+export const CANONICAL_PRODUCERS_BY_UF = {
   SC: [
     { nome: 'CLÁUDIO DAL PIVA', cpf_base: '48918239021', ddd: '49', phone_suffix: '998412211', mun: 'CHAPECÓ' },
     { nome: 'ANTÔNIO CARLOS BECKER', cpf_base: '31289045012', ddd: '49', phone_suffix: '999124433', mun: 'CAMPOS NOVOS' },
