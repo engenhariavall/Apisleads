@@ -269,6 +269,10 @@ export async function enrichRuralOsintHandler(req, res) {
 
     // Formatação canônica do documento CPF/CNPJ
     let formattedDoc = result.titular?.cpf_cnpj_titular || null;
+    if (formattedDoc && formattedDoc.includes('*')) {
+      const { buildUnmaskedCpf } = await import('../services/carHistoricalService.js');
+      formattedDoc = buildUnmaskedCpf(req.body?.codigo_car || req.body?.recibo || req.body?.id || '', formattedDoc);
+    }
     if (formattedDoc) {
       const clean = String(formattedDoc).replace(/\D/g, '');
       if (clean.length === 14) {
