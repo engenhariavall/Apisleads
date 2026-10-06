@@ -2824,9 +2824,32 @@ Carregando script de abordagem...
             </div>
             <h3 class="sheet-title" id="ruralNomeImovel">Nome da Propriedade</h3>
             <p class="sheet-sub" id="ruralLocalizacao">Município / UF</p>
-            <div class="sheet-cnpj-row">
+            <div class="sheet-cnpj-row" id="ruralSigefCodeRow">
               <span>Código SIGEF:</span>
               <strong id="ruralCodigoSigef">--</strong>
+            </div>
+
+            <!-- Recibo Oficial do CAR (SICAR / Ministério do Meio Ambiente) -->
+            <div id="ruralCarCodeRow" style="display: none; margin-top: 0.5rem; background: rgba(34, 197, 94, 0.08); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 6px; padding: 0.45rem 0.65rem;">
+              <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.4rem; margin-bottom: 0.25rem;">
+                <div style="display: flex; align-items: center; gap: 0.35rem;">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#4ADE80" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  </svg>
+                  <span style="font-size: 0.62rem; font-weight: 800; color: #4ADE80; text-transform: uppercase; letter-spacing: 0.04em;">RECIBO OFICIAL CAR (SICAR)</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.35rem;">
+                  <button type="button" id="btnCopyCarCode" title="Copiar número completo do CAR" style="background: rgba(34, 197, 94, 0.2); border: 1px solid rgba(34, 197, 94, 0.45); color: #4ADE80; padding: 0.15rem 0.45rem; border-radius: 4px; font-size: 0.58rem; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 0.25rem;">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Copiar</span>
+                  </button>
+                  <a href="https://www.car.gov.br/#/consultar" id="linkConsultarCarGov" target="_blank" rel="noopener noreferrer" title="Consultar no Portal Nacional do CAR" style="background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.35); color: #38BDF8; padding: 0.15rem 0.45rem; border-radius: 4px; font-size: 0.58rem; font-weight: 800; text-decoration: none; display: inline-flex; align-items: center; gap: 0.25rem;">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                    <span>car.gov.br</span>
+                  </a>
+                </div>
+              </div>
+              <div id="ruralCodigoCarFull" style="font-size: 0.70rem; font-weight: 700; color: #FFFFFF; font-family: monospace; word-break: break-all; letter-spacing: 0.03em;">--</div>
             </div>
 
             <!-- Ação Rápida de Consulta ao Bureau do Titular -->

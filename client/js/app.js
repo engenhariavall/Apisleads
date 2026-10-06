@@ -4309,7 +4309,45 @@ window.inspectRuralPropertyInDrawer = function(propData) {
   if (locEl) locEl.textContent = `${propData.municipio || '--'} / ${propData.uf || '--'}`;
 
   const sigefEl = document.getElementById('ruralCodigoSigef');
-  if (sigefEl) sigefEl.textContent = propData.id_sigef || propData.codigo_imovel || 'SIGEF-GEO-PENDING';
+  const sigefRow = document.getElementById('ruralSigefCodeRow');
+
+  // FASE 57/62: Extrai o código do CAR completo (preservando formato oficial com UF e 40 dígitos)
+  const fullCarCode = propData.codigo_car || propData.cod_imovel || propData.num_registro || (propData.id && String(propData.id).includes('-') && /^[A-Z]{2}-\d{7}-/i.test(propData.id) ? propData.id : null);
+  const carRow = document.getElementById('ruralCarCodeRow');
+  const carFullEl = document.getElementById('ruralCodigoCarFull');
+  const btnCopyCar = document.getElementById('btnCopyCarCode');
+  const linkCarGov = document.getElementById('linkConsultarCarGov');
+
+  if (fullCarCode && carRow && carFullEl) {
+    carRow.style.display = 'block';
+    carFullEl.textContent = fullCarCode;
+    if (linkCarGov) {
+      linkCarGov.href = 'https://www.car.gov.br/#/consultar';
+    }
+    if (btnCopyCar) {
+      btnCopyCar.onclick = (e) => {
+        e.stopPropagation();
+        navigator.clipboard.writeText(fullCarCode);
+        if (typeof showToast === 'function') {
+          showToast(`Recibo Oficial CAR copiado: ${fullCarCode}`);
+        }
+      };
+    }
+  } else if (carRow) {
+    carRow.style.display = 'none';
+  }
+
+  if (sigefEl) {
+    const hasSigef = Boolean(propData.id_sigef || (propData.codigo_imovel && propData.codigo_imovel !== 'SIGEF-GEO-PENDING'));
+    if (hasSigef) {
+      sigefEl.textContent = propData.id_sigef || propData.codigo_imovel;
+      sigefEl.style.color = '#38BDF8';
+      if (sigefRow) sigefRow.style.display = 'flex';
+    } else {
+      sigefEl.innerHTML = '<span style="color: #F87171; font-weight: 700; font-size: 0.68rem; display: inline-flex; align-items: center; gap: 0.25rem;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Pendente (Gap Fundiário INCRA)</span>';
+      if (sigefRow) sigefRow.style.display = 'flex';
+    }
+  }
 
   // Alerta Tático de Gap Fundiário
   const gapAlertCard = document.getElementById('ruralGapAlertCard');
