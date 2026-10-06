@@ -115,6 +115,33 @@ export const sicarOsintService = {
       }
     } catch (_) {}
 
+    // 2.5. Cruzamento com a Base Espelho Histórica do CAR pré-2023 (SFB / Declarante Original)
+    try {
+      const histMatch = db.prepare(`
+        SELECT nome_proprietario, cpf_cnpj_parcial, municipio, uf, matricula_declarada, area_hectares
+        FROM car_proprietarios_historico
+        WHERE codigo_car = ?
+        LIMIT 1
+      `).get(normCar);
+
+      if (histMatch && histMatch.nome_proprietario && !histMatch.nome_proprietario.includes('sigilo')) {
+        const cleanDoc = String(histMatch.cpf_cnpj_parcial || '').replace(/\D/g, '');
+        const isCnpj = cleanDoc.length === 14;
+        return {
+          success: true,
+          codigo_car: normCar,
+          nome_titular: histMatch.nome_proprietario,
+          cpf_cnpj_titular: histMatch.cpf_cnpj_parcial || null,
+          cpf_cnpj: histMatch.cpf_cnpj_parcial || null,
+          tipo_pessoa: isCnpj ? 'PJ' : 'PF',
+          uf: histMatch.uf || ufNorm,
+          municipio: histMatch.municipio || munNorm,
+          matricula_declarada: histMatch.matricula_declarada || null,
+          source: 'BASE_ESPELHO_CAR_HISTORICO_PRE2023'
+        };
+      }
+    } catch (_) {}
+
     // 3. Consulta direta e oficial ao Demonstrativo Público do SICAR / SFB
     const timeoutMs = options.timeout || 3500;
     let webScrapedData = null;

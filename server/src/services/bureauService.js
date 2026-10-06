@@ -886,27 +886,23 @@ export const bureauService = {
       LIMIT 1
     `).get(cleanDoc, cleanDoc);
 
-    // Se ainda não encontrou diretamente, verifica se o CPF corresponde a um produtor desmascarado em propriedades rurais
+    // Se ainda não encontrou diretamente, verifica se o CPF/CNPJ consta na base histórica oficial do CAR
     let sefazProducerFallback = null;
     if (!existingLead && !existingProp && isCpf) {
       try {
-        const { CANONICAL_PRODUCERS_BY_UF } = await import('./sefazIeService.js');
-        for (const [uf, prods] of Object.entries(CANONICAL_PRODUCERS_BY_UF || {})) {
-          for (const p of prods) {
-            if (p.cpf_base === cleanDoc || (cleanDoc === '59145017255' && p.nome.includes('TRENTIN'))) {
-              sefazProducerFallback = {
-                produtor_pf_nome: p.nome,
-                produtor_pf_cpf: cleanDoc,
-                municipio: p.mun || 'PASSO FUNDO',
-                uf: uf,
-                ddd: p.ddd,
-                inscricao_estadual: cleanDoc === '59145017255' ? '356/1813248' : 'ATIVA / SEFAZ',
-                whatsapp: p.phone_suffix ? `+55${p.ddd}${p.phone_suffix}` : '+5554998816319'
-              };
-              break;
-            }
-          }
-          if (sefazProducerFallback) break;
+        const hist = db.prepare(`
+          SELECT * FROM car_proprietarios_historico
+          WHERE REPLACE(REPLACE(REPLACE(cpf_cnpj, '.', ''), '-', ''), '/', '') = ?
+          LIMIT 1
+        `).get(cleanDoc);
+        if (hist) {
+          sefazProducerFallback = {
+            produtor_pf_nome: hist.nome_proprietario,
+            produtor_pf_cpf: cleanDoc,
+            municipio: hist.municipio || 'PASSO FUNDO',
+            uf: hist.uf || 'RS',
+            inscricao_estadual: null
+          };
         }
       } catch (_) {}
     }
