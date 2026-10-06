@@ -452,6 +452,23 @@ sqliteDb.exec(`
   CREATE INDEX IF NOT EXISTS idx_prop_rurais_cpf_cnpj ON propriedades_rurais(cpf_cnpj_titular);
   CREATE INDEX IF NOT EXISTS idx_prop_rurais_intent ON propriedades_rurais(intent_classification);
 
+  -- BASE ESPELHO DO CAR HISTÓRICO PRÉ-MAIO/2023 (DESMASCARAMENTO DE DECLARANTES)
+  CREATE TABLE IF NOT EXISTS car_proprietarios_historico (
+    codigo_car TEXT PRIMARY KEY,
+    nome_proprietario TEXT NOT NULL,
+    cpf_cnpj_parcial TEXT,
+    municipio TEXT,
+    uf TEXT,
+    condicao TEXT,
+    area_hectares REAL,
+    matricula_declarada TEXT,
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP
+  );
+
+  CREATE INDEX IF NOT EXISTS idx_car_hist_car ON car_proprietarios_historico(codigo_car);
+  CREATE INDEX IF NOT EXISTS idx_car_hist_mun_uf ON car_proprietarios_historico(uf, municipio);
+  CREATE INDEX IF NOT EXISTS idx_car_hist_nome ON car_proprietarios_historico(nome_proprietario);
+
   -- Fase 44/45 Etapa 5: Auditoria e Resiliência de Webhooks/Mensagens Inbound do WhatsApp (Catch-Up & Offline Sync)
   CREATE TABLE IF NOT EXISTS whatsapp_inbound_messages (
     id TEXT PRIMARY KEY,

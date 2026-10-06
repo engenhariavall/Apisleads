@@ -14,6 +14,7 @@ import { receitaService } from './receitaService.js';
 import crmService from './crmService.js';
 import cognitiveQueueService from './cognitiveQueueService.js';
 import SparksAlertDispatcherService from './sparksAlertDispatcherService.js';
+import { SparksRealDataIngestionService } from './sparksRealDataIngestionService.js';
 
 // Catálogo Canônico de Eventos e Sinais Reais de Mercado
 const AUTHENTIC_SPARKS_FEEDS = {
@@ -765,68 +766,8 @@ export class SparksEngineService {
     `).run(monitorId, tenantId);
 
     try {
-      for (const item of feed) {
-        // Verifica duplicidade recente pelo título ou documento
-        const existing = db.prepare(`
-          SELECT id FROM sparks_signals 
-          WHERE monitor_id = ? AND titulo = ? AND tenant_id = ?
-        `).get(monitorId, item.titulo, tenantId);
-
-        let signalId = existing?.id;
-        if (!existing) {
-          signalId = `sig-${type.toLowerCase()}-${crypto.randomBytes(4).toString('hex')}`;
-          
-          // Calcula pontos pelo tipo de sinal (foco em máquinas: Finame +40, Outorga +35)
-          let score = 20;
-          if (type === 'CREDITO_BNDES') score = 40;
-          else if (type === 'OUTORGA_ANA') score = 35;
-          else if (type === 'EXPANSAO_LEILAO') score = 35;
-          else if (type === 'DOU') score = 25;
-          else if (type === 'EVENTO_AGRO') score = 25;
-          else if (type === 'PASSIVO_IBAMA') score = 20;
-
-          db.prepare(`
-            INSERT INTO sparks_signals (
-              id, monitor_id, spark_type, titulo, resumo, conteudo_bruto,
-              orgao_emissor, data_publicacao, valor_monetario, volume_m3h,
-              documento_identificado, titular_identificado, nome_imovel,
-              municipio, uf, lat, lng, status_processamento, score_gerado,
-              trigger_texto, tenant_id
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, date('now'), ?, ?, ?, ?, ?, ?, ?, ?, ?, 'ENRIQUECIDO', ?, ?, ?)
-          `).run(
-            signalId, monitorId, type, item.titulo, item.resumo, item.conteudo_bruto,
-            item.orgao_emissor, item.valor_monetario, item.volume_m3h,
-            item.documento_identificado, item.titular_identificado, item.nome_imovel,
-            item.municipio, item.uf, item.lat, item.lng, score,
-            item.trigger_texto, tenantId
-          );
-
-          const signalPayload = {
-            id: signalId,
-            monitor_id: monitorId,
-            spark_type: type,
-            titulo: item.titulo,
-            resumo: item.resumo,
-            valor_monetario: item.valor_monetario,
-            volume_m3h: item.volume_m3h,
-            documento_identificado: item.documento_identificado,
-            titular_identificado: item.titular_identificado,
-            nome_imovel: item.nome_imovel,
-            municipio: item.municipio,
-            uf: item.uf,
-            trigger_texto: item.trigger_texto,
-            created_at: new Date().toISOString()
-          };
-
-          newlyIngestedSignals.push(signalPayload);
-          ingestedCount++;
-
-          // Disparo autônomo gratuito para a lista de gestores no Super Admin
-          SparksAlertDispatcherService.notifySignal(signalPayload, tenantId).catch(err => {
-            console.warn('[SPARKS_ALERT] Falha ao notificar gestor:', err.message);
-          });
-        }
-      }
+      const ingestResult = await SparksRealDataIngestionService.ingestRealSignals(type, tenantId);
+      ingestedCount = ingestResult.saved_count || 0;
 
       // Cálculo de intervalo adaptativo governado por Q-Learning
       const baseFreq = Number(monitor.frequencia_minutos || 60);
@@ -884,49 +825,16 @@ export class SparksEngineService {
   }
 
   /**
-   * Povoa sinais autênticos e garante que todos os feeds canônicos estejam disponíveis
+   * Povoa sinais autênticos e garante que todos os feeds reais estejam disponíveis
    */
-  static seedInitialSignalsIfEmpty(tenantId = 'tenant-root-default') {
+  static async seedInitialSignalsIfEmpty(tenantId = 'tenant-root-default') {
     try {
-      const monitors = db.prepare("SELECT id, spark_type FROM sparks_monitors WHERE tenant_id = ?").all(tenantId);
-      for (const m of monitors) {
-        const feed = AUTHENTIC_SPARKS_FEEDS[m.spark_type] || [];
-        for (const item of feed) {
-          const existing = db.prepare(`
-            SELECT id FROM sparks_signals 
-            WHERE monitor_id = ? AND titulo = ? AND tenant_id = ?
-          `).get(m.id, item.titulo, tenantId);
-
-          if (!existing) {
-            const signalId = `sig-${m.spark_type.toLowerCase()}-${crypto.randomBytes(4).toString('hex')}`;
-            let score = 25;
-            if (m.spark_type === 'CREDITO_BNDES') score = 40;
-            else if (m.spark_type === 'OUTORGA_ANA') score = 35;
-            else if (m.spark_type === 'EXPANSAO_LEILAO') score = 35;
-            else if (m.spark_type === 'DOU') score = 25;
-            else if (m.spark_type === 'EVENTO_AGRO') score = 25;
-            else if (m.spark_type === 'PASSIVO_IBAMA') score = 20;
-
-            db.prepare(`
-              INSERT INTO sparks_signals (
-                id, monitor_id, spark_type, titulo, resumo, conteudo_bruto,
-                orgao_emissor, data_publicacao, valor_monetario, volume_m3h,
-                documento_identificado, titular_identificado, nome_imovel,
-                municipio, uf, lat, lng, status_processamento, score_gerado,
-                trigger_texto, tenant_id
-              ) VALUES (?, ?, ?, ?, ?, ?, ?, date('now'), ?, ?, ?, ?, ?, ?, ?, ?, ?, 'ENRIQUECIDO', ?, ?, ?)
-            `).run(
-              signalId, m.id, m.spark_type, item.titulo, item.resumo, item.conteudo_bruto,
-              item.orgao_emissor, item.valor_monetario, item.volume_m3h,
-              item.documento_identificado, item.titular_identificado, item.nome_imovel,
-              item.municipio, item.uf, item.lat, item.lng, score,
-              item.trigger_texto, tenantId
-            );
-          }
-        }
+      const count = db.prepare("SELECT COUNT(*) as total FROM sparks_signals WHERE tenant_id = ?").get(tenantId);
+      if (!count || count.total === 0) {
+        await SparksRealDataIngestionService.ingestRealSignals(null, tenantId);
       }
     } catch (err) {
-      console.warn('⚠️ [SPARKS SEED] Falha ao sincronizar sinais autênticos:', err.message);
+      console.warn('⚠️ [SPARKS REAL INGESTION] Falha ao sincronizar sinais reais:', err.message);
     }
   }
 

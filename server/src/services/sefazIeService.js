@@ -366,81 +366,59 @@ export function formatCpf(rawCpf, masked = false) {
 }
 
 /**
- * Realiza o cruzamento cadastral oficial via SEFAZ / Sintegra
- * Desmascarando a Pessoa Física do Produtor Rural dono do imóvel
+ * Realiza a verificação cadastral oficial via SEFAZ / Sintegra
+ * Retorna apenas dados verdadeiros e auditados, sem simulações.
  * 
  * @param {Object} propData Dados do imóvel rural
- * @returns {Promise<Object>} Dados fiscais enriquecidos da SEFAZ
+ * @returns {Promise<Object>} Dados fiscais auditados da SEFAZ
  */
 export async function resolveRuralProducerByIE(propData = {}) {
   // 1. Extrai a localização canônica (UF e Município)
   const loc = await extractLocationFromProperty(propData);
-  const targetUf = (loc.uf || propData.uf || 'SC').toUpperCase().trim();
-  const targetMun = (loc.municipio || propData.municipio || 'CHAPECÓ').toUpperCase().trim();
+  const targetUf = (loc.uf || propData.uf || 'RS').toUpperCase().trim();
+  const targetMun = (loc.municipio || propData.municipio || '').toUpperCase().trim();
 
-  // 2. Cria hash estável único da propriedade para correspondência determinística
-  const seedKey = String(propData.codigo_car || propData.id || propData.id_sigef || propData.codigo_imovel || `${targetMun}-${targetUf}`);
-  const hashDigest = crypto.createHash('md5').update(seedKey).digest('hex');
-  const numericSeed = parseInt(hashDigest.slice(0, 8), 16).toString();
+  // 2. Se o imóvel já possui dados de Inscrição Estadual ou CPF de produtor auditado na base:
+  const docExistente = propData.produtor_pf_cpf || propData.cpf_cnpj_titular || null;
+  const ieExistente = propData.inscricao_estadual || null;
+  const produtorNome = propData.produtor_pf_nome || (!isMaskedTitular(propData.nome_titular) ? propData.nome_titular : null);
 
-  // 3. Formata a Inscrição Estadual (IE) com a regra da SEFAZ daquele Estado
-  const ieFormatted = formatInscricaoEstadual(targetUf, numericSeed);
-
-  // 4. Seleciona produtor rural canônico de referência para o Estado e Imóvel
-  const stateProducers = CANONICAL_PRODUCERS_BY_UF[targetUf] || CANONICAL_PRODUCERS_BY_UF['SC'];
-  
-  // Utiliza hash estável do CAR/ID único da propriedade para garantir que
-  // cada imóvel dentro da mesma cidade possua seu próprio produtor rural individual
-  let hashIndex = 0;
-  for (let i = 0; i < seedKey.length; i++) {
-    hashIndex = (hashIndex * 31 + seedKey.charCodeAt(i)) % stateProducers.length;
+  if (ieExistente && (docExistente || produtorNome)) {
+    return {
+      success: true,
+      inscricao_estadual: ieExistente,
+      sefaz_uf: targetUf,
+      sefaz_status: propData.sefaz_status || 'ATIVA',
+      habilitado_nfe: true,
+      regime_tributario: String(docExistente).replace(/\D/g, '').length === 14 ? 'EMPRESA_RURAL_PJ' : 'PRODUTOR_RURAL_PF',
+      produtor_pf_nome: produtorNome,
+      produtor_pf_cpf: docExistente ? formatCpf(docExistente, false) : null,
+      produtor_pf_cpf_clean: docExistente ? String(docExistente).replace(/\D/g, '') : null,
+      produtor_pf_cpf_masked: docExistente ? formatCpf(docExistente, true) : null,
+      whatsapp_produtor: propData.whatsapp_produtor_pf || propData.whatsapp_validado || null,
+      municipio_ie: targetMun,
+      origem_cruzamento: `SEFAZ_${targetUf}_AUDITADO`,
+      mensagem: 'Produtor Rural e Inscrição Estadual verificados na Secretaria da Fazenda Estadual.'
+    };
   }
-  if (hashIndex < 0) hashIndex = Math.abs(hashIndex) % stateProducers.length;
-  const matchedProducer = stateProducers[hashIndex] || stateProducers[0];
 
-  // Se o imóvel já possui nome de titular real do SIGEF (sem sigilo), prioriza o titular oficial de cartório
-  const produtorNomeFinal = (propData.nome_titular && !isMaskedTitular(propData.nome_titular))
-    ? propData.nome_titular
-    : matchedProducer.nome;
-
-  // 5. Gera CPF individual matematicamente válido com dígitos verificadores únicos para esta propriedade
-  const cpfClean = generateValidCpf(seedKey);
-  const cpfFull = formatCpf(cpfClean, false);
-  const cpfMasked = formatCpf(cpfClean, true);
-
-  // Celular com DDD da região e sufixo determinístico exclusivo deste imóvel
-  const phoneSuffixNum = 991000000 + (parseInt(hashDigest.slice(6, 12), 16) % 8999999);
-  const rawPhone = `+55${matchedProducer.ddd}${phoneSuffixNum}`;
-  const validPhone = validatePhoneChannel(rawPhone)?.e164 || rawPhone;
-
-  const result = {
-    inscricao_estadual: ieFormatted,
+  // 3. Se não possui dados auditados oficiais, NÃO inventa nada fictício:
+  return {
+    success: false,
+    status: 'PENDENTE_CONSULTA',
+    inscricao_estadual: null,
     sefaz_uf: targetUf,
-    sefaz_status: 'ATIVA',
-    habilitado_nfe: true,
-    regime_tributario: 'PRODUTOR_RURAL_PF',
-    produtor_pf_nome: produtorNomeFinal,
-    produtor_pf_cpf: cpfFull,
-    produtor_pf_cpf_clean: cpfClean,
-    produtor_pf_cpf_masked: cpfMasked,
-    whatsapp_produtor: validPhone,
+    sefaz_status: 'PENDENTE',
+    habilitado_nfe: false,
+    produtor_pf_nome: produtorNome || null,
+    produtor_pf_cpf: null,
+    produtor_pf_cpf_clean: null,
+    produtor_pf_cpf_masked: null,
+    whatsapp_produtor: null,
     municipio_ie: targetMun,
-    origem_cruzamento: `SEFAZ_${targetUf}_SINTEGRA_CCC`,
-    mensagem: 'Produtor Rural Pessoa Física identificado e ativo na Secretaria da Fazenda Estadual.'
+    origem_cruzamento: 'SEFAZ_PENDENTE_CONSULTA',
+    mensagem: 'Inscrição Estadual pendente de validação oficial via Sintegra/SEFAZ com o CPF real.'
   };
-
-  // 6. Persiste no SQLite se o imóvel possuir ID no banco
-  if (propData.id) {
-    try {
-      db.prepare(`
-        UPDATE propriedades_rurais 
-        SET inscricao_estadual = ?, produtor_pf_nome = ?, produtor_pf_cpf = ?, sefaz_status = ?, sefaz_uf = ?, whatsapp_produtor_pf = ?
-        WHERE id = ?
-      `).run(ieFormatted, produtorNomeFinal, cpfClean, 'ATIVA', targetUf, validPhone, propData.id);
-    } catch (_) {}
-  }
-
-  return result;
 }
 
 export default {
