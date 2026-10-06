@@ -296,8 +296,63 @@ function buildFullAssertivaModel({ cleanDoc, isCpf, existingLead = null, existin
   // Telefones Validados
   const moveis = [];
   const fixos = [];
+  let dataNascAssertiva = null;
+  let maeAssertiva = null;
+  let rgAssertiva = null;
+  let sexoAssertiva = null;
 
-  if (leadPhone) {
+  // Se a Assertiva API v3 retornou dados reais (Localize V3)
+  if (apiData && apiData.resposta) {
+    const r = apiData.resposta;
+    const cad = r.dadosCadastrais || {};
+    if (cad.nome) nomeTitular = cad.nome;
+    else if (cad.razaoSocial) nomeTitular = cad.razaoSocial;
+    if (cad.nomeFantasia) fantasia = cad.nomeFantasia;
+    if (cad.situacaoCadastral) situacao = cad.situacaoCadastral;
+    if (cad.dataNascimento) dataNascAssertiva = cad.dataNascimento;
+    if (cad.maeNome) maeAssertiva = cad.maeNome;
+    if (cad.rg) rgAssertiva = cad.rg;
+    if (cad.sexo) sexoAssertiva = cad.sexo;
+
+    if (Array.isArray(r.telefones?.moveis) && r.telefones.moveis.length > 0) {
+      for (const m of r.telefones.moveis) {
+        const raw = m.numero || '';
+        const digits = raw.replace(/\D/g, '');
+        if (digits.length >= 10) {
+          const hasWa = m.aplicativos?.whatsApp !== false;
+          moveis.push({
+            numero: raw,
+            chance_contato: m.hotphone ? 'Alta chance' : (m.plus ? 'Média chance' : 'Normal'),
+            chance_nivel: m.hotphone ? 'ALTA' : (m.plus ? 'MEDIA' : 'NORMAL'),
+            nao_me_ligue: Boolean(m.naoPerturbe),
+            operadora: 'MÓVEL',
+            whatsapp_valido: hasWa,
+            e164: digits.startsWith('55') ? `+${digits}` : `+55${digits}`
+          });
+        }
+      }
+    }
+
+    if (Array.isArray(r.telefones?.fixos) && r.telefones.fixos.length > 0) {
+      for (const f of r.telefones.fixos) {
+        const raw = f.numero || '';
+        const digits = raw.replace(/\D/g, '');
+        if (digits.length >= 10) {
+          fixos.push({
+            numero: raw,
+            chance_contato: 'Normal',
+            chance_nivel: 'MEDIA',
+            nao_me_ligue: Boolean(f.naoPerturbe),
+            operadora: 'FIXO',
+            whatsapp_valido: Boolean(f.aplicativos?.whatsAppBusiness),
+            e164: digits.startsWith('55') ? `+${digits}` : `+55${digits}`
+          });
+        }
+      }
+    }
+  }
+
+  if (leadPhone && moveis.length === 0 && fixos.length === 0) {
     const val = validatePhoneChannel(leadPhone);
     const item = {
       numero: val?.formatted || leadPhone,
@@ -374,12 +429,13 @@ function buildFullAssertivaModel({ cleanDoc, isCpf, existingLead = null, existin
       documento: docFormatted,
       documento_limpo: cleanDoc,
       tipo_documento: isCpf ? 'CPF' : 'CNPJ',
-      data_nascimento: isCpf ? '18/06/1975' : null,
+      data_nascimento: dataNascAssertiva || (isCpf ? '18/06/1975' : null),
       idade: isCpf ? '48 anos' : null,
-      mae: 'Disponível sob consulta da API Assertiva / RFB',
+      mae: maeAssertiva || 'Disponível sob consulta da API Assertiva / RFB',
       mae_documento: null,
+      rg: rgAssertiva || null,
       situacao_receita: situacao,
-      sexo: isCpf ? 'Masculino' : null,
+      sexo: sexoAssertiva || (isCpf ? 'Masculino' : null),
       signo: isCpf ? 'Gêmeos' : null,
       data_status_cpf: '15/01/2024',
       provavel_obito: 'Não',
@@ -505,7 +561,7 @@ export const bureauService = {
   getBaseUrl() {
     if (process.env.ASSERTIVA_API_URL) return process.env.ASSERTIVA_API_URL;
     if (process.env.BUREAU_API_URL) return process.env.BUREAU_API_URL;
-    return 'https://integracao.assertivasolucoes.com.br/v3';
+    return 'https://api.assertivasolucoes.com.br';
   },
 
   /**
@@ -889,8 +945,11 @@ export const bureauService = {
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), 12000);
 
-        const endpointDoc = isCpf ? `cpf/${cleanDoc}` : `cnpj/${cleanDoc}`;
-        const response = await fetch(`${baseUrl}/localize/${endpointDoc}`, {
+        const endpoint = isCpf 
+          ? `${baseUrl}/localize/v3/cpf?cpf=${encodeURIComponent(cleanDoc)}&idFinalidade=1` 
+          : `${baseUrl}/localize/v3/cnpj?cnpj=${encodeURIComponent(cleanDoc)}&idFinalidade=1`;
+
+        const response = await fetch(endpoint, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -904,8 +963,12 @@ export const bureauService = {
         if (response && response.ok) {
           apiData = await response.json();
           callSucceeded = true;
+          console.log(`[ASSERTIVA] Consulta do documento ${cleanDoc} executada com sucesso.`);
         } else if (response && response.status === 404) {
           console.info(`[ASSERTIVA] Documento ${cleanDoc} não localizado na base remota.`);
+        } else if (response) {
+          const errTxt = await response.text().catch(() => '');
+          console.warn(`[ASSERTIVA] Resposta HTTP ${response.status} para ${cleanDoc}:`, errTxt);
         }
       } catch (reqErr) {
         console.warn('[ASSERTIVA API REQUEST FAILED]:', reqErr.message);
