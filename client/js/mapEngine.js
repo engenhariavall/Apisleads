@@ -4183,6 +4183,7 @@ window.MapEngine = (function() {
       layerId: 'wms-ibama-layer',
       url: 'https://pamgia.ibama.gov.br/geoserver/wms?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&LAYERS=ibama:embargos&SRS=EPSG:3857&BBOX={bbox-epsg-3857}&WIDTH=256&HEIGHT=256&FORMAT=image/png&TRANSPARENT=TRUE',
       opacity: 0.75,
+      color: '#D946EF',
       active: false,
       btnId: 'toggleWmsIbamaBtn',
       chkId: 'checkWmsIbamaLeg'
@@ -4194,6 +4195,7 @@ window.MapEngine = (function() {
       layerId: 'wms-ana-layer',
       url: 'https://www.snirh.gov.br/arcgis/services/INDE/Camadas/MapServer/WMSServer?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&LAYERS=pivos_irrigacao&SRS=EPSG:3857&BBOX={bbox-epsg-3857}&WIDTH=256&HEIGHT=256&FORMAT=image/png&TRANSPARENT=TRUE',
       opacity: 0.80,
+      color: '#14B8A6',
       active: false,
       btnId: 'toggleWmsAnaBtn',
       chkId: 'checkWmsAnaLeg'
@@ -4205,6 +4207,7 @@ window.MapEngine = (function() {
       layerId: 'wms-prodes-layer',
       url: 'https://terrabrasilis.dpi.inpe.br/geoserver/ows?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&LAYERS=prodes-cerrado-nb:yearly_deforestation,prodes-legal-amz-nb:yearly_deforestation&SRS=EPSG:3857&BBOX={bbox-epsg-3857}&WIDTH=256&HEIGHT=256&FORMAT=image/png&TRANSPARENT=TRUE',
       opacity: 0.75,
+      color: '#EA580C',
       active: false,
       btnId: 'toggleWmsProdesBtn',
       chkId: 'checkWmsProdesLeg'
