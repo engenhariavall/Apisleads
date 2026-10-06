@@ -237,6 +237,7 @@ window.MapEngine = (function() {
         setupLassoLayers(); // FASE 66: Camadas do Laço de Seleção Espacial
         setupLassoEvents(); // FASE 66: Interação e Card de Seleção por Laço
         fetchAndRenderFundiarioGeoJson();
+        setupWmsLayersAndControls();
       });
 
       // Resize defensivo
@@ -926,6 +927,9 @@ window.MapEngine = (function() {
 
     // 12. Padronização Global de Tooltips Corporativos da Barra Superior
     setupSpatialToolbarTooltips();
+
+    // 13. Gestão e Sincronização de Camadas WMS Oficiais (IBAMA, ANA, PRODES)
+    setupWmsLayersAndControls();
   }
 
   /**
@@ -4168,11 +4172,190 @@ window.MapEngine = (function() {
     );
   }
 
+  // =========================================================================
+  // FASE WMS: CAMADAS GEOESPACIAIS OFICIAIS (IBAMA, ANA, PRODES)
+  // =========================================================================
+  const WMS_CONFIGS = {
+    ibama: {
+      id: 'ibama',
+      name: 'IBAMA (Embargos Ambientais)',
+      sourceId: 'wms-ibama-source',
+      layerId: 'wms-ibama-layer',
+      url: 'https://pamgia.ibama.gov.br/geoserver/wms?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&LAYERS=ibama:embargos&SRS=EPSG:3857&BBOX={bbox-epsg-3857}&WIDTH=256&HEIGHT=256&FORMAT=image/png&TRANSPARENT=TRUE',
+      opacity: 0.75,
+      active: false,
+      btnId: 'toggleWmsIbamaBtn',
+      chkId: 'checkWmsIbamaLeg'
+    },
+    ana: {
+      id: 'ana',
+      name: 'ANA (Pivôs de Irrigação)',
+      sourceId: 'wms-ana-source',
+      layerId: 'wms-ana-layer',
+      url: 'https://www.snirh.gov.br/arcgis/services/INDE/Camadas/MapServer/WMSServer?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&LAYERS=pivos_irrigacao&SRS=EPSG:3857&BBOX={bbox-epsg-3857}&WIDTH=256&HEIGHT=256&FORMAT=image/png&TRANSPARENT=TRUE',
+      opacity: 0.80,
+      active: false,
+      btnId: 'toggleWmsAnaBtn',
+      chkId: 'checkWmsAnaLeg'
+    },
+    prodes: {
+      id: 'prodes',
+      name: 'PRODES (Desmatamento INPE)',
+      sourceId: 'wms-prodes-source',
+      layerId: 'wms-prodes-layer',
+      url: 'https://terrabrasilis.dpi.inpe.br/geoserver/ows?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&LAYERS=prodes-cerrado-nb:yearly_deforestation,prodes-legal-amz-nb:yearly_deforestation&SRS=EPSG:3857&BBOX={bbox-epsg-3857}&WIDTH=256&HEIGHT=256&FORMAT=image/png&TRANSPARENT=TRUE',
+      opacity: 0.75,
+      active: false,
+      btnId: 'toggleWmsProdesBtn',
+      chkId: 'checkWmsProdesLeg'
+    }
+  };
+
+  let isWmsInitialized = false;
+
+  function ensureWmsLayer(layerKey) {
+    if (!map || !WMS_CONFIGS[layerKey]) return;
+    const cfg = WMS_CONFIGS[layerKey];
+
+    try {
+      if (!map.getSource(cfg.sourceId)) {
+        map.addSource(cfg.sourceId, {
+          type: 'raster',
+          tiles: [cfg.url],
+          tileSize: 256
+        });
+      }
+
+      if (!map.getLayer(cfg.layerId)) {
+        const beforeLayerId = map.getLayer('fundiario-polygon-stroke') ? 'fundiario-polygon-stroke' :
+                              (map.getLayer('clusters') ? 'clusters' :
+                              (map.getLayer('unclustered-point') ? 'unclustered-point' : undefined));
+
+        map.addLayer({
+          id: cfg.layerId,
+          type: 'raster',
+          source: cfg.sourceId,
+          minzoom: 3,
+          maxzoom: 20,
+          paint: {
+            'raster-opacity': cfg.opacity
+          },
+          layout: {
+            visibility: cfg.active ? 'visible' : 'none'
+          }
+        }, beforeLayerId);
+      }
+    } catch (e) {
+      console.warn(`[MapEngine] Erro ao instanciar camada WMS ${layerKey}:`, e);
+    }
+  }
+
+  function toggleWmsLayer(layerKey, forceState) {
+    const cfg = WMS_CONFIGS[layerKey];
+    if (!cfg) return;
+
+    const nextState = typeof forceState === 'boolean' ? forceState : !cfg.active;
+    cfg.active = nextState;
+
+    if (map) {
+      ensureWmsLayer(layerKey);
+      try {
+        if (map.getLayer(cfg.layerId)) {
+          map.setLayoutProperty(cfg.layerId, 'visibility', nextState ? 'visible' : 'none');
+        }
+      } catch (err) {
+        console.warn(`[MapEngine] Erro ao alternar visibilidade da camada WMS ${layerKey}:`, err);
+      }
+    }
+
+    // Sincroniza o botão na barra superior do mapa
+    const btn = document.getElementById(cfg.btnId);
+    if (btn) {
+      btn.classList.toggle('active', nextState);
+    }
+
+    // Sincroniza o checkbox na Legenda Espacial
+    const chk = document.getElementById(cfg.chkId);
+    if (chk) {
+      chk.checked = nextState;
+    }
+
+    // Toast de notificação
+    if (typeof showToast === 'function') {
+      showToast(nextState ? `Camada ${cfg.name} ativada no mapa.` : `Camada ${cfg.name} desativada.`);
+    }
+
+    // Persistência em LocalStorage
+    try {
+      const saved = JSON.parse(localStorage.getItem('versus_wms_layers_state') || '{}');
+      saved[layerKey] = nextState;
+      localStorage.setItem('versus_wms_layers_state', JSON.stringify(saved));
+    } catch (_) {}
+  }
+
+  function setupWmsLayersAndControls() {
+    if (isWmsInitialized) return;
+    isWmsInitialized = true;
+
+    let savedPrefs = {};
+    try {
+      savedPrefs = JSON.parse(localStorage.getItem('versus_wms_layers_state') || '{}');
+    } catch (_) {}
+
+    Object.keys(WMS_CONFIGS).forEach(key => {
+      const cfg = WMS_CONFIGS[key];
+
+      // Botão na barra de ferramentas
+      const btn = document.getElementById(cfg.btnId);
+      if (btn) {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          toggleWmsLayer(key);
+        });
+      }
+
+      // Checkbox na Legenda Espacial
+      const chk = document.getElementById(cfg.chkId);
+      if (chk) {
+        chk.addEventListener('change', (e) => {
+          e.stopPropagation();
+          toggleWmsLayer(key, chk.checked);
+        });
+      }
+
+      // Clique no container do item da Legenda Espacial
+      const legItem = document.querySelector(`.leg-wms-item[data-wms-key="${key}"]`);
+      if (legItem) {
+        legItem.addEventListener('click', (e) => {
+          if (e.target.tagName.toLowerCase() === 'input') return;
+          e.stopPropagation();
+          toggleWmsLayer(key);
+        });
+      }
+
+      // Restaura preferência salva
+      if (savedPrefs[key] === true) {
+        if (map && isMapInitialized) {
+          toggleWmsLayer(key, true);
+        } else {
+          cfg.active = true;
+          if (btn) btn.classList.add('active');
+          if (chk) chk.checked = true;
+        }
+      }
+    });
+  }
+
   return {
     initMap,
     resize,
     toggleFullscreen,
     exitFullscreen,
+    toggleWmsLayer,
+    getWmsConfigs: () => WMS_CONFIGS,
+    isWmsLayerActive: (key) => !!WMS_CONFIGS[key]?.active,
+    setupWmsLayersAndControls,
     toggleBaseMapMode,
     setBaseMapMode,
     getBaseMapMode: () => currentBaseMapMode,

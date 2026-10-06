@@ -812,6 +812,22 @@
                     <span>Apenas PF</span>
                   </button>
                 </div>
+                <!-- Seletor Tático de Camadas WMS Oficiais (IBAMA / ANA / PRODES) -->
+                <div class="map-wms-toggles-container" id="mapWmsTogglesContainer" data-niche="agro">
+                  <span class="wms-toggles-label">CAMADAS WMS:</span>
+                  <button type="button" class="btn-wms-toggle ibama" id="toggleWmsIbamaBtn" data-wms="ibama" data-tooltip="Ativar/Desativar camada WMS de Embargos Ambientais do IBAMA">
+                    <span class="wms-dot ibama"></span>
+                    <span>IBAMA (Embargos)</span>
+                  </button>
+                  <button type="button" class="btn-wms-toggle ana" id="toggleWmsAnaBtn" data-wms="ana" data-tooltip="Ativar/Desativar camada WMS de Pivôs Centrais de Irrigação da ANA (SNIRH)">
+                    <span class="wms-dot ana"></span>
+                    <span>ANA (Pivôs)</span>
+                  </button>
+                  <button type="button" class="btn-wms-toggle prodes" id="toggleWmsProdesBtn" data-wms="prodes" data-tooltip="Ativar/Desativar camada WMS de Monitoramento de Desmatamento PRODES (INPE)">
+                    <span class="wms-dot prodes"></span>
+                    <span>PRODES (Desmatamento)</span>
+                  </button>
+                </div>
                 <!-- Alternador de Estilo de Base: Satélite Real vs Vetorial -->
                 <button type="button" class="btn-map-control btn-map-mode-toggle" id="btnToggleMapMode" data-mode="vector" data-tooltip="Alternar entre Satélite Real de Alta Resolução e Mapa Vetorial">
                   <span class="map-mode-icon" id="btnToggleMapModeIcon">
@@ -1054,6 +1070,7 @@
                         <div class="help-item"><b>Revenda Agro & Máquinas:</b> Concessionárias de máquinas, tratores e lojas de insumos.</div>
                         <div class="help-item"><b>Comércio B2B Geral:</b> Empresas e distribuidores mercantis em geral.</div>
                         <div class="help-item"><b>Malha Fundiária:</b> Polígonos certificados SIGEF (INCRA), ambientais CAR e Gaps HOT.</div>
+                        <div class="help-item"><b>Camadas WMS Oficiais:</b> Embargos IBAMA, pivôs de irrigação ANA e desmatamento PRODES/INPE.</div>
                         <div class="help-item"><b>Sensoriamento Orbital:</b> Pivôs centrais, silos, recursos hídricos e vigor NDVI.</div>
                         <div class="help-item"><b>Vitalidade Cadastral:</b> Empresas em operação ativa vs zumbis presumidas.</div>
                       </div>
@@ -1178,6 +1195,85 @@
                               Dupla validação espacial: georreferenciamento cartorial do INCRA cruzado e reconciliado com o CAR do SICAR.
                             </div>
                           </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- SEÇÃO WMS: CAMADAS WMS & FISCALIZAÇÃO (IBAMA / ANA / PRODES) -->
+                    <div class="legend-accordion-group" data-group="wms">
+                      <div class="legend-accordion-header" data-target="groupWms">
+                        <div class="legend-header-title">
+                          <span class="legend-header-icon" style="display:inline-flex; align-items:center;">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#F43F5E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                            </svg>
+                          </span>
+                          <span>Camadas WMS (IBAMA / ANA / PRODES)</span>
+                        </div>
+                        <span class="legend-accordion-arrow">▸</span>
+                      </div>
+                      <div class="legend-accordion-body" id="groupWms" style="display: none;">
+                        <!-- IBAMA Embargos -->
+                        <div class="leg-item leg-item-tooltip-wrap leg-wms-item" data-wms-key="ibama">
+                          <label class="leg-wms-checkbox-label" title="Ativar/Desativar camada no mapa">
+                            <input type="checkbox" id="checkWmsIbamaLeg" class="leg-wms-checkbox">
+                            <span class="leg-wms-box ibama"></span>
+                          </label>
+                          <span style="font-size: 0.68rem; line-height: 1.25;"><strong style="color: #F87171;">IBAMA</strong> (Embargos Ambientais)</span>
+                          <div class="spatial-legend-tooltip">
+                            <div class="spatial-tooltip-title" style="color: #F87171;">
+                              <span class="spatial-tooltip-dot" style="background: #EF4444; box-shadow: 0 0 6px rgba(239, 68, 68, 0.6);"></span>
+                              <span>IBAMA - Embargos Ambientais</span>
+                            </div>
+                            <div class="spatial-tooltip-body">
+                              Polígonos oficiais de áreas autuadas e embargadas pelo IBAMA por infrações ambientais. Camada WMS indispensável para compliance socioambiental, risco ESG e restrição de crédito rural.
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- ANA Pivôs de Irrigação -->
+                        <div class="leg-item leg-item-tooltip-wrap leg-wms-item" data-wms-key="ana">
+                          <label class="leg-wms-checkbox-label" title="Ativar/Desativar camada no mapa">
+                            <input type="checkbox" id="checkWmsAnaLeg" class="leg-wms-checkbox">
+                            <span class="leg-wms-box ana"></span>
+                          </label>
+                          <span style="font-size: 0.68rem; line-height: 1.25;"><strong style="color: #38BDF8;">ANA</strong> (Pivôs de Irrigação)</span>
+                          <div class="spatial-legend-tooltip">
+                            <div class="spatial-tooltip-title" style="color: #38BDF8;">
+                              <span class="spatial-tooltip-dot" style="background: #06B6D4; box-shadow: 0 0 6px rgba(6, 182, 212, 0.6);"></span>
+                              <span>ANA / SNIRH - Pivôs de Irrigação</span>
+                            </div>
+                            <div class="spatial-tooltip-body">
+                              Levantamento nacional de pivôs centrais de irrigação mapeados pela Agência Nacional de Águas e Saneamento Básico (SNIRH/Embrapa). Mapeia perímetros de agricultura irrigada intensiva e alto consumo tecnológico.
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- PRODES Desmatamento INPE -->
+                        <div class="leg-item leg-item-tooltip-wrap leg-wms-item" data-wms-key="prodes">
+                          <label class="leg-wms-checkbox-label" title="Ativar/Desativar camada no mapa">
+                            <input type="checkbox" id="checkWmsProdesLeg" class="leg-wms-checkbox">
+                            <span class="leg-wms-box prodes"></span>
+                          </label>
+                          <span style="font-size: 0.68rem; line-height: 1.25;"><strong style="color: #FBBF24;">PRODES</strong> (Desmatamento INPE)</span>
+                          <div class="spatial-legend-tooltip">
+                            <div class="spatial-tooltip-title" style="color: #FBBF24;">
+                              <span class="spatial-tooltip-dot" style="background: #EAB308; box-shadow: 0 0 6px rgba(234, 179, 8, 0.6);"></span>
+                              <span>PRODES / TerraBrasilis - Desmatamento</span>
+                            </div>
+                            <div class="spatial-tooltip-body">
+                              Monitoramento anual por satélite de supressão e corte raso da cobertura vegetal nativa (Cerrado e Amazônia Legal), provido pelo Instituto Nacional de Pesquisas Espaciais (INPE/TerraBrasilis).
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Rodapé de Status do Serviço WMS -->
+                        <div class="leg-wms-sub-footer" style="margin-top: 0.35rem; padding-top: 0.25rem; border-top: 1px dashed rgba(255, 255, 255, 0.08); display: flex; align-items: center; justify-content: space-between; font-size: 0.60rem; color: #64748B;">
+                          <span>Serviços OGC WMS</span>
+                          <span style="color: #34D399; display: inline-flex; align-items: center; gap: 3px;">
+                            <span style="width: 5px; height: 5px; border-radius: 50%; background: #10B981; box-shadow: 0 0 4px #10B981; display: inline-block;"></span>
+                            Online
+                          </span>
                         </div>
                       </div>
                     </div>
