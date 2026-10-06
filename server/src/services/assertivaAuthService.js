@@ -53,7 +53,7 @@ export const assertivaAuthService = {
    * Retorna a URL de autenticação OAuth2
    */
   getAuthUrl() {
-    return process.env.ASSERTIVA_AUTH_URL || 'https://integracao.assertivasolucoes.com.br/v3/token';
+    return process.env.ASSERTIVA_AUTH_URL || 'https://api.assertivasolucoes.com.br/oauth2/v3/token';
   },
 
   /**
