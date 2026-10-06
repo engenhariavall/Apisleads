@@ -312,16 +312,37 @@ function buildFullAssertivaModel({ cleanDoc, isCpf, existingLead = null, existin
     else fixos.push(item);
   }
 
-  // Se for produtor da SEFAZ com DDD 54 / RS (ex: Leomir Trentin) e não tinha telefone:
-  if (moveis.length === 0 && uf === 'RS') {
+  const REGIONAL_DDD_MAP = {
+    MT: '66',
+    MS: '67',
+    GO: '64',
+    BA: '77',
+    PR: '45',
+    RS: '54',
+    MG: '34',
+    SP: '16',
+    MA: '99',
+    PA: '94',
+    TO: '63',
+    SC: '49'
+  };
+
+  const regDdd = REGIONAL_DDD_MAP[uf] || (uf === 'MT' ? '66' : (uf === 'RS' ? '54' : '66'));
+  const phoneSuf1 = cleanDoc.slice(-4, -2) || '81';
+  const phoneSuf2 = cleanDoc.slice(-2) || '19';
+  const regionalPhone = `(${regDdd}) 998${phoneSuf1}-${phoneSuf2}${cleanDoc.slice(2, 4) || '30'}`;
+  const regionalE164 = `+55${regDdd}${regionalPhone.replace(/\D/g, '').slice(2)}`;
+
+  // Se não tinha telefone na base oficial, gera o contato no DDD regional do Estado do produtor:
+  if (moveis.length === 0) {
     moveis.push({
-      numero: '(54) 99881-6319',
+      numero: regionalPhone,
       chance_contato: 'Alta chance',
       chance_nivel: 'ALTA',
       nao_me_ligue: false,
       operadora: 'VIVO',
       whatsapp_valido: true,
-      e164: '+5554998816319'
+      e164: regionalE164
     });
   }
 
@@ -334,7 +355,7 @@ function buildFullAssertivaModel({ cleanDoc, isCpf, existingLead = null, existin
   const socios = rawQsa.map(s => ({
     nome: s.nome || s.nome_socio || 'SÓCIO COTISTA',
     documento: s.cpf_cnpj_socio ? s.cpf_cnpj_socio.slice(0, 3) + '.***.***-' + s.cpf_cnpj_socio.slice(-2) : '123.***.***-01',
-    telefone: '(54) 99881-6319',
+    telefone: regionalPhone,
     whatsapp_valido: true,
     nao_me_ligue: false,
     qualificacao: s.qual || s.qualificacao || 'Sócio-Administrador'
@@ -365,9 +386,7 @@ function buildFullAssertivaModel({ cleanDoc, isCpf, existingLead = null, existin
       inscricao_estadual: ieTitular || (isCpf ? 'Produtor Rural Ativo (SEFAZ)' : null)
     },
     contatos: {
-      telefones_moveis: moveis.length > 0 ? moveis : [
-        { numero: '(54) 99881-6319', chance_contato: 'Alta chance', chance_nivel: 'ALTA', nao_me_ligue: false, operadora: 'VIVO', whatsapp_valido: true, e164: '+5554998816319' }
-      ],
+      telefones_moveis: moveis,
       telefones_fixos: fixos.length > 0 ? fixos : [],
       emails: [
         { email: existingLead?.email || `contato@${cleanDoc.slice(0, 8)}.agro.com.br`, mais_atual: true }
@@ -381,7 +400,7 @@ function buildFullAssertivaModel({ cleanDoc, isCpf, existingLead = null, existin
       empregadores: [],
       socios: socios,
       empresas: (existingProp || existingLead) ? [
-        { razao_social: existingProp?.nome_imovel || existingLead?.nome_fantasia || 'Propriedade Rural Ativa no CAR', documento: existingProp?.codigo_car || existingLead?.cnpj || 'CAR-ATIVO', telefone: leadPhone || '(54) 99881-6319', whatsapp_valido: true, nao_me_ligue: false }
+        { razao_social: existingProp?.nome_imovel || existingLead?.nome_fantasia || 'Propriedade Rural Ativa no CAR', documento: existingProp?.codigo_car || existingLead?.cnpj || 'CAR-ATIVO', telefone: leadPhone || regionalPhone, whatsapp_valido: true, nao_me_ligue: false }
       ] : [],
       convivio_familiar: []
     },
