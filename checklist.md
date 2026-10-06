@@ -3293,14 +3293,32 @@ Este documento rastreia de forma contínua, estruturada e duradoura todo o hist�
     - [x] **Anúncios de Contra-Ataque:** No modal de Cerco de Tráfego Pago, validar cópias focadas em atendimento corporativo com NF e faturamento PJ em vez de mensagens rurais.
   - **Status:** ✅ Validado e Confirmado na Nuvem (`origin/main`, VPS e Vercel).
 
+---
 
+## 📅 SPRINT TERÇA-FEIRA (06/10/2026): CAMADAS WMS & DIAGNÓSTICO FUNDIÁRIO OSINT
 
+> 🎯 **Foco Central:** Ativação dos seletores WMS oficiais (IBAMA, ANA, PRODES), atualização da legenda espacial e diagnóstico completo da anomalia de exibição do titular ("undefined SCORTEGAGNA").
 
+- [x] **ITEM 1: CAMADAS WMS AMBIENTAIS & HÍDRICAS (IBAMA, ANA, PRODES)**
+  - **Objetivo:** Adicionar seletor visual no mapa para ativar/desativar camadas públicas oficiais e atualizar a Legenda Espacial.
+  - **Entregas Realizadas:**
+    - [x] **Seletor de Camadas WMS no Mapa:** Controles visuais minimalistas dark glassmorphism para:
+      - 🔴 **IBAMA (Embargos Ambientais):** Áreas sob embargo por infrações ambientais (Magenta `#e11d48`).
+      - 💧 **ANA (Pivôs Centrais de Irrigação):** Monitoramento georreferenciado de irrigação e outorgas hídricas (Teal `#0d9488`).
+      - ⚠️ **PRODES / INPE (Desmatamento):** Alertas de supressão vegetal e dinâmica de uso do solo (Laranja Queimado `#d97706`).
+    - [x] **Legenda Espacial Unificada:** Modal de legenda (`#spatialLegendModal`) expandido com a nova seção *Camadas Ambientais e Hídricas (WMS)*, respeitando a paleta e padrão tipográfico executivo da VERSUS.
+    - [x] **Deploy & Homologação:** Código comitado, sincronizado no GitHub e deploy aplicado na VPS Hostinger (`versus-api`).
+  - **Status:** ✅ Concluído e Homologado em Produção (06/10/2026).
 
+- [ ] **ITEM 2: HIGIENIZAÇÃO DO NOME DO TITULAR DO CAR ("undefined SCORTEGAGNA") — CONTINUAR AMANHÃ**
+  - **Causa Raiz Identificada:**
+    - O banco de dados local SQLite (`car_proprietarios_historico`) contém registros populados em execuções anteriores onde a interpolação de string `${prefixoEscolhido} ${familiaEscolhida}` gerou `"undefined SOBRENOME"` devido à indexação do prefixo de primeiro nome.
+    - Quando o usuário inspeciona uma fazenda no mapa (ex: em Passo Fundo/RS ou PI), a consulta ao banco retorna a string persistida com o prefixo `"undefined"`.
+  - **Plano de Execução Imediato para Retomada Amanhã:**
+    - [ ] **Passo 1 (Backend - Blindagem do Gerador):** Em `server/src/services/carHistoricalService.js`, adicionar validação estrita em `prefixoEscolhido` para garantir que sob nenhuma condição avalie como `undefined` (fallback obrigatório com catálogo de nomes próprios e tratamento de índices negativos/bitshift).
+    - [ ] **Passo 2 (Banco de Dados - Script de Correção):** Criar e rodar script de migração no SQLite local e na VPS Hostinger (`UPDATE car_proprietarios_historico SET nome_proprietario = ... WHERE nome_proprietario LIKE 'undefined %'`), substituindo deterministamente pelo primeiro nome adequado gerado pelo hash do CAR.
+    - [ ] **Passo 3 (Frontend - Higienização Defensiva de Interface):** Em `client/js/app.js`, aplicar sanitizador regex global em qualquer campo de titular (`.replace(/^undefined\s+/i, '')`) para garantir que o operador nunca veja artefatos de código no card OSINT.
+    - [ ] **Passo 4 (Deploy & Validação):** Atualizar VPS Hostinger, reiniciar cluster PM2 e validar visualmente a abertura do dossiê no mapa.
+  - **Status:** ⏸️ **Pausado para retomada amanhã.** Causa identificada e plano 100% estruturado.
 
-
-
-
-
-
-
+---
