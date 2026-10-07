@@ -471,11 +471,30 @@
         </button>
       ` : '';
 
-      // Botão de Auditoria Direta no DOU (Link Oficial Governamental)
+      // Botão de Auditoria Direta (Link Oficial Governamental / Site Oficial)
+      let linkBadgeLabel = 'FONTE';
+      let linkBadgeTitle = 'Auditar na Fonte Oficial';
+      if (s.spark_type === 'CREDITO_BNDES') {
+        linkBadgeLabel = 'BNDES';
+        linkBadgeTitle = 'Ver operação no Portal de Dados Abertos do BNDES';
+      } else if (s.spark_type === 'OUTORGA_ANA') {
+        linkBadgeLabel = 'ANA/SNIRH';
+        linkBadgeTitle = 'Ver outorga no Portal Oficial da ANA/SNIRH';
+      } else if (s.spark_type === 'EVENTO_AGRO') {
+        linkBadgeLabel = 'SITE FEIRA';
+        linkBadgeTitle = 'Abrir portal oficial da feira/evento';
+      } else if (s.spark_type === 'PASSIVO_IBAMA') {
+        linkBadgeLabel = 'IBAMA';
+        linkBadgeTitle = 'Consultar embargo no portal do IBAMA / DOU';
+      } else {
+        linkBadgeLabel = 'DOU';
+        linkBadgeTitle = 'Ver publicação oficial no Diário Oficial da União (in.gov.br)';
+      }
+
       const douLinkBtn = s.url_fonte ? `
-        <a href="${s.url_fonte}" target="_blank" rel="noopener noreferrer" class="btn-action-spark-dou" onclick="event.stopPropagation()" title="Auditar no Diário Oficial da União (in.gov.br)" style="display:inline-flex; align-items:center; gap:0.25rem; padding:0.28rem 0.55rem; background:rgba(2,132,199,0.15); border:1px solid rgba(56,189,248,0.4); border-radius:4px; color:#38BDF8; font-size:0.68rem; font-weight:700; text-decoration:none;">
+        <a href="${s.url_fonte}" target="_blank" rel="noopener noreferrer" class="btn-action-spark-dou" onclick="event.stopPropagation()" title="${linkBadgeTitle}" style="display:inline-flex; align-items:center; gap:0.25rem; padding:0.28rem 0.55rem; background:rgba(2,132,199,0.15); border:1px solid rgba(56,189,248,0.4); border-radius:4px; color:#38BDF8; font-size:0.68rem; font-weight:700; text-decoration:none;">
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-          <span>DOU</span>
+          <span>${linkBadgeLabel}</span>
         </a>
       ` : '';
 
@@ -618,13 +637,34 @@
       const sourceEl = document.getElementById('modalSparkSource');
       if (sourceEl) sourceEl.textContent = signal.orgao_emissor || 'Imprensa Nacional / DOU';
 
-      // Link Oficial do DOU
+      // Link Oficial de Auditoria / Acesso Direto
       const linkContainer = document.getElementById('modalSparkOfficialLinkContainer');
       const linkBtn = document.getElementById('modalSparkOfficialLinkBtn');
+      const linkFonteLabel = document.getElementById('modalSparkOfficialFonteLabel');
       if (linkContainer && linkBtn) {
         if (signal.url_fonte) {
           linkContainer.style.display = 'flex';
           linkBtn.href = signal.url_fonte;
+          let btnText = '🔗 Abrir na Fonte Oficial';
+          let fonteDesc = 'Fonte Governamental Auditável';
+          if (signal.spark_type === 'CREDITO_BNDES') {
+            btnText = '🔗 Ver no BNDES Transparente';
+            fonteDesc = 'Portal de Dados Abertos do BNDES (dadosabertos.bndes.gov.br)';
+          } else if (signal.spark_type === 'OUTORGA_ANA') {
+            btnText = '🔗 Ver no SNIRH / ANA';
+            fonteDesc = 'Cadastro Nacional de Outorgas do SNIRH (Agência Nacional de Águas)';
+          } else if (signal.spark_type === 'EVENTO_AGRO') {
+            btnText = '🔗 Abrir Site da Feira';
+            fonteDesc = 'Portal Oficial da Feira / Comitê Organizador do Evento';
+          } else if (signal.spark_type === 'PASSIVO_IBAMA') {
+            btnText = '🔗 Consultar no IBAMA';
+            fonteDesc = 'Cadastro de Áreas Embargadas do IBAMA / Ministério do Meio Ambiente';
+          } else {
+            btnText = '🔗 Ver no DOU Oficial';
+            fonteDesc = 'Imprensa Nacional - Diário Oficial da União (in.gov.br)';
+          }
+          linkBtn.textContent = btnText;
+          if (linkFonteLabel) linkFonteLabel.textContent = fonteDesc;
         } else {
           linkContainer.style.display = 'none';
         }
