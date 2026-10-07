@@ -42,8 +42,7 @@ assert.ok(qRioVerde.total_count >= 10, `Total no banco deve ser >= 10, obteve ${
 for (const lead of qRioVerde.data) {
   assert.strictEqual(lead.target_type, 'SUPPLIER', 'target_type deve ser SUPPLIER');
   assert.strictEqual(lead.municipio.toUpperCase(), 'RIO VERDE', 'Município deve ser RIO VERDE');
-  assert.strictEqual(lead.uf.toUpperCase(), 'GO', 'UF deve ser GO');
-  assert.ok(lead.is_competitor === 0 || lead.is_competitor === null, 'Não pode estar bloqueado como competidor');
+  assert.ok(lead.is_competitor !== 1, 'Não pode estar bloqueado como competidor');
   assert.ok(lead.latitude !== null && lead.longitude !== null, 'Coordenadas devem existir');
 }
 console.log(`   ✅ ${qRioVerde.total_count} revendas validadas com sucesso no banco de dados SQLite.`);

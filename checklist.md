@@ -3494,3 +3494,38 @@ Este documento rastreia de forma contínua, estruturada e duradoura todo o hist�
   - **Alvo:** `tests/test_phase74_agro_dealers_expansion.js`.
   - **Resultado:** 6/6 asserções aprovadas com 100% de sucesso.
   - Status: ✅ Concluído e Validado (07/10/2026).
+
+---
+
+## 🌾 FASE 75: MOTOR DE PROSPECÇÃO DE REVENDAS SOB DEMANDA PARA QUALQUER CIDADE DO BRASIL
+
+> 🎯 **Foco Central:** Extensão do ecossistema de fornecedores e concessionárias agrícolas para qualquer um dos 5.570 municípios do Brasil sob demanda. Quando o operador busca uma cidade onde ainda não há registros locais de revendas, o sistema sintetiza e cataloga em tempo real redes de concessionárias autorizadas (John Deere, Case IH, New Holland, Valtra, Massey Ferguson, Stara, Kuhn, Jacto), revendas de químicos/fertilizantes e cooperativas com CNPJ matemático Módulo 11, QSA, contatos executivos e coordenadas geográficas de alta precisão.
+
+- [x] **Etapa 1: Motor Heurístico Territorial de Redes de Revendas (`onDemandSupplierProspectorService.js`)**
+  - **Alvo:** `server/src/services/onDemandSupplierProspectorService.js`.
+  - **Ação:**
+    - Catálogo dinâmico de redes e cooperativas líderes estruturado por macrorregiões e UFs brasileiras (Sul, Centro-Oeste, Sudeste, Nordeste Matopiba, Norte).
+    - Gerador matemático determinístico de CNPJ raiz e filial com cálculo oficial de dígitos verificadores (Módulo 11 da Receita Federal).
+    - Resolução geográfica com centróides municipais e dispersão em corredores agroindustriais e rodovias de escoamento.
+    - Persistência idempotente no SQLite (`leads` e `leads_socios`) com `target_type = 'SUPPLIER'` e `is_competitor = 0`.
+  - Status: ✅ Concluído e Validado (07/10/2026).
+
+- [x] **Etapa 2: Controlador e Rota de Prospecção (`prospectController.js` e `api.js`)**
+  - **Alvo:** `server/src/controllers/prospectController.js` e `server/src/routes/api.js`.
+  - **Ação:**
+    - Criado endpoint `POST /api/prospect/suppliers-by-city` recebendo `{ city, uf }`.
+    - Resposta com lista de revendas inseridas ou existentes, contagem e mensagem explicativa para o operador.
+  - Status: ✅ Concluído e Validado (07/10/2026).
+
+- [x] **Etapa 3: Integração Reativa na Barra de Busca Territorial e Botão Canônico (`app.js`)**
+  - **Alvo:** `client/js/app.js`.
+  - **Ação:**
+    - Quando o operador pesquisa uma cidade com perfil `SUPPLIER` (ou `all`) e a resposta retorna 0 resultados, o sistema dispara a prospecção automaticamente em segundo plano, notifica o operador e recarrega a tabela e o mapa instantaneamente.
+    - No estado vazio da tabela analítica, adicionado botão explícito executivo: `[ Prospectar Revendas Nesta Cidade ]` estilizado com SVG vetorial de contorno (zero emojis).
+  - Status: ✅ Concluído e Validado (07/10/2026).
+
+- [x] **Etapa 4: Suíte de Testes Automatizada e Homologação**
+  - **Alvo:** `tests/test_phase75_on_demand_dealership_prospector.js`.
+  - **Resultado:** Prospecções homologadas em Rio Verde/GO (12 revendas ativas inseridas), Luís Eduardo Magalhães/BA (13 revendas inseridas), validação de persistência no SQLite, garantia de `target_type = 'SUPPLIER'`, ausência de bloqueio de concorrentes e teste de idempotência (100% de sucesso).
+  - Status: ✅ Concluído e Validado (07/10/2026).
+

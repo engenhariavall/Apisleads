@@ -289,12 +289,7 @@ export async function resolveRuralProducerByIE(propData = {}) {
       ieExistente = formatInscricaoEstadual(targetUf, seed);
     }
 
-    const ddd = (targetMun === 'SORRISO' ? '66' : (targetMun === 'CHAPECÓ' || targetMun === 'CHAPECO' ? '49' : (STATE_DEFAULT_DDD[targetUf] || '54')));
     let rawPhone = propData.whatsapp_produtor_pf || propData.whatsapp_validado || null;
-    if (!rawPhone && docExistente) {
-      const seedNum = docExistente.replace(/\D/g, '').slice(-8);
-      rawPhone = `+55${ddd}9${seedNum.slice(0, 4)}${seedNum.slice(4, 8)}`;
-    }
 
     return {
       success: true,
