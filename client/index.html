@@ -3114,6 +3114,10 @@ Carregando script de abordagem...
               <span>Código SIGEF:</span>
               <strong id="ruralCodigoSigef">--</strong>
             </div>
+            <div class="sheet-cnpj-row" id="ruralMatriculaRow" style="display: none; margin-top: 0.35rem;">
+              <span>Matrícula CRI:</span>
+              <strong id="ruralMatriculaCri" style="color: #38BDF8;">--</strong>
+            </div>
 
             <!-- Recibo Oficial do CAR (SICAR / Ministério do Meio Ambiente) -->
             <div id="ruralCarCodeRow" style="display: none; margin-top: 0.5rem; background: rgba(34, 197, 94, 0.08); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 6px; padding: 0.45rem 0.65rem;">
@@ -3136,6 +3140,24 @@ Carregando script de abordagem...
                 </div>
               </div>
               <div id="ruralCodigoCarFull" style="font-size: 0.70rem; font-weight: 700; color: #FFFFFF; font-family: monospace; word-break: break-all; letter-spacing: 0.03em;">--</div>
+            </div>
+
+            <!-- FASE 52 (PASSO 3): Edital Oficial do Diário Oficial (DOU / DOE) -->
+            <div id="ruralGazetteNoticeRow" style="display: none; margin-top: 0.5rem; background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 6px; padding: 0.45rem 0.65rem;">
+              <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.4rem; margin-bottom: 0.25rem;">
+                <div style="display: flex; align-items: center; gap: 0.35rem;">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                  </svg>
+                  <span id="ruralGazetteTipoBadge" style="font-size: 0.62rem; font-weight: 800; color: #38BDF8; text-transform: uppercase; letter-spacing: 0.04em;">EDITAL DIÁRIO OFICIAL (DOU)</span>
+                </div>
+                <a href="#" id="linkRuralGazetteUrl" target="_blank" rel="noopener noreferrer" style="background: rgba(56, 189, 248, 0.2); border: 1px solid rgba(56, 189, 248, 0.45); color: #38BDF8; padding: 0.15rem 0.45rem; border-radius: 4px; font-size: 0.58rem; font-weight: 800; text-decoration: none; display: inline-flex; align-items: center; gap: 0.25rem;">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                  <span>Ver Edital Oficial</span>
+                </a>
+              </div>
+              <div id="ruralGazetteSnippet" style="font-size: 0.68rem; color: #CBD5E1; line-height: 1.35; margin-top: 2px;">--</div>
             </div>
 
             <!-- Ação Rápida de Consulta ao Bureau do Titular -->

@@ -1785,7 +1785,10 @@ window.MapEngine = (function() {
 
       const badge = document.getElementById('mapFilteredCountBadge');
       if (badge) {
-        badge.textContent = `${currentGeoJson.total_features || (currentGeoJson.features ? currentGeoJson.features.length : 0)} empresas`;
+        const featCount = currentGeoJson.total_features !== undefined ? currentGeoJson.total_features : (currentGeoJson.features ? currentGeoJson.features.length : 0);
+        const tType = String(filters.target_type || '').toUpperCase();
+        const typeNoun = tType === 'SUPPLIER' ? 'revendas / fornecedores' : (tType === 'BUYER' ? 'compradores / fazendas' : 'empresas');
+        badge.textContent = `${featCount} ${typeNoun}`;
         badge.classList.remove('highlight');
       }
 

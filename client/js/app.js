@@ -4650,6 +4650,64 @@ window.inspectRuralPropertyInDrawer = function(propData) {
     }
   }
 
+  // FASE 52 (PASSO 2): Matrícula Cartorial de Registro de Imóveis (CRI)
+  const matriculaEl = document.getElementById('ruralMatriculaCri');
+  const matriculaRow = document.getElementById('ruralMatriculaRow');
+  if (matriculaEl && matriculaRow) {
+    const rawMat = propData.registro_matricula || propData.matricula || null;
+    if (rawMat) {
+      matriculaEl.textContent = rawMat;
+      matriculaRow.style.display = 'flex';
+    } else {
+      matriculaRow.style.display = 'none';
+    }
+  }
+
+  // FASE 52 (PASSO 3): Diário Oficial & Editais Ambientais (DOU / DOEs)
+  const gazetteRow = document.getElementById('ruralGazetteNoticeRow');
+  const gazetteBadge = document.getElementById('ruralGazetteTipoBadge');
+  const gazetteLink = document.getElementById('linkRuralGazetteUrl');
+  const gazetteSnippet = document.getElementById('ruralGazetteSnippet');
+  if (gazetteRow) {
+    const hasGazette = Boolean(propData.diario_oficial_url || propData.edital_notificacao_car);
+    if (hasGazette) {
+      gazetteRow.style.display = 'block';
+      if (gazetteBadge) {
+        const ato = String(propData.diario_oficial_ato || '').toUpperCase();
+        const tipoDoc = propData.diario_oficial_tipo || 'DOU';
+        if (ato.includes('OUTORGA')) {
+          gazetteBadge.textContent = `OUTORGA DE ÁGUA / PIVÔ CENTRAL (${tipoDoc})`;
+          gazetteBadge.style.color = '#38BDF8';
+        } else if (ato.includes('LICENCA')) {
+          gazetteBadge.textContent = `LICENÇA AMBIENTAL / SILOS (${tipoDoc})`;
+          gazetteBadge.style.color = '#10B981';
+        } else if (ato.includes('EMBARGO')) {
+          gazetteBadge.textContent = `TERMO DE EMBARGO AMBIENTAL (IBAMA)`;
+          gazetteBadge.style.color = '#EF4444';
+        } else if (ato.includes('VALIDACAO') || ato.includes('CAR')) {
+          gazetteBadge.textContent = `REGULARIZAÇÃO AMBIENTAL CAR (${tipoDoc})`;
+          gazetteBadge.style.color = '#F59E0B';
+        } else {
+          gazetteBadge.textContent = `EDITAL DIÁRIO OFICIAL (${tipoDoc})`;
+          gazetteBadge.style.color = '#38BDF8';
+        }
+      }
+      if (gazetteLink && propData.diario_oficial_url) {
+        gazetteLink.href = propData.diario_oficial_url;
+        gazetteLink.style.display = 'inline-flex';
+      } else if (gazetteLink) {
+        gazetteLink.style.display = 'none';
+      }
+      if (gazetteSnippet) {
+        const ato = propData.diario_oficial_ato ? `[${propData.diario_oficial_ato}] ` : '';
+        const dt = propData.diario_oficial_data ? `Publicado em ${propData.diario_oficial_data}` : '';
+        gazetteSnippet.textContent = `${ato}${dt}` || 'Publicação oficial homologada';
+      }
+    } else {
+      gazetteRow.style.display = 'none';
+    }
+  }
+
   // Alerta Tático de Gap Fundiário
   const gapAlertCard = document.getElementById('ruralGapAlertCard');
   if (gapAlertCard) {

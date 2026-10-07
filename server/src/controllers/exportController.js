@@ -916,10 +916,19 @@ export async function exportLeads(req, res) {
         }
 
         let feedbackNotas = '';
+        if (l.registro_matricula) {
+          feedbackNotas += `[Cartório CRI: ${l.registro_matricula}] `;
+        }
+        if (l.codigo_imovel_sncr) {
+          feedbackNotas += `[SNCR: ${l.codigo_imovel_sncr}] `;
+        }
+        if (l.diario_oficial_url) {
+          feedbackNotas += `[Edital DOU/DOE: ${l.diario_oficial_url}] `;
+        }
         if (l.feedback_comercial) {
           try {
             const fc = typeof l.feedback_comercial === 'string' ? JSON.parse(l.feedback_comercial) : l.feedback_comercial;
-            feedbackNotas = fc.notas || '';
+            if (fc.notas) feedbackNotas += fc.notas;
           } catch (e) {}
         }
 

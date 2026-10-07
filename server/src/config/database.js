@@ -469,6 +469,31 @@ sqliteDb.exec(`
   CREATE INDEX IF NOT EXISTS idx_car_hist_mun_uf ON car_proprietarios_historico(uf, municipio);
   CREATE INDEX IF NOT EXISTS idx_car_hist_nome ON car_proprietarios_historico(nome_proprietario);
 
+  -- FASE 52 (PASSO 3): Diários Oficiais e Editais Ambientais (DOU / DOEs)
+  CREATE TABLE IF NOT EXISTS editais_diarios_oficiais (
+    id TEXT PRIMARY KEY,
+    codigo_car TEXT,
+    uf TEXT,
+    municipio TEXT,
+    nome_titular TEXT NOT NULL,
+    cpf_cnpj TEXT,
+    tipo_ato TEXT DEFAULT 'NOTIFICACAO_VALIDACAO_CAR', -- 'NOTIFICACAO_VALIDACAO_CAR', 'OUTORGA_IRRIGACAO', 'LICENCA_AMBIENTAL', 'TERMO_EMBARGO'
+    orgao_emissor TEXT DEFAULT 'IBAMA', -- 'IBAMA', 'SEMA', 'FEPAM', 'ANA', 'INCRA'
+    diario_oficial_tipo TEXT DEFAULT 'DOU', -- 'DOU', 'DOE'
+    diario_oficial_numero TEXT,
+    diario_oficial_data TEXT,
+    diario_oficial_url TEXT,
+    conteudo_resumo TEXT,
+    tenant_id TEXT DEFAULT 'tenant-root-default',
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    updated_at TEXT DEFAULT CURRENT_TIMESTAMP
+  );
+
+  CREATE INDEX IF NOT EXISTS idx_editais_car ON editais_diarios_oficiais(codigo_car);
+  CREATE INDEX IF NOT EXISTS idx_editais_mun_uf ON editais_diarios_oficiais(municipio, uf);
+  CREATE INDEX IF NOT EXISTS idx_editais_cpf_cnpj ON editais_diarios_oficiais(cpf_cnpj);
+  CREATE INDEX IF NOT EXISTS idx_editais_nome ON editais_diarios_oficiais(nome_titular);
+
   -- Fase 44/45 Etapa 5: Auditoria e Resiliência de Webhooks/Mensagens Inbound do WhatsApp (Catch-Up & Offline Sync)
   CREATE TABLE IF NOT EXISTS whatsapp_inbound_messages (
     id TEXT PRIMARY KEY,

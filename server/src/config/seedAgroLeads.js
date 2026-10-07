@@ -10,8 +10,10 @@
  */
 
 import db from './database.js';
+import { PASSO_FUNDO_EXPANDED_SUPPLIERS } from './seedPassoFundoSuppliers.js';
 
 export const AGRO_REGIONAL_SEEDS = [
+  ...PASSO_FUNDO_EXPANDED_SUPPLIERS,
   // ── PASSO FUNDO / PLANALTO MÉDIO (PRODUTORES & AGROEMPRESAS) ──────────────
   {
     cnpj: '08.319.452/0001-42',
@@ -1529,7 +1531,7 @@ export function seedAgroLeads() {
         porte, target_type, municipio, uf, logradouro, numero, bairro, cep,
         latitude, longitude, lat_operacional, lng_operacional, address_reconciled,
         telefone, telefone_sanitized, email, qsa,
-        origem, tag, contato_nome,
+        origem, tag, contato_nome, is_competitor,
         tenant_id, created_at, updated_at
       ) VALUES (
         ?, ?, ?, ?, ?,
@@ -1537,7 +1539,7 @@ export function seedAgroLeads() {
         ?, ?, ?, ?, ?, ?, ?, ?,
         ?, ?, ?, ?, ?,
         ?, ?, ?, ?,
-        ?, ?, ?,
+        ?, ?, ?, 0,
         'tenant-root-default', datetime('now'), datetime('now')
       )
       ON CONFLICT(id) DO UPDATE SET
@@ -1566,6 +1568,7 @@ export function seedAgroLeads() {
         origem = excluded.origem,
         tag = excluded.tag,
         contato_nome = excluded.contato_nome,
+        is_competitor = CASE WHEN excluded.target_type = 'SUPPLIER' THEN 0 ELSE COALESCE(leads.is_competitor, 0) END,
         updated_at = datetime('now')
     `);
 

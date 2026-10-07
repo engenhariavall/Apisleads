@@ -729,6 +729,20 @@ export async function buscarMalhaCarPorMunicipio({ uf, municipio } = {}) {
     console.warn('[PASSO 2 INTERSECTS] Aviso:', overlayErr.message);
   }
 
+  // ── PASSO 3: DIÁRIOS OFICIAIS & EDITAIS AMBIENTAIS (DOU & DOEs) ───────────
+  // Para parcelas sem titular no SIGEF, cruza com editais públicos e portarias ambientais
+  try {
+    const { GazetteEnvironmentalService } = await import('./gazetteEnvironmentalService.js');
+    const gazetteRes = await GazetteEnvironmentalService.enrichCarFeaturesWithGazette(features, { uf: ufNorm, municipio: munNorm });
+    features = gazetteRes.enrichedFeatures;
+    provenance.gazette_matches = gazetteRes.gazetteMatchesCount;
+    if (gazetteRes.gazetteMatchesCount > 0) {
+      console.log(`[PASSO 3 EDITAIS] ${gazetteRes.gazetteMatchesCount} parcelas enriquecidas com publicações do Diário Oficial.`);
+    }
+  } catch (gazetteErr) {
+    console.warn('[PASSO 3 EDITAIS] Aviso:', gazetteErr.message);
+  }
+
   return {
     type: 'FeatureCollection',
     source: 'CAR',

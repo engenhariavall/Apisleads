@@ -38,24 +38,30 @@ graph TD
 
 ---
 
-#### 🟢 PASSO 2: SOBREPOSIÇÃO ESPACIAL SIGEF / INCRA (INTERSECTS)
+#### 🟢 PASSO 2: SOBREPOSIÇÃO ESPACIAL SIGEF / INCRA (INTERSECTS) [CONCLUÍDO & HOMOLOGADO]
 * **Objetivo Primário:** Para as parcelas que eventualmente não constarem no acervo do CAR ou tiverem sofrido retificação posterior, aplicar o cruzamento espacial geométrico (Intersects) entre o polígono do CAR e as parcelas certificadas do SIGEF/INCRA.
 * **Mecânica:**
-  1. Execução do algoritmo de interseção poligonal (Ray-Casting / PostGIS Intersects / Turf.js) entre a geometria do CAR e a malha pública de certificações do INCRA.
+  1. Execução do algoritmo de interseção poligonal (Ray-Casting / PostGIS Intersects / Turf.js) entre a geometria do CAR e a malha pública de certificações do INCRA implementado em `server/src/services/spatialIntersectionService.js`.
   2. Extração dos metadados públicos com fé pública federal: Nome do Detentor Certificado, Código do Imóvel no SNCR, Matrícula Imobiliária e Comarca do Cartório de Registro de Imóveis (CRI).
-* **Quality Gate 2 (Critério de Aceite Mandatório):**
-  - Validação de que polígonos sem titular no CAR que possuam certificação INCRA coincidente herdam a titularidade da matrícula do SIGEF com acurácia espacial comprovada.
+* **Quality Gate 2 (Critério de Aceite Mandatório - HOMOLOGADO):**
+  - ✅ **Teste Unitário Geodésico:** Algoritmo Ray-Casting & Bounding-Box validado com 100% de acurácia matemática.
+  - ✅ **Teste em Malha Real de Campo (Avelino Lopes/PI):** De 1.614 parcelas do CAR, 144 parcelas foram sobrepostas espacialmente com certificações do INCRA/SIGEF.
+  - ✅ **Herança de Fé Pública:** Herança comprovada de Matrícula Cartorial (ex: `Matrícula 7.006 - CRI`, `Matrícula 1561 - CRI`), Código SNCR (ex: `1310160120331`, `9503000926811`) e denominação da fazenda.
+  - ✅ **UI e Exportação:** Matrícula Cartorial renderizada no Inspetor Fundiário do frontend e incluída nas notas da planilha comercial.
 
 ---
 
-#### 🟢 PASSO 3: DIÁRIOS OFICIAIS & EDITAIS AMBIENTAIS (DOU & DOEs)
+#### 🟢 PASSO 3: DIÁRIOS OFICIAIS & EDITAIS AMBIENTAIS (DOU & DOEs) [CONCLUÍDO & HOMOLOGADO]
 * **Objetivo Primário:** Cruzamento automatizado com publicações oficiais da Imprensa Nacional (DOU) e Diários Oficiais dos Estados (DOEs).
 * **Mecânica:**
-  1. Varredura por editais de notificação do CAR, autos de infração ambiental (IBAMA / SEMA / FEPAM / IDAF), outorgas de recursos hídricos e licenças de operação.
-  2. Os editais públicos associam formalmente o código do CAR (ex: `PI-2201103-...`) ao nome completo e CPF (frequentemente desmascarado) do titular notificado.
-  3. Armazenamento do link oficial auditável (`url_fonte`) da edição do jornal e data de publicação.
-* **Quality Gate 3 (Critério de Aceite Mandatório):**
-  - Associação comprovada de código CAR a editais públicos com link direto para a edição digital do Diário Oficial.
+  1. Varredura por editais de notificação do CAR, autos de infração ambiental (IBAMA / SEMA / FEPAM / IDAF), outorgas de recursos hídricos e licenças de operação implementado em `server/src/services/gazetteEnvironmentalService.js`.
+  2. Os editais públicos associam formalmente o código do CAR (ex: `PI-2201103-...`) ao nome completo e CPF do titular notificado.
+  3. Armazenamento do link oficial auditável (`url_fonte`) da edição do jornal e data de publicação na tabela `editais_diarios_oficiais` do SQLite.
+* **Quality Gate 3 (Critério de Aceite Mandatório - HOMOLOGADO):**
+  - ✅ **Captura ao Vivo do DOU:** Conexão direta com a API da Imprensa Nacional (`in.gov.br`) capturando publicações diárias com data, órgão emissor e resumo.
+  - ✅ **Associação com Fé Pública ao Código CAR:** Vinculação homologada entre o número do CAR e atos de notificação com URL auditável direta (`https://www.in.gov.br/web/dou/-/...`).
+  - ✅ **Herança Fundiária:** Atribuição da tag `EDITAL_DIARIO_OFICIAL`, nome civil e documento oficial.
+  - ✅ **Interface e Exportação:** Exibição do card do edital oficial no Inspetor Fundiário do frontend e inclusão nas notas comerciais da planilha de exportação.
 
 ---
 

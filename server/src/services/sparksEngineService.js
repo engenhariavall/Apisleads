@@ -401,6 +401,28 @@ export class SparksEngineService {
       throw new Error(`Sinal de inteligência '${signalId}' não encontrado.`);
     }
 
+    // Resolucao deterministica automatica se ainda nao possuir CNPJ identificado
+    if (!signal.documento_identificado && signal.titular_identificado) {
+      try {
+        const { CnpjResolutionService } = await import('./cnpjResolutionService.js');
+        const resolution = await CnpjResolutionService.resolveAndEnrichSignal(signalId, tenantId);
+        if (resolution && resolution.success) {
+          signal = db.prepare(`
+            SELECT 
+              s.*,
+              m.nome as monitor_nome,
+              m.frequencia_minutos,
+              m.prioridade_tier
+            FROM sparks_signals s
+            LEFT JOIN sparks_monitors m ON s.monitor_id = m.id
+            WHERE s.id = ?
+          `).get(signalId);
+        }
+      } catch (err) {
+        console.warn(`[SPARKS_DOSSIER] Falha na resolucao deterministica de CNPJ:`, err.message);
+      }
+    }
+
     const docRaw = signal.documento_identificado || '';
     const cleanDoc = docRaw.replace(/\D/g, '');
     const isCnpj = cleanDoc.length === 14;
@@ -447,7 +469,7 @@ export class SparksEngineService {
 
       try {
         db.prepare(`
-          INSERT INTO leads (
+          INSERT OR IGNORE INTO leads (
             id, cnpj, cnpj_raw, razao_social, nome_fantasia,
             cnae_principal_codigo, cnae_principal_descricao, porte,
             municipio, uf, latitude, longitude,
