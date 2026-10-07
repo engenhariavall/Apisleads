@@ -29,6 +29,8 @@ export const AGRO_REGIONAL_SEEDS = [
     numero: 'KM 08',
     bairro: 'ZONA RURAL',
     cep: '99050-000',
+    latitude: -28.2366853,
+    longitude: -52.3742800,
     telefone: '(54) 3314-8899',
     telefone_sanitized: '+5554999812233',
     email: 'diretoria@agropecuariasantafe.com.br',
@@ -53,6 +55,8 @@ export const AGRO_REGIONAL_SEEDS = [
     numero: 'S/N',
     bairro: 'DISTRITO DE SÃO ROQUE',
     cep: '99080-000',
+    latitude: -28.3191199,
+    longitude: -52.3887174,
     telefone: '(54) 3313-7744',
     telefone_sanitized: '+5554999745566',
     email: 'operacoes@fazendaaparecida.agr.br',
@@ -77,6 +81,8 @@ export const AGRO_REGIONAL_SEEDS = [
     numero: '2840',
     bairro: 'SÃO CRISTÓVÃO',
     cep: '99060-000',
+    latitude: -28.2852328,
+    longitude: -52.3698084,
     telefone: '(54) 3315-1200',
     telefone_sanitized: '+5554999128899',
     email: 'contato@agropesquisas.com.br',
@@ -100,6 +106,8 @@ export const AGRO_REGIONAL_SEEDS = [
     numero: 'KM 296',
     bairro: 'DISTRITO INDUSTRIAL',
     cep: '99050-100',
+    latitude: -28.2348000,
+    longitude: -52.3482000,
     telefone: '(54) 3312-6500',
     telefone_sanitized: '+5554999654411',
     email: 'comercial@fazendaalvorada.agr.br',
@@ -123,6 +131,8 @@ export const AGRO_REGIONAL_SEEDS = [
     numero: '1420',
     bairro: 'PETRÓPOLIS',
     cep: '99050-001',
+    latitude: -28.2380778,
+    longitude: -52.3756894,
     telefone: '(54) 3316-2000',
     telefone_sanitized: '+5554999162000',
     email: 'contato@copasso.com.br',
@@ -146,6 +156,8 @@ export const AGRO_REGIONAL_SEEDS = [
     numero: 'S/N',
     bairro: 'ZONA RURAL',
     cep: '99080-120',
+    latitude: -28.3351520,
+    longitude: -52.4216710,
     telefone: '(54) 3311-8844',
     telefone_sanitized: '+5554999118844',
     email: 'diretoria@planaltomedioagro.com.br',
@@ -169,6 +181,8 @@ export const AGRO_REGIONAL_SEEDS = [
     numero: 'KM 118',
     bairro: 'BOA VISTA',
     cep: '99040-020',
+    latitude: -28.2479656,
+    longitude: -52.3562206,
     telefone: '(54) 3317-5500',
     telefone_sanitized: '+5554999823344',
     email: 'comercial@sementesestrela.com.br',
@@ -192,6 +206,8 @@ export const AGRO_REGIONAL_SEEDS = [
     numero: 'KM 04',
     bairro: 'ZONA RURAL',
     cep: '99085-000',
+    latitude: -28.2220300,
+    longitude: -52.3797230,
     telefone: '(54) 3318-3322',
     telefone_sanitized: '+5554999332211',
     email: 'paiquere@agropaiquere.com.br',
@@ -217,6 +233,8 @@ export const AGRO_REGIONAL_SEEDS = [
     numero: '2980',
     bairro: 'SÃO JOSÉ',
     cep: '99052-000',
+    latitude: -28.2319453,
+    longitude: -52.3925329,
     telefone: '(54) 3316-9900',
     telefone_sanitized: '+5554999556677',
     email: 'gerencia.passofundo@slcmaquinas.com.br',
@@ -240,6 +258,8 @@ export const AGRO_REGIONAL_SEEDS = [
     numero: '3100',
     bairro: 'SÃO CRISTÓVÃO',
     cep: '99060-010',
+    latitude: -28.2871000,
+    longitude: -52.3712000,
     telefone: '(54) 3315-4400',
     telefone_sanitized: '+5554999443322',
     email: 'vendas@macponta.com.br',
@@ -263,6 +283,8 @@ export const AGRO_REGIONAL_SEEDS = [
     numero: '120',
     bairro: 'PETRÓPOLIS',
     cep: '99050-200',
+    latitude: -28.2443607,
+    longitude: -52.3900892,
     telefone: '(54) 3317-2200',
     telefone_sanitized: '+5554999221100',
     email: 'filial.passofundo@agrofel.com.br',
@@ -1501,10 +1523,11 @@ export function seedAgroLeads() {
   try {
     const checkStmt = db.prepare(`SELECT id FROM leads WHERE cnpj_raw = ? LIMIT 1`);
     const insertLeadStmt = db.prepare(`
-      INSERT OR REPLACE INTO leads (
+      INSERT INTO leads (
         id, cnpj, cnpj_raw, razao_social, nome_fantasia,
         cnae_principal_codigo, cnae_principal_descricao, capital_social,
         porte, target_type, municipio, uf, logradouro, numero, bairro, cep,
+        latitude, longitude, lat_operacional, lng_operacional, address_reconciled,
         telefone, telefone_sanitized, email, qsa,
         origem, tag, contato_nome,
         tenant_id, created_at, updated_at
@@ -1512,10 +1535,38 @@ export function seedAgroLeads() {
         ?, ?, ?, ?, ?,
         ?, ?, ?,
         ?, ?, ?, ?, ?, ?, ?, ?,
+        ?, ?, ?, ?, ?,
         ?, ?, ?, ?,
         ?, ?, ?,
         'tenant-root-default', datetime('now'), datetime('now')
       )
+      ON CONFLICT(id) DO UPDATE SET
+        razao_social = excluded.razao_social,
+        nome_fantasia = excluded.nome_fantasia,
+        cnae_principal_codigo = excluded.cnae_principal_codigo,
+        cnae_principal_descricao = excluded.cnae_principal_descricao,
+        capital_social = excluded.capital_social,
+        porte = excluded.porte,
+        target_type = excluded.target_type,
+        municipio = excluded.municipio,
+        uf = excluded.uf,
+        logradouro = excluded.logradouro,
+        numero = excluded.numero,
+        bairro = excluded.bairro,
+        cep = excluded.cep,
+        latitude = COALESCE(excluded.latitude, leads.latitude),
+        longitude = COALESCE(excluded.longitude, leads.longitude),
+        lat_operacional = COALESCE(excluded.lat_operacional, leads.lat_operacional),
+        lng_operacional = COALESCE(excluded.lng_operacional, leads.lng_operacional),
+        address_reconciled = COALESCE(excluded.address_reconciled, leads.address_reconciled),
+        telefone = excluded.telefone,
+        telefone_sanitized = excluded.telefone_sanitized,
+        email = excluded.email,
+        qsa = excluded.qsa,
+        origem = excluded.origem,
+        tag = excluded.tag,
+        contato_nome = excluded.contato_nome,
+        updated_at = datetime('now')
     `);
 
     const insertSocioStmt = db.prepare(`
@@ -1532,6 +1583,10 @@ export function seedAgroLeads() {
       const leadOrigem = isBuyer ? 'RURAL_SIGEF' : 'RECEITA_FEDERAL';
       const leadTag = isBuyer ? 'ORIGEM: RURAL / PJ' : 'REVENDA_AGRO';
       const contatoNome = sociosList.length > 0 ? sociosList[0].nome : null;
+
+      const lat = lead.latitude !== undefined && lead.latitude !== null ? parseFloat(lead.latitude) : null;
+      const lng = lead.longitude !== undefined && lead.longitude !== null ? parseFloat(lead.longitude) : null;
+      const reconciled = lat !== null && lng !== null ? 1 : null;
 
       const id = `lead-agro-${lead.cnpj_raw}`;
       insertLeadStmt.run(
@@ -1551,6 +1606,11 @@ export function seedAgroLeads() {
         lead.numero || null,
         lead.bairro || null,
         lead.cep ? String(lead.cep).replace(/\D/g, '') : null,
+        lat,
+        lng,
+        lat,
+        lng,
+        reconciled,
         lead.telefone,
         lead.telefone_sanitized,
         lead.email,

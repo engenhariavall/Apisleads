@@ -190,6 +190,10 @@ export class GeoSpatialEngine {
       return { lat: parseFloat(lead.latitude), lng: parseFloat(lead.longitude), precision: 'DATABASE' };
     }
 
+    if (lead.lat_operacional && lead.lng_operacional && !isNaN(lead.lat_operacional) && !isNaN(lead.lng_operacional)) {
+      return { lat: parseFloat(lead.lat_operacional), lng: parseFloat(lead.lng_operacional), precision: 'OPERATIONAL' };
+    }
+
     const mun = (lead.municipio || '').toUpperCase().trim();
     const uf = (lead.uf || '').toUpperCase().trim();
     const key = `${mun}/${uf}`;
