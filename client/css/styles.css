@@ -1206,8 +1206,8 @@ body.map-fullscreen-mode #rightDrawer {
   flex-direction: column;
   gap: 0.65rem;
   pointer-events: auto;
-  min-width: 220px;
-  max-width: 260px;
+  min-width: 230px;
+  max-width: 285px;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }

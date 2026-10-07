@@ -1067,12 +1067,15 @@
                       ?
                       <div class="legend-help-tooltip" id="legendHelpTooltip">
                         <div class="help-title">Guia da Legenda Espacial:</div>
+                        <div class="help-item"><b>Clusters:</b> Círculos azuis. Agrupamento geográfico de empresas. O número indica o total de leads reunidos na região. Clique ou dê zoom para desagrupar.</div>
+                        <div class="help-item"><b>Operação Ativa:</b> Ponto verde. Empresa com CNPJ ativo e atividade comercial comprovada.</div>
+                        <div class="help-item"><b>Em Transição:</b> Ponto âmbar. Alteração contratual, societária ou dados em revisão.</div>
+                        <div class="help-item"><b>Zumbi Presumida:</b> Ponto vermelho. Baixa movimentação ou indício de inatividade.</div>
                         <div class="help-item"><b>Revenda Agro & Máquinas:</b> Concessionárias de máquinas, tratores e lojas de insumos.</div>
                         <div class="help-item"><b>Comércio B2B Geral:</b> Empresas e distribuidores mercantis em geral.</div>
                         <div class="help-item"><b>Malha Fundiária:</b> Polígonos certificados SIGEF (INCRA), ambientais CAR e Gaps HOT.</div>
                         <div class="help-item"><b>Camadas WMS Oficiais:</b> Embargos IBAMA, pivôs de irrigação ANA e desmatamento PRODES/INPE.</div>
                         <div class="help-item"><b>Sensoriamento Orbital:</b> Pivôs centrais, silos, recursos hídricos e vigor NDVI.</div>
-                        <div class="help-item"><b>Vitalidade Cadastral:</b> Empresas em operação ativa vs zumbis presumidas.</div>
                       </div>
                     </span>
                   </div>
@@ -1362,15 +1365,101 @@
                         <span class="legend-accordion-arrow">▸</span>
                       </div>
                       <div class="legend-accordion-body" id="groupCadastral" style="display: none;">
-                        <div class="leg-item"><span class="leg-dot active"></span><span>Operação Ativa</span></div>
-                        <div class="leg-item"><span class="leg-dot transition"></span><span>Em Transição</span></div>
-                        <div class="leg-item"><span class="leg-dot zombie"></span><span>Zumbi Presumida</span></div>
+                        <div class="legend-sub" style="margin-top: 0.15rem; margin-bottom: 0.25rem;">Pontos no Mapa (Vitalidade)</div>
 
-                        <div class="legend-sub" style="margin-top: 0.35rem; margin-bottom: 0.2rem;">Clusters VERSUS</div>
+                        <div class="leg-item leg-item-tooltip-wrap" style="align-items: flex-start;">
+                          <span class="leg-dot active" style="margin-top: 3px;"></span>
+                          <div style="display: flex; flex-direction: column;">
+                            <span style="font-size: 0.68rem; line-height: 1.25;"><strong style="color: #4ADE80;">Operação Ativa</strong></span>
+                            <span style="font-size: 0.58rem; color: #94A3B8; line-height: 1.3;">CNPJ ativo e atividade comercial comprovada</span>
+                          </div>
+                          <div class="spatial-legend-tooltip">
+                            <div class="spatial-tooltip-title" style="color: #4ADE80;">
+                              <span class="spatial-tooltip-dot" style="background: #22C55E; box-shadow: 0 0 6px rgba(34, 197, 94, 0.6);"></span>
+                              <span>Operação Ativa (Lead Qualificado)</span>
+                            </div>
+                            <div class="spatial-tooltip-body">
+                              Empresa ou propriedade rural com CNPJ ativo, regularidade cadastral e dados comerciais validados.
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="leg-item leg-item-tooltip-wrap" style="align-items: flex-start;">
+                          <span class="leg-dot transition" style="margin-top: 3px;"></span>
+                          <div style="display: flex; flex-direction: column;">
+                            <span style="font-size: 0.68rem; line-height: 1.25;"><strong style="color: #FBBF24;">Em Transição</strong></span>
+                            <span style="font-size: 0.58rem; color: #94A3B8; line-height: 1.3;">Alteração contratual ou dados em revisão</span>
+                          </div>
+                          <div class="spatial-legend-tooltip">
+                            <div class="spatial-tooltip-title" style="color: #FBBF24;">
+                              <span class="spatial-tooltip-dot" style="background: #F59E0B; box-shadow: 0 0 6px rgba(245, 158, 11, 0.6);"></span>
+                              <span>Em Transição (Atenção Cadastral)</span>
+                            </div>
+                            <div class="spatial-tooltip-body">
+                              Empresa com mudanças recentes de endereço, quadro societário ou divergência cadastral entre CNAE e atividade.
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="leg-item leg-item-tooltip-wrap" style="align-items: flex-start;">
+                          <span class="leg-dot zombie" style="margin-top: 3px;"></span>
+                          <div style="display: flex; flex-direction: column;">
+                            <span style="font-size: 0.68rem; line-height: 1.25;"><strong style="color: #F87171;">Zumbi Presumida</strong></span>
+                            <span style="font-size: 0.58rem; color: #94A3B8; line-height: 1.3;">Baixa movimentação ou indício de inativa</span>
+                          </div>
+                          <div class="spatial-legend-tooltip">
+                            <div class="spatial-tooltip-title" style="color: #F87171;">
+                              <span class="spatial-tooltip-dot" style="background: #EF4444; box-shadow: 0 0 6px rgba(239, 68, 68, 0.6);"></span>
+                              <span>Zumbi Presumida (Inoperante)</span>
+                            </div>
+                            <div class="spatial-tooltip-body">
+                              Empresa com sinais severos de inatividade comercial, telefones inoperantes ou alto risco de encerramento.
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="legend-sub" style="margin-top: 0.45rem; margin-bottom: 0.15rem;">Círculos Azuis com Números (Clusters)</div>
+                        <div style="font-size: 0.59rem; color: #94A3B8; line-height: 1.35; margin-bottom: 0.35rem;">
+                          Agrupamento de empresas na região (zoom afastado). O número indica a <strong>quantidade de empresas/leads</strong> agrupados ali. Clique no círculo ou aproxime o zoom para desagrupar.
+                        </div>
+
                         <div class="leg-cluster-scale">
-                          <span class="c-step low" title="Até 10 empresas">1-10</span>
-                          <span class="c-step mid" title="10 a 50 empresas">10-50</span>
-                          <span class="c-step high" title="50+ empresas">50+</span>
+                          <div class="leg-item-tooltip-wrap" style="flex: 1; padding: 0;">
+                            <span class="c-step low" style="display: block; text-align: center; width: 100%; cursor: help;" title="Até 10 empresas agrupadas">1-10</span>
+                            <div class="spatial-legend-tooltip">
+                              <div class="spatial-tooltip-title" style="color: #0055FF;">
+                                <span class="spatial-tooltip-dot" style="background: #0055FF;"></span>
+                                <span>Cluster Pequeno (1 a 10 empresas)</span>
+                              </div>
+                              <div class="spatial-tooltip-body">
+                                Concentração de até 10 empresas ou fazendas reunidas nesse local. Dê zoom para ver cada ponto individual.
+                              </div>
+                            </div>
+                          </div>
+                          <div class="leg-item-tooltip-wrap" style="flex: 1; padding: 0;">
+                            <span class="c-step mid" style="display: block; text-align: center; width: 100%; cursor: help;" title="10 a 50 empresas agrupadas">10-50</span>
+                            <div class="spatial-legend-tooltip">
+                              <div class="spatial-tooltip-title" style="color: #0088FF;">
+                                <span class="spatial-tooltip-dot" style="background: #0088FF;"></span>
+                                <span>Cluster Médio (10 a 50 empresas)</span>
+                              </div>
+                              <div class="spatial-tooltip-body">
+                                Polo intermediário com 10 a 50 empresas/fazendas reunidas na mesma microrregião.
+                              </div>
+                            </div>
+                          </div>
+                          <div class="leg-item-tooltip-wrap" style="flex: 1; padding: 0;">
+                            <span class="c-step high" style="display: block; text-align: center; width: 100%; cursor: help;" title="50+ empresas agrupadas">50+</span>
+                            <div class="spatial-legend-tooltip">
+                              <div class="spatial-tooltip-title" style="color: #00D2FF;">
+                                <span class="spatial-tooltip-dot" style="background: #00D2FF;"></span>
+                                <span>Cluster Denso (50+ empresas)</span>
+                              </div>
+                              <div class="spatial-tooltip-body">
+                                Alta densidade econômica com mais de 50 empresas agrupadas no mesmo município ou polo agroindustrial.
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
