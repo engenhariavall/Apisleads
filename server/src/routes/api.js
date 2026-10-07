@@ -595,7 +595,9 @@ router.post('/osint/enrich-whatsapp-bureau', optionalAuth, async (req, res) => {
       try {
         const hist = db.prepare('SELECT nome_proprietario, cpf_cnpj_parcial, municipio, uf FROM car_proprietarios_historico WHERE codigo_car = ? LIMIT 1').get(codigo_car);
         if (hist) {
-          if (!nome_titular || nome_titular.includes('sigilo')) nome_titular = hist.nome_proprietario;
+          if (!nome_titular || nome_titular.includes('sigilo')) {
+            nome_titular = String(hist.nome_proprietario || '').replace(/^undefined\s+/i, '').trim();
+          }
           let doc = hist.cpf_cnpj_parcial || rawDoc;
           if (doc && doc.includes('*')) {
             const { buildUnmaskedCpf } = await import('../services/carHistoricalService.js');

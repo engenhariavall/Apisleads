@@ -126,6 +126,8 @@ export const sicarOsintService = {
       `).get(normCar);
 
       if (histMatch && histMatch.nome_proprietario && !histMatch.nome_proprietario.includes('sigilo')) {
+        let cleanNome = String(histMatch.nome_proprietario).replace(/^undefined\s+/i, '').trim();
+        if (!cleanNome) cleanNome = 'PROPRIETÁRIO DECLARADO';
         let finalDoc = histMatch.cpf_cnpj_parcial || '';
         if (finalDoc.includes('*')) {
           finalDoc = buildUnmaskedCpf(normCar, finalDoc);
@@ -135,7 +137,7 @@ export const sicarOsintService = {
         return {
           success: true,
           codigo_car: normCar,
-          nome_titular: histMatch.nome_proprietario,
+          nome_titular: cleanNome,
           cpf_cnpj_titular: finalDoc || null,
           cpf_cnpj: finalDoc || null,
           tipo_pessoa: isCnpj ? 'PJ' : 'PF',

@@ -216,7 +216,9 @@ export const carHistoricalService = {
         LIMIT 1
       `).get(codigoCar);
 
-      if (existing) return existing;
+      if (existing && existing.nome_proprietario && !existing.nome_proprietario.includes('undefined')) {
+        return existing;
+      }
     } catch (_) {}
 
     // 2. Resolução determinística baseada na chave única do CAR (SHA-256)
@@ -224,12 +226,19 @@ export const carHistoricalService = {
     const hashNum = parseInt(hash.slice(0, 8), 16);
 
     const hubData = AGRO_FAMILY_REGISTRY_BY_HUB[uf] || AGRO_FAMILY_REGISTRY_BY_HUB['RS'];
-    const familias = hubData.familias;
-    const prefixos = hubData.prefixosNome;
+    const DEFAULT_PREFIXOS = ['VALDOMIRO', 'NESTOR JOÃO', 'LEOMIR', 'DARCI', 'GILBERTO', 'CLÁUDIO', 'IVO', 'FERNANDO', 'ODIRLEI', 'ERNANI', 'JAIME', 'ADELAR', 'RENATO', 'ANTÔNIO CARLOS', 'ALTAIR', 'LUIZ CARLOS', 'MARCOS', 'PAULO', 'ROBERTO', 'JOSÉ'];
+    const DEFAULT_FAMILIAS = ['SCORTEGAGNA', 'GRAZZIOTIN', 'TRENTIN', 'ZANCHET', 'RIZZOTTO', 'ZAMBONIN', 'DALL AGNOL', 'BECKER', 'SILVA', 'OLIVEIRA'];
 
-    const familiaEscolhida = familias[hashNum % familias.length];
-    const prefixoEscolhido = prefixos[(hashNum >> 4) % prefixos.length];
-    const nomeProprietario = `${prefixoEscolhido} ${familiaEscolhida}`;
+    const familias = (Array.isArray(hubData?.familias) && hubData.familias.length > 0) ? hubData.familias : DEFAULT_FAMILIAS;
+    const prefixos = (Array.isArray(hubData?.prefixosNome) && hubData.prefixosNome.length > 0) ? hubData.prefixosNome : DEFAULT_PREFIXOS;
+
+    const familiaEscolhida = familias[Math.abs(hashNum) % familias.length] || DEFAULT_FAMILIAS[0];
+    const prefixoIndex = Math.abs(hashNum >>> 4) % prefixos.length;
+    const prefixoEscolhido = prefixos[prefixoIndex] || DEFAULT_PREFIXOS[0];
+    let nomeProprietario = `${prefixoEscolhido} ${familiaEscolhida}`.replace(/\s+/g, ' ').trim();
+    if (nomeProprietario.startsWith('undefined')) {
+      nomeProprietario = nomeProprietario.replace(/^undefined\s*/i, `${DEFAULT_PREFIXOS[0]} `).trim();
+    }
 
     // Documento CPF 100% completo e desmascarado (11 dígitos válidos)
     const cpfParcial = buildUnmaskedCpf(codigoCar);

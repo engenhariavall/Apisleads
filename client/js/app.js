@@ -4240,6 +4240,11 @@ window.inspectRuralPropertyInDrawer = function(propData) {
 
   if (!rightDrawer) return;
 
+  if (propData) {
+    if (propData.nome_titular) propData.nome_titular = String(propData.nome_titular).replace(/^undefined\s+/i, '').trim();
+    if (propData.nome_proprietario) propData.nome_proprietario = String(propData.nome_proprietario).replace(/^undefined\s+/i, '').trim();
+  }
+
   window.currentInspectedRuralProperty = propData;
 
   // Auto-seleciona a propriedade rural se não houver seleção múltipla ativa
@@ -4678,7 +4683,8 @@ window.inspectRuralPropertyInDrawer = function(propData) {
   const btnBureau = document.getElementById('btnRevealBureauWhatsApp');
 
   // RENDERIZAÇÃO IMEDIATA: Exibe dados já conhecidos ou estado de carregamento
-  const knownTitular = propData.nome_titular && !isMaskedTitular(propData.nome_titular) ? propData.nome_titular : null;
+  const rawKnownTitular = propData.nome_titular && !isMaskedTitular(propData.nome_titular) ? propData.nome_titular : null;
+  const knownTitular = rawKnownTitular ? String(rawKnownTitular).replace(/^undefined\s+/i, '').trim() : null;
   const rawKnownDoc = propData.cpf_cnpj_titular && !String(propData.cpf_cnpj_titular).toLowerCase().includes('sigilo') && !String(propData.cpf_cnpj_titular).toLowerCase().includes('pendente') ? propData.cpf_cnpj_titular : null;
   const knownDoc = formatUnmaskedDocument(rawKnownDoc, propData.codigo_car || propData.id || propData.nome_titular);
   const knownPhone = propData.whatsapp_validado || propData.whatsapp || propData.telefone || null;
@@ -5865,8 +5871,9 @@ _Gerado por VERSUS INTELLIGENCE B2B_`;
           handleTestDriveExpired(enrichData.message);
         }
         if (titularEl) {
-          titularEl.textContent = propData.nome_titular || 'Titularidade sob sigilo (LGPD)';
-          titularEl.style.color = (propData.nome_titular && propData.nome_titular.includes('sigilo')) ? '#94A3B8' : '#FFFFFF';
+          const tNome = String(propData.nome_titular || 'Titularidade sob sigilo (LGPD)').replace(/^undefined\s+/i, '').trim();
+          titularEl.textContent = tNome || 'Titularidade sob sigilo (LGPD)';
+          titularEl.style.color = (tNome && tNome.includes('sigilo')) ? '#94A3B8' : '#FFFFFF';
         }
         if (cpfCnpjEl) {
           const docUnmasked = formatUnmaskedDocument(propData.cpf_cnpj_titular, propData.codigo_car || propData.id || propData.nome_titular);
@@ -5883,7 +5890,7 @@ _Gerado por VERSUS INTELLIGENCE B2B_`;
 
         // Atualiza dados no cache do objeto inspecionado
         if (enrichData.nome_titular && !enrichData.nome_titular.includes('sigilo') && !enrichData.nome_titular.includes('Declarado')) {
-          propData.nome_titular = enrichData.nome_titular;
+          propData.nome_titular = String(enrichData.nome_titular).replace(/^undefined\s+/i, '').trim();
         }
         if (enrichData.cpf_cnpj_titular) {
           propData.cpf_cnpj_titular = enrichData.cpf_cnpj_titular;
@@ -5935,8 +5942,9 @@ _Gerado por VERSUS INTELLIGENCE B2B_`;
 
         if (isSameProp || !window.currentInspectedRuralProperty) {
           if (titularEl) {
-            const finalNome = enrichData.razao_social || enrichData.nome_titular || propData.nome_titular || 'Titularidade sob sigilo (LGPD)';
-            titularEl.textContent = finalNome;
+            let finalNome = enrichData.razao_social || enrichData.nome_titular || propData.nome_titular || 'Titularidade sob sigilo (LGPD)';
+            finalNome = String(finalNome).replace(/^undefined\s+/i, '').trim();
+            titularEl.textContent = finalNome || 'Titularidade sob sigilo (LGPD)';
             titularEl.style.color = (finalNome.includes('sigilo') || finalNome.includes('Pendente')) ? '#94A3B8' : '#FFFFFF';
           }
           if (cpfCnpjEl) {
@@ -5980,7 +5988,8 @@ _Gerado por VERSUS INTELLIGENCE B2B_`;
         }
       } else {
         if (titularEl) {
-          titularEl.textContent = propData.nome_titular || 'Titularidade sob sigilo (LGPD)';
+          const tNome = String(propData.nome_titular || 'Titularidade sob sigilo (LGPD)').replace(/^undefined\s+/i, '').trim();
+          titularEl.textContent = tNome || 'Titularidade sob sigilo (LGPD)';
           titularEl.style.color = '#94A3B8';
         }
         if (cpfCnpjEl) {
@@ -5993,7 +6002,8 @@ _Gerado por VERSUS INTELLIGENCE B2B_`;
     } catch (err) {
       console.warn('Erro ao enriquecer OSINT da propriedade rural:', err);
       if (titularEl) {
-        titularEl.textContent = propData.nome_titular || 'Titularidade sob sigilo (LGPD)';
+        const tNome = String(propData.nome_titular || 'Titularidade sob sigilo (LGPD)').replace(/^undefined\s+/i, '').trim();
+        titularEl.textContent = tNome || 'Titularidade sob sigilo (LGPD)';
         titularEl.style.color = '#94A3B8';
       }
       if (cpfCnpjEl) {
@@ -6091,7 +6101,8 @@ _Gerado por VERSUS INTELLIGENCE B2B_`;
         const emailEl = document.getElementById('ruralEmailText');
         const linkedinEl = document.getElementById('ruralLinkedinLink');
 
-        const currentNomeTitular = (titularEl && !titularEl.innerHTML.includes('SICAR OSINT')) ? titularEl.textContent.trim() : propData.nome_titular;
+        const rawNomeTitular = (titularEl && !titularEl.innerHTML.includes('SICAR OSINT')) ? titularEl.textContent.trim() : (propData.nome_titular || '');
+        const currentNomeTitular = String(rawNomeTitular).replace(/^undefined\s+/i, '').trim();
         const currentCpfCnpj = (cpfCnpjEl && !cpfCnpjEl.innerHTML.includes('Extraindo')) ? cpfCnpjEl.textContent.trim() : propData.cpf_cnpj_titular;
         const currentWa = (waText && waText.textContent !== 'Contato não localizado' && !waText.innerHTML.includes('Cruzando')) ? waText.textContent.trim() : propData.whatsapp_validado;
         const currentEmail = (emailEl && emailEl.textContent !== 'Não verificado' && emailEl.textContent !== '--') ? emailEl.textContent.trim() : propData.email_validado;

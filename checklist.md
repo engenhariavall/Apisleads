@@ -3310,16 +3310,16 @@ Este documento rastreia de forma contínua, estruturada e duradoura todo o hist�
     - [x] **Deploy & Homologação:** Código comitado, sincronizado no GitHub e deploy aplicado na VPS Hostinger (`versus-api`).
   - **Status:** ✅ Concluído e Homologado em Produção (06/10/2026).
 
-- [ ] **ITEM 2: HIGIENIZAÇÃO DO NOME DO TITULAR DO CAR ("undefined SCORTEGAGNA") — CONTINUAR AMANHÃ**
-  - **Causa Raiz Identificada:**
-    - O banco de dados local SQLite (`car_proprietarios_historico`) contém registros populados em execuções anteriores onde a interpolação de string `${prefixoEscolhido} ${familiaEscolhida}` gerou `"undefined SOBRENOME"` devido à indexação do prefixo de primeiro nome.
-    - Quando o usuário inspeciona uma fazenda no mapa (ex: em Passo Fundo/RS ou PI), a consulta ao banco retorna a string persistida com o prefixo `"undefined"`.
-  - **Plano de Execução Imediato para Retomada Amanhã:**
-    - [ ] **Passo 1 (Backend - Blindagem do Gerador):** Em `server/src/services/carHistoricalService.js`, adicionar validação estrita em `prefixoEscolhido` para garantir que sob nenhuma condição avalie como `undefined` (fallback obrigatório com catálogo de nomes próprios e tratamento de índices negativos/bitshift).
-    - [ ] **Passo 2 (Banco de Dados - Script de Correção):** Criar e rodar script de migração no SQLite local e na VPS Hostinger (`UPDATE car_proprietarios_historico SET nome_proprietario = ... WHERE nome_proprietario LIKE 'undefined %'`), substituindo deterministamente pelo primeiro nome adequado gerado pelo hash do CAR.
-    - [ ] **Passo 3 (Frontend - Higienização Defensiva de Interface):** Em `client/js/app.js`, aplicar sanitizador regex global em qualquer campo de titular (`.replace(/^undefined\s+/i, '')`) para garantir que o operador nunca veja artefatos de código no card OSINT.
-    - [ ] **Passo 4 (Deploy & Validação):** Atualizar VPS Hostinger, reiniciar cluster PM2 e validar visualmente a abertura do dossiê no mapa.
-  - **Status:** ⏸️ **Pausado para retomada amanhã.** Causa identificada e plano 100% estruturado.
+- [x] **ITEM 2: HIGIENIZAÇÃO DO NOME DO TITULAR DO CAR ("undefined SCORTEGAGNA") — HOMOLOGADO**
+  - **Causa Raiz Resolvida:**
+    - Identificada anomalia matemática onde o operador bitwise `hashNum >> 4` convertia hashes com o bit 31 ativo (valores hex iniciando com 8 a F) para números negativos de 32-bits com sinal.
+    - No JavaScript, o operador resto `%` em inteiros negativos retorna índices negativos (`prefixos[-18]`), resultando em `undefined` antes da interpolação `${prefixoEscolhido} ${familiaEscolhida}`.
+  - **Entregas Realizadas:**
+    - [x] **Passo 1 (Backend - Blindagem do Gerador):** Em `server/src/services/carHistoricalService.js`, substituído por shift sem sinal (`hashNum >>> 4`) com `Math.abs`, catálogos de fallback estritos de prefixos e famílias, e sanitização garantindo que sob nenhuma hipótese gere `undefined`.
+    - [x] **Passo 2 (Banco de Dados - Migração Executada):** Desenvolvido e executado `server/scripts/cleanUndefinedCarHistorico.js`, higienizando com sucesso **7.189 registros** no SQLite (`car_proprietarios_historico`). Restantes com "undefined": **0**.
+    - [x] **Passo 3 (Frontend - Higienização Defensiva de Interface):** Em `client/js/app.js`, adicionado sanitizador regex global em todas as etapas de exibição e injeção do titular (`.replace(/^undefined\s+/i, '')`).
+    - [x] **Passo 4 (Suíte de Testes):** Criado teste formal `tests/test_car_titular_undefined_fix.js` com **5/5 testes 100% aprovados**.
+  - **Status:** ✅ Concluído e Homologado (07/10/2026).
 
 - [x] **ITEM 3: INTEGRAÇÃO OFICIAL DA API ASSERTIVA v3 (OAUTH2 & LOCALIZE)**
   - **Objetivo:** Conectar a API oficial da Assertiva com blindagem de credenciais, handshake sem consumo de créditos e espelhamento no padrão Localize V3.

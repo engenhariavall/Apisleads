@@ -191,7 +191,8 @@ export function normalizarFeatureCar(rawFeature = {}, overrides = {}) {
     } catch (_) {}
   }
 
-  const rawTitular   = histMatch?.nome_proprietario || props.nom_proprietario || props.nome_titular || props.proprietario || props.titular || '';
+  const dirtyTitular = histMatch?.nome_proprietario || props.nom_proprietario || props.nome_titular || props.proprietario || props.titular || '';
+  const rawTitular   = String(dirtyTitular).replace(/^undefined\s+/i, '').trim();
   const nomeTitular  = (rawTitular && !['Produtor Rural Declarado', 'Titular não informado', 'Não informado', 'Titularidade sob sigilo (LGPD)'].includes(String(rawTitular).trim()))
     ? String(rawTitular).trim()
     : 'Titularidade sob sigilo (LGPD)';
