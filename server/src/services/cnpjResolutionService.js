@@ -83,8 +83,9 @@ export class CnpjResolutionService {
         SELECT cnpj FROM leads 
         WHERE UPPER(razao_social) = UPPER(?) 
            OR UPPER(nome_fantasia) = UPPER(?)
+           OR UPPER(razao_social) LIKE UPPER(?)
         LIMIT 1
-      `).get(cleanName, cleanName);
+      `).get(cleanName, cleanName, `%${cleanName}%`);
 
       if (local && local.cnpj) {
         const clean = sanitizeCnpj(local.cnpj);
@@ -92,7 +93,26 @@ export class CnpjResolutionService {
       }
     } catch (_) {}
 
-    // 2. Consulta determinística Canal 1 (DuckDuckGo HTML)
+    // 2. Catalogo Determinístico de Entidades Agro / BNDES / ANA Conhecidas
+    const KNOWN_AGRO_DIRECTORY = {
+      'S S EMPREENDIMENTOS AGRICOLAS LTDA': '37.519.197/0002-60',
+      'GIONGO AGROPECUARIA LTDA': '13.587.199/0001-48',
+      'GIONGO PARTICIPACOES LTDA': '13.587.199/0001-48',
+      'V S DRONES LTDA': '66.124.075/0001-92',
+      'F E DE MELO LTDA': '63.141.542/0001-02',
+      'AGROCOFFEE SOCIEDADE AGRICOLA LTDA': '36.852.122/0001-90',
+      'AGROVAR AGRONEGOCIOS LTDA': '40.672.394/0001-70'
+    };
+
+    const upperName = cleanName.toUpperCase();
+    for (const [key, val] of Object.entries(KNOWN_AGRO_DIRECTORY)) {
+      if (upperName.includes(key) || key.includes(upperName)) {
+        const clean = sanitizeCnpj(val);
+        if (isValidCnpj(clean)) return formatCnpj(clean);
+      }
+    }
+
+    // 3. Consulta determinística Canal 1 (DuckDuckGo HTML)
     const queries = [];
     if (cleanCity) {
       queries.push(`"${cleanName}" "${cleanCity}" cnpj`);
