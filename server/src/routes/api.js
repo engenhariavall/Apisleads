@@ -236,6 +236,8 @@ router.get('/crm/status', optionalAuth, (req, res) => {
   } catch (error) {
     return res.status(500).json({ success: false, error: error.message });
   }
+});
+
 // FASE 75: MOTOR DE PROSPECÇÃO DE REVENDAS SOB DEMANDA (QUALQUER CIDADE DO BRASIL)
 router.post('/prospect/suppliers-by-city', optionalAuth, prospectSuppliersByCityController);
 

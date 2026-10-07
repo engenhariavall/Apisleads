@@ -775,7 +775,7 @@ export async function exportLeads(req, res) {
             }
           } catch (_) {}
         }
-        decisor = decisor.replace(/undefined\s*/gi, 'VALDOMIRO ').trim();
+        decisor = decisor.replace(/undefined\s*/gi, '').trim();
         if (!decisor || decisor.toLowerCase().includes('sigilo')) decisor = 'Produtor Rural Titular';
 
         // 3. Nome da Propriedade / Empresa
@@ -785,7 +785,7 @@ export async function exportLeads(req, res) {
           const loc = l.municipio ? ` (${l.municipio}-${l.uf || 'BR'})` : '';
           nome = `Fazenda ${decisor}${loc}`;
         }
-        nome = nome.replace(/undefined\s*/gi, 'VALDOMIRO ').trim();
+        nome = nome.replace(/undefined\s*/gi, '').trim();
 
         const ie = (l.sefaz_ie_pf || l.inscricao_estadual || '').trim() || 'Ativa (SEFAZ)';
 
