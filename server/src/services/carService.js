@@ -35,6 +35,7 @@ import db from '../config/database.js';
 import { carHistoricalService, buildUnmaskedCpf } from './carHistoricalService.js';
 import { agronomicProfileService } from './agronomicProfileService.js';
 import { calculateRuralIntentScore } from './intentScoringService.js';
+import { executeSpatialOverlayCarSigef, testSpatialIntersection } from './spatialIntersectionService.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname  = path.dirname(__filename);
@@ -701,9 +702,32 @@ export async function buscarMalhaCarPorMunicipio({ uf, municipio } = {}) {
   }
 
   // ── Normalização para schema VERSUS (apenas geometrias reais válidas) ──────
-  const features = rawFeatures
+  let features = rawFeatures
     .filter(f => f && (f.geometry || f.geometria))
     .map(f => normalizarFeatureCar(f, { uf: ufNorm, municipio: munNorm }));
+
+  // ── PASSO 2: SOBREPOSIÇÃO ESPACIAL SIGEF / INCRA (INTERSECTS) ─────────────
+  // Cruza a malha do CAR com as parcelas certificadas do SIGEF para herdar Matrícula CRI, SNCR e Detentor
+  try {
+    const { loadOfficialRuralProperties } = await import('./geoFundiarioService.js');
+    const allSigef = loadOfficialRuralProperties();
+    const regionalSigef = allSigef.filter(s => {
+      const sUf = String(s.uf || '').toUpperCase().trim();
+      const sMun = String(s.municipio || '').toUpperCase().trim();
+      if (ufNorm && sUf !== ufNorm) return false;
+      if (munNorm && sMun && !sMun.includes(munNorm) && !munNorm.includes(sMun)) return false;
+      return true;
+    });
+
+    if (regionalSigef.length > 0) {
+      const overlayResult = executeSpatialOverlayCarSigef(features, regionalSigef);
+      features = overlayResult.enrichedFeatures;
+      provenance.sigef_overlay_matches = overlayResult.matchCount;
+      console.log(`[PASSO 2 INTERSECTS] ${overlayResult.matchCount}/${features.length} parcelas do CAR sobrepostas com certificação SIGEF/INCRA em ${munNorm}/${ufNorm}.`);
+    }
+  } catch (overlayErr) {
+    console.warn('[PASSO 2 INTERSECTS] Aviso:', overlayErr.message);
+  }
 
   return {
     type: 'FeatureCollection',

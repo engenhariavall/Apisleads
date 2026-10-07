@@ -184,6 +184,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   safeInit(initPhase65Features, 'initPhase65Features');
   safeInit(initPhase66FunnelAndTerritories, 'initPhase66FunnelAndTerritories');
   safeInit(setupMassActionsScrollArrows, 'setupMassActionsScrollArrows');
+  safeInit(initTerritorialDirectSearchBar, 'initTerritorialDirectSearchBar');
+  safeInit(initRailApplyFiltersButton, 'initRailApplyFiltersButton');
 
   // Carrega segmentos e localizações da API
   try {
@@ -1593,6 +1595,233 @@ window.selectCity = function(city) {
 };
 
 // =========================================================================
+// FASE 73: BARRA DE BUSCA TERRITORIAL DIRETA & PROSPECÇÃO (TOP SEARCH BAR)
+// =========================================================================
+function initTerritorialDirectSearchBar() {
+  const selectProfile = document.getElementById('tdsSelectTargetProfile');
+  const selectState = document.getElementById('tdsSelectState');
+  const selectCity = document.getElementById('tdsSelectCity');
+  const btnSearch = document.getElementById('btnTdsExecuteSearch');
+  const btnClear = document.getElementById('btnTdsClearSearch');
+  const labelSearch = document.getElementById('labelTdsExecuteSearch');
+  const spinnerSearch = document.getElementById('spinnerTdsSearch');
+  const statusBox = document.getElementById('tdsStatusIndicator');
+  const statusText = document.getElementById('tdsStatusText');
+
+  if (!btnSearch || !selectState || !selectCity) return;
+
+  // 1. Popula as 27 UFs do Brasil
+  selectState.innerHTML = '<option value="">Todos os Estados</option>';
+  ALL_BRAZIL_UFS.forEach(uf => {
+    const opt = document.createElement('option');
+    opt.value = uf;
+    const name = typeof getUfName === 'function' ? getUfName(uf) : uf;
+    opt.textContent = `${uf} - ${name}`;
+    if (state.filters.estados && state.filters.estados[0] === uf) {
+      opt.selected = true;
+    }
+    selectState.appendChild(opt);
+  });
+
+  // 2. Atualizador dinâmico de cidades com base na UF selecionada
+  const updateTdsCities = (uf, cityToSelect = '') => {
+    if (!uf) {
+      selectCity.disabled = true;
+      selectCity.innerHTML = '<option value="">Selecione o Estado primeiro</option>';
+      return;
+    }
+
+    selectCity.disabled = false;
+    selectCity.innerHTML = `<option value="">Todas as Cidades de ${uf}</option>`;
+
+    const populateOpts = (list) => {
+      selectCity.innerHTML = `<option value="">Todas as Cidades de ${uf}</option>`;
+      list.forEach(city => {
+        const opt = document.createElement('option');
+        opt.value = city;
+        opt.textContent = city;
+        if (cityToSelect && city.toUpperCase() === cityToSelect.toUpperCase()) {
+          opt.selected = true;
+        }
+        selectCity.appendChild(opt);
+      });
+    };
+
+    const localCities = state.locations.citiesByUf?.[uf] || [];
+    const fallbackCities = DEFAULT_AGRO_LOCATIONS_SIDEBAR.citiesByUf?.[uf] || [];
+    let initialList = Array.from(new Set([...localCities, ...fallbackCities])).sort();
+
+    if (IBGE_SIDEBAR_CITIES_CACHE[uf] && IBGE_SIDEBAR_CITIES_CACHE[uf].length > 0) {
+      initialList = IBGE_SIDEBAR_CITIES_CACHE[uf];
+    }
+    populateOpts(initialList);
+
+    if (!IBGE_SIDEBAR_CITIES_CACHE[uf]) {
+      fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${uf}/municipios?orderBy=nome`)
+        .then(res => res.ok ? res.json() : null)
+        .then(data => {
+          if (Array.isArray(data) && data.length > 0) {
+            const ibgeCities = data.map(m => m.nome ? m.nome.toUpperCase().trim() : '').filter(Boolean);
+            const fullList = Array.from(new Set([...initialList, ...ibgeCities])).sort();
+            IBGE_SIDEBAR_CITIES_CACHE[uf] = fullList;
+            if (selectState.value === uf) {
+              populateOpts(fullList);
+            }
+          }
+        })
+        .catch(() => {});
+    }
+  };
+
+  // Se já houver estado ativo no state inicial
+  if (state.filters.estados && state.filters.estados[0]) {
+    updateTdsCities(state.filters.estados[0], state.filters.cidades ? state.filters.cidades[0] : '');
+  }
+
+  // Listener de UF da Top Bar
+  selectState.addEventListener('change', (e) => {
+    const uf = e.target.value;
+    updateTdsCities(uf);
+
+    // Sincroniza espelho com o Left Rail
+    const railEstado = document.getElementById('selectFiltroEstado');
+    if (railEstado && railEstado.value !== uf) {
+      railEstado.value = uf;
+      if (typeof updateDirectCitySelector === 'function') {
+        updateDirectCitySelector(uf);
+      }
+    }
+  });
+
+  // Listener de Perfil da Top Bar
+  selectProfile?.addEventListener('change', (e) => {
+    const val = e.target.value;
+    state.filters.target_type = val;
+
+    if (val === 'SUPPLIER') {
+      state.filters.origem = 'EMPRESAS';
+      document.querySelectorAll('.icp-chip').forEach(c => {
+        c.classList.toggle('active', c.dataset.target === 'SUPPLIER');
+      });
+      const btnEmpresas = document.getElementById('btnTabCategoryEmpresas');
+      const btnRural = document.getElementById('btnTabCategoryRural');
+      const btnTodos = document.getElementById('btnTabCategoryTodos');
+      [btnEmpresas, btnRural, btnTodos].forEach(b => b?.classList.remove('active'));
+      btnEmpresas?.classList.add('active');
+    } else if (val === 'BUYER') {
+      document.querySelectorAll('.icp-chip').forEach(c => {
+        c.classList.toggle('active', c.dataset.target === 'BUYER');
+      });
+    } else {
+      document.querySelectorAll('.icp-chip').forEach(c => {
+        c.classList.toggle('active', c.dataset.target === 'all');
+      });
+    }
+  });
+
+  // Ação de Clique Canônica: [ Buscar ]
+  btnSearch.addEventListener('click', async () => {
+    const uf = selectState.value;
+    const city = selectCity.value;
+    const profile = selectProfile?.value || 'SUPPLIER';
+
+    // Aplica os parâmetros canônicos
+    state.filters.target_type = profile;
+    state.filters.estados = uf ? [uf] : [];
+    state.filters.cidades = city ? [city] : [];
+    state.filters.page = 1;
+
+    // Estado visual de processamento
+    btnSearch.disabled = true;
+    if (spinnerSearch) spinnerSearch.style.display = 'inline-block';
+    if (labelSearch) labelSearch.textContent = 'Buscando...';
+    if (statusBox) statusBox.style.display = 'none';
+
+    try {
+      await fetchLeads();
+
+      // Câmera do Mapa: Centraliza com foco garantido no território (sem reset cego para o Brasil)
+      if (city || uf) {
+        if (window.MapEngine && typeof window.MapEngine.flyToLocation === 'function') {
+          window.MapEngine.flyToLocation(uf, city);
+        }
+      }
+
+      // Feedback executivo limpo
+      if (statusBox && statusText) {
+        const total = state.pagination?.total || state.leads?.length || 0;
+        if (total > 0) {
+          const profileLabel = profile === 'SUPPLIER' ? 'fornecedores/revendas' : (profile === 'BUYER' ? 'compradores (ICP)' : 'empresas');
+          statusText.textContent = `${total} ${profileLabel} em ${city || uf || 'território'}`;
+        } else {
+          statusText.textContent = `0 empresas locais em ${city || uf || 'território'}. Câmera fixada na cidade.`;
+        }
+        statusBox.style.display = 'inline-flex';
+      }
+    } catch (err) {
+      console.error('Erro na busca territorial:', err);
+    } finally {
+      btnSearch.disabled = false;
+      if (spinnerSearch) spinnerSearch.style.display = 'none';
+      if (labelSearch) labelSearch.textContent = 'Buscar';
+    }
+  });
+
+  // Ação de Limpar
+  btnClear?.addEventListener('click', async () => {
+    selectState.value = '';
+    selectCity.value = '';
+    selectCity.disabled = true;
+    selectCity.innerHTML = '<option value="">Selecione o Estado primeiro</option>';
+    if (selectProfile) selectProfile.value = 'SUPPLIER';
+
+    state.filters.estados = [];
+    state.filters.cidades = [];
+    state.filters.target_type = 'SUPPLIER';
+    state.filters.termo_busca = '';
+    state.filters.page = 1;
+
+    if (statusBox) statusBox.style.display = 'none';
+
+    // Sincroniza com o Left Rail
+    const railEstado = document.getElementById('selectFiltroEstado');
+    const railCidade = document.getElementById('selectFiltroCidade');
+    if (railEstado) railEstado.value = '';
+    if (railCidade) {
+      railCidade.value = '';
+      railCidade.disabled = true;
+      railCidade.innerHTML = '<option value="">Todas as Cidades (Selecione o Estado)</option>';
+    }
+
+    await fetchLeads();
+  });
+}
+
+function initRailApplyFiltersButton() {
+  const btnApply = document.getElementById('btnApplyRailFilters');
+  btnApply?.addEventListener('click', async () => {
+    state.filters.page = 1;
+    btnApply.disabled = true;
+    const originalHtml = btnApply.innerHTML;
+    btnApply.innerHTML = '<span class="tds-spinner" style="margin-right: 6px;"></span> APLICANDO...';
+    try {
+      await fetchLeads();
+      const city = state.filters.cidades?.[0] || '';
+      const uf = state.filters.estados?.[0] || '';
+      if ((city || uf) && window.MapEngine && typeof window.MapEngine.flyToLocation === 'function') {
+        window.MapEngine.flyToLocation(uf, city);
+      }
+      if (typeof showToast === 'function') {
+        showToast(`Filtros aplicados: ${state.pagination?.total || state.leads?.length || 0} empresas encontradas.`);
+      }
+    } finally {
+      btnApply.disabled = false;
+      btnApply.innerHTML = originalHtml;
+    }
+  });
+}
+
+// =========================================================================
 // SELETORES DIRETOS DE ESTADO E CIDADE (PADRÃO MAPA & BUSCA FLUIDA)
 // =========================================================================
 const ALL_BRAZIL_UFS = [
@@ -1631,6 +1860,13 @@ function populateDirectLocationSelectors() {
     state.filters.cidades = [];
     state.filters.page = 1;
     updateDirectCitySelector(selectedUf);
+
+    // Sincroniza com a Top Bar
+    const topUf = document.getElementById('tdsSelectState');
+    if (topUf && topUf.value !== selectedUf) {
+      topUf.value = selectedUf;
+      topUf.dispatchEvent(new Event('change'));
+    }
     fetchLeads();
   };
 
@@ -1643,6 +1879,12 @@ function populateDirectLocationSelectors() {
         state.filters.cidades = [];
       }
       state.filters.page = 1;
+
+      // Sincroniza com a Top Bar
+      const topCity = document.getElementById('tdsSelectCity');
+      if (topCity && topCity.value !== selectedCity) {
+        topCity.value = selectedCity;
+      }
       fetchLeads();
     };
   }
