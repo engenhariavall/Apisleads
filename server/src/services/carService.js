@@ -179,28 +179,16 @@ export function normalizarFeatureCar(rawFeature = {}, overrides = {}) {
         LIMIT 1
       `).get(codigoCar);
 
-      // RESOLUÇÃO AUTOMÁTICA NACIONAL JIT: Se ainda não estava indexado, desmascara na hora para qualquer cidade/UF!
-      if (!histMatch && carHistoricalService?.resolveOrSeedHistoricalCarOwnerSync) {
-        histMatch = carHistoricalService.resolveOrSeedHistoricalCarOwnerSync({
-          codigo_car: codigoCar,
-          municipio: overrides.municipio || props.nom_municipio || props.municipio,
-          uf: overrides.uf || props.sig_uf || props.uf,
-          area_hectares: props.num_area || props.area_ha || props.area_hectares || props.area || 0,
-          nome_imovel: props.nom_imovel || props.nome_imovel || props.denominacao
-        });
-      }
+      // Consulta estrita apenas a registros previamente auditados e verificados
     } catch (_) {}
   }
 
   const dirtyTitular = histMatch?.nome_proprietario || props.nom_proprietario || props.nome_titular || props.proprietario || props.titular || '';
   const rawTitular   = String(dirtyTitular).replace(/^undefined\s+/i, '').trim();
-  const nomeTitular  = (rawTitular && !['Produtor Rural Declarado', 'Titular não informado', 'Não informado', 'Titularidade sob sigilo (LGPD)'].includes(String(rawTitular).trim()))
+  const nomeTitular  = (rawTitular && !['Produtor Rural Declarado', 'Titular não informado', 'Não informado', 'Titularidade sob sigilo (LGPD)', 'Titularidade sob sigilo (Cartório CRI / SNCR)'].includes(String(rawTitular).trim()))
     ? String(rawTitular).trim()
-    : 'Titularidade sob sigilo (LGPD)';
+    : 'Titularidade sob sigilo (CAR Declaratório)';
   let cpfCnpj        = histMatch?.cpf_cnpj_parcial || String(props.cpf_cnpj_titular || props.cpf_cnpj || props.num_cpf_cnpj || '').replace(/\s/g, '') || null;
-  if (cpfCnpj && cpfCnpj.includes('*') && codigoCar) {
-    cpfCnpj = buildUnmaskedCpf(codigoCar, cpfCnpj);
-  }
   const nomeImovel   = String(histMatch?.nome_imovel_declarado || props.nom_imovel || props.nome_imovel || props.denominacao || props.nome || (codigoCar ? `Imóvel CAR ${codigoCar.slice(-8)}` : 'Imóvel Rural CAR')).trim();
   const municipio    = String(overrides.municipio || props.nom_municipio || props.municipio || '').toUpperCase().trim();
   const uf           = String(overrides.uf || props.sig_uf || props.uf || '').toUpperCase().trim();

@@ -1227,7 +1227,7 @@ export async function createRuralPropertyLead(propData = {}, tenantId = 'tenant-
         const hist = carHistoricalService.resolveOrSeedHistoricalCarOwnerSync(propData);
         if (hist) {
           if (isMasked && hist.nome_proprietario) {
-            effectiveTitular = hist.nome_proprietario.replace(/undefined\s*/gi, 'VALDOMIRO ').trim();
+            effectiveTitular = hist.nome_proprietario.replace(/undefined\s*/gi, '').trim();
             isMasked = false;
           }
           if (!effectiveCpfCnpj && hist.cpf_cnpj_parcial) {

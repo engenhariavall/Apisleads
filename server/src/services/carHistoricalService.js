@@ -232,87 +232,9 @@ export const carHistoricalService = {
       }
     } catch (_) {}
 
-    // 2. Resolução determinística baseada na chave única do CAR (SHA-256)
-    const hash = crypto.createHash('sha256').update(codigoCar).digest('hex');
-    const hashNum = parseInt(hash.slice(0, 8), 16);
-
-    const hubData = AGRO_FAMILY_REGISTRY_BY_HUB[uf] || AGRO_FAMILY_REGISTRY_BY_HUB['RS'];
-    const DEFAULT_PREFIXOS = ['VALDOMIRO', 'NESTOR JOÃO', 'LEOMIR', 'DARCI', 'GILBERTO', 'CLÁUDIO', 'IVO', 'FERNANDO', 'ODIRLEI', 'ERNANI', 'JAIME', 'ADELAR', 'RENATO', 'ANTÔNIO CARLOS', 'ALTAIR', 'LUIZ CARLOS', 'MARCOS', 'PAULO', 'ROBERTO', 'JOSÉ'];
-    const DEFAULT_FAMILIAS = ['SCORTEGAGNA', 'GRAZZIOTIN', 'TRENTIN', 'ZANCHET', 'RIZZOTTO', 'ZAMBONIN', 'DALL AGNOL', 'BECKER', 'SILVA', 'OLIVEIRA'];
-
-    const familias = (Array.isArray(hubData?.familias) && hubData.familias.length > 0) ? hubData.familias : DEFAULT_FAMILIAS;
-    const prefixos = (Array.isArray(hubData?.prefixosNome) && hubData.prefixosNome.length > 0) ? hubData.prefixosNome : DEFAULT_PREFIXOS;
-
-    const familiaEscolhida = familias[Math.abs(hashNum) % familias.length] || DEFAULT_FAMILIAS[0];
-    const prefixoIndex = Math.abs(hashNum >>> 4) % prefixos.length;
-    const prefixoEscolhido = prefixos[prefixoIndex] || DEFAULT_PREFIXOS[0];
-    let nomeProprietario = `${prefixoEscolhido} ${familiaEscolhida}`.replace(/\s+/g, ' ').trim();
-    if (nomeProprietario.toLowerCase().includes('undefined')) {
-      nomeProprietario = nomeProprietario.replace(/undefined\s*/gi, `${DEFAULT_PREFIXOS[0]} `).trim();
-    }
-
-    // Documento CPF 100% completo e desmascarado (11 dígitos válidos)
-    const cpfParcial = buildUnmaskedCpf(codigoCar);
-
-    // Denominação da Fazenda/Imóvel
-    let tipoPrefixo = 'FAZENDA';
-    if (areaHa >= 1000) {
-      tipoPrefixo = hashNum % 2 === 0 ? 'FAZENDA' : 'ESTÂNCIA';
-    } else if (areaHa >= 200) {
-      tipoPrefixo = hashNum % 2 === 0 ? 'GRANJA' : 'FAZENDA';
-    } else {
-      tipoPrefixo = hashNum % 2 === 0 ? 'SÍTIO' : 'CHÁCARA';
-    }
-
-    const glebaSuffix = areaHa >= 300 ? ` - GLEBA ${(hashNum % 5) + 1}` : '';
-    const nomeImovelDeclarado = prop.nome_imovel && !prop.nome_imovel.includes('Imóvel CAR')
-      ? prop.nome_imovel
-      : `${tipoPrefixo} ${familiaEscolhida}${glebaSuffix}`;
-
-    // Matrícula Cartorial CRI oficial
-    const matriculaNum = (1000 + (hashNum % 89000)).toLocaleString('pt-BR');
-    const matriculaDeclarada = `Matrícula ${matriculaNum} - CRI ${municipio}`;
-
-    // 3. Persistência automática no SQLite (Auto-Seed)
-    try {
-      const insertStmt = db.prepare(`
-        INSERT INTO car_proprietarios_historico (
-          codigo_car, nome_proprietario, cpf_cnpj_parcial, municipio, uf,
-          condicao, area_hectares, matricula_declarada, nome_imovel_declarado, updated_at
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
-        ON CONFLICT(codigo_car) DO UPDATE SET
-          nome_proprietario = excluded.nome_proprietario,
-          cpf_cnpj_parcial = excluded.cpf_cnpj_parcial,
-          matricula_declarada = excluded.matricula_declarada,
-          nome_imovel_declarado = excluded.nome_imovel_declarado,
-          updated_at = CURRENT_TIMESTAMP
-      `);
-
-      insertStmt.run(
-        codigoCar,
-        nomeProprietario,
-        cpfParcial,
-        municipio,
-        uf,
-        'PROPRIETÁRIO',
-        areaHa,
-        matriculaDeclarada,
-        nomeImovelDeclarado
-      );
-    } catch (persistErr) {
-      console.warn(`[CAR AUTO-RESOLVER] Falha na persistência de ${codigoCar}:`, persistErr.message);
-    }
-
-    return {
-      codigo_car: codigoCar,
-      nome_proprietario: nomeProprietario,
-      cpf_cnpj_parcial: cpfParcial,
-      municipio,
-      uf,
-      area_hectares: areaHa,
-      matricula_declarada: matriculaDeclarada,
-      nome_imovel_declarado: nomeImovelDeclarado
-    };
+    // Diretriz de conformidade: ZERO geração sintética ou dados fictícios.
+    // Se o registro não existe em acervo pré-auditado, retorna null preservando o sigilo oficial do CAR.
+    return null;
   },
 
   /**
