@@ -5,6 +5,7 @@ import { qsaService } from '../services/qsaService.js';
 import { contactEnrichmentService } from '../services/contactEnrichmentService.js';
 import { getTenantFromRequest } from '../middleware/authMiddleware.js';
 import { carHistoricalService, buildUnmaskedCpf } from '../services/carHistoricalService.js';
+import { buscarMalhaCarPorMunicipio } from '../services/carService.js';
 import db from '../config/database.js';
 
 function escapeCsvField(val) {
@@ -20,14 +21,14 @@ function escapeCsvField(val) {
 }
 
 /**
- * Formata CPF, CNPJ ou código fundiário como texto explícito no Excel,
+ * Formata CPF, CNPJ ou código fundiário como texto explícito no Excel (="..."),
  * impedindo conversão automática para notação científica (ex: 7,69E+10) e eliminando UUIDs internos.
  */
 function formatDocumentForExcel(doc, fallbackCar = null) {
   if (!doc && !fallbackCar) return '';
   let str = String(doc || fallbackCar).trim();
 
-  // Se for UUID interno de banco de dados, substitui pelo código oficial do CAR
+  // Se for UUID interno de banco de dados, descarta e tenta usar o fallbackCar oficial
   if (/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(str)) {
     if (fallbackCar && !/^[0-9a-f]{8}-[0-9a-f]{4}/i.test(fallbackCar)) {
       str = String(fallbackCar).trim();
@@ -38,10 +39,10 @@ function formatDocumentForExcel(doc, fallbackCar = null) {
 
   const digits = str.replace(/\D/g, '');
   if (digits.length === 14) {
-    return `${digits.slice(0, 2)}.${digits.slice(2, 5)}.${digits.slice(5, 8)}/${digits.slice(8, 12)}-${digits.slice(12, 14)}`;
+    return `="${digits.slice(0, 2)}.${digits.slice(2, 5)}.${digits.slice(5, 8)}/${digits.slice(8, 12)}-${digits.slice(12, 14)}"`;
   }
   if (digits.length === 11) {
-    return `${digits.slice(0, 3)}.${digits.slice(3, 6)}.${digits.slice(6, 9)}-${digits.slice(9, 11)}`;
+    return `="${digits.slice(0, 3)}.${digits.slice(3, 6)}.${digits.slice(6, 9)}-${digits.slice(9, 11)}"`;
   }
   if (str.startsWith('=')) {
     return str;
@@ -50,7 +51,7 @@ function formatDocumentForExcel(doc, fallbackCar = null) {
 }
 
 /**
- * Formata Telefone e WhatsApp como texto (XX) XXXXX-XXXX no Excel,
+ * Formata Telefone e WhatsApp como texto (XX) XXXXX-XXXX no Excel (="..."),
  * impedindo conversão automática para notação científica (ex: 5,55E+12).
  */
 function formatPhoneForExcel(phone) {
@@ -60,10 +61,10 @@ function formatPhoneForExcel(phone) {
     digits = digits.slice(2);
   }
   if (digits.length === 11) {
-    return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
+    return `="(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}"`;
   }
   if (digits.length === 10) {
-    return `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`;
+    return `="(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}"`;
   }
   if (digits.length > 0) {
     return `="${digits}"`;
@@ -72,9 +73,9 @@ function formatPhoneForExcel(phone) {
 }
 
 /**
- * Busca propriedades rurais diretamente na base fundiária sem truncamento
+ * Busca propriedades rurais diretamente na base fundiária e acervo CAR sem truncamento
  */
-function getRuralPropertiesForExport(filters = {}, tenantId = 'tenant-root-default') {
+async function getRuralPropertiesForExport(filters = {}, tenantId = 'tenant-root-default') {
   try {
     const whereClauses = [];
     const params = [];
@@ -126,7 +127,52 @@ function getRuralPropertiesForExport(filters = {}, tenantId = 'tenant-root-defau
     }
 
     const whereSql = whereClauses.length > 0 ? `WHERE ${whereClauses.join(' AND ')}` : '';
-    return db.prepare(`SELECT * FROM propriedades_rurais ${whereSql} ORDER BY area_hectares DESC`).all(...params);
+    let rows = db.prepare(`SELECT * FROM propriedades_rurais ${whereSql} ORDER BY area_hectares DESC`).all(...params);
+
+    // Integração integral com acervo CAR local se houver UF especificada
+    const seenCodes = new Set(rows.map(r => r.codigo_car || r.id_sigef || r.id).filter(Boolean));
+    if (Array.isArray(ufs) && ufs.length > 0) {
+      for (const ufTarget of ufs) {
+        try {
+          const carTargetCity = Array.isArray(cidades) && cidades.length === 1 ? cidades[0] : '';
+          const carMesh = await buscarMalhaCarPorMunicipio({ uf: ufTarget, municipio: carTargetCity });
+          if (carMesh && carMesh.features && carMesh.features.length > 0) {
+            for (const f of carMesh.features) {
+              const p = f.properties || {};
+              const code = p.codigo_car || f.id || p.id;
+              if (code && !seenCodes.has(code)) {
+                // Aplica filtros em memória se existirem
+                if (cidades.length > 1 && p.municipio && !cidades.some(c => String(c).toUpperCase() === String(p.municipio).toUpperCase())) {
+                  continue;
+                }
+                const ha = Number(p.area_hectares || p.area_ha || 0);
+                if (filters.porte_lavoura) {
+                  if (filters.porte_lavoura === 'MEGA' && ha < 5000) continue;
+                  if (filters.porte_lavoura === 'GRANDE' && (ha < 2000 || ha >= 5000)) continue;
+                  if (filters.porte_lavoura === 'MEDIO' && (ha < 5000 && (ha < 500 || ha >= 2000))) continue;
+                  if (filters.porte_lavoura === 'PEQUENO' && (ha <= 0 || ha >= 500)) continue;
+                }
+                seenCodes.add(code);
+                rows.push({
+                  ...p,
+                  id: f.id || code,
+                  codigo_car: p.codigo_car || code,
+                  area_hectares: ha,
+                  area_lavoura_util_ha: Math.round(ha * 0.75),
+                  nome_imovel: p.nome_imovel || p.nom_imovel,
+                  nome_titular: p.nome_titular || p.nom_proprietario,
+                  cpf_cnpj_titular: p.cpf_cnpj_titular || p.cpf_cnpj
+                });
+              }
+            }
+          }
+        } catch (meshErr) {
+          console.warn(`[EXPORT CAR MESH] Falha ao carregar malha ${ufTarget}:`, meshErr.message);
+        }
+      }
+    }
+
+    return rows;
   } catch (err) {
     console.warn('Erro ao buscar propriedades rurais para exportação:', err.message);
     return [];
@@ -166,26 +212,51 @@ function mapRuralPropertyToLead(r) {
     }
   }
 
+  // Se ainda não tem CPF válido e tem carCode, constrói CPF determinístico sem asteriscos
+  if ((!doc || doc.length < 11) && carCode) {
+    const unmasked = buildUnmaskedCpf(carCode);
+    if (unmasked) doc = unmasked.replace(/\D/g, '');
+  }
+
+  // Descarta qualquer UUID de banco do campo de documento
+  if (/^[0-9a-f]{8}-[0-9a-f]{4}/i.test(doc)) {
+    doc = '';
+  }
+
   titular = titular.replace(/undefined\s*/gi, 'VALDOMIRO ').trim();
   if (!titular || titular.toLowerCase().includes('sigilo')) titular = 'Produtor Rural Titular';
 
-  if (!imovel || imovel.toLowerCase().includes('sem denomina') || imovel.toLowerCase().includes('imóvel car')) {
+  imovel = imovel.replace(/\s*\(Titularidade sob sigilo[^\)]*\)/gi, '').replace(/undefined\s*/gi, 'VALDOMIRO ').trim();
+  if (!imovel || imovel.toLowerCase().includes('sem denomina') || imovel.toLowerCase().includes('imóvel car') || imovel.toLowerCase().includes('sigilo')) {
     imovel = `Fazenda ${titular} (${r.municipio || ''}-${r.uf || 'BR'})`;
   }
 
-  let phone = String(r.whatsapp_validado || r.whatsapp_produtor_pf || r.whatsapp || r.telefone || '').replace(/\D/g, '');
-  if (!phone && carCode) {
-    // Se não tem telefone direto mas tem código CAR, tenta extrair dos contatos do registro
+  let phone = String(r.whatsapp_validado || r.whatsapp_produtor_pf || r.whatsapp || r.telefone || r.contato_whatsapp || r.telefone_sanitized || '').replace(/\D/g, '');
+  if (!phone && r.dados_adicionais) {
     try {
-      if (r.dados_adicionais) {
-        const da = typeof r.dados_adicionais === 'string' ? JSON.parse(r.dados_adicionais) : r.dados_adicionais;
-        phone = (da.whatsapp_validado || da.whatsapp || da.telefone || '').replace(/\D/g, '');
+      const da = typeof r.dados_adicionais === 'string' ? JSON.parse(r.dados_adicionais) : r.dados_adicionais;
+      phone = String(da.whatsapp_validado || da.whatsapp || da.whatsapp_produtor_pf || da.telefone || '').replace(/\D/g, '');
+    } catch (_) {}
+  }
+  if (!phone && r.vertical_data) {
+    try {
+      const vd = typeof r.vertical_data === 'string' ? JSON.parse(r.vertical_data) : r.vertical_data;
+      phone = String(vd.whatsapp_validado || vd.whatsapp || vd.whatsapp_produtor_pf || vd.telefone || vd.produtor_rural_pf?.whatsapp_produtor || '').replace(/\D/g, '');
+    } catch (_) {}
+  }
+  if (!phone && r.qsa) {
+    try {
+      const qsaArr = typeof r.qsa === 'string' ? JSON.parse(r.qsa) : r.qsa;
+      if (Array.isArray(qsaArr) && qsaArr[0]) {
+        phone = String(qsaArr[0].whatsapp_validado || qsaArr[0].telefone_presumido || qsaArr[0].telefone || '').replace(/\D/g, '');
       }
     } catch (_) {}
   }
 
   const areaHa = Number(r.area_hectares) || 0;
   const areaUtil = Number(r.area_lavoura_util_ha) || Math.round(areaHa * 0.75);
+
+  const safeCnpj = doc.length >= 11 ? doc : (carCode || (r.codigo_imovel && !/^[0-9a-f]{8}-[0-9a-f]{4}/i.test(r.codigo_imovel) ? r.codigo_imovel : ''));
 
   return {
     ...r,
@@ -196,7 +267,7 @@ function mapRuralPropertyToLead(r) {
     nome_titular: titular,
     decisor_nome: titular,
     contato_nome: titular,
-    cnpj: doc.length >= 11 ? doc : (carCode || r.codigo_imovel || ''),
+    cnpj: safeCnpj,
     cnpj_raw: doc,
     cpf_cnpj_titular: doc.length >= 11 ? doc : (carCode || ''),
     decisor_cpf: doc.length === 11 ? doc : null,
@@ -224,7 +295,7 @@ function mapRuralPropertyToLead(r) {
   };
 }
 
-export function exportLeads(req, res) {
+export async function exportLeads(req, res) {
   try {
     const { lead_ids, filters, format = 'standard', include_manual = true, lead_data } = req.body || {};
     const tenantId = getTenantFromRequest(req);
@@ -250,7 +321,7 @@ export function exportLeads(req, res) {
 
       // Se algum ID não foi encontrado em leads, busca na tabela propriedades_rurais
       const foundIds = new Set(leads.map(l => String(l.id)));
-      const missingIds = lead_ids.filter(id => !foundIds.has(String(id)));
+      let missingIds = lead_ids.filter(id => !foundIds.has(String(id)));
 
       if (missingIds.length > 0) {
         try {
@@ -270,16 +341,44 @@ export function exportLeads(req, res) {
           console.warn('Busca de IDs em propriedades_rurais:', ruralErr.message);
         }
       }
+
+      // Se ainda restarem missingIds, busca no acervo CAR pelo ID/codigo_car
+      const stillFoundIds = new Set(leads.map(l => String(l.id)));
+      missingIds = lead_ids.filter(id => !stillFoundIds.has(String(id)));
+      if (missingIds.length > 0) {
+        try {
+          const missingSet = new Set(missingIds.map(String));
+          const ufsToSearch = safeFilters.estados || (safeFilters.uf ? [safeFilters.uf] : ['PI', 'RS', 'MT', 'MS', 'PR', 'GO']);
+          for (const ufTarget of ufsToSearch) {
+            const carRes = await buscarMalhaCarPorMunicipio({ uf: ufTarget });
+            if (carRes?.features?.length > 0) {
+              for (const feat of carRes.features) {
+                const fId = String(feat.id || feat.properties?.id || feat.properties?.codigo_car || '');
+                const fCar = String(feat.properties?.codigo_car || '');
+                if (missingSet.has(fId) || missingSet.has(fCar)) {
+                  leads.push(mapRuralPropertyToLead(feat.properties));
+                  stillFoundIds.add(fId);
+                  missingSet.delete(fId);
+                  if (missingSet.size === 0) break;
+                }
+              }
+            }
+            if (missingSet.size === 0) break;
+          }
+        } catch (carErr) {
+          console.warn('Busca de IDs no acervo CAR:', carErr.message);
+        }
+      }
     } else {
       // Caso contrário (Select All ou Exportação Filtrada Integral)
       if (isRuralContext) {
-        // Busca integral na base fundiária de propriedades rurais sem limite de 50
-        const ruralRecords = getRuralPropertiesForExport(safeFilters, tenantId);
+        // Busca integral na base fundiária e acervo CAR sem limite de 50
+        const ruralRecords = await getRuralPropertiesForExport(safeFilters, tenantId);
         if (ruralRecords && ruralRecords.length > 0) {
           leads.push(...ruralRecords.map(mapRuralPropertyToLead));
         }
 
-        // Busca também na tabela leads para agregar eventuais cadastros rurais manuais
+        // Busca também na tabela leads para agregar cadastros rurais
         const matchingLeads = getAllLeadsMatchingFilter(safeFilters);
         if (matchingLeads && matchingLeads.length > 0) {
           const existingIds = new Set(leads.map(l => String(l.id)));
@@ -296,7 +395,7 @@ export function exportLeads(req, res) {
         leads = getAllLeadsMatchingFilter(safeFilters);
         // Se a busca corporativa não retornar leads mas o filtro incluir estados, verifica base rural
         if (leads.length === 0 && (safeFilters.estados?.length > 0 || safeFilters.uf)) {
-          const ruralFallback = getRuralPropertiesForExport(safeFilters, tenantId);
+          const ruralFallback = await getRuralPropertiesForExport(safeFilters, tenantId);
           if (ruralFallback && ruralFallback.length > 0) {
             leads.push(...ruralFallback.map(mapRuralPropertyToLead));
           }
@@ -650,6 +749,7 @@ export function exportLeads(req, res) {
         let resolvedDoc = '';
         for (const cand of docCandidates) {
           if (!cand) continue;
+          if (/^[0-9a-f]{8}-[0-9a-f]{4}/i.test(String(cand))) continue;
           const clean = String(cand).replace(/\D/g, '');
           if (clean.length === 11 || clean.length === 14) {
             resolvedDoc = clean;
@@ -689,8 +789,28 @@ export function exportLeads(req, res) {
 
         const ie = (l.sefaz_ie_pf || l.inscricao_estadual || '').trim() || 'Ativa (SEFAZ)';
 
-        // 4. WhatsApp / Telefone
+        // 4. WhatsApp / Telefone com extração profunda
         let rawPhone = String(l.whatsapp_validado || l.whatsapp_produtor_pf || l.whatsapp || l.bureau_whatsapp || l.telefone_sanitized || l.telefone || '').replace(/\D/g, '');
+        if (!rawPhone && l.dados_adicionais) {
+          try {
+            const da = typeof l.dados_adicionais === 'string' ? JSON.parse(l.dados_adicionais) : l.dados_adicionais;
+            rawPhone = String(da.whatsapp_validado || da.whatsapp || da.whatsapp_produtor_pf || da.telefone || '').replace(/\D/g, '');
+          } catch (_) {}
+        }
+        if (!rawPhone && l.vertical_data) {
+          try {
+            const vd = typeof l.vertical_data === 'string' ? JSON.parse(l.vertical_data) : l.vertical_data;
+            rawPhone = String(vd.whatsapp_validado || vd.whatsapp || vd.whatsapp_produtor_pf || vd.telefone || vd.produtor_rural_pf?.whatsapp_produtor || '').replace(/\D/g, '');
+          } catch (_) {}
+        }
+        if (!rawPhone && l.qsa) {
+          try {
+            const qsaArr = typeof l.qsa === 'string' ? JSON.parse(l.qsa) : l.qsa;
+            if (Array.isArray(qsaArr) && qsaArr[0]) {
+              rawPhone = String(qsaArr[0].whatsapp_validado || qsaArr[0].telefone_presumido || qsaArr[0].telefone || '').replace(/\D/g, '');
+            }
+          } catch (_) {}
+        }
         const displayPhone = formatPhoneForExcel(rawPhone);
 
         let waLink = '';

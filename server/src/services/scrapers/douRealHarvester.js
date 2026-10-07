@@ -6,41 +6,56 @@
  * Fonte Oficial: Imprensa Nacional do Governo Federal (in.gov.br)
  * 100% de dados reais, públicos e auditáveis publicados diariamente no DOU:
  * - Seção 1 (Atos Normativos e Portarias)
- * - Seção 2 (Atos de Pessoal)
- * - Seção 3 (Contratos, Editais, Leilões, Extratos de Financiamento e Avisos)
+ * - Seção 3 (Contratos de Financiamento, Licenças Ambientais de Armazenagem, Outorgas)
  * 
- * Todas as operações gravam o LINK OFICIAL VERIFICÁVEL da página no portal do governo.
+ * BLOQUEIO ESTRITO DE LICITAÇÕES:
+ * Descarta automaticamente avisos de licitação, pregões eletrônicos e compras de prefeituras.
+ * Focado 100% em oportunidades comerciais para o agronegócio e vendas de implementos.
  */
 
 import crypto from 'crypto';
 
 const DOU_SEARCH_BASE = 'https://www.in.gov.br/consulta/-/buscar/dou';
 
+const DISCARD_PROCUREMENT_TERMS = [
+  'aviso de licitação',
+  'aviso de licitacao',
+  'pregão eletrônico',
+  'pregao eletronico',
+  'pregão presencial',
+  'dispensa de licitação',
+  'inexigibilidade de licitação',
+  'tomada de preços',
+  'concorrência pública',
+  'ata de registro de preços',
+  'registro de preços'
+];
+
 const QUERY_BY_TYPE = {
   CREDITO_BNDES: {
-    term: 'crédito rural BNDES Finame',
-    orgaoDefault: 'BNDES / Ministério da Agricultura',
-    triggerLabel: 'Crédito e Financiamento Rural Publicado no DOU'
+    term: 'contrato financiamento máquinas Moderfrota agropecuária',
+    orgaoDefault: 'Banco Repassador / BNDES / MAPA',
+    triggerLabel: 'Financiamento de Máquinas & Crédito Agro no DOU'
   },
   PASSIVO_IBAMA: {
-    term: 'IBAMA embargo infração ambiental',
+    term: 'termo de embargo infração desmatamento fazenda IBAMA',
     orgaoDefault: 'IBAMA / Ministério do Meio Ambiente',
-    triggerLabel: 'Edital de Embargo / Infração Ambiental no DOU'
+    triggerLabel: 'Termo de Embargo / Autuação Ambiental no DOU'
   },
   OUTORGA_ANA: {
-    term: 'ANA outorga água irrigação',
+    term: 'portaria outorga captação irrigação',
     orgaoDefault: 'Agência Nacional de Águas (ANA)',
-    triggerLabel: 'Portaria de Outorga Hídrica Publicada no DOU'
+    triggerLabel: 'Portaria de Outorga de Irrigação no DOU'
   },
   EXPANSAO_LEILAO: {
-    term: 'leilão judicial fazenda rural',
-    orgaoDefault: 'Tribunal Regional / Justiça Federal',
-    triggerLabel: 'Edital de Leilão de Imóvel Rural no DOU'
+    term: 'certificação georreferenciamento imóvel rural gleba INCRA',
+    orgaoDefault: 'INCRA / SIGEF / Cartório de Registro',
+    triggerLabel: 'Expansão & Certificação Fundiária (INCRA/SIGEF)'
   },
   DOU: {
-    term: 'licenciamento ambiental rural',
-    orgaoDefault: 'Órgão Ambiental Federal / MAPA',
-    triggerLabel: 'Publicação Oficial no Diário Oficial da União'
+    term: 'licença instalação armazém silos secador grãos',
+    orgaoDefault: 'Órgão Ambiental Estadual / Federal',
+    triggerLabel: 'Licença Ambiental para Armazenagem & Silos'
   }
 };
 
@@ -52,8 +67,8 @@ export class DouRealHarvester {
    * @param {Object} options Filtros opcionais (uf, municipio)
    * @returns {Promise<Array>} Lista de sinais reais com link de auditoria
    */
-  static async harvestDOU(sparkType = 'CREDITO_BNDES', { uf = null, municipio = null } = {}) {
-    const config = QUERY_BY_TYPE[sparkType] || QUERY_BY_TYPE.CREDITO_BNDES;
+  static async harvestDOU(sparkType = 'DOU', { uf = null, municipio = null } = {}) {
+    const config = QUERY_BY_TYPE[sparkType] || QUERY_BY_TYPE.DOU;
     const query = config.term;
 
     const searchUrl = `${DOU_SEARCH_BASE}?q=${encodeURIComponent(query)}&exactDate=mes`;
@@ -99,9 +114,18 @@ export class DouRealHarvester {
       return [];
     }
 
-    console.log(`✅ [DOU LIVE CRAWLER] ${rawHits.length} publicações oficiais autênticas capturadas no DOU.`);
+    const signals = [];
 
-    const signals = rawHits.map(hit => {
+    for (const hit of rawHits) {
+      const titleLower = (hit.title || '').toLowerCase();
+      const contentLower = (hit.content || '').toLowerCase();
+
+      // FILTRO ANTI-LICITAÇÃO: descarta pregões, dispensas e concorrências públicas
+      const isProcurement = DISCARD_PROCUREMENT_TERMS.some(t => titleLower.includes(t) || contentLower.includes(t));
+      if (isProcurement) {
+        continue;
+      }
+
       const urlTitle = hit.urlTitle || hit.title || '';
       const urlOficial = `https://www.in.gov.br/web/dou/-/${urlTitle}`;
       const uniqueKey = hit.urlTitle || `${hit.title}-${hit.pubDate}`;
@@ -170,7 +194,7 @@ export class DouRealHarvester {
         ufDetectada = ufFound[1];
       }
 
-      return {
+      signals.push({
         id: signalId,
         spark_type: sparkType,
         titulo: hit.title || `Publicação Oficial do DOU (${hit.pubDate})`,
@@ -189,9 +213,10 @@ export class DouRealHarvester {
         lng: -47.9292,
         url_fonte: urlOficial,
         trigger_texto: `${config.triggerLabel} [${hit.pubDate}]`
-      };
-    });
+      });
+    }
 
+    console.log(`✅ [DOU LIVE CRAWLER] ${signals.length} publicações comerciais legítimas filtradas (licitações descartadas).`);
     return signals;
   }
 }

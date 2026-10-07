@@ -1,19 +1,23 @@
 /**
  * server/src/services/sparksRealDataIngestionService.js
  * 
- * FASE SPARKS REAL: MOTOR DE INGESTÃO DE DADOS ABERTOS OFICIAIS
+ * FASE SPARKS REAL: MOTOR DE INGESTÃO DE DADOS ABERTOS OFICIAIS 24/7
  * E CRUZAMENTO DETERMINÍSTICO COM A BASE DE LEADS & FAZENDAS (CAR/SIGEF)
  * 
- * 100% DADOS REAIS AUDITÁVEIS DIRETAMENTE DO DIÁRIO OFICIAL DA UNIÃO (DOU - IN.GOV.BR)
- * ZERO DADOS FICTÍCIOS OU MOCKADOS.
- * Todos os sinais possuem:
- * - url_fonte oficial verificável (https://www.in.gov.br/web/dou/-/{slug})
- * - data_publicacao oficial da edição do DOU
- * - Órgão emissor oficial
+ * ARQUITETURA MULTI-FONTE 100% REAL:
+ * 1. CREDITO_BNDES: API CKAN de Dados Abertos do BNDES (Operações Indiretas Automáticas)
+ * 2. OUTORGA_ANA: Cadastro Nacional de Outorgas do SNIRH / Agência Nacional de Águas (ANA)
+ * 3. EVENTO_AGRO: Feiras Oficiais de Máquinas e Tecnologia Agrícola com Links Diretos
+ * 4. DOU / EXPANSAO / PASSIVO: Imprensa Nacional com Bloqueio Estrito de Licitações Municipais
+ * 
+ * ZERO MOCKS. ZERO DADOS SINTÉTICOS. ZERO EDITAIS DE LICITAÇÃO.
  */
 
 import crypto from 'crypto';
 import db from '../config/database.js';
+import { BndesCkanHarvester } from './scrapers/bndesCkanHarvester.js';
+import { AnaRealHarvester } from './scrapers/anaRealHarvester.js';
+import { FeirasAgroHarvester } from './scrapers/feirasAgroHarvester.js';
 import { DouRealHarvester } from './scrapers/douRealHarvester.js';
 import SparksAlertDispatcherService from './sparksAlertDispatcherService.js';
 
@@ -24,19 +28,50 @@ export class SparksRealDataIngestionService {
   static async ingestRealSignals(sparkType = null, tenantId = 'tenant-root-default') {
     let collectedSignals = [];
 
-    const typesToHarvest = sparkType && sparkType !== 'ALL'
-      ? [sparkType]
-      : ['CREDITO_BNDES', 'OUTORGA_ANA', 'PASSIVO_IBAMA', 'EXPANSAO_LEILAO', 'DOU'];
-
-    for (const type of typesToHarvest) {
+    // 1. Crédito BNDES (Operações Reais de Financiamento Agropecuário)
+    if (!sparkType || sparkType === 'CREDITO_BNDES' || sparkType === 'ALL') {
       try {
-        console.log(`📡 [SPARKS REAL INGESTION] Executando crawler real do DOU para ${type}...`);
-        const signals = await DouRealHarvester.harvestDOU(type);
-        if (Array.isArray(signals) && signals.length > 0) {
-          collectedSignals.push(...signals);
+        console.log('📡 [SPARKS REAL INGESTION] Executando harvester BNDES CKAN...');
+        const bndesSignals = await BndesCkanHarvester.harvestOperations({ limit: 40 });
+        if (Array.isArray(bndesSignals)) collectedSignals.push(...bndesSignals);
+      } catch (err) {
+        console.error('❌ [SPARKS REAL INGESTION] Erro em CREDITO_BNDES:', err.message);
+      }
+    }
+
+    // 2. Outorgas ANA (Concessões de Irrigação SNIRH)
+    if (!sparkType || sparkType === 'OUTORGA_ANA' || sparkType === 'ALL') {
+      try {
+        console.log('📡 [SPARKS REAL INGESTION] Executando harvester ANA SNIRH...');
+        const anaSignals = await AnaRealHarvester.harvestWaterGrants({ limit: 30 });
+        if (Array.isArray(anaSignals)) collectedSignals.push(...anaSignals);
+      } catch (err) {
+        console.error('❌ [SPARKS REAL INGESTION] Erro em OUTORGA_ANA:', err.message);
+      }
+    }
+
+    // 3. Feiras & Eventos do Agronegócio (Grandes feiras de máquinas e crédito)
+    if (!sparkType || sparkType === 'EVENTO_AGRO' || sparkType === 'ALL') {
+      try {
+        console.log('📡 [SPARKS REAL INGESTION] Executando harvester de Feiras Agro...');
+        const feirasSignals = await FeirasAgroHarvester.harvestFairs();
+        if (Array.isArray(feirasSignals)) collectedSignals.push(...feirasSignals);
+      } catch (err) {
+        console.error('❌ [SPARKS REAL INGESTION] Erro em EVENTO_AGRO:', err.message);
+      }
+    }
+
+    // 4. Diário Oficial da União (Licenciamento de Silos, Expansão e Passivo IBAMA - Anti-Licitação)
+    const douTypes = ['DOU', 'EXPANSAO_LEILAO', 'PASSIVO_IBAMA'];
+    for (const dtype of douTypes) {
+      if (!sparkType || sparkType === dtype || sparkType === 'ALL') {
+        try {
+          console.log(`📡 [SPARKS REAL INGESTION] Executando harvester DOU para ${dtype}...`);
+          const douSignals = await DouRealHarvester.harvestDOU(dtype);
+          if (Array.isArray(douSignals)) collectedSignals.push(...douSignals);
+        } catch (err) {
+          console.error(`❌ [SPARKS REAL INGESTION] Erro em ${dtype}:`, err.message);
         }
-      } catch (harvestErr) {
-        console.error(`❌ [SPARKS REAL INGESTION] Erro ao coletar sinais reais de ${type}:`, harvestErr.message);
       }
     }
 
@@ -71,10 +106,11 @@ export class SparksRealDataIngestionService {
       let finalTrigger = rawSignal.trigger_texto;
       let scoreGerado = 20;
 
-      if (rawSignal.spark_type === 'CREDITO_BNDES') scoreGerado = 40;
-      else if (rawSignal.spark_type === 'OUTORGA_ANA') scoreGerado = 35;
-      else if (rawSignal.spark_type === 'PASSIVO_IBAMA') scoreGerado = 25;
+      if (rawSignal.spark_type === 'CREDITO_BNDES') scoreGerado = 45;
+      else if (rawSignal.spark_type === 'OUTORGA_ANA') scoreGerado = 40;
       else if (rawSignal.spark_type === 'EXPANSAO_LEILAO') scoreGerado = 30;
+      else if (rawSignal.spark_type === 'EVENTO_AGRO') scoreGerado = 25;
+      else if (rawSignal.spark_type === 'PASSIVO_IBAMA') scoreGerado = 25;
 
       if (matchedLead || matchedProp) {
         finalTrigger = `[HOT MATCH: CLIENTE DA BASE] ${rawSignal.trigger_texto}`;
@@ -126,14 +162,16 @@ export class SparksRealDataIngestionService {
           db.prepare(`
             UPDATE sparks_signals 
             SET url_fonte = COALESCE(url_fonte, ?),
-                data_publicacao = COALESCE(data_publicacao, ?)
+                data_publicacao = COALESCE(data_publicacao, ?),
+                valor_monetario = CASE WHEN valor_monetario = 0 AND ? > 0 THEN ? ELSE valor_monetario END,
+                volume_m3h = CASE WHEN volume_m3h = 0 AND ? > 0 THEN ? ELSE volume_m3h END
             WHERE id = ?
-          `).run(rawSignal.url_fonte, rawSignal.data_publicacao, existing.id);
+          `).run(rawSignal.url_fonte, rawSignal.data_publicacao, rawSignal.valor_monetario, rawSignal.valor_monetario, rawSignal.volume_m3h, rawSignal.volume_m3h, existing.id);
         } catch (_) {}
       }
     }
 
-    console.log(`✅ [SPARKS REAL INGESTION] Concluído: ${collectedSignals.length} capturados no DOU, ${savedCount} novos inseridos, ${matchedCount} hot matches.`);
+    console.log(`✅ [SPARKS REAL INGESTION] Concluído: ${collectedSignals.length} sinais capturados nas fontes oficiais, ${savedCount} novos inseridos, ${matchedCount} hot matches.`);
 
     return {
       success: true,

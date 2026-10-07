@@ -773,7 +773,15 @@ function renderTable() {
       if (!rawWa && lead.vertical_data) {
         try {
           const vd = typeof lead.vertical_data === 'string' ? JSON.parse(lead.vertical_data) : lead.vertical_data;
-          rawWa = vd.whatsapp_validado || vd.whatsapp || vd.whatsapp_produtor_pf || vd.bureau_whatsapp || vd.telefone || vd.telefone_validado || '';
+          rawWa = vd.whatsapp_validado || vd.whatsapp || vd.whatsapp_produtor_pf || vd.bureau_whatsapp || vd.telefone || vd.telefone_validado || vd.produtor_rural_pf?.whatsapp_produtor || vd.produtor_rural_pf?.telefone || '';
+        } catch(e) {}
+      }
+      if (!rawWa && lead.qsa) {
+        try {
+          const qsaArr = typeof lead.qsa === 'string' ? JSON.parse(lead.qsa) : lead.qsa;
+          if (Array.isArray(qsaArr) && qsaArr[0]) {
+            rawWa = qsaArr[0].whatsapp_validado || qsaArr[0].telefone_presumido || qsaArr[0].telefone || '';
+          }
         } catch(e) {}
       }
       const cleanPhone = String(rawWa).replace(/\D/g, '');
@@ -783,7 +791,7 @@ function renderTable() {
 
       // 6. Status Comercial
       let status = lead.feedback_status;
-      if (!status) {
+      if (!status || status === 'NAO_CONTATADO') {
         if (lead.intent_classification === 'HOT' || lead.score_vitalidade >= 80) {
           status = 'INTERESSADO';
         } else if (hasValidPhone || lead.intent_classification === 'WARM') {
@@ -9899,7 +9907,20 @@ function initPhase65Features() {
     updateVisibleFarmsCount(e.detail?.count);
   });
 
-  const performBulkInjection = async (targetBtn, explicitProperties = null) => {
+  const performBulkInjection = async (arg1, arg2 = null) => {
+    let targetBtn = null;
+    let explicitProperties = null;
+
+    if (Array.isArray(arg1)) {
+      explicitProperties = arg1;
+      targetBtn = (arg2 && (arg2.nodeType || arg2.innerHTML !== undefined)) ? arg2 : null;
+    } else {
+      targetBtn = (arg1 && (arg1.nodeType || arg1.innerHTML !== undefined)) ? arg1 : null;
+      if (Array.isArray(arg2)) {
+        explicitProperties = arg2;
+      }
+    }
+
     let properties = Array.isArray(explicitProperties) && explicitProperties.length > 0
       ? explicitProperties
       : (Array.isArray(window.ruralPropertiesData) ? window.ruralPropertiesData : []);
@@ -9963,14 +9984,21 @@ function initPhase65Features() {
       const injectedCount = data.count || properties.length;
       showToast(`✅ ${injectedCount} fazendas e produtores rurais sincronizados na Tabela Analítica!`);
 
-      // Detecta a UF das propriedades injetadas para sincronizar perfeitamente o filtro
+      // Detecta a UF e a origem das propriedades injetadas para sincronizar perfeitamente o filtro
       const propUf = (properties[0]?.uf || 'GO').toUpperCase();
+      const isCar = properties.some(p => p.origem === 'RURAL_CAR' || p.codigo_car || (p.id && String(p.id).includes('-')));
       state.filters.estados = [propUf];
       state.filters.cidades = []; // Limpa cidades para garantir visão total do estado/município injetado
-      state.filters.origem = 'RURAL_SIGEF';
+      state.filters.origem = isCar ? 'RURAL_CAR' : 'RURAL_SIGEF';
       state.filters.funnel_status = 'NOVOS';
       state.filters.page = 1;
       state.currentPage = 1;
+
+      // Mantém os IDs selecionados para que a exportação imediata capture todos
+      if (Array.isArray(properties) && properties.length > 0) {
+        state.selectedLeadIds = new Set(properties.map(p => String(p.id || p.id_sigef || p.codigo_car || '')).filter(Boolean));
+        state.selectAllFiltered = true;
+      }
 
       // Sincroniza visualmente as abas de categoria (Empresas vs Rural)
       const tabRural = document.getElementById('btnTabCategoryRural');

@@ -3395,22 +3395,76 @@ Este documento rastreia de forma contínua, estruturada e duradoura todo o hist�
     - [x] **Deploy e Teste na VPS Hostinger:** Código enviado ao GitHub, puxado na VPS `179.236.237.116`, banco higienizado e serviço PM2 `versus-api` reiniciado com sucesso. Endpoints `/api/sparks/signals` e `/api/sparks/signals/:id/dossier` retornando dados 100% autênticos com HTTP 200.
   - **Status:** ✅ Concluído e Homologado em Produção (07/10/2026).
 
-- [ ] **ITEM 2: AQUISIÇÃO E INGESTÃO DO ACERVO HISTÓRICO DO CAR (2022/2023 PRÉ-LGPD)**
-  - [ ] Localizar e mapear fontes e repositórios acadêmicos e públicos com o dump pré-LGPD do SICAR.
-  - [ ] Criar script de ingestão oficial associando \cod_imovel\ aos nomes e CPFs declarados oficialmente.
+- [ ] **ITEM 2 (PASSO 1 - PRIORIDADE NÚMERO 1): ACERVO HISTÓRICO DO SICAR (2021/2022 PRÉ-LGPD)**
+  - [ ] Mapear repositórios acadêmicos e dumps públicos abertos com a base pré-LGPD do SICAR.
+  - [ ] Ingestão na base `car_proprietarios_historico` associando `codigo_car` aos nomes e CPFs declarados oficialmente.
+  - [ ] **Quality Gate 1:** Validar em mapa WebGL se a área piloto (ex: PI/RS/MT) resolve mais de 80% dos proprietários reais antes de avançar para a próxima etapa.
 
-- [ ] **ITEM 3: MOTOR ESPACIAL SIGEF/INCRA (SOBREPOSIÇÃO DE POLÍGONOS)**
-  - [ ] Cruzamento espacial (Intersects) do polígono do imóvel com parcelas certificadas do INCRA.
-  - [ ] Extração autêntica de Matrícula, Cartório de Registro de Imóveis (CRI) e Detentor da Certificação.
+- [ ] **ITEM 3 (PASSO 2 - QUALITY GATE 2): MOTOR ESPACIAL SIGEF/INCRA (SOBREPOSIÇÃO POLIGONAL INTERSECTS)**
+  - [ ] Cruzamento espacial geométrico (Intersects) do polígono do CAR com parcelas certificadas do INCRA.
+  - [ ] Extração autêntica de Matrícula, Cartório de Registro de Imóveis (CRI) e Detentor Certificado pelo INCRA.
+  - [ ] **Quality Gate 2:** Validar sobreposição espacial e herança de titularidade de matrícula com fé pública federal.
 
-- [ ] **ITEM 4: CRAWLER FISCAL & DIÁRIOS OFICIAIS (SEFAZ-RS / SINTEGRA)**
-  - [ ] Consulta automatizada de Inscrição Estadual de Produtor Rural ativo.
-  - [ ] Monitoramento de editais de notificação ambiental para recuperação de titulares de CAR.
+- [ ] **ITEM 4 (PASSO 3 - QUALITY GATE 3): DIÁRIOS OFICIAIS & EDITAIS AMBIENTAIS (DOU / DOEs)**
+  - [ ] Monitoramento automatizado de editais de notificação ambiental, outorgas e licenciamentos que citem o CAR e o nome completo do titular.
+  - [ ] Persistência de link auditável (`url_fonte`) da edição oficial.
+  - [ ] **Quality Gate 3:** Comprovação de correspondência de código CAR a editais públicos com link direto.
 
-- [ ] **ITEM 5: ENRIQUECIMENTO TELEFÔNICO COM FÉ PÚBLICA (ASSERTIVA v3)**
-  - [ ] Acionamento exclusivo via CPF/CNPJ reais e auditados.
-  - [ ] Captura de WhatsApp verificado, celulares e dados cadastrais autênticos.
+- [ ] **ITEM 5 (PASSO 4 - QUALITY GATE 4): ROBÔ FISCAL NACIONAL ADAPTATIVO (SINTEGRA / SEFAZ 27 UFs)**
+  - [ ] Scraper adaptável a todas as 27 UFs brasileiras (RS, MT, MS, GO, PR, SP, BA, PI, MG, etc.).
+  - [ ] Tratamento específico para Produtor Rural PF (Talão de Produtor / NFP-e vinculada a CPF): no SEFAZ-RS e demais estados, chavear para a consulta de Produtor Rural/CPF ou Inscrição Estadual, sem abortar por falta de CNPJ.
+  - [ ] **Quality Gate 4:** Teste de ponta a ponta com extração de IE e situação cadastral ativa de produtores PF em RS, MT e PI.
 
-- [ ] **ITEM 6: EXPORTAÇÃO COMERCIAL EM MASSA (EXCEL BRASIL)**
+- [ ] **ITEM 6 (PASSO 5 - QUALITY GATE 5): VALIDAÇÃO CADASTRAL NA RECEITA FEDERAL OFICIAL**
+  - [ ] Cruzamento oficial com dados abertos da Receita Federal (QSA, CNPJ Raiz, Sócios/Administradores, Matriz/Filiais).
+  - [ ] Validação matemática de CPF e situação cadastral federal.
+  - [ ] **Quality Gate 5:** Confirmação de regularidade cadastral federal com documento consolidado.
+
+- [ ] **ITEM 7 (PASSO 6 - ÚLTIMO RECURSO): PROVEDOR TELEFÔNICO HOMOLOGADO (ASSERTIVA v3)**
+  - [ ] Acionamento **estritamente em últimos casos** (Fallback Final), somente quando as fontes públicas gratuitas anteriores não retornarem telefone celular/WhatsApp.
+  - [ ] Disparo cirúrgico exclusivo com CPF/CNPJ real auditado pelas etapas anteriores, garantindo 100% de match rate e economia máxima de créditos pagos.
+  - [ ] **Quality Gate 6:** Captura de celular ativo com validação prévia de operadora e canal de WhatsApp.
+
+- [ ] **ITEM 8: EXPORTAÇÃO COMERCIAL EM MASSA & ALINHAMENTO EXCEL (EXCEL BRASIL)**
   - [ ] Remoção da trava de 50 registros: descarregar 100% dos leads selecionados (ex: 1.083 leads).
-  - [ ] Formatação nativa para Excel: delimitador ponto-e-vírgula (\;\), UTF-8 BOM (\\uFEFF\) e colunas ordenadas com carimbo de auditoria de cada dado.
+  - [ ] Formatação nativa para Excel: delimitador ponto-e-vírgula (`;`), UTF-8 BOM (`\uFEFF`), números e documentos blindados com `="..."` para zero notação científica.
+
+---
+
+## 📅 SPRINT QUARTA-FEIRA (07/10/2026): FASE 73 — BARRA DE BUSCA DIRETA, UX SIMPLIFICADA & PROSPECÇÃO DE REVENDAS SOB DEMANDA
+
+> 🎯 **Foco Central:** Simplificação radical da UX de busca para operadores e gestores. Injeção de Barra de Prospecção Direta com botão canônico `[ 🔍 BUSCAR ]` na área de trabalho principal (Tabela/Mapa), eliminação de auto-disparos confusos e motor de prospecção territorial sob demanda para qualquer um dos 5.570 municípios do Brasil.
+
+- [ ] **ITEM 1: BARRA DE BUSCA ESTRUTURADA DIRETA NA ÁREA DE TRABALHO (TOP SEARCH BAR)**
+  - **Diagnóstico:** O painel lateral ("Filtros & Verticais") gera sobrecarga cognitiva com 8 seções compactadas e auto-disparos a cada clique sem botão explícito de "Buscar", desorientando o gestor.
+  - **Escopo Técnico:**
+    - [ ] Criar componente visual de busca rápida fixo/integrado no topo da área de trabalho (acima da Tabela e do Mapa):
+      - Seletor rápido de **Estado (UF)** (27 estados do Brasil).
+      - Seletor inteligente de **Cidade** (carregado dinamicamente via IBGE para a UF escolhida).
+      - Seletor de Perfil: **Revendas / Fornecedores** | **Compradores / Produtores** | **Todos**.
+      - Botão Primário Canônico: **`[ 🔍 BUSCAR LEADS ]`** com feedback de loading/spinner.
+      - Botão secundário: **`[ ↺ Limpar ]`**.
+    - [ ] A busca só é disparada quando o usuário clica no botão `[ 🔍 BUSCAR LEADS ]` ou pressiona `Enter`, evitando recarregamentos intempestivos ou travamentos de tela.
+
+- [ ] **ITEM 2: CORREÇÃO DO COMPORTAMENTO DO MAPA NO ZERO-STATE (CENTRALIZAÇÃO MUNICIPAL)**
+  - **Diagnóstico:** Quando o filtro retorna 0 registros em uma cidade, o motor `mapEngine.js` executa recuo de câmera para a visão geral do Brasil (`BRAZIL_CENTER`), causando a sensação de que o mapa quebrou.
+  - **Escopo Técnico:**
+    - [ ] Obter as coordenadas geográficas (latitude/longitude) do município selecionado via API pública do IBGE / base de centróides.
+    - [ ] Quando o resultado retornar 0 leads, voar imediatamente a câmera para o centróide da cidade com zoom de aproximação (zoom 12).
+    - [ ] Exibir Empty State elegante no mapa e na tabela: *"Nenhum registro local encontrado em [Cidade]/[UF]"*.
+
+- [ ] **ITEM 3: MOTOR DE PROSPECÇÃO DE REVENDAS SOB DEMANDA NA RECEITA FEDERAL (QUALQUER CIDADE DO BRASIL)**
+  - **Diagnóstico:** O gestor precisa encontrar revendas e fornecedores em qualquer cidade do país (ex: Almirante Tamandaré do Sul, Sorriso, Dourados), mesmo que o município ainda não tenha leads minerados previamente na base SQLite local.
+  - **Escopo Técnico:**
+    - [ ] Criar endpoint backend `POST /api/prospect/revendas-municipio`:
+      - Recebe `{ uf, municipio, cnaes: ['4661-3/00', '4683-4/00', ...] }`.
+      - Consulta as fontes abertas de dados da Receita Federal / CNPJ para o município especificado.
+      - Salva os estabelecimentos ativos no banco local (`leads`) associando as coordenadas geográficas do endereço ou centróide urbano.
+    - [ ] No frontend, ao buscar uma cidade com 0 registros locais, oferecer botão de ação em 1 clique:
+      - `[ ⚡ Prospectar Revendas nesta Cidade na Receita Federal ]`.
+      - Ao clicar, minera as empresas, salva no banco e renderiza os novos pinos no mapa e as linhas na tabela em tempo real.
+
+- [ ] **ITEM 4: BOTÃO "APLICAR FILTROS" NO LEFT RAIL (FILTROS CIRÚRGICOS AVANÇADOS)**
+  - **Escopo Técnico:**
+    - [ ] Adicionar botão de destaque `[ 🔍 APLICAR FILTROS ]` na base do painel lateral esquerdo.
+    - [ ] Desacoplar os `change` e `input` automáticos para que os filtros avançados (Capital social, ICP Tier, Porte da lavoura, Implementos) só sejam executados quando o usuário clicar no botão ou no Enter, mantendo a consistência do sistema.

@@ -2850,6 +2850,7 @@ window.MapEngine = (function() {
       });
 
       selectedFarmsByLasso = insideFarms;
+      window.selectedFarmsByLasso = insideFarms;
 
       const highlightFeatures = insideFarms.map(f => ({
         type: 'Feature',

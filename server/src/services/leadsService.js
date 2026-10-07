@@ -262,11 +262,11 @@ export function buildFilterQuery(filters = {}) {
   // 16. Filtro por Origem do Lead (MANUAL, RURAL / SIGEF ou RECEITA_FEDERAL)
   if (filters.origem && filters.origem !== 'TODOS' && filters.origem !== 'todos') {
     const orig = String(filters.origem).toUpperCase();
-    if (orig === 'RURAL' || orig === 'SIGEF' || orig === 'RURAL_SIGEF') {
+    if (orig.startsWith('RURAL') || orig === 'SIGEF' || orig === 'CAR') {
       if (filters.target_type && String(filters.target_type).toUpperCase() === 'SUPPLIER') {
         // Se o usuário estiver explicitamente buscando fornecedores, não restringe a fazendas
       } else {
-        whereClauses.push("(origem LIKE 'RURAL%' OR tag LIKE '%RURAL%' OR tag LIKE '%SIGEF%')");
+        whereClauses.push("(origem LIKE 'RURAL%' OR tag LIKE '%RURAL%' OR tag LIKE '%SIGEF%' OR tag LIKE '%CAR%')");
       }
     } else if (orig === 'MANUAL') {
       whereClauses.push("(origem = 'MANUAL' OR tag = 'ORIGEM: MANUAL')");
