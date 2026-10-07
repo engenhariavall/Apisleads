@@ -3376,3 +3376,41 @@ Este documento rastreia de forma contínua, estruturada e duradoura todo o hist�
     - Rodar script SQL de higienização no SQLite local e na VPS substituindo `"undefined "` pelo nome limpo e adicionando fallback no frontend.
 
 ---
+
+---
+
+# 🛡️ FASE 52: GOVERNANÇA DE DADOS REAIS & MOTOR DE INTELIGÊNCIA TERRITORIAL EM CASCATA
+
+> 🎯 **Mandato Supremo do Projeto:** Tolerância ZERO para dados sintéticos, geradores de sobrenomes aleatórios ou números simulados. Cada informação deve ser rastreável a fontes governamentais autênticas ou provedores oficiais homologados (Assertiva v3).
+> 📄 **Documento Regulatório Completo:** Consulte [GOVERNANCA_E_PLANO_DADOS_REAIS.md](file:///c:/Users/Usuario/.gemini/antigravity-ide/scratch/Projeto%20API%20Leads/GOVERNANCA_E_PLANO_DADOS_REAIS.md)
+
+- [x] **ITEM 1: PURGA E HIGIENIZAÇÃO DE REGISTROS MOCKADOS (RADAR SPARKS & DIÁRIO OFICIAL DA UNIÃO - DOU) — HOMOLOGADO**
+  - **Objetivo Concluído:** Erradicação total de dados fictícios/simulados no Radar Sparks e ativação de raspador em tempo real conectado à Imprensa Nacional (`in.gov.br`).
+  - **Entregas Realizadas:**
+    - [x] **Crawler Real do DOU (`douRealHarvester.js`):** Motor de busca ao vivo na Imprensa Nacional capturando publicações autênticas do Diário Oficial da União (Seções 1, 2 e 3) para Crédito Rural/BNDES, Outorgas Hídricas ANA, Embargos IBAMA, Leilões Judiciais e Licenciamentos.
+    - [x] **Link Oficial Auditável (`url_fonte`):** Coluna adicionada ao banco SQLite e Supabase. 100% dos sinais possuem link governamental direto (`https://www.in.gov.br/web/dou/-/...`) para validação pública imediata.
+    - [x] **Data Real de Publicação (`data_publicacao`):** Extração da data oficial da edição do jornal (ex: `07/10/2026`) em formato ISO e formatação no frontend.
+    - [x] **Higienização Total de Mocks:** Removidos 18 registros sintéticos da tabela `sparks_signals` e substituídos por 42 publicações reais extraídas do DOU.
+    - [x] **Interface Radar Sparks (`client/js/sparksRadar.js` e `client/index.html`):** Adicionado botão `[ 🔗 DOU ]` em cada linha da tabela de sinais, carimbo de data oficial e banner com botão de acesso direto no Dossiê Raio-X.
+    - [x] **Deploy e Teste na VPS Hostinger:** Código enviado ao GitHub, puxado na VPS `179.236.237.116`, banco higienizado e serviço PM2 `versus-api` reiniciado com sucesso. Endpoints `/api/sparks/signals` e `/api/sparks/signals/:id/dossier` retornando dados 100% autênticos com HTTP 200.
+  - **Status:** ✅ Concluído e Homologado em Produção (07/10/2026).
+
+- [ ] **ITEM 2: AQUISIÇÃO E INGESTÃO DO ACERVO HISTÓRICO DO CAR (2022/2023 PRÉ-LGPD)**
+  - [ ] Localizar e mapear fontes e repositórios acadêmicos e públicos com o dump pré-LGPD do SICAR.
+  - [ ] Criar script de ingestão oficial associando \cod_imovel\ aos nomes e CPFs declarados oficialmente.
+
+- [ ] **ITEM 3: MOTOR ESPACIAL SIGEF/INCRA (SOBREPOSIÇÃO DE POLÍGONOS)**
+  - [ ] Cruzamento espacial (Intersects) do polígono do imóvel com parcelas certificadas do INCRA.
+  - [ ] Extração autêntica de Matrícula, Cartório de Registro de Imóveis (CRI) e Detentor da Certificação.
+
+- [ ] **ITEM 4: CRAWLER FISCAL & DIÁRIOS OFICIAIS (SEFAZ-RS / SINTEGRA)**
+  - [ ] Consulta automatizada de Inscrição Estadual de Produtor Rural ativo.
+  - [ ] Monitoramento de editais de notificação ambiental para recuperação de titulares de CAR.
+
+- [ ] **ITEM 5: ENRIQUECIMENTO TELEFÔNICO COM FÉ PÚBLICA (ASSERTIVA v3)**
+  - [ ] Acionamento exclusivo via CPF/CNPJ reais e auditados.
+  - [ ] Captura de WhatsApp verificado, celulares e dados cadastrais autênticos.
+
+- [ ] **ITEM 6: EXPORTAÇÃO COMERCIAL EM MASSA (EXCEL BRASIL)**
+  - [ ] Remoção da trava de 50 registros: descarregar 100% dos leads selecionados (ex: 1.083 leads).
+  - [ ] Formatação nativa para Excel: delimitador ponto-e-vírgula (\;\), UTF-8 BOM (\\uFEFF\) e colunas ordenadas com carimbo de auditoria de cada dado.
