@@ -3527,5 +3527,52 @@ Este documento rastreia de forma contínua, estruturada e duradoura todo o hist�
 - [x] **Etapa 4: Suíte de Testes Automatizada e Homologação**
   - **Alvo:** `tests/test_phase75_on_demand_dealership_prospector.js`.
   - **Resultado:** Prospecções homologadas em Rio Verde/GO (12 revendas ativas inseridas), Luís Eduardo Magalhães/BA (13 revendas inseridas), validação de persistência no SQLite, garantia de `target_type = 'SUPPLIER'`, ausência de bloqueio de concorrentes e teste de idempotência (100% de sucesso).
-  - Status: ✅ Concluído e Validado (07/10/2026).
+  - Status: Concluido e Validado (07/10/2026).
+
+---
+
+## FASE 76: ENRIQUECIMENTO DETERMINISTICO RADAR SPARKS, QSA, GEORREFERENCIAMENTO DE SEDE E CERCO DIGITAL META ADS
+
+> **Foco Central:** Transformacao de sinais de alta intencao de compra do agronegocio (operacoes de credito rural BNDES e concessoes de irrigacao ANA) em alvos de venda qualificados para representantes comerciais. Resolucao deterministica de CNPJ e Quadro de Socios e Administradores (QSA), georreferenciamento de precisao da sede (OSM Nominatim), extrato interno consolidado de comprovante BNDES no dashboard, teletransporte espacial para o mapa territorial e pipeline duplo de exportacao para o Meta Ads (Custom Audiences SHA-256 e Geofencing hiperlocal com coordenadas decimais).
+
+- [x] **Etapa 1: Motor de Resolucao de CNPJ e Socios QSA (`cnpjResolutionService.js`)**
+  - **Alvo:** `server/src/services/cnpjResolutionService.js`.
+  - **Acao:**
+    - Resolucao automatica de CNPJ baseada em catalogo agro deterministico e base local de leads.
+    - Integracao resiliente com API MinhaReceita e BrasilAPI para extracao de QSA oficial e telefones.
+    - Persistencia atomica nas tabelas `sparks_signals`, `leads` e `leads_socios`.
+  - Status: Concluido e Validado (07/10/2026).
+
+- [x] **Etapa 2: Georreferenciamento de Precisao da Sede (`addressResolverService.js`)**
+  - **Alvo:** `server/src/services/cnpjResolutionService.js` e `addressResolverService.js`.
+  - **Acao:**
+    - Geocodificacao do endereco fiscal completo da sede via OpenStreetMap Nominatim.
+    - Resolucao de coordenadas a nivel de rua (STREET_LEVEL) para clientes prioritarios como S S EMPREENDIMENTOS AGRICOLAS LTDA (-25.873602, -50.380575 em Sao Mateus do Sul/PR).
+    - Persistencia das coordenadas exatas no sinal e na entidade lead correspondente.
+  - Status: Concluido e Validado (07/10/2026).
+
+- [x] **Etapa 3: Refatoracao do Dossie Executivo e Marcador Espacial no Mapa**
+  - **Alvo:** `client/index.html`, `client/js/sparksRadar.js`, `client/js/mapEngine.js`, `client/css/styles.css`.
+  - **Acao:**
+    - Card executivo interno BNDES eliminando a necessidade de consulta ao portal governamental externo.
+    - Acao de "Ver no Mapa Territorial" com teletransporte com voo suave (zoom 14.5) e alfinete espacial dedicado (`radar-spark-target-pin`).
+    - Botoes de acao rapida na listagem tabular e no modal de dossie do Radar Sparks.
+  - Status: Concluido e Validado (07/10/2026).
+
+- [x] **Etapa 4: Pipeline de Exportacao Meta Ads e Geofencing Hiperlocal**
+  - **Alvo:** `server/src/services/sparksEngineService.js`, `server/src/controllers/sparksController.js`, `server/src/routes/api.js`.
+  - **Acao:**
+    - Endpoint `/api/sparks/signals/export-meta-ads` com geracao de CSV em conformidade com o Meta Ads Custom Audiences.
+    - Normalizacao de telefones para E.164 (55 + DDD + numero) e hashing criptografico SHA-256 (64 caracteres hexadecimais em caixa baixa).
+    - Camada 2: Exportacao de arquivo CSV de Geofencing com colunas `cliente, cnpj, municipio, uf, latitude, longitude, raio_km, coordenadas_meta` para cerco de raio hiperlocal (1.5 km) na sede das fazendas/empresas.
+  - Status: Concluido e Validado (07/10/2026).
+
+- [x] **Etapa 5: Deploy em Producao na VPS Hostinger e Homologacao Completa**
+  - **Alvo:** VPS Hostinger (`179.236.237.116`), PM2 `versus-api`, banco SQLite de producao.
+  - **Acao:**
+    - Sincronizacao de codigo e aplicacao do script idempotente `server/scripts/syncEnrichedSparksPilots.js`.
+    - Reinicializacao do servico PM2 (`versus-api`).
+    - Validacao de chamadas HTTP reais e publicas para os endpoints de dossie, Custom Audiences SHA-256 e Geofencing CSV.
+  - Status: Concluido e Homologado (07/10/2026).
+
 
