@@ -375,6 +375,7 @@ CREATE TABLE IF NOT EXISTS sparks_signals (
   status_processamento VARCHAR(30) DEFAULT 'NOVO',
   score_gerado INTEGER DEFAULT 0,
   trigger_texto TEXT,
+  url_fonte TEXT DEFAULT NULL,
   tenant_id TEXT DEFAULT 'tenant-root-default' REFERENCES tenants(id) ON DELETE CASCADE,
   created_at TIMESTAMPTZ DEFAULT NOW()
 );

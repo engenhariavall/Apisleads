@@ -453,7 +453,15 @@
 
       const docFormatado = s.documento_identificado ? `<div class="sparks-doc-code">${s.documento_identificado}</div>` : '';
 
+      // Formatação da Data de Publicação Oficial do DOU (DD/MM/YYYY)
+      let pubDateFormatted = '';
+      if (s.data_publicacao) {
+        const p = s.data_publicacao.split('-');
+        if (p.length === 3) pubDateFormatted = `${p[2]}/${p[1]}/${p[0]}`;
+        else pubDateFormatted = s.data_publicacao;
+      }
       const dt = formatDateTimeSplit(s.created_at);
+      const displayDate = pubDateFormatted || dt.date;
 
       // Botão WhatsApp se houver titular ou documento
       const whatsBtn = s.titular_identificado ? `
@@ -461,6 +469,14 @@
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
           <span>WhatsApp</span>
         </button>
+      ` : '';
+
+      // Botão de Auditoria Direta no DOU (Link Oficial Governamental)
+      const douLinkBtn = s.url_fonte ? `
+        <a href="${s.url_fonte}" target="_blank" rel="noopener noreferrer" class="btn-action-spark-dou" onclick="event.stopPropagation()" title="Auditar no Diário Oficial da União (in.gov.br)" style="display:inline-flex; align-items:center; gap:0.25rem; padding:0.28rem 0.55rem; background:rgba(2,132,199,0.15); border:1px solid rgba(56,189,248,0.4); border-radius:4px; color:#38BDF8; font-size:0.68rem; font-weight:700; text-decoration:none;">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+          <span>DOU</span>
+        </a>
       ` : '';
 
       const farmHtml = s.nome_imovel ? `
@@ -474,8 +490,8 @@
         <tr class="sparks-feed-row" onclick="window.SparksRadar.openSignalDossier('${s.id}')" title="Clique para abrir o Raio-X e Dossiê Completo">
           <td class="sparks-col-time">
             <div class="sparks-dt-badge">
-              <span class="sparks-date">${dt.date}</span>
-              <span class="sparks-time">${dt.time}</span>
+              <span class="sparks-date" style="color:#38BDF8; font-weight:700;" title="Data oficial da publicação no DOU">${displayDate}</span>
+              <span class="sparks-time" title="Hora de detecção">${dt.time}</span>
             </div>
           </td>
           <td>${badgeType}</td>
@@ -505,6 +521,7 @@
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                 <span>Raio-X</span>
               </button>
+              ${douLinkBtn}
               ${whatsBtn}
             </div>
           </td>
@@ -581,18 +598,37 @@
         docEl.textContent = signal.documento_identificado || lead?.cnpj || 'Sem documento público';
       }
 
-      // 3. Telemetria e Rastreabilidade
+      // 3. Telemetria e Rastreabilidade (Dados 100% Reais do DOU)
       const dateEl = document.getElementById('modalSparkDate');
-      if (dateEl) dateEl.textContent = signal.data_formatada || '01/10/2026';
+      if (dateEl) {
+        if (signal.data_publicacao) {
+          const p = signal.data_publicacao.split('-');
+          dateEl.textContent = p.length === 3 ? `${p[2]}/${p[1]}/${p[0]} (DOU Oficial)` : signal.data_publicacao;
+        } else {
+          dateEl.textContent = signal.data_formatada || '07/10/2026';
+        }
+      }
 
       const timeEl = document.getElementById('modalSparkTime');
-      if (timeEl) timeEl.textContent = signal.hora_formatada || '11:08:59';
+      if (timeEl) timeEl.textContent = signal.hora_formatada || (signal.created_at ? formatDateTimeSplit(signal.created_at).time : '10:00:00');
 
       const robotEl = document.getElementById('modalSparkRobot');
-      if (robotEl) robotEl.textContent = signal.monitor_nome || 'Robô Sparks';
+      if (robotEl) robotEl.textContent = signal.monitor_nome || 'Crawler Diário Oficial';
 
       const sourceEl = document.getElementById('modalSparkSource');
-      if (sourceEl) sourceEl.textContent = signal.orgao_emissor || 'Diário Oficial / Órgão Regulador';
+      if (sourceEl) sourceEl.textContent = signal.orgao_emissor || 'Imprensa Nacional / DOU';
+
+      // Link Oficial do DOU
+      const linkContainer = document.getElementById('modalSparkOfficialLinkContainer');
+      const linkBtn = document.getElementById('modalSparkOfficialLinkBtn');
+      if (linkContainer && linkBtn) {
+        if (signal.url_fonte) {
+          linkContainer.style.display = 'flex';
+          linkBtn.href = signal.url_fonte;
+        } else {
+          linkContainer.style.display = 'none';
+        }
+      }
 
       // 4. Gatilho & Valores
       const headEl = document.getElementById('modalSparkTriggerHeadline');

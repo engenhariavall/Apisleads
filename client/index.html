@@ -4124,21 +4124,38 @@ Carregando script de abordagem...
         <!-- Banner de Rastreabilidade do Robô & Data/Hora -->
         <div class="spark-telemetry-banner">
           <div class="spark-tel-item">
-            <span class="spark-tel-lbl">DATA DA DETECÇÃO</span>
-            <strong class="spark-tel-val" id="modalSparkDate">01/10/2026</strong>
+            <span class="spark-tel-lbl">PUBLICAÇÃO OFICIAL</span>
+            <strong class="spark-tel-val" id="modalSparkDate">07/10/2026</strong>
           </div>
           <div class="spark-tel-item">
-            <span class="spark-tel-lbl">HORA EXATA</span>
-            <strong class="spark-tel-val" id="modalSparkTime">11:08:59</strong>
+            <span class="spark-tel-lbl">CAPTURA SISTEMA</span>
+            <strong class="spark-tel-val" id="modalSparkTime">10:00:00</strong>
           </div>
           <div class="spark-tel-item">
-            <span class="spark-tel-lbl">ROBÔ RESPONSÁVEL</span>
-            <strong class="spark-tel-val" id="modalSparkRobot">DOU / Licenças</strong>
+            <span class="spark-tel-lbl">MOTOR DE COLETA</span>
+            <strong class="spark-tel-val" id="modalSparkRobot">Crawler Oficial DOU</strong>
           </div>
           <div class="spark-tel-item">
             <span class="spark-tel-lbl">ÓRGÃO / FONTE</span>
-            <strong class="spark-tel-val" id="modalSparkSource">DOU / FEPAM</strong>
+            <strong class="spark-tel-val" id="modalSparkSource">Imprensa Nacional (in.gov.br)</strong>
           </div>
+        </div>
+
+        <!-- Link Oficial Auditável do Diário Oficial da União -->
+        <div id="modalSparkOfficialLinkContainer" style="display: flex; align-items: center; justify-content: space-between; background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 6px; padding: 0.55rem 0.85rem; margin-bottom: 0.85rem;">
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <span style="display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; background: rgba(56, 189, 248, 0.2); color: #38BDF8;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+            </span>
+            <div>
+              <span style="font-size: 0.62rem; color: #94A3B8; text-transform: uppercase; font-weight: 700; display: block;">Fonte Oficial Auditável</span>
+              <span style="font-size: 0.78rem; color: #E2E8F0; font-weight: 600;" id="modalSparkOfficialFonteLabel">Imprensa Nacional - Diário Oficial da União (in.gov.br)</span>
+            </div>
+          </div>
+          <a href="#" target="_blank" rel="noopener noreferrer" id="modalSparkOfficialLinkBtn" class="btn-primary" style="display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.75rem; padding: 0.35rem 0.85rem; text-decoration: none; border-radius: 5px; background: #0284C7; color: #FFFFFF; font-weight: 700;">
+            <span>🔗 Abrir no DOU</span>
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+          </a>
         </div>
 
         <!-- Card do Gatilho Comercial & Valor -->

@@ -815,6 +815,7 @@ try {
       status_processamento TEXT DEFAULT 'NOVO',
       score_gerado INTEGER DEFAULT 0,
       trigger_texto TEXT,
+      url_fonte TEXT DEFAULT NULL,
       tenant_id TEXT DEFAULT 'tenant-root-default',
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (monitor_id) REFERENCES sparks_monitors(id)
@@ -848,6 +849,15 @@ try {
     CREATE INDEX IF NOT EXISTS idx_sparks_monitors_type ON sparks_monitors(spark_type);
     CREATE INDEX IF NOT EXISTS idx_sparks_recipients_tenant ON sparks_alert_recipients(tenant_id);
   `);
+
+  try {
+    const sparksSignalsCols = sqliteDb.prepare("PRAGMA table_info(sparks_signals)").all();
+    if (!sparksSignalsCols.some(c => c.name === 'url_fonte')) {
+      sqliteDb.exec("ALTER TABLE sparks_signals ADD COLUMN url_fonte TEXT DEFAULT NULL;");
+    }
+  } catch (colErr) {
+    console.warn('Verificação de coluna url_fonte em sparks_signals:', colErr.message);
+  }
 
   // Seed idempotente dos 6 Monitores Canônicos (Priorizando Crédito e Outorgas)
   const monitorCount = sqliteDb.prepare("SELECT COUNT(*) as cnt FROM sparks_monitors").get().cnt;

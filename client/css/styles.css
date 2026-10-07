@@ -8695,6 +8695,29 @@ input:checked + .slider:before {
   color: #FFFFFF;
 }
 
+.btn-action-spark-dou {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.28rem 0.55rem;
+  border-radius: 4px;
+  background: rgba(2, 132, 199, 0.15);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  color: #38BDF8;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-action-spark-dou:hover {
+  background: rgba(2, 132, 199, 0.35);
+  border-color: #38BDF8;
+  color: #FFFFFF;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.35);
+}
+
 .sparks-table-empty {
   text-align: center;
   padding: 2.5rem;
