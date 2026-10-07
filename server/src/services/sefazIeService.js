@@ -275,10 +275,19 @@ export async function resolveRuralProducerByIE(propData = {}) {
         ieExistente = formatInscricaoEstadual(targetUf, seed);
       }
     } else {
-      const seed = propData.codigo_car ? propData.codigo_car.replace(/\D/g, '') : String(Date.now());
-      produtorNome = propData.produtor_pf_nome || `Produtor Rural (${targetUf})`;
-      docExistente = propData.produtor_pf_cpf || `523.${seed.slice(0, 3)}.${seed.slice(3, 6)}-01`;
-      ieExistente = formatInscricaoEstadual(targetUf, seed);
+      // Diretriz rigorosa: ZERO dados inventados. Se não foi localizado em base oficial, retorna null.
+      return {
+        success: false,
+        inscricao_estadual: null,
+        sefaz_uf: targetUf,
+        sefaz_status: 'PENDENTE_CONSULTA',
+        habilitado_nfe: false,
+        regime_tributario: 'PRODUTOR_RURAL_PF',
+        produtor_pf_nome: null,
+        produtor_pf_cpf: null,
+        whatsapp_produtor: null,
+        origem_desmascaramento: 'SIGILO_OFICIAL_GOV'
+      };
     }
   }
 
