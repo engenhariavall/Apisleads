@@ -128,43 +128,24 @@ export const AGRO_FAMILY_REGISTRY_BY_HUB = {
 };
 
 /**
- * Constrói CPF completo e desmascarado (11 dígitos numéricos com dígitos verificadores oficiais da Receita)
- * Se houver dígitos intermediários existentes (ex: ***.946.655-**), preserva-os e calcula os DVs oficiais.
+ * Normaliza e preserva o documento oficial (CPF/CNPJ) sem inventar dígitos sintéticos.
+ * Se o documento estiver mascarado pelo governo federal (LGPD), mantém a máscara transparente (ex: ***.450.170-**).
+ * Documentos com 11 ou 14 dígitos são formatados canonicamente.
  */
 export function buildUnmaskedCpf(seedKey, existingMasked = '') {
-  const hash = crypto.createHash('sha256').update(String(seedKey)).digest('hex');
-  const middleDigits = String(existingMasked || '').replace(/\D/g, '');
-  
-  let d = [];
-  if (middleDigits.length === 6) {
-    d.push((parseInt(hash[0], 16) % 9) + 1);
-    d.push(parseInt(hash[1], 16) % 10);
-    d.push(parseInt(hash[2], 16) % 10);
-    for (let i = 0; i < 6; i++) {
-      d.push(parseInt(middleDigits[i], 10));
-    }
-  } else {
-    for (let i = 0; d.length < 9; i++) {
-      d.push(parseInt(hash[i], 16) % 10);
-    }
+  const str = String(existingMasked || '').trim();
+  if (!str) return null;
+  const digits = str.replace(/\D/g, '');
+  if (digits.length === 11) {
+    return `${digits.slice(0, 3)}.${digits.slice(3, 6)}.${digits.slice(6, 9)}-${digits.slice(9, 11)}`;
   }
-
-  if (d.every(x => x === d[0])) d[0] = (d[0] + 1) % 10;
-
-  let s1 = 0;
-  for (let i = 0; i < 9; i++) s1 += d[i] * (10 - i);
-  let dv1 = (s1 * 10) % 11;
-  if (dv1 >= 10) dv1 = 0;
-  d.push(dv1);
-
-  let s2 = 0;
-  for (let i = 0; i < 10; i++) s2 += d[i] * (11 - i);
-  let dv2 = (s2 * 10) % 11;
-  if (dv2 >= 10) dv2 = 0;
-  d.push(dv2);
-
-  const clean = d.join('');
-  return `${clean.slice(0, 3)}.${clean.slice(3, 6)}.${clean.slice(6, 9)}-${clean.slice(9, 11)}`;
+  if (digits.length === 14) {
+    return `${digits.slice(0, 2)}.${digits.slice(2, 5)}.${digits.slice(5, 8)}/${digits.slice(8, 12)}-${digits.slice(12, 14)}`;
+  }
+  if (digits.length === 6) {
+    return `***.${digits.slice(0, 3)}.${digits.slice(3, 6)}-**`;
+  }
+  return str.startsWith('***') ? str : (digits ? `***.${digits.slice(0, 3)}.${digits.slice(3, 6)}-**` : null);
 }
 
 export const carHistoricalService = {

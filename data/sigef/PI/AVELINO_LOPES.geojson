@@ -63,35 +63,16 @@
         "id_sigef": "cffa37cb-3ca0-4c7f-8a21-018999985d69",
         "codigo_imovel": "1310590164111",
         "nome_imovel": "BAIXÃO DO GRAJAU - Parte 1",
-        "nome_titular": "BAIXÃO DO GRAJAU S.A.",
-        "cpf_cnpj_titular": "92.040.000/0101-04",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula R-1-758,1651 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 604.08,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -10.196220799999999,
-        "centroide_lng": -44.1091457,
-        "cnpj_raw": "92040000010104",
-        "razao_social": "BAIXÃO DO GRAJAU S.A.",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 11180000,
-        "qsa": [
-          {
-            "nome": "Carlos Alberto Fontana",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Mariana Fontana",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933162000",
-        "telefone": "(89) 3316-2000",
-        "email": "contato@baixodograjau.agr.br"
+        "centroide_lng": -44.1091457
       }
     },
     {
@@ -197,35 +178,16 @@
         "id_sigef": "26b55e14-d395-443f-a818-0f96c2d6c08a",
         "codigo_imovel": "1220410820076",
         "nome_imovel": "BAIXÃO DO PÉ DE SERRA - Parte 1",
-        "nome_titular": "BAIXÃO DO PÉ DE SERRA S.A.",
-        "cpf_cnpj_titular": "92.040.000/0238-50",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 3190 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 1157.35,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -10.180684523809523,
-        "centroide_lng": -44.060325476190485,
-        "cnpj_raw": "92040000023850",
-        "razao_social": "BAIXÃO DO PÉ DE SERRA S.A.",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 21410000,
-        "qsa": [
-          {
-            "nome": "Eduardo Grazziotin",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Patrícia Grazziotin",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933162037",
-        "telefone": "(89) 3316-2037",
-        "email": "contato@baixodopdeserra.agr.br"
+        "centroide_lng": -44.060325476190485
       }
     },
     {
@@ -271,35 +233,16 @@
         "id_sigef": "34cc3de3-0c3a-48c7-b293-f3a2c187930b",
         "codigo_imovel": "1310160082812",
         "nome_imovel": "SITIO NOVO I LOCALIZADO NA DATA SITIO  - Parte 1",
-        "nome_titular": "SITIO NOVO I LOCALIZADO NA DATA SITIO LTDA",
-        "cpf_cnpj_titular": "92.040.000/0375-68",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 1944 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 75.28,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -10.231057666666667,
-        "centroide_lng": -43.84963166666666,
-        "cnpj_raw": "92040000037568",
-        "razao_social": "SITIO NOVO I LOCALIZADO NA DATA SITIO LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1390000,
-        "qsa": [
-          {
-            "nome": "Fernando Silveira",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Roberto Silveira",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933162074",
-        "telefone": "(89) 3316-2074",
-        "email": "contato@sitionovoilocalizadonadatasitio.agr.br"
+        "centroide_lng": -43.84963166666666
       }
     },
     {
@@ -361,35 +304,16 @@
         "id_sigef": "a7a1f0fe-3e0d-4ed7-9e4a-890b662a9758",
         "codigo_imovel": "9503000926811",
         "nome_imovel": "BAIXÃO DO URÇULINO - Parte 1",
-        "nome_titular": "BAIXÃO DO URÇULINO LTDA",
-        "cpf_cnpj_titular": "92.040.000/0512-00",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 1561 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 51.14,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -10.2456578,
-        "centroide_lng": -43.8734905,
-        "cnpj_raw": "92040000051200",
-        "razao_social": "BAIXÃO DO URÇULINO LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Gilberto Estrela",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Helena Estrela",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933162111",
-        "telefone": "(89) 3316-2111",
-        "email": "contato@baixodourulino.agr.br"
+        "centroide_lng": -43.8734905
       }
     },
     {
@@ -491,35 +415,16 @@
         "id_sigef": "5f3a9ee3-e7d4-409b-9934-044a6425f57d",
         "codigo_imovel": "9511105781269",
         "nome_imovel": "CATUABAL - Parte 1",
-        "nome_titular": "CATUABAL S.A.",
-        "cpf_cnpj_titular": "92.040.000/0649-64",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 2951 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 316.97,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -10.2370024,
-        "centroide_lng": -44.01023705000001,
-        "cnpj_raw": "92040000064964",
-        "razao_social": "CATUABAL S.A.",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 5860000,
-        "qsa": [
-          {
-            "nome": "Paulo Renato Laimer",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Juliana Laimer",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933162148",
-        "telefone": "(89) 3316-2148",
-        "email": "contato@catuabal.agr.br"
+        "centroide_lng": -44.01023705000001
       }
     },
     {
@@ -561,35 +466,16 @@
         "id_sigef": "71f2b54d-c8da-4357-9162-9d969901b547",
         "codigo_imovel": "9503355512368",
         "nome_imovel": "SITIO NOVO II  LOCALIZADO NA DATA SITIO - Parte 1",
-        "nome_titular": "SITIO NOVO II LOCALIZADO NA DATA SITIO LTDA",
-        "cpf_cnpj_titular": "92.040.000/0786-71",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 1945 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 75.11,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -10.234506800000002,
-        "centroide_lng": -43.8476774,
-        "cnpj_raw": "92040000078671",
-        "razao_social": "SITIO NOVO II LOCALIZADO NA DATA SITIO LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1390000,
-        "qsa": [
-          {
-            "nome": "Marcos Vinicius Witte",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Renata Witte",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933162185",
-        "telefone": "(89) 3316-2185",
-        "email": "contato@sitionovoiilocalizadonadatasitio.agr.br"
+        "centroide_lng": -43.8476774
       }
     },
     {
@@ -667,35 +553,16 @@
         "id_sigef": "68f7dba7-aaa4-4f2f-a43d-152aa76bcbd3",
         "codigo_imovel": "1310160120331",
         "nome_imovel": "LAGOA DO TRAVESSÃO - DATA SÍTIO - Parte 01",
-        "nome_titular": "LAGOA DO TRAVESSÃO DATA SÍTIO LTDA",
-        "cpf_cnpj_titular": "92.040.000/0923-13",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 7.006 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 41.4,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -10.239559785714286,
-        "centroide_lng": -43.94146035714285,
-        "cnpj_raw": "92040000092313",
-        "razao_social": "LAGOA DO TRAVESSÃO DATA SÍTIO LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "José Francisco Gehn",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Beatriz Gehn",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933162222",
-        "telefone": "(89) 3316-2222",
-        "email": "contato@lagoadotravessodatastio.agr.br"
+        "centroide_lng": -43.94146035714285
       }
     },
     {
@@ -741,35 +608,16 @@
         "id_sigef": "1057c522-f951-4257-be80-a6a26661ae39",
         "codigo_imovel": "9501229852606",
         "nome_imovel": "SÍTIO BOA ESPERANÇA - Parte 1",
-        "nome_titular": "SÍTIO BOA ESPERANÇA LTDA",
-        "cpf_cnpj_titular": "92.040.000/1060-47",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 7703 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 58.76,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -10.203816833333333,
-        "centroide_lng": -43.87762233333333,
-        "cnpj_raw": "92040000106047",
-        "razao_social": "SÍTIO BOA ESPERANÇA LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Antônio Carlos Sebben",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Clara Sebben",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933162259",
-        "telefone": "(89) 3316-2259",
-        "email": "contato@stioboaesperana.agr.br"
+        "centroide_lng": -43.87762233333333
       }
     },
     {
@@ -867,35 +715,16 @@
         "id_sigef": "0a6a2ef2-e75d-4994-8d01-9176fc0334aa",
         "codigo_imovel": "9510301647396",
         "nome_imovel": "FAZENDA JAMES CLIMM - FAZENDA JAMES CLIMM",
-        "nome_titular": "FAZENDA JAMES CLIMM FAZENDA JAMES CLIMM LTDA",
-        "cpf_cnpj_titular": "92.040.000/1197-00",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 7572 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 135.72,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -10.253198947368421,
-        "centroide_lng": -43.951594684210534,
-        "cnpj_raw": "92040000119700",
-        "razao_social": "FAZENDA JAMES CLIMM FAZENDA JAMES CLIMM LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 2510000,
-        "qsa": [
-          {
-            "nome": "Luiz Henrique Biazus",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Camila Biazus",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933162296",
-        "telefone": "(89) 3316-2296",
-        "email": "contato@fazendajamesclimmfazendajamesclimm.agr.br"
+        "centroide_lng": -43.951594684210534
       }
     },
     {
@@ -969,35 +798,16 @@
         "id_sigef": "e7cd2bc3-0a91-4454-ad85-358eba2ad77e",
         "codigo_imovel": "1310160057893",
         "nome_imovel": "LAGOA DA JUREMA - LAGOA DA JUREMA",
-        "nome_titular": "LAGOA DA JUREMA LAGOA DA JUREMA LTDA",
-        "cpf_cnpj_titular": "92.040.000/1334-43",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula R-408 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 42.86,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -10.246717384615383,
-        "centroide_lng": -43.97435938461539,
-        "cnpj_raw": "92040000133443",
-        "razao_social": "LAGOA DA JUREMA LAGOA DA JUREMA LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Sérgio Murilo Trevisan",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Aline Trevisan",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933162333",
-        "telefone": "(89) 3316-2333",
-        "email": "contato@lagoadajuremalagoadajurema.agr.br"
+        "centroide_lng": -43.97435938461539
       }
     },
     {
@@ -1051,35 +861,16 @@
         "id_sigef": "a114d406-782c-4a39-9eb6-f8acb487415e",
         "codigo_imovel": "9511370575921",
         "nome_imovel": "SÃO LUIZ - SÃO LUIZ – Parcela 01",
-        "nome_titular": "SÃO LUIZ SÃO LUIZ LTDA",
-        "cpf_cnpj_titular": "92.040.000/1471-50",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 7581 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 25.82,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -10.075457750000002,
-        "centroide_lng": -43.97708875,
-        "cnpj_raw": "92040000147150",
-        "razao_social": "SÃO LUIZ SÃO LUIZ LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Rodrigo Dall Agnol",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Fernanda Dall Agnol",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933162370",
-        "telefone": "(89) 3316-2370",
-        "email": "contato@soluizsoluiz.agr.br"
+        "centroide_lng": -43.97708875
       }
     },
     {
@@ -1113,35 +904,16 @@
         "id_sigef": "2681b207-ce63-479d-8ec4-22ad8240c91c",
         "codigo_imovel": "9999034056390",
         "nome_imovel": "BAIXÃO DO SITIO NOVO - GLEBA B",
-        "nome_titular": "BAIXÃO DO SITIO NOVO GLEBA B LTDA",
-        "cpf_cnpj_titular": "92.040.000/1608-40",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula R1-02 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 60.31,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -10.019448333333335,
-        "centroide_lng": -43.87764766666667,
-        "cnpj_raw": "92040000160840",
-        "razao_social": "BAIXÃO DO SITIO NOVO GLEBA B LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Guilherme Augusto Tedesco",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Tatiana Tedesco",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933162407",
-        "telefone": "(89) 3316-2407",
-        "email": "contato@baixodositionovoglebab.agr.br"
+        "centroide_lng": -43.87764766666667
       }
     },
     {
@@ -1187,35 +959,16 @@
         "id_sigef": "919e5398-6f72-488b-8c6a-f0bfb4d69e95",
         "codigo_imovel": "9510642575245",
         "nome_imovel": "VOLTA DO RIACHO  - VOLTA DO RIACHO",
-        "nome_titular": "VOLTA DO RIACHO VOLTA DO RIACHO S.A.",
-        "cpf_cnpj_titular": "92.040.000/1745-57",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 2.792 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 254.97,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -9.992148666666667,
-        "centroide_lng": -43.931955499999994,
-        "cnpj_raw": "92040000174557",
-        "razao_social": "VOLTA DO RIACHO VOLTA DO RIACHO S.A.",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 4720000,
-        "qsa": [
-          {
-            "nome": "Cláudio Roberto Scortegagna",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Vanessa Scortegagna",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933162444",
-        "telefone": "(89) 3316-2444",
-        "email": "contato@voltadoriachovoltadoriacho.agr.br"
+        "centroide_lng": -43.931955499999994
       }
     },
     {
@@ -1285,35 +1038,16 @@
         "id_sigef": "82026ff7-91f4-411e-bd31-60cdd7fac9f6",
         "codigo_imovel": "9501490791380",
         "nome_imovel": "LAGOA DO GATO - Parte 1",
-        "nome_titular": "LAGOA DO GATO LTDA",
-        "cpf_cnpj_titular": "92.040.000/1882-64",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 5828 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 82.75,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -10.079215250000003,
-        "centroide_lng": -43.878308249999996,
-        "cnpj_raw": "92040000188264",
-        "razao_social": "LAGOA DO GATO LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1530000,
-        "qsa": [
-          {
-            "nome": "Mauro Cézar Zaffari",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Luciana Zaffari",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933162481",
-        "telefone": "(89) 3316-2481",
-        "email": "contato@lagoadogato.agr.br"
+        "centroide_lng": -43.878308249999996
       }
     },
     {
@@ -1359,35 +1093,16 @@
         "id_sigef": "94967376-6cb8-4955-a9b8-6d7af26777e4",
         "codigo_imovel": "9510809277756",
         "nome_imovel": "FAZENDA POÇO COMPRIDO - Parte 1",
-        "nome_titular": "FAZENDA POÇO COMPRIDO LTDA",
-        "cpf_cnpj_titular": "92.040.000/2019-70",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 5348 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 70.56,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -10.057935333333333,
-        "centroide_lng": -43.94146866666667,
-        "cnpj_raw": "92040000201970",
-        "razao_social": "FAZENDA POÇO COMPRIDO LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1310000,
-        "qsa": [
-          {
-            "nome": "Valter Luiz Rizzardi",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Carla Rizzardi",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933162518",
-        "telefone": "(89) 3316-2518",
-        "email": "contato@fazendapoocomprido.agr.br"
+        "centroide_lng": -43.94146866666667
       }
     },
     {
@@ -1441,35 +1156,16 @@
         "id_sigef": "a5fba06d-3c57-4fed-a167-a916f21bdea5",
         "codigo_imovel": "9511370575921",
         "nome_imovel": "SÃO LUIZ - SÃO LUIZ – Parcela 02",
-        "nome_titular": "SÃO LUIZ SÃO LUIZ LTDA",
-        "cpf_cnpj_titular": "92.040.000/2156-87",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 7581 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 100.53,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -10.078408,
-        "centroide_lng": -43.977013,
-        "cnpj_raw": "92040000215687",
-        "razao_social": "SÃO LUIZ SÃO LUIZ LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1860000,
-        "qsa": [
-          {
-            "nome": "Otávio Augusto Canabarro",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Letícia Canabarro",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933162555",
-        "telefone": "(89) 3316-2555",
-        "email": "contato@soluizsoluiz.agr.br"
+        "centroide_lng": -43.977013
       }
     },
     {
@@ -1507,35 +1203,16 @@
         "id_sigef": "c9973516-7acb-46e3-9bfe-3ae7967f8ffe",
         "codigo_imovel": "9502626808504",
         "nome_imovel": "SÍTIO - Parte 1",
-        "nome_titular": "SÍTIO LTDA",
-        "cpf_cnpj_titular": "92.040.000/2293-94",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 4541 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 29.72,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -10.0478965,
-        "centroide_lng": -43.996062249999994,
-        "cnpj_raw": "92040000229394",
-        "razao_social": "SÍTIO LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Ricardo Luís Meneguzzi",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Sandra Meneguzzi",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933162592",
-        "telefone": "(89) 3316-2592",
-        "email": "contato@stio.agr.br"
+        "centroide_lng": -43.996062249999994
       }
     },
     {
@@ -1597,35 +1274,16 @@
         "id_sigef": "1d7318f9-9a8a-4e2f-a01b-7488b85052bf",
         "codigo_imovel": "1310160127425",
         "nome_imovel": "TRAÍRAS  - Parte 3",
-        "nome_titular": "TRAÍRAS LTDA",
-        "cpf_cnpj_titular": "92.040.000/2430-36",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 834 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 46.87,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -10.055311,
-        "centroide_lng": -43.8883039,
-        "cnpj_raw": "92040000243036",
-        "razao_social": "TRAÍRAS LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Bernardo Della Mea",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Giovana Della Mea",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933162629",
-        "telefone": "(89) 3316-2629",
-        "email": "contato@traras.agr.br"
+        "centroide_lng": -43.8883039
       }
     },
     {
@@ -1675,35 +1333,16 @@
         "id_sigef": "90ae84b4-d706-458e-8450-966cc2edd371",
         "codigo_imovel": "9501062297761",
         "nome_imovel": "FAZENDA LAJEDO - Parte 1",
-        "nome_titular": "FAZENDA LAJEDO LTDA",
-        "cpf_cnpj_titular": "92.040.000/2567-90",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 2865 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 55.11,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -10.058459428571428,
-        "centroide_lng": -43.92616042857143,
-        "cnpj_raw": "92040000256790",
-        "razao_social": "FAZENDA LAJEDO LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Felipe Antônio Rubin",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Larissa Rubin",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933162666",
-        "telefone": "(89) 3316-2666",
-        "email": "contato@fazendalajedo.agr.br"
+        "centroide_lng": -43.92616042857143
       }
     },
     {
@@ -1753,35 +1392,16 @@
         "id_sigef": "b3da7906-455d-449b-93f4-825da2963620",
         "codigo_imovel": "9502115069665",
         "nome_imovel": "BAIXAO DO AVELINO - Parte 1",
-        "nome_titular": "BAIXAO DO AVELINO LTDA",
-        "cpf_cnpj_titular": "92.040.000/2704-32",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 7705 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 100.53,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -10.087095285714286,
-        "centroide_lng": -44.03570157142857,
-        "cnpj_raw": "92040000270432",
-        "razao_social": "BAIXAO DO AVELINO LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1860000,
-        "qsa": [
-          {
-            "nome": "Henrique Dornelles",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Carolina Dornelles",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933162703",
-        "telefone": "(89) 3316-2703",
-        "email": "contato@baixaodoavelino.agr.br"
+        "centroide_lng": -44.03570157142857
       }
     },
     {
@@ -1867,35 +1487,16 @@
         "id_sigef": "c0b5c0a1-350a-474b-9fce-d90dc502ca3f",
         "codigo_imovel": "9999034056390",
         "nome_imovel": "BAIXÃO DO SITIO NOVO - GLEBA A",
-        "nome_titular": "BAIXÃO DO SITIO NOVO GLEBA A LTDA",
-        "cpf_cnpj_titular": "92.040.000/2841-40",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula R1-02 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 142.96,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -10.000646875000001,
-        "centroide_lng": -43.884366874999984,
-        "cnpj_raw": "92040000284140",
-        "razao_social": "BAIXÃO DO SITIO NOVO GLEBA A LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 2640000,
-        "qsa": [
-          {
-            "nome": "Carlos Alberto Fontana",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Mariana Fontana",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933162740",
-        "telefone": "(89) 3316-2740",
-        "email": "contato@baixodositionovoglebaa.agr.br"
+        "centroide_lng": -43.884366874999984
       }
     },
     {
@@ -1965,35 +1566,16 @@
         "id_sigef": "834a754c-2824-47e1-9808-72f3a391af9a",
         "codigo_imovel": "9510565338669",
         "nome_imovel": "FAZENDA ALTO FORMOSO - Parcela Única",
-        "nome_titular": "FAZENDA ALTO FORMOSO PARCELA ÚNICA LTDA",
-        "cpf_cnpj_titular": "92.040.000/2978-02",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula R1.- 2273; R1.- 7155 e R1.- 2233 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 194.15,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -10.07023225,
-        "centroide_lng": -43.9543395,
-        "cnpj_raw": "92040000297802",
-        "razao_social": "FAZENDA ALTO FORMOSO PARCELA ÚNICA LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 3590000,
-        "qsa": [
-          {
-            "nome": "Eduardo Grazziotin",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Patrícia Grazziotin",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933162777",
-        "telefone": "(89) 3316-2777",
-        "email": "contato@fazendaaltoformosoparcelanica.agr.br"
+        "centroide_lng": -43.9543395
       }
     },
     {
@@ -2051,35 +1633,16 @@
         "id_sigef": "074ce2fa-66ba-4a06-a34c-0d8b15814631",
         "codigo_imovel": "9510723536120",
         "nome_imovel": "FAZ. CRUZ Il - FAZ CRUZ I",
-        "nome_titular": "FAZ. CRUZ IL FAZ CRUZ I LTDA",
-        "cpf_cnpj_titular": "92.040.000/3115-62",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 1190 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 192,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -10.000090666666667,
-        "centroide_lng": -43.90971766666667,
-        "cnpj_raw": "92040000311562",
-        "razao_social": "FAZ. CRUZ IL FAZ CRUZ I LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 3550000,
-        "qsa": [
-          {
-            "nome": "Fernando Silveira",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Roberto Silveira",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933162814",
-        "telefone": "(89) 3316-2814",
-        "email": "contato@fazcruzilfazcruzi.agr.br"
+        "centroide_lng": -43.90971766666667
       }
     },
     {
@@ -2125,35 +1688,16 @@
         "id_sigef": "2d8923c3-a66f-45fd-a115-1007c310bbc8",
         "codigo_imovel": "9502038703828",
         "nome_imovel": "FAZ. MORADA NOVA - Parte 1",
-        "nome_titular": "FAZ. MORADA NOVA LTDA",
-        "cpf_cnpj_titular": "92.040.000/3252-70",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 7658 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 30.91,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -10.029748,
-        "centroide_lng": -43.91249283333334,
-        "cnpj_raw": "92040000325270",
-        "razao_social": "FAZ. MORADA NOVA LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Gilberto Estrela",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Helena Estrela",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933162851",
-        "telefone": "(89) 3316-2851",
-        "email": "contato@fazmoradanova.agr.br"
+        "centroide_lng": -43.91249283333334
       }
     },
     {
@@ -2215,35 +1759,16 @@
         "id_sigef": "aaf7e76a-008b-46fb-a921-49ac30e1dd77",
         "codigo_imovel": "9502038702422",
         "nome_imovel": "FAZENDA TABULEIRO - Parte 1",
-        "nome_titular": "FAZENDA TABULEIRO LTDA",
-        "cpf_cnpj_titular": "92.040.000/3389-24",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 4877 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 136.08,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -10.025842899999999,
-        "centroide_lng": -43.9023448,
-        "cnpj_raw": "92040000338924",
-        "razao_social": "FAZENDA TABULEIRO LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 2520000,
-        "qsa": [
-          {
-            "nome": "Paulo Renato Laimer",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Juliana Laimer",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933162888",
-        "telefone": "(89) 3316-2888",
-        "email": "contato@fazendatabuleiro.agr.br"
+        "centroide_lng": -43.9023448
       }
     },
     {
@@ -2321,35 +1846,16 @@
         "id_sigef": "fcc6ca45-2265-46d9-ab9d-4dbf45753cc9",
         "codigo_imovel": "9510994848810",
         "nome_imovel": "FAZENDA SERRA DA PINTADA - FAZENDA SERRA DA PINTADA",
-        "nome_titular": "FAZENDA SERRA DA PINTADA FAZENDA SERRA DA PINTADA S.A.",
-        "cpf_cnpj_titular": "92.040.000/3526-76",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula R2-7492 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 603.8,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -10.00931807142857,
-        "centroide_lng": -43.86517707142857,
-        "cnpj_raw": "92040000352676",
-        "razao_social": "FAZENDA SERRA DA PINTADA FAZENDA SERRA DA PINTADA S.A.",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 11170000,
-        "qsa": [
-          {
-            "nome": "Marcos Vinicius Witte",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Renata Witte",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933162925",
-        "telefone": "(89) 3316-2925",
-        "email": "contato@fazendaserradapintadafazendaserradapintada.agr.br"
+        "centroide_lng": -43.86517707142857
       }
     },
     {
@@ -2419,35 +1925,16 @@
         "id_sigef": "a424ca9d-1a03-47fe-bd56-e6e84ed2ba05",
         "codigo_imovel": "1310160129550",
         "nome_imovel": "MORRO VELHO - Parte 1",
-        "nome_titular": "MORRO VELHO LTDA",
-        "cpf_cnpj_titular": "92.040.000/3663-83",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 7713 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 99.94,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -10.007500666666667,
-        "centroide_lng": -43.90608783333332,
-        "cnpj_raw": "92040000366383",
-        "razao_social": "MORRO VELHO LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1850000,
-        "qsa": [
-          {
-            "nome": "José Francisco Gehn",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Beatriz Gehn",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933162962",
-        "telefone": "(89) 3316-2962",
-        "email": "contato@morrovelho.agr.br"
+        "centroide_lng": -43.90608783333332
       }
     },
     {
@@ -2557,35 +2044,16 @@
         "id_sigef": "7a978308-1678-4417-870e-ec8477d7efa6",
         "codigo_imovel": "9510723552401",
         "nome_imovel": "FAZ CALDEIRAO - DD",
-        "nome_titular": "FAZ CALDEIRAO DD S.A.",
-        "cpf_cnpj_titular": "92.040.000/3800-25",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 3051 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 782.68,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -9.9947145,
-        "centroide_lng": -43.88661631818182,
-        "cnpj_raw": "92040000380025",
-        "razao_social": "FAZ CALDEIRAO DD S.A.",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 14480000,
-        "qsa": [
-          {
-            "nome": "Antônio Carlos Sebben",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Clara Sebben",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933162999",
-        "telefone": "(89) 3316-2999",
-        "email": "contato@fazcaldeiraodd.agr.br"
+        "centroide_lng": -43.88661631818182
       }
     },
     {
@@ -2655,35 +2123,16 @@
         "id_sigef": "5be1aad9-b2b3-4e93-bda8-7a8ebd3cd6b7",
         "codigo_imovel": "1310160142734",
         "nome_imovel": "FAZENDA ALTO FORMOSO - FAZENDA ALTO FORMOSO",
-        "nome_titular": "FAZENDA ALTO FORMOSO FAZENDA ALTO FORMOSO LTDA",
-        "cpf_cnpj_titular": "92.040.000/3937-80",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula [2232]; [3138] e [2234] - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 166.33,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -10.078828166666666,
-        "centroide_lng": -43.94880866666667,
-        "cnpj_raw": "92040000393780",
-        "razao_social": "FAZENDA ALTO FORMOSO FAZENDA ALTO FORMOSO LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 3080000,
-        "qsa": [
-          {
-            "nome": "Luiz Henrique Biazus",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Camila Biazus",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933163036",
-        "telefone": "(89) 3316-3036",
-        "email": "contato@fazendaaltoformosofazendaaltoformoso.agr.br"
+        "centroide_lng": -43.94880866666667
       }
     },
     {
@@ -2797,35 +2246,16 @@
         "id_sigef": "b14c8690-1761-4fc6-8241-d09bf96c8742",
         "codigo_imovel": "9502623448850",
         "nome_imovel": "TAMBURIL - Parte 1",
-        "nome_titular": "TAMBURIL S.A.",
-        "cpf_cnpj_titular": "92.040.000/4074-03",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 1910 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 226.17,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -10.036922608695653,
-        "centroide_lng": -43.96272482608696,
-        "cnpj_raw": "92040000407403",
-        "razao_social": "TAMBURIL S.A.",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 4180000,
-        "qsa": [
-          {
-            "nome": "Sérgio Murilo Trevisan",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Aline Trevisan",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933163073",
-        "telefone": "(89) 3316-3073",
-        "email": "contato@tamburil.agr.br"
+        "centroide_lng": -43.96272482608696
       }
     },
     {
@@ -2911,35 +2341,16 @@
         "id_sigef": "fa9c6bf4-eaa8-465a-9f0e-af1e3b2ecd12",
         "codigo_imovel": "9510642577965",
         "nome_imovel": "VOLTA DO RIACHO - VOLTA DO RIACHO (PARTE 2)",
-        "nome_titular": "VOLTA DO RIACHO VOLTA DO RIACHO () S.A.",
-        "cpf_cnpj_titular": "92.040.000/4211-55",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 1.994 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 618.47,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -9.988310750000002,
-        "centroide_lng": -43.9521931875,
-        "cnpj_raw": "92040000421155",
-        "razao_social": "VOLTA DO RIACHO VOLTA DO RIACHO () S.A.",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 11440000,
-        "qsa": [
-          {
-            "nome": "Rodrigo Dall Agnol",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Fernanda Dall Agnol",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933163110",
-        "telefone": "(89) 3316-3110",
-        "email": "contato@voltadoriachovoltadoriacho.agr.br"
+        "centroide_lng": -43.9521931875
       }
     },
     {
@@ -2993,35 +2404,16 @@
         "id_sigef": "15a2a7ff-c3c6-482c-b6bf-6c8139095062",
         "codigo_imovel": "9500333122907",
         "nome_imovel": "SITIO NOVO - PARTE 1",
-        "nome_titular": "SITIO NOVO S.A.",
-        "cpf_cnpj_titular": "92.040.000/4348-00",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 5126 E 6600 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 527.08,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -10.0069465,
-        "centroide_lng": -43.81233975,
-        "cnpj_raw": "92040000434800",
-        "razao_social": "SITIO NOVO S.A.",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 9750000,
-        "qsa": [
-          {
-            "nome": "Guilherme Augusto Tedesco",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Tatiana Tedesco",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933163147",
-        "telefone": "(89) 3316-3147",
-        "email": "contato@sitionovo.agr.br"
+        "centroide_lng": -43.81233975
       }
     },
     {
@@ -3075,35 +2467,16 @@
         "id_sigef": "8cc25582-65cb-48d7-b9fa-905cd2f668da",
         "codigo_imovel": "9502388964039",
         "nome_imovel": "GLEBA XIXÁ  - Parte 1",
-        "nome_titular": "GLEBA XIXÁ LTDA",
-        "cpf_cnpj_titular": "92.040.000/4485-17",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 436 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 52.85,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -10.052792874999998,
-        "centroide_lng": -43.958874625,
-        "cnpj_raw": "92040000448517",
-        "razao_social": "GLEBA XIXÁ LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Cláudio Roberto Scortegagna",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Vanessa Scortegagna",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933163184",
-        "telefone": "(89) 3316-3184",
-        "email": "contato@glebaxix.agr.br"
+        "centroide_lng": -43.958874625
       }
     },
     {
@@ -3157,35 +2530,16 @@
         "id_sigef": "8d05b3be-b85d-4ca5-a643-4da045e535c3",
         "codigo_imovel": "1310160048045",
         "nome_imovel": "FAZENDA LAJEDO - Parte 1",
-        "nome_titular": "FAZENDA LAJEDO LTDA",
-        "cpf_cnpj_titular": "92.040.000/4622-69",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 2857 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 54.69,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -10.058507375000001,
-        "centroide_lng": -43.93086924999999,
-        "cnpj_raw": "92040000462269",
-        "razao_social": "FAZENDA LAJEDO LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Mauro Cézar Zaffari",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Luciana Zaffari",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933163221",
-        "telefone": "(89) 3316-3221",
-        "email": "contato@fazendalajedo.agr.br"
+        "centroide_lng": -43.93086924999999
       }
     },
     {
@@ -3251,35 +2605,16 @@
         "id_sigef": "eb5835d5-e37a-4f58-93d4-6034a5d5a64c",
         "codigo_imovel": "9510723546789",
         "nome_imovel": "FAZ. CRUZ I - FAZ CRUZ I",
-        "nome_titular": "FAZ. CRUZ I FAZ CRUZ I S.A.",
-        "cpf_cnpj_titular": "92.040.000/4759-13",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 799 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 831.41,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -9.989620999999998,
-        "centroide_lng": -43.84383081818182,
-        "cnpj_raw": "92040000475913",
-        "razao_social": "FAZ. CRUZ I FAZ CRUZ I S.A.",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 15380000,
-        "qsa": [
-          {
-            "nome": "Valter Luiz Rizzardi",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Carla Rizzardi",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933163258",
-        "telefone": "(89) 3316-3258",
-        "email": "contato@fazcruzifazcruzi.agr.br"
+        "centroide_lng": -43.84383081818182
       }
     },
     {
@@ -3345,35 +2680,16 @@
         "id_sigef": "c4535e9f-6908-4a81-b2d8-b79f780d83cf",
         "codigo_imovel": "9999205547231",
         "nome_imovel": "FAZENDA CALDEIRÃO - Parte 1",
-        "nome_titular": "FAZENDA CALDEIRÃO S.A.",
-        "cpf_cnpj_titular": "92.040.000/4896-20",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 540 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 435,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -9.986203090909093,
-        "centroide_lng": -43.79604936363637,
-        "cnpj_raw": "92040000489620",
-        "razao_social": "FAZENDA CALDEIRÃO S.A.",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 8050000,
-        "qsa": [
-          {
-            "nome": "Otávio Augusto Canabarro",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Letícia Canabarro",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933163295",
-        "telefone": "(89) 3316-3295",
-        "email": "contato@fazendacaldeiro.agr.br"
+        "centroide_lng": -43.79604936363637
       }
     },
     {
@@ -3411,35 +2727,16 @@
         "id_sigef": "bf979c27-f940-42ad-a46b-7fbd83ee35f1",
         "codigo_imovel": "9511100167996",
         "nome_imovel": "SÍTIO - Parte 1",
-        "nome_titular": "SÍTIO LTDA",
-        "cpf_cnpj_titular": "92.040.000/5033-99",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula R1-1454 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 60.45,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -10.046147000000001,
-        "centroide_lng": -43.99263525,
-        "cnpj_raw": "92040000503399",
-        "razao_social": "SÍTIO LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Ricardo Luís Meneguzzi",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Sandra Meneguzzi",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933163332",
-        "telefone": "(89) 3316-3332",
-        "email": "contato@stio.agr.br"
+        "centroide_lng": -43.99263525
       }
     },
     {
@@ -3501,35 +2798,16 @@
         "id_sigef": "19136567-c9bc-4829-aa6f-1e0846276d3c",
         "codigo_imovel": "1310160137900",
         "nome_imovel": "MECEJANA - Parcela 01",
-        "nome_titular": "MECEJANA LTDA",
-        "cpf_cnpj_titular": "92.040.000/5170-04",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 7616 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 106.73,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -10.098654100000001,
-        "centroide_lng": -43.9330388,
-        "cnpj_raw": "92040000517004",
-        "razao_social": "MECEJANA LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1970000,
-        "qsa": [
-          {
-            "nome": "Bernardo Della Mea",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Giovana Della Mea",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933163369",
-        "telefone": "(89) 3316-3369",
-        "email": "contato@mecejana.agr.br"
+        "centroide_lng": -43.9330388
       }
     },
     {
@@ -3579,35 +2857,16 @@
         "id_sigef": "e17f7fb7-7a2c-4eb5-bf8a-50b3089cf532",
         "codigo_imovel": "1310160137900",
         "nome_imovel": "MECEJANA - Parcela 02",
-        "nome_titular": "MECEJANA LTDA",
-        "cpf_cnpj_titular": "92.040.000/5307-95",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 7617 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 30.22,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -10.094407285714286,
-        "centroide_lng": -43.93655914285714,
-        "cnpj_raw": "92040000530795",
-        "razao_social": "MECEJANA LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Felipe Antônio Rubin",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Larissa Rubin",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933163406",
-        "telefone": "(89) 3316-3406",
-        "email": "contato@mecejana.agr.br"
+        "centroide_lng": -43.93655914285714
       }
     },
     {
@@ -3697,35 +2956,16 @@
         "id_sigef": "4a353478-01a9-4adf-a77f-fa22188f94cb",
         "codigo_imovel": "1310160127425",
         "nome_imovel": "TRAÍRAS  - Parte 1",
-        "nome_titular": "TRAÍRAS LTDA",
-        "cpf_cnpj_titular": "92.040.000/5444-00",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 834 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 45.63,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -10.061316529411766,
-        "centroide_lng": -43.88895670588235,
-        "cnpj_raw": "92040000544400",
-        "razao_social": "TRAÍRAS LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Henrique Dornelles",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Carolina Dornelles",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933163443",
-        "telefone": "(89) 3316-3443",
-        "email": "contato@traras.agr.br"
+        "centroide_lng": -43.88895670588235
       }
     },
     {
@@ -3775,35 +3015,16 @@
         "id_sigef": "b035e097-babe-4099-96ab-1f26b8f3d8e9",
         "codigo_imovel": "1310160133743",
         "nome_imovel": "MORRO VELHO - Parte 1",
-        "nome_titular": "MORRO VELHO LTDA",
-        "cpf_cnpj_titular": "92.040.000/5581-00",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 1420 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 100.93,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -10.010445,
-        "centroide_lng": -43.910000571428576,
-        "cnpj_raw": "92040000558100",
-        "razao_social": "MORRO VELHO LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1870000,
-        "qsa": [
-          {
-            "nome": "Carlos Alberto Fontana",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Mariana Fontana",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933163480",
-        "telefone": "(89) 3316-3480",
-        "email": "contato@morrovelho.agr.br"
+        "centroide_lng": -43.910000571428576
       }
     },
     {
@@ -3889,35 +3110,16 @@
         "id_sigef": "4b0e4f84-165c-4959-868c-0266ae41289a",
         "codigo_imovel": "1310160127425",
         "nome_imovel": "TRAÍRAS  - Parte 2",
-        "nome_titular": "TRAÍRAS LTDA",
-        "cpf_cnpj_titular": "92.040.000/5718-07",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 834 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 9.58,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -10.059274499999999,
-        "centroide_lng": -43.888346875,
-        "cnpj_raw": "92040000571807",
-        "razao_social": "TRAÍRAS LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Eduardo Grazziotin",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Patrícia Grazziotin",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933163517",
-        "telefone": "(89) 3316-3517",
-        "email": "contato@traras.agr.br"
+        "centroide_lng": -43.888346875
       }
     },
     {
@@ -3963,35 +3165,16 @@
         "id_sigef": "223cd4e9-7ed9-40fd-9272-53cc9fd8fad9",
         "codigo_imovel": "9502626808504",
         "nome_imovel": "SÍTIO - Parte 2",
-        "nome_titular": "SÍTIO LTDA",
-        "cpf_cnpj_titular": "92.040.000/5855-06",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 4541 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 8.07,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -10.048612833333332,
-        "centroide_lng": -43.986268833333334,
-        "cnpj_raw": "92040000585506",
-        "razao_social": "SÍTIO LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Fernando Silveira",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Roberto Silveira",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933163554",
-        "telefone": "(89) 3316-3554",
-        "email": "contato@stio.agr.br"
+        "centroide_lng": -43.986268833333334
       }
     },
     {
@@ -4085,35 +3268,16 @@
         "id_sigef": "fcf45c06-220a-4243-823d-501ddea40f50",
         "codigo_imovel": "9510642603397",
         "nome_imovel": "VOLTA DO RIACHO - VOLTA DO RIACHO (PARTE 03)",
-        "nome_titular": "VOLTA DO RIACHO VOLTA DO RIACHO () LTDA",
-        "cpf_cnpj_titular": "92.040.000/5992-13",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 1.705 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 101.61,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -9.983360944444446,
-        "centroide_lng": -43.942001944444456,
-        "cnpj_raw": "92040000599213",
-        "razao_social": "VOLTA DO RIACHO VOLTA DO RIACHO () LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1880000,
-        "qsa": [
-          {
-            "nome": "Gilberto Estrela",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Helena Estrela",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933163591",
-        "telefone": "(89) 3316-3591",
-        "email": "contato@voltadoriachovoltadoriacho.agr.br"
+        "centroide_lng": -43.942001944444456
       }
     },
     {
@@ -4159,35 +3323,16 @@
         "id_sigef": "1c24c16a-30bc-4159-98e0-055a4ae145a6",
         "codigo_imovel": "9501498158708",
         "nome_imovel": "FAZENDA LAGOA BONITA - Parte 1",
-        "nome_titular": "FAZENDA LAGOA BONITA LTDA",
-        "cpf_cnpj_titular": "92.040.000/6129-29",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 6211 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 69.85,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -10.041056666666666,
-        "centroide_lng": -43.80109166666667,
-        "cnpj_raw": "92040000612929",
-        "razao_social": "FAZENDA LAGOA BONITA LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1290000,
-        "qsa": [
-          {
-            "nome": "Paulo Renato Laimer",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Juliana Laimer",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933163628",
-        "telefone": "(89) 3316-3628",
-        "email": "contato@fazendalagoabonita.agr.br"
+        "centroide_lng": -43.80109166666667
       }
     },
     {
@@ -4253,35 +3398,16 @@
         "id_sigef": "e10681d3-a7c4-4784-b4b6-ae3cfa101f26",
         "codigo_imovel": "1300950667297",
         "nome_imovel": "IMOVEL RURAL DENOMINADO SITIO ALTO FORMOSO - Parte 1",
-        "nome_titular": "IMOVEL RURAL DENOMINADO SITIO ALTO FORMOSO LTDA",
-        "cpf_cnpj_titular": "92.040.000/6266-36",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 1762 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 35.22,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -10.085115363636364,
-        "centroide_lng": -43.911719999999995,
-        "cnpj_raw": "92040000626636",
-        "razao_social": "IMOVEL RURAL DENOMINADO SITIO ALTO FORMOSO LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Marcos Vinicius Witte",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Renata Witte",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933163665",
-        "telefone": "(89) 3316-3665",
-        "email": "contato@imovelruraldenominadositioaltoformoso.agr.br"
+        "centroide_lng": -43.911719999999995
       }
     },
     {
@@ -4363,35 +3489,16 @@
         "id_sigef": "b246f975-fd7e-4e2e-8ea7-fdb369722385",
         "codigo_imovel": "9510648593385",
         "nome_imovel": "SITIO BAIXAO DA FORTALEZA II - Parte 1",
-        "nome_titular": "SITIO BAIXAO DA FORTALEZA II LTDA",
-        "cpf_cnpj_titular": "92.040.000/6403-88",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 5614 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 132.45,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -10.1489154,
-        "centroide_lng": -43.786331600000004,
-        "cnpj_raw": "92040000640388",
-        "razao_social": "SITIO BAIXAO DA FORTALEZA II LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 2450000,
-        "qsa": [
-          {
-            "nome": "José Francisco Gehn",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Beatriz Gehn",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933163702",
-        "telefone": "(89) 3316-3702",
-        "email": "contato@sitiobaixaodafortalezaii.agr.br"
+        "centroide_lng": -43.786331600000004
       }
     },
     {
@@ -4437,35 +3544,16 @@
         "id_sigef": "6afa19d7-6b5d-4252-925e-a950fdaef430",
         "codigo_imovel": "1310160127697",
         "nome_imovel": "GLEBA VAI QUE TEM  - Parte 1",
-        "nome_titular": "GLEBA VAI QUE TEM LTDA",
-        "cpf_cnpj_titular": "92.040.000/6540-95",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 551 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 65.05,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -10.129225499999999,
-        "centroide_lng": -44.03890716666667,
-        "cnpj_raw": "92040000654095",
-        "razao_social": "GLEBA VAI QUE TEM LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Antônio Carlos Sebben",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Clara Sebben",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933163739",
-        "telefone": "(89) 3316-3739",
-        "email": "contato@glebavaiquetem.agr.br"
+        "centroide_lng": -44.03890716666667
       }
     },
     {
@@ -4559,35 +3647,16 @@
         "id_sigef": "b2091847-e36f-4702-8775-5966c530fec1",
         "codigo_imovel": "1310160044139",
         "nome_imovel": "GAVIÃO - GAVIÃO",
-        "nome_titular": "GAVIÃO GAVIÃO LTDA",
-        "cpf_cnpj_titular": "92.040.000/6677-40",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 875 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 164.24,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -10.16364488888889,
-        "centroide_lng": -43.95673277777777,
-        "cnpj_raw": "92040000667740",
-        "razao_social": "GAVIÃO GAVIÃO LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 3040000,
-        "qsa": [
-          {
-            "nome": "Luiz Henrique Biazus",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Camila Biazus",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933163776",
-        "telefone": "(89) 3316-3776",
-        "email": "contato@gaviogavio.agr.br"
+        "centroide_lng": -43.95673277777777
       }
     },
     {
@@ -4637,35 +3706,16 @@
         "id_sigef": "4e8bee3c-7925-4f98-84b1-4041e02631b3",
         "codigo_imovel": "1310160084866",
         "nome_imovel": "ALTO DA PRAIA - Parte 1",
-        "nome_titular": "ALTO DA PRAIA LTDA",
-        "cpf_cnpj_titular": "92.040.000/6814-91",
+        "nome_titular": "Titularidade sob sigilo (Cartório CRI / SNCR)",
+        "cpf_cnpj_titular": null,
         "registro_matricula": "Matrícula 2989 - CRI",
         "municipio": "AVELINO LOPES",
         "uf": "PI",
         "area_hectares": 25.06,
         "status_geo": "CERTIFICADO",
-        "tag_fonte": "FUSAO_SIGEF_CAR",
+        "tag_fonte": "SIGEF",
         "centroide_lat": -10.13107,
-        "centroide_lng": -43.95862671428572,
-        "cnpj_raw": "92040000681491",
-        "razao_social": "ALTO DA PRAIA LTDA",
-        "tipo_pessoa": "PJ",
-        "is_corporate": true,
-        "pj_status": "AUDITADO_RECEITA",
-        "capital_social": 1200000,
-        "qsa": [
-          {
-            "nome": "Sérgio Murilo Trevisan",
-            "qual": "Sócio-Administrador"
-          },
-          {
-            "nome": "Aline Trevisan",
-            "qual": "Sócio"
-          }
-        ],
-        "whatsapp_validado": "+558933163813",
-        "telefone": "(89) 3316-3813",
-        "email": "contato@altodapraia.agr.br"
+        "centroide_lng": -43.95862671428572
       }
     }
   ]

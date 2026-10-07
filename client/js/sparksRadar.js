@@ -149,6 +149,7 @@
     document.getElementById('btnModalSparkMetaAds')?.addEventListener('click', dispatchCurrentSignalToMetaAds);
     document.getElementById('btnModalSparkWhatsApp')?.addEventListener('click', dispatchCurrentSignalToWhatsApp);
     document.getElementById('btnModalSparkBureauEnrich')?.addEventListener('click', enrichSparkViaBureau);
+    document.getElementById('btnModalSparkFlyMap')?.addEventListener('click', flyCurrentSignalToMap);
 
     // Ações em Lote do Topo da Tabela
     document.getElementById('btnSparksExportB2bBatch')?.addEventListener('click', exportBatchB2b);
@@ -540,6 +541,10 @@
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                 <span>Raio-X</span>
               </button>
+              <button type="button" class="btn-action-spark-map" onclick="window.SparksRadar.flySignalToMap('${s.id}')" title="Ver Sede no Mapa Territorial" style="background: rgba(0, 210, 255, 0.12); border: 1px solid rgba(0, 210, 255, 0.35); color: #38BDF8; border-radius: 4px; padding: 0.25rem 0.45rem; font-size: 0.68rem; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 0.25rem;">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon><line x1="9" y1="3" x2="9" y2="18"></line><line x1="15" y1="6" x2="15" y2="21"></line></svg>
+                <span>Mapa</span>
+              </button>
               ${douLinkBtn}
               ${whatsBtn}
             </div>
@@ -637,6 +642,61 @@
       const sourceEl = document.getElementById('modalSparkSource');
       if (sourceEl) sourceEl.textContent = signal.orgao_emissor || 'Imprensa Nacional / DOU';
 
+      // 3.1 Dossiê Executivo / Comprovante BNDES (Elimina necessidade de abrir portal lento)
+      const bndesVoucherCard = document.getElementById('modalSparkBndesVoucherCard');
+      if (bndesVoucherCard) {
+        if (signal.spark_type === 'CREDITO_BNDES') {
+          bndesVoucherCard.style.display = 'block';
+          const valorFormatado = signal.valor_monetario > 0 
+            ? signal.valor_monetario.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+            : 'Sob Consulta';
+          
+          const bVal = document.getElementById('modalSparkBndesValor');
+          if (bVal) bVal.textContent = valorFormatado;
+
+          const bLinha = document.getElementById('modalSparkBndesLinha');
+          if (bLinha) bLinha.textContent = stripEmojis(signal.trigger_texto || 'MODERFROTA / PRONAF');
+
+          const bBanco = document.getElementById('modalSparkBndesBanco');
+          if (bBanco) bBanco.textContent = stripEmojis(signal.orgao_emissor || 'Banco Repassador Homologado');
+
+          const bCnpj = document.getElementById('modalSparkBndesCnpj');
+          if (bCnpj) bCnpj.textContent = signal.documento_identificado || lead?.cnpj || '--';
+
+          const bEnd = document.getElementById('modalSparkBndesEndereco');
+          if (bEnd) {
+            if (lead?.logradouro) {
+              bEnd.textContent = `${lead.logradouro}, ${lead.numero || 'S/N'} - ${lead.bairro || ''}, ${lead.municipio}/${lead.uf} (CEP ${lead.cep || '--'})`;
+            } else {
+              bEnd.textContent = `${signal.municipio || ''}/${signal.uf || ''} - Endereço Fiscal Homologado`;
+            }
+          }
+
+          const bSociosList = document.getElementById('modalSparkBndesSociosList');
+          if (bSociosList) {
+            if (socios && socios.length > 0) {
+              bSociosList.innerHTML = socios.map(soc => `
+                <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(2, 6, 23, 0.6); padding:0.4rem 0.6rem; border-radius:5px; border:1px solid rgba(255,255,255,0.05); font-size:0.72rem;">
+                  <div>
+                    <strong style="color:#FFFFFF; display:block;">${stripEmojis(soc.nome || soc.nome_socio || 'Sócio')}</strong>
+                    <span style="color:#94A3B8; font-size:0.65rem;">${soc.qualificacao || soc.qualificacao_socio || 'Sócio-Administrador'}${soc.faixa_etaria ? ` • ${soc.faixa_etaria}` : ''}</span>
+                  </div>
+                  <span style="color:#34D399; font-weight:700; font-family:monospace; font-size:0.72rem;">${soc.telefone || soc.telefone_presumido || lead?.telefone || 'Telefone em validação'}</span>
+                </div>
+              `).join('');
+            } else {
+              bSociosList.innerHTML = `
+                <div style="color:#94A3B8; font-size:0.7rem; padding:0.25rem 0;">
+                  Titular identificado: <strong style="color:#FFFFFF;">${stripEmojis(signal.titular_identificado || lead?.razao_social || 'Produtor')}</strong>
+                </div>
+              `;
+            }
+          }
+        } else {
+          bndesVoucherCard.style.display = 'none';
+        }
+      }
+
       // Link Oficial de Auditoria / Acesso Direto
       const linkContainer = document.getElementById('modalSparkOfficialLinkContainer');
       const linkBtn = document.getElementById('modalSparkOfficialLinkBtn');
@@ -645,22 +705,22 @@
         if (signal.url_fonte) {
           linkContainer.style.display = 'flex';
           linkBtn.href = signal.url_fonte;
-          let btnText = '🔗 Abrir na Fonte Oficial';
+          let btnText = 'Abrir na Fonte Oficial';
           let fonteDesc = 'Fonte Governamental Auditável';
           if (signal.spark_type === 'CREDITO_BNDES') {
-            btnText = '🔗 Ver no BNDES Transparente';
+            btnText = 'Auditar no Portal BNDES';
             fonteDesc = 'Portal de Dados Abertos do BNDES (dadosabertos.bndes.gov.br)';
           } else if (signal.spark_type === 'OUTORGA_ANA') {
-            btnText = '🔗 Ver no SNIRH / ANA';
+            btnText = 'Ver no SNIRH / ANA';
             fonteDesc = 'Cadastro Nacional de Outorgas do SNIRH (Agência Nacional de Águas)';
           } else if (signal.spark_type === 'EVENTO_AGRO') {
-            btnText = '🔗 Abrir Site da Feira';
+            btnText = 'Abrir Site da Feira';
             fonteDesc = 'Portal Oficial da Feira / Comitê Organizador do Evento';
           } else if (signal.spark_type === 'PASSIVO_IBAMA') {
-            btnText = '🔗 Consultar no IBAMA';
+            btnText = 'Consultar no IBAMA';
             fonteDesc = 'Cadastro de Áreas Embargadas do IBAMA / Ministério do Meio Ambiente';
           } else {
-            btnText = '🔗 Ver no DOU Oficial';
+            btnText = 'Ver no DOU Oficial';
             fonteDesc = 'Imprensa Nacional - Diário Oficial da União (in.gov.br)';
           }
           linkBtn.textContent = btnText;
@@ -886,6 +946,104 @@
       if (btn) btn.disabled = false;
       if (btnText) btnText.textContent = origText;
     }
+  }
+
+  /**
+   * Navega para a sede do sinal aberto no dossiê diretamente no Mapa Territorial WebGL
+   */
+  function flyCurrentSignalToMap() {
+    if (!currentDossierData?.signal) return;
+    const s = currentDossierData.signal;
+    const l = currentDossierData.lead;
+    const lat = Number(s.lat || l?.latitude);
+    const lng = Number(s.lng || l?.longitude);
+
+    if (!lat || !lng || isNaN(lat) || isNaN(lng)) {
+      showToastNotification('Coordenadas georreferenciadas ainda não disponíveis para este alvo.', 'warning');
+      return;
+    }
+
+    const sparkPayload = {
+      id: s.id,
+      spark_type: s.spark_type,
+      titular_identificado: l?.razao_social || s.titular_identificado || s.titulo,
+      documento_identificado: l?.cnpj || s.documento_identificado,
+      municipio: s.municipio || l?.municipio,
+      uf: s.uf || l?.uf,
+      valor_monetario: s.valor_monetario,
+      volume_m3h: s.volume_m3h,
+      linha_credito: s.trigger_texto,
+      banco_repassador: s.orgao_emissor,
+      socio_decisor: currentDossierData.socios?.[0]?.nome || l?.decisor_nome,
+      telefone: currentDossierData.contatos?.whatsapp || currentDossierData.contatos?.telefone || l?.telefone
+    };
+
+    closeSignalDossier();
+
+    // 1. Alterna para a aba do Mapa WebGL
+    if (window.CopilotActionBus && typeof window.CopilotActionBus.executeSwitchTab === 'function') {
+      window.CopilotActionBus.executeSwitchTab({ aba: 'map' });
+    } else {
+      const mapTabBtn = document.querySelector('.viewport-tab-btn[data-view="map"], #tabViewMap, [data-tab="map"]');
+      if (mapTabBtn) mapTabBtn.click();
+    }
+
+    // 2. Executa flyTo e fixa o marcador exclusivo
+    setTimeout(() => {
+      if (window.MapEngine && typeof window.MapEngine.flyToSparkLocation === 'function') {
+        window.MapEngine.flyToSparkLocation(lat, lng, sparkPayload);
+      }
+    }, 400);
+  }
+
+  /**
+   * Navega para um sinal a partir do ID (chamada externa ou botão de tabela)
+   */
+  async function flySignalToMap(signalId) {
+    let signal = sparksData.signals?.find(s => s.id === signalId);
+    let lat = signal ? Number(signal.lat) : null;
+    let lng = signal ? Number(signal.lng) : null;
+
+    if (!signal || !lat || !lng || isNaN(lat) || isNaN(lng)) {
+      try {
+        const res = await fetch(`/api/sparks/signals/${signalId}/dossier`);
+        if (res.ok) {
+          const json = await res.json();
+          currentDossierData = json.data;
+          flyCurrentSignalToMap();
+          return;
+        }
+      } catch (_) {}
+      showToastNotification('Coordenadas do sinal não localizadas.', 'warning');
+      return;
+    }
+
+    const sparkPayload = {
+      id: signal.id,
+      spark_type: signal.spark_type,
+      titular_identificado: signal.titular_identificado || signal.titulo,
+      documento_identificado: signal.documento_identificado,
+      municipio: signal.municipio,
+      uf: signal.uf,
+      valor_monetario: signal.valor_monetario,
+      volume_m3h: signal.volume_m3h,
+      linha_credito: signal.trigger_texto,
+      banco_repassador: signal.orgao_emissor
+    };
+
+    // Alterna para a aba do Mapa
+    if (window.CopilotActionBus && typeof window.CopilotActionBus.executeSwitchTab === 'function') {
+      window.CopilotActionBus.executeSwitchTab({ aba: 'map' });
+    } else {
+      const mapTabBtn = document.querySelector('.viewport-tab-btn[data-view="map"], #tabViewMap, [data-tab="map"]');
+      if (mapTabBtn) mapTabBtn.click();
+    }
+
+    setTimeout(() => {
+      if (window.MapEngine && typeof window.MapEngine.flyToSparkLocation === 'function') {
+        window.MapEngine.flyToSparkLocation(lat, lng, sparkPayload);
+      }
+    }, 400);
   }
 
   /**
@@ -1289,6 +1447,8 @@
     openWhatsAppForSignal,
     openSignalDossier,
     closeSignalDossier,
+    flyCurrentSignalToMap,
+    flySignalToMap,
     exportBatchB2b,
     dispatchBatchCrm
   };

@@ -2387,6 +2387,135 @@ window.MapEngine = (function() {
     }, 500);
   }
 
+  // ===========================================================================
+  // MARCADOR TÁTICO & NAVEGAÇÃO RADAR SPARKS (ALTA INTENÇÃO BNDES / OUTORGAS)
+  // ===========================================================================
+  let activeSparkMarker = null;
+
+  function clearActiveSparkMarker() {
+    if (activeSparkMarker) {
+      activeSparkMarker.remove();
+      activeSparkMarker = null;
+    }
+  }
+
+  /**
+   * Navega diretamente para a sede georreferenciada do Sinal do Radar Sparks
+   * e projeta o marcador visual tático com popup e atalhos comerciais.
+   */
+  function flyToSparkLocation(lat, lng, sparkData = {}) {
+    if (!map) {
+      if (typeof initMap === 'function') initMap();
+    }
+    if (!map) return;
+
+    const numLat = parseFloat(lat);
+    const numLng = parseFloat(lng);
+
+    if (isNaN(numLat) || isNaN(numLng)) {
+      console.warn('[MapEngine] flyToSparkLocation: Coordenadas inválidas:', { lat, lng });
+      return;
+    }
+
+    clearActiveSparkMarker();
+
+    const isBndes = sparkData.spark_type === 'CREDITO_BNDES';
+    const isAna = sparkData.spark_type === 'OUTORGA_ANA';
+    const pinColor = isBndes ? '#EF4444' : (isAna ? '#00D2FF' : '#F59E0B');
+    const badgeLabel = isBndes ? 'BNDES ATIVO' : (isAna ? 'OUTORGA ANA' : 'SINAL SPARK');
+
+    const el = document.createElement('div');
+    el.className = 'radar-spark-target-pin';
+
+    const titleText = sparkData.titular_identificado || sparkData.titulo || 'Alvo Spark';
+    el.innerHTML = `
+      <div class="spark-pin-bubble" style="border-color: ${pinColor}; box-shadow: 0 0 15px ${pinColor}80;">
+        <span class="spark-pin-badge" style="background: ${pinColor};">${badgeLabel}</span>
+        <span class="spark-pin-title">${titleText}</span>
+      </div>
+      <div class="spark-pin-core" style="background: ${pinColor};"></div>
+      <div class="spark-pin-pulse" style="border-color: ${pinColor};"></div>
+    `;
+
+    const formatBrl = (val) => val ? Number(val).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : null;
+    const valorTxt = formatBrl(sparkData.valor_monetario) || (sparkData.volume_m3h ? `${sparkData.volume_m3h} m³/h` : 'Alta Intenção');
+
+    const popupHtml = `
+      <div class="map-tactical-popup spark-tactical-popup">
+        <div class="map-tactical-header">
+          <span class="map-badge-spark" style="background: ${pinColor}25; color: ${pinColor}; border: 1px solid ${pinColor}60; font-weight: 800; font-size: 0.65rem; padding: 0.15rem 0.5rem; border-radius: 4px;">
+            RADAR SPARKS • ${badgeLabel}
+          </span>
+          <span style="font-size: 0.68rem; color: #34D399; font-weight: 700;">ALTA INTENÇÃO</span>
+        </div>
+        <h4 class="map-tactical-title" style="color: #FFFFFF; font-size: 0.9rem; margin: 0.4rem 0 0.15rem 0;">${titleText}</h4>
+        <div class="map-tactical-sub" style="font-size: 0.72rem; color: #94A3B8; margin-bottom: 0.5rem;">
+          CNPJ: ${sparkData.documento_identificado || '--'} • ${sparkData.municipio || ''}/${sparkData.uf || ''}
+        </div>
+        <div class="map-tactical-grid">
+          <div class="map-tactical-row">
+            <span>Operação / Volume:</span>
+            <strong style="color: #FBBF24;">${valorTxt}</strong>
+          </div>
+          ${sparkData.linha_credito ? `
+          <div class="map-tactical-row">
+            <span>Linha de Crédito:</span>
+            <strong>${sparkData.linha_credito}</strong>
+          </div>` : ''}
+          ${sparkData.banco_repassador ? `
+          <div class="map-tactical-row">
+            <span>Banco Repassador:</span>
+            <strong>${sparkData.banco_repassador}</strong>
+          </div>` : ''}
+          ${sparkData.socio_decisor ? `
+          <div class="map-tactical-row">
+            <span>Decisor Principal:</span>
+            <strong style="color: #38BDF8;">${sparkData.socio_decisor}</strong>
+          </div>` : ''}
+          ${sparkData.telefone ? `
+          <div class="map-tactical-row">
+            <span>Contato Validado:</span>
+            <strong style="color: #22C55E;">${sparkData.telefone}</strong>
+          </div>` : ''}
+        </div>
+        <div style="display: flex; gap: 0.4rem; margin-top: 0.6rem;">
+          ${sparkData.telefone ? `
+          <a href="https://wa.me/${sparkData.telefone.replace(/\D/g, '')}" target="_blank" class="btn-primary" style="flex: 1; font-size: 0.72rem; padding: 0.35rem 0.5rem; text-align: center; text-decoration: none; background: #16A34A; border-radius: 4px; color: #FFF; font-weight: 700;">
+            WhatsApp
+          </a>` : ''}
+          <button type="button" onclick="if(window.SparksRadar && typeof window.SparksRadar.openSignalDossier === 'function') window.SparksRadar.openSignalDossier('${sparkData.id}')" style="flex: 1; font-size: 0.72rem; padding: 0.35rem 0.5rem; background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 4px; color: #38BDF8; font-weight: 700; cursor: pointer;">
+            Abrir Dossiê
+          </button>
+        </div>
+      </div>
+    `;
+
+    activeSparkMarker = new maplibregl.Marker({ element: el, anchor: 'bottom' })
+      .setLngLat([numLng, numLat])
+      .addTo(map);
+
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (tacticalPopup) {
+        tacticalPopup.setLngLat([numLng, numLat]).setHTML(popupHtml).addTo(map);
+      }
+    });
+
+    map.flyTo({
+      center: [numLng, numLat],
+      zoom: 14.5,
+      speed: 1.3,
+      curve: 1.4,
+      essential: true
+    });
+
+    setTimeout(() => {
+      if (tacticalPopup) {
+        tacticalPopup.setLngLat([numLng, numLat]).setHTML(popupHtml).addTo(map);
+      }
+    }, 700);
+  }
+
   /**
    * Navega suavemente a câmera do mapa para qualquer município ou estado do Brasil
    * @param {string} uf Estado (ex: 'RS')
@@ -4434,6 +4563,8 @@ window.MapEngine = (function() {
     renderCompetitorAndGapsSpatial,
     flyToGapLocation,
     flyToLocation,
+    flyToSparkLocation,
+    clearActiveSparkMarker,
     isCompetitorsLayerActive: () => competitorsLayerActive,
     setupFundiarioLayers,
     fetchAndRenderFundiarioGeoJson,

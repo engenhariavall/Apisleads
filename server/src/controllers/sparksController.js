@@ -180,38 +180,92 @@ export async function exportSignalsMetaAds(req, res) {
     } else if (req.body?.signalIds) {
       signalIds = req.body.signalIds;
     }
-    const hashedRows = await SparksEngineService.exportSignalsMetaAds(signalIds, tenantId);
+    const metaExport = await SparksEngineService.exportSignalsMetaAds(signalIds, tenantId);
+    const isRaw = req.query.raw === 'true';
+    const isGeofence = req.query.type === 'geofencing';
 
     if (req.query.format === 'json') {
-      return res.status(200).json({ success: true, data: hashedRows, total: hashedRows.length });
+      return res.status(200).json({
+        success: true,
+        data: isRaw ? metaExport.audiences_raw : metaExport.hashed_rows,
+        geofencing: metaExport.geofencing_pins,
+        total: metaExport.hashed_rows.length
+      });
     }
 
-    // Gera arquivo CSV estritamente no padrão Custom Audiences do Meta Ads
+    if (isGeofence) {
+      // Exportação de Alfinetes e Coordenadas de Geofencing para Meta Ads
+      const headers = ['cliente', 'cnpj', 'municipio', 'uf', 'latitude', 'longitude', 'raio_km', 'coordenadas_meta'];
+      let csvContent = headers.join(',') + '\r\n';
+      metaExport.geofencing_pins.forEach(pin => {
+        const escape = val => `"${String(val || '').replace(/"/g, '""')}"`;
+        csvContent += [
+          escape(pin.cliente),
+          escape(pin.cnpj),
+          escape(pin.municipio),
+          escape(pin.uf),
+          escape(pin.latitude),
+          escape(pin.longitude),
+          escape(pin.raio_sugerido_km),
+          escape(pin.coordenadas_meta)
+        ].join(',') + '\r\n';
+      });
+      const timestamp = new Date().toISOString().slice(0, 10);
+      res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+      res.setHeader('Content-Disposition', `attachment; filename="geofencing-meta-ads-sparks-${timestamp}.csv"`);
+      return res.status(200).send('\uFEFF' + csvContent);
+    }
+
+    // Exportação de Audiência Personalizada (Custom Audiences)
+    const rows = isRaw ? metaExport.audiences_raw : metaExport.hashed_rows;
     const headers = ['email', 'phone', 'fn', 'ln', 'ct', 'st', 'zip', 'country', 'cnpj', 'razao_social'];
     let csvContent = headers.join(',') + '\r\n';
 
-    hashedRows.forEach(row => {
+    rows.forEach(row => {
       const escape = val => `"${String(val || '').replace(/"/g, '""')}"`;
-      csvContent += [
-        escape(row.email),
-        escape(row.phone),
-        escape(row.fn),
-        escape(row.ln),
-        escape(row.ct),
-        escape(row.st),
-        escape(row.zip),
-        escape(row.country),
-        escape(row.cnpj),
-        escape(row.razao_social)
-      ].join(',') + '\r\n';
+      if (isRaw) {
+        const nameParts = (row.contato_nome || '').trim().split(/\s+/);
+        const fn = nameParts[0] || '';
+        const ln = nameParts.slice(1).join(' ') || '';
+        let phoneFormatted = (row.telefone || '').replace(/\D/g, '');
+        if (phoneFormatted && !phoneFormatted.startsWith('55') && (phoneFormatted.length === 10 || phoneFormatted.length === 11)) {
+          phoneFormatted = '55' + phoneFormatted;
+        }
+        csvContent += [
+          escape(row.email),
+          escape(phoneFormatted),
+          escape(fn),
+          escape(ln),
+          escape(row.municipio),
+          escape(row.uf),
+          escape((row.cep || '').replace(/\D/g, '').slice(0, 5)),
+          escape('br'),
+          escape(row.cnpj),
+          escape(row.razao_social)
+        ].join(',') + '\r\n';
+      } else {
+        csvContent += [
+          escape(row.email),
+          escape(row.phone),
+          escape(row.fn),
+          escape(row.ln),
+          escape(row.ct),
+          escape(row.st),
+          escape(row.zip),
+          escape(row.country),
+          escape(row.cnpj),
+          escape(row.razao_social)
+        ].join(',') + '\r\n';
+      }
     });
 
     const timestamp = new Date().toISOString().slice(0, 10);
+    const filenameType = isRaw ? 'conferencia' : 'sha256';
     res.setHeader('Content-Type', 'text/csv; charset=utf-8');
-    res.setHeader('Content-Disposition', `attachment; filename="meta-ads-audiences-sparks-sha256-${timestamp}.csv"`);
+    res.setHeader('Content-Disposition', `attachment; filename="meta-ads-audiences-sparks-${filenameType}-${timestamp}.csv"`);
     return res.status(200).send('\uFEFF' + csvContent);
   } catch (err) {
-    console.error(`❌ [SPARKS_CONTROLLER] Erro ao exportar planilha Meta Ads SHA-256:`, err.message);
+    console.error(`[SPARKS_CONTROLLER] Erro ao exportar planilha Meta Ads:`, err.message);
     return res.status(500).json({ success: false, error: err.message });
   }
 }

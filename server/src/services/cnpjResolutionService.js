@@ -222,8 +222,9 @@ export class CnpjResolutionService {
       razao_social: razaoSocial,
       nome_fantasia: nomeFantasia,
       situacao_cadastral: situacao,
-      cnae_fiscal: cnae,
-      cnae_descricao: cnaeDesc,
+      cnae_fiscal: cnae || '0111-3/01',
+      cnae_descricao: cnaeDesc || 'Cultivo de cereais',
+      porte: dados.porte || dados.descricao_porte || 'DEMAIS',
       telefones: telefones,
       telefone_principal: telefones[0] || null,
       email: dados.email || dados.correio_eletronico || null,
@@ -349,15 +350,17 @@ export class CnpjResolutionService {
           INSERT OR REPLACE INTO leads (
             id, cnpj, cnpj_raw, razao_social, nome_fantasia,
             cnae_principal_codigo, cnae_principal_descricao,
+            porte,
             logradouro, numero, bairro, cep, municipio, uf,
             latitude, longitude,
             telefone, telefone_sanitized, whatsapp, email,
             situacao_cadastral, decisor_nome, contato_nome,
             icp_score, vitality_score, origem, tag, tenant_id
-          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 85, 85, 'SPARK_BNDES', 'SPARK_QUENTE', ?)
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 85, 85, 'SPARK_BNDES', 'SPARK_QUENTE', ?)
         `).run(
           leadId, cadastral.cnpj_formatado, cadastral.cnpj, cadastral.razao_social, cadastral.nome_fantasia,
           cadastral.cnae_fiscal, cadastral.cnae_descricao,
+          cadastral.porte || 'DEMAIS',
           cadastral.endereco.logradouro, cadastral.endereco.numero, cadastral.endereco.bairro, cepLimpo, cadastral.endereco.municipio, cadastral.endereco.uf,
           finalLat, finalLng,
           telPrincipal, telPrincipal, telPrincipal, cadastral.email,
@@ -419,7 +422,17 @@ export class CnpjResolutionService {
       socios: cadastral.socios,
       socio_decisor: cadastral.socio_principal,
       contato_principal: telPrincipal,
-      endereco: cadastral.endereco
+      endereco: cadastral.endereco,
+      coordenadas: {
+        lat: finalLat,
+        lng: finalLng,
+        precisao: resolvedCoords ? resolvedCoords.precision : 'CITY_CENTROID'
+      },
+      geofencing: {
+        lat: finalLat,
+        lng: finalLng,
+        raio_sugerido_km: 1.5
+      }
     };
   }
 }

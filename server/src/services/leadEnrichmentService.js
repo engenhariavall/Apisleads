@@ -927,7 +927,7 @@ export const leadEnrichmentService = {
           ? resolvedTitular
           : (resolvedRazaoSocial || companyMatched || propInput.nome_titular || 'Produtor Rural Qualificado'));
 
-    const osintFinalStatus = resolvedWhatsapp ? 'ENRICHED' : (resolvedTitular || resolvedCpfCnpj ? 'PARTIAL' : 'NOT_FOUND');
+    let osintFinalStatus = resolvedWhatsapp ? 'ENRICHED' : (resolvedTitular || resolvedCpfCnpj ? 'PARTIAL' : 'NOT_FOUND');
     const tipoPessoa = (resolvedCpfCnpj.length === 14 || resolvedRazaoSocial || companyMatched || propInput.tipo_pessoa === 'PJ')
       ? 'PJ'
       : (resolvedCpfCnpj.length === 11 ? 'PF' : 'INDETERMINADO');
@@ -991,6 +991,9 @@ export const leadEnrichmentService = {
       // Se não havia documento resolvido, conecta o CPF do produtor rural
       if (!resolvedCpfCnpj && sefazPfData?.produtor_pf_cpf) {
         resolvedCpfCnpj = sefazPfData.produtor_pf_cpf;
+      }
+      if (!resolvedRazaoSocial && sefazPfData?.produtor_pf_nome) {
+        resolvedRazaoSocial = `${sefazPfData.produtor_pf_nome} - PRODUTOR RURAL`;
       }
     } catch (sefazErr) {
       console.warn('⚠️ [WATERFALL_SEFAZ_IE] Erro ao resolver produtor PF via SEFAZ:', sefazErr.message);

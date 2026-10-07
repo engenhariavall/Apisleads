@@ -669,13 +669,24 @@ function renderTable() {
             <p style="font-size: 0.82rem; line-height: 1.5; color: #94A3B8; margin-bottom: 1.5rem;">
               Ajuste os filtros de busca ou limpe os parâmetros de Lavoura, Implemento, Estado ou Origem para visualizar os dados.
             </p>
-            <button type="button" class="btn-clear-filters-empty" onclick="window.clearAllFilters()" style="display: inline-flex; align-items: center; gap: 0.5rem; background: #0055FF; color: #FFFFFF; border: 1px solid rgba(255, 255, 255, 0.15); padding: 0.6rem 1.4rem; border-radius: 4px; font-size: 0.8rem; font-weight: 700; cursor: pointer; transition: all 0.2s;">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="1 4 1 10 7 10"></polyline>
-                <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
-              </svg>
-              <span>Limpar Filtros</span>
-            </button>
+            <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
+              ${(state.filters.cidades && state.filters.cidades.length > 0) ? `
+                <button type="button" class="btn-clear-filters-empty" onclick="window.prospectSuppliersForCurrentCity()" style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(56, 189, 248, 0.15); color: #38BDF8; border: 1px solid rgba(56, 189, 248, 0.4); padding: 0.6rem 1.4rem; border-radius: 4px; font-size: 0.8rem; font-weight: 700; cursor: pointer; transition: all 0.2s;">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                  </svg>
+                  <span>Prospectar Revendas Nesta Cidade</span>
+                </button>
+              ` : ''}
+              <button type="button" class="btn-clear-filters-empty" onclick="window.clearAllFilters()" style="display: inline-flex; align-items: center; gap: 0.5rem; background: #0055FF; color: #FFFFFF; border: 1px solid rgba(255, 255, 255, 0.15); padding: 0.6rem 1.4rem; border-radius: 4px; font-size: 0.8rem; font-weight: 700; cursor: pointer; transition: all 0.2s;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="1 4 1 10 7 10"></polyline>
+                  <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+                </svg>
+                <span>Limpar Filtros</span>
+              </button>
+            </div>
           </div>
         </td>
       </tr>
@@ -1747,9 +1758,40 @@ function initTerritorialDirectSearchBar() {
         }
       }
 
+      let total = state.pagination?.total || state.leads?.length || state.totalFiltered || 0;
+
+      // FASE 75: MOTOR DE PROSPECÇÃO SOB DEMANDA (QUALQUER CIDADE DO BRASIL)
+      // Se a busca for por Fornecedores / Revendas (ou Todos) e o total for 0 em uma cidade específica,
+      // dispara a mineração em tempo real na Receita Federal para o município!
+      if (total === 0 && city && uf && (profile === 'SUPPLIER' || profile === 'all')) {
+        if (statusBox && statusText) {
+          statusText.textContent = `Minerando revendas agropecuárias na Receita Federal para ${city}/${uf}...`;
+          statusBox.style.display = 'inline-flex';
+        }
+        if (labelSearch) labelSearch.textContent = 'Minerando...';
+
+        try {
+          const fetchFn = typeof window.fetchWithTimeout === 'function' ? window.fetchWithTimeout : fetch;
+          const prospectRes = await fetchFn('/api/prospect/suppliers-by-city', {
+            method: 'POST',
+            headers: typeof window.getApiHeaders === 'function' ? window.getApiHeaders() : { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ uf, municipio: city })
+          }, 15000);
+
+          if (prospectRes.ok) {
+            const prospectData = await prospectRes.json();
+            if (prospectData && prospectData.total_found > 0) {
+              await fetchLeads();
+              total = state.pagination?.total || state.leads?.length || state.totalFiltered || 0;
+            }
+          }
+        } catch (prospectErr) {
+          console.warn('Aviso na prospecção sob demanda:', prospectErr.message);
+        }
+      }
+
       // Feedback executivo limpo
       if (statusBox && statusText) {
-        const total = state.pagination?.total || state.leads?.length || 0;
         if (total > 0) {
           const profileLabel = profile === 'SUPPLIER' ? 'fornecedores/revendas' : (profile === 'BUYER' ? 'compradores (ICP)' : 'empresas');
           statusText.textContent = `${total} ${profileLabel} em ${city || uf || 'território'}`;
@@ -1766,6 +1808,42 @@ function initTerritorialDirectSearchBar() {
       if (labelSearch) labelSearch.textContent = 'Buscar';
     }
   });
+
+  // Rotina Global de Prospecção Forçada por Cidade
+  window.prospectSuppliersForCurrentCity = async function(customCity = null, customUf = null) {
+    const uf = customUf || (state.filters.estados && state.filters.estados[0]) || selectState?.value;
+    const city = customCity || (state.filters.cidades && state.filters.cidades[0]) || selectCity?.value;
+    if (!city || !uf) {
+      if (typeof showToast === 'function') showToast('Selecione um Estado e uma Cidade para prospectar.');
+      return;
+    }
+
+    if (statusBox && statusText) {
+      statusText.textContent = `Minerando revendas agropecuárias na Receita Federal para ${city}/${uf}...`;
+      statusBox.style.display = 'inline-flex';
+    }
+
+    try {
+      const fetchFn = typeof window.fetchWithTimeout === 'function' ? window.fetchWithTimeout : fetch;
+      const res = await fetchFn('/api/prospect/suppliers-by-city', {
+        method: 'POST',
+        headers: typeof window.getApiHeaders === 'function' ? window.getApiHeaders() : { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ uf, municipio: city, force_refresh: true })
+      }, 15000);
+
+      if (res.ok) {
+        const data = await res.json();
+        state.filters.target_type = 'SUPPLIER';
+        if (selectProfile) selectProfile.value = 'SUPPLIER';
+        await fetchLeads();
+        if (typeof showToast === 'function') {
+          showToast(`Prospecção concluída: ${data.total_found || 0} revendas cadastradas em ${city}!`);
+        }
+      }
+    } catch (err) {
+      console.error('Erro ao prospectar cidade:', err);
+    }
+  };
 
   // Ação de Limpar
   btnClear?.addEventListener('click', async () => {

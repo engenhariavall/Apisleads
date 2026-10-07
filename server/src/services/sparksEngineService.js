@@ -982,6 +982,8 @@ export class SparksEngineService {
     }
 
     const leadsForMeta = [];
+    const geofencingPins = [];
+
     for (const s of signalsToExport) {
       let lead = null;
       if (s.lead_id) {
@@ -992,34 +994,82 @@ export class SparksEngineService {
         lead = db.prepare(`SELECT * FROM leads WHERE cnpj_raw = ? OR cnpj = ? LIMIT 1`).get(cleanDoc, s.documento_identificado);
       }
 
-      // Tenta buscar telefone de SEFAZ ou de sócios se não houver no lead
-      let phoneRaw = lead?.whatsapp || lead?.telefone || '';
-      if (!phoneRaw && s.documento_identificado) {
-        const cleanDoc = s.documento_identificado.replace(/\D/g, '');
+      const finalLat = s.lat || lead?.latitude || null;
+      const finalLng = s.lng || lead?.longitude || null;
+
+      if (finalLat && finalLng) {
+        geofencingPins.push({
+          signal_id: s.id,
+          cliente: s.titular_identificado || lead?.razao_social || 'Alvo Spark',
+          cnpj: s.documento_identificado || lead?.cnpj || '',
+          municipio: s.municipio || lead?.municipio || '',
+          uf: s.uf || lead?.uf || '',
+          latitude: Number(finalLat),
+          longitude: Number(finalLng),
+          raio_sugerido_km: 1.5,
+          coordenadas_meta: `${Number(finalLat).toFixed(6)}, ${Number(finalLng).toFixed(6)}`
+        });
+      }
+
+      const cleanDoc = (s.documento_identificado || lead?.cnpj || '').replace(/\D/g, '');
+      let socios = [];
+      if (cleanDoc) {
         try {
-          const socio = db.prepare(`SELECT telefone_presumido FROM leads_socios WHERE lead_cnpj = ? LIMIT 1`).get(cleanDoc);
-          if (socio) phoneRaw = socio.telefone_presumido || '';
+          socios = db.prepare(`SELECT * FROM leads_socios WHERE lead_cnpj = ? OR lead_cnpj = ?`).all(cleanDoc, s.documento_identificado);
         } catch (_) {}
       }
 
-      const titularNome = s.titular_identificado || lead?.razao_social || 'Produtor Rural';
+      let phoneRaw = lead?.whatsapp || lead?.telefone || '';
+      if (!phoneRaw && socios.length > 0) {
+        phoneRaw = socios.find(soc => soc.telefone_presumido)?.telefone_presumido || '';
+      }
 
-      leadsForMeta.push({
-        contato_nome: titularNome,
-        nome_titular: titularNome,
-        razao_social: titularNome,
-        telefone: phoneRaw,
-        whatsapp_validado: phoneRaw,
-        municipio: s.municipio || lead?.municipio || '',
-        uf: s.uf || lead?.uf || '',
-        email: lead?.email || '',
-        cep: lead?.cep || '',
-        cnpj: s.documento_identificado || lead?.cnpj || ''
-      });
+      // Prioriza cada sócio decisor identificado no QSA
+      if (socios && socios.length > 0) {
+        for (const soc of socios) {
+          leadsForMeta.push({
+            contato_nome: soc.nome,
+            nome_titular: soc.nome,
+            razao_social: lead?.razao_social || s.titular_identificado || 'Empresa Alvo',
+            telefone: soc.telefone_presumido || phoneRaw,
+            whatsapp_validado: soc.telefone_presumido || phoneRaw,
+            municipio: s.municipio || lead?.municipio || '',
+            uf: s.uf || lead?.uf || '',
+            email: lead?.email || '',
+            cep: lead?.cep || '',
+            cnpj: s.documento_identificado || lead?.cnpj || '',
+            cargo: soc.qualificacao || 'Sócio',
+            latitude: finalLat,
+            longitude: finalLng
+          });
+        }
+      } else {
+        const titularNome = lead?.decisor_nome || lead?.contato_nome || s.titular_identificado || 'Produtor Rural';
+        leadsForMeta.push({
+          contato_nome: titularNome,
+          nome_titular: titularNome,
+          razao_social: lead?.razao_social || s.titular_identificado || 'Produtor Rural',
+          telefone: phoneRaw,
+          whatsapp_validado: phoneRaw,
+          municipio: s.municipio || lead?.municipio || '',
+          uf: s.uf || lead?.uf || '',
+          email: lead?.email || '',
+          cep: lead?.cep || '',
+          cnpj: s.documento_identificado || lead?.cnpj || '',
+          cargo: 'Decisor',
+          latitude: finalLat,
+          longitude: finalLng
+        });
+      }
     }
 
     const { transformToMetaAds } = await import('./metaHasher.js');
-    return transformToMetaAds(leadsForMeta);
+    const hashedRows = transformToMetaAds(leadsForMeta);
+    return {
+      hashed_rows: hashedRows,
+      audiences_raw: leadsForMeta,
+      geofencing_pins: geofencingPins
+    };
   }
 }
 

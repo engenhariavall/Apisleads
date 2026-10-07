@@ -28,6 +28,7 @@ import { getEconomicClusters, filterLeadsByRadius, filterLeadsByPolygon, getMapP
 import { getVerticalsCatalog, getVerticalMetrics, fuseVerticalData } from '../controllers/verticalsController.js';
 import { getCityMacroData, getMacroIndicatorsSummary, getMacroSummaryFromFilter, getMunicipalPotentialLayer } from '../controllers/macroController.js';
 import { generateExecutiveDossierController, getBaitReportController, getLeadTrackingController } from '../controllers/reportController.js';
+import { prospectSuppliersByCityController } from '../controllers/prospectController.js';
 
 import { lookupCompetitor, getCompetitors, getMarketGapsHandler, removeCompetitor, seedReferenceCompetitorsHandler, runCompetitorSweepHandler, getCompetitorTradeFlowHandler, getCercoAdsPayloadHandler, exportCercoGeofencingCsvHandler } from '../controllers/competitorController.js';
 import { healthCheck } from '../controllers/healthController.js';
@@ -235,7 +236,8 @@ router.get('/crm/status', optionalAuth, (req, res) => {
   } catch (error) {
     return res.status(500).json({ success: false, error: error.message });
   }
-});
+// FASE 75: MOTOR DE PROSPECÇÃO DE REVENDAS SOB DEMANDA (QUALQUER CIDADE DO BRASIL)
+router.post('/prospect/suppliers-by-city', optionalAuth, prospectSuppliersByCityController);
 
 
 // Rotas de Inteligência Artificial & Copywriting (Frente 3: Geração de Criativos & Lead Scoring)
