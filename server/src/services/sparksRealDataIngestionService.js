@@ -135,8 +135,8 @@ export class SparksRealDataIngestionService {
       const monitorId = this.resolveMonitorId(rawSignal.spark_type);
       const existing = db.prepare(`
         SELECT id FROM sparks_signals 
-        WHERE ((url_fonte IS NOT NULL AND url_fonte = ?) OR (titulo = ? AND tenant_id = ?))
-      `).get(rawSignal.url_fonte, rawSignal.titulo, tenantId);
+        WHERE id = ? OR (titulo = ? AND data_publicacao = ? AND tenant_id = ?)
+      `).get(rawSignal.id, rawSignal.titulo, rawSignal.data_publicacao, tenantId);
 
       if (!existing) {
         db.prepare(`

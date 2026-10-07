@@ -17,15 +17,33 @@ import { SparksRealDataIngestionService } from '../src/services/sparksRealDataIn
 async function main() {
   console.log('🧹 [PURGE REAL SPARKS] Iniciando limpeza rigorosa...');
 
-  // Remove qualquer sinal de licitação ou mock antigo
+  // Remove qualquer sinal de licitação, edital ou resquício antigo
   const delProcurement = db.prepare(`
     DELETE FROM sparks_signals 
-    WHERE titulo LIKE '%LICITAÇÃO%'
-       OR titulo LIKE '%LICITACAO%'
+    WHERE titulo LIKE '%LICITAÇ%'
+       OR titulo LIKE '%LICITAC%'
        OR titulo LIKE '%PREGÃO%'
+       OR titulo LIKE '%PREGAO%'
+       OR titulo LIKE '%ADJUDICAÇ%'
+       OR titulo LIKE '%HOMOLOGAÇ%'
        OR titulo LIKE '%DISPENSA%'
        OR titulo LIKE '%APOSTILAMENTO%'
        OR titulo LIKE '%CONVÊNIO%'
+       OR titulo LIKE '%CONVENIO%'
+       OR titulo LIKE '%EDITAL%'
+       OR titulo LIKE '%UASG%'
+       OR titulo LIKE '%ACORDO DE COOPERAÇÃO%'
+       OR titulo LIKE '%ACORDO DE COOPERACAO%'
+       OR titulo LIKE '%TERMO ADITIVO%'
+       OR orgao_emissor LIKE '%Prefeitura%'
+       OR orgao_emissor LIKE '%Câmara%'
+       OR orgao_emissor LIKE '%Universidade%'
+       OR orgao_emissor LIKE '%Instituto Federal%'
+       OR orgao_emissor LIKE '%Escola%'
+       OR orgao_emissor LIKE '%Conselho Regional%'
+       OR orgao_emissor LIKE '%Superintendência Regional%'
+       OR (spark_type = 'CREDITO_BNDES' AND (valor_monetario <= 0 OR url_fonte LIKE '%in.gov.br%'))
+       OR (spark_type = 'OUTORGA_ANA' AND (volume_m3h <= 0 OR url_fonte LIKE '%in.gov.br%'))
        OR id LIKE 'sig-sim-%'
        OR id LIKE 'sig-bndes-legacy-%'
   `).run();

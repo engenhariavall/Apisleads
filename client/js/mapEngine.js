@@ -1789,14 +1789,20 @@ window.MapEngine = (function() {
         badge.classList.remove('highlight');
       }
 
-      // Se estado zero (sem empresas no tenant/filtro), centraliza visão padrão do Brasil suavemente
+      // Se estado zero (sem empresas no filtro), centraliza na cidade ou estado selecionado (sem reset cego para o Brasil)
       const count = currentGeoJson.total_features !== undefined ? currentGeoJson.total_features : (currentGeoJson.features ? currentGeoJson.features.length : 0);
       if (count === 0 && map) {
-        map.flyTo({
-          center: BRAZIL_CENTER,
-          zoom: BRAZIL_DEFAULT_ZOOM,
-          speed: 1.2
-        });
+        const activeCity = (filters.cidades && filters.cidades[0]) ? filters.cidades[0] : '';
+        const activeUf = (filters.estados && filters.estados[0]) ? filters.estados[0] : '';
+        if (activeCity || activeUf) {
+          flyToLocation(activeUf, activeCity);
+        } else {
+          map.flyTo({
+            center: BRAZIL_CENTER,
+            zoom: BRAZIL_DEFAULT_ZOOM,
+            speed: 1.2
+          });
+        }
       }
 
       // Se a camada H3 estiver ativa, atualiza com os novos dados
@@ -2376,6 +2382,56 @@ window.MapEngine = (function() {
         tacticalPopup.setLngLat([lng, lat]).setHTML(html).addTo(map);
       }
     }, 500);
+  }
+
+  /**
+   * Navega suavemente a câmera do mapa para qualquer município ou estado do Brasil
+   * @param {string} uf Estado (ex: 'RS')
+   * @param {string} city Cidade (ex: 'Almirante Tamandaré do Sul')
+   */
+  async function flyToLocation(uf, city) {
+    if (!map) {
+      if (typeof initMap === 'function') initMap();
+      if (!map) return;
+    }
+    const cleanUf = (uf || '').trim().toUpperCase();
+    const cleanCity = (city || '').trim().toUpperCase();
+
+    if (cleanCity && cleanUf) {
+      try {
+        const res = await fetch(`/api/gis/city-coordinates?uf=${encodeURIComponent(cleanUf)}&cidade=${encodeURIComponent(cleanCity)}`);
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.lat && data.lng) {
+            map.flyTo({
+              center: [data.lng, data.lat],
+              zoom: 12.5,
+              speed: 1.3,
+              curve: 1.2,
+              essential: true
+            });
+            return;
+          }
+        }
+      } catch (e) {
+        console.warn('[MAP ENGINE] Falha ao resolver coordenadas municipais:', e.message);
+      }
+    }
+
+    if (cleanUf && BRAZIL_UF_BOUNDS && BRAZIL_UF_BOUNDS[cleanUf]) {
+      map.fitBounds(BRAZIL_UF_BOUNDS[cleanUf], {
+        padding: 40,
+        duration: 1500,
+        essential: true
+      });
+      return;
+    }
+
+    map.flyTo({
+      center: BRAZIL_CENTER,
+      zoom: BRAZIL_DEFAULT_ZOOM,
+      speed: 1.2
+    });
   }
 
   // =========================================================================
@@ -4374,6 +4430,7 @@ window.MapEngine = (function() {
     setCompetitorLayersVisibility,
     renderCompetitorAndGapsSpatial,
     flyToGapLocation,
+    flyToLocation,
     isCompetitorsLayerActive: () => competitorsLayerActive,
     setupFundiarioLayers,
     fetchAndRenderFundiarioGeoJson,

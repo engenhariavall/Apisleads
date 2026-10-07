@@ -24,7 +24,7 @@ import { exportLeads, exportCompetitorGeofencing } from '../controllers/exportCo
 import { importRealDataController, reSyncAllLeadsController } from '../controllers/importController.js';
 import { syncMetaAudiences, dispatchWebhooks, getIntegrationsStatus } from '../controllers/integrationsController.js';
 import { generateAiCopy, getLeadPredictiveScore, getBatchPredictiveScores } from '../controllers/aiController.js';
-import { getEconomicClusters, filterLeadsByRadius, filterLeadsByPolygon, getMapPoints, getGeoJsonLeads } from '../controllers/gisController.js';
+import { getEconomicClusters, filterLeadsByRadius, filterLeadsByPolygon, getMapPoints, getGeoJsonLeads, getCityCoordinates } from '../controllers/gisController.js';
 import { getVerticalsCatalog, getVerticalMetrics, fuseVerticalData } from '../controllers/verticalsController.js';
 import { getCityMacroData, getMacroIndicatorsSummary, getMacroSummaryFromFilter, getMunicipalPotentialLayer } from '../controllers/macroController.js';
 import { generateExecutiveDossierController, getBaitReportController, getLeadTrackingController } from '../controllers/reportController.js';
@@ -249,6 +249,7 @@ router.post('/gis/filter-radius', optionalAuth, filterLeadsByRadius);
 router.post('/gis/filter-polygon', optionalAuth, filterLeadsByPolygon);
 router.post('/gis/map-points', optionalAuth, getMapPoints);
 router.post('/gis/geojson', optionalAuth, getGeoJsonLeads);
+router.get('/gis/city-coordinates', optionalAuth, getCityCoordinates);
 
 // Rotas de Macrodados Territoriais (Fase 19: IBGE POF & Frotas)
 router.get('/macro/cities/:uf/:municipio', optionalAuth, getCityMacroData);

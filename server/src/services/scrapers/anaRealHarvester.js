@@ -35,7 +35,7 @@ export class AnaRealHarvester {
       const params = new URLSearchParams({
         where: whereClause,
         outFields: 'objectid,emp_nm_empreendimento,emp_nm_responsavel,emp_nu_cpfcnpj,ing_nm_municipio,ing_sg_ufmunicipio,int_nm_corpohidrico,int_qt_vazaomaxima,int_nu_latitude,int_nu_longitude,out_nu_ato,out_dt_outorgainicial,out_nu_processo,tfn_ds',
-        orderByFields: 'out_dt_outorgainicial desc',
+        orderByFields: 'objectid desc',
         returnGeometry: 'false',
         f: 'json',
         resultRecordCount: String(limit)

@@ -13,6 +13,7 @@
  */
 
 import crypto from 'crypto';
+import { CITY_COORDINATES, UF_CENTROIDS } from '../../modules/gis/geoSpatialEngine.js';
 
 const BNDES_API_URL = 'https://dadosabertos.bndes.gov.br/api/3/action/datastore_search';
 const RESOURCE_ID = '612faa0b-b6be-4b2c-9317-da5dc2c0b901'; // Operações Indiretas Automáticas
@@ -80,6 +81,12 @@ export class BndesCkanHarvester {
         const hashKey = `${clienteNome}-${dataContratacaoIso}-${valor}`;
         const signalId = `sig-bndes-${crypto.createHash('md5').update(hashKey).digest('hex').slice(0, 10)}`;
 
+        // Resolução geográfica refinada
+        const cityKey = `${municipioClean.toUpperCase()}/${ufClean}`;
+        const coords = (CITY_COORDINATES && CITY_COORDINATES[cityKey]) || (UF_CENTROIDS && UF_CENTROIDS[ufClean]) || { lat: -15.7801, lng: -47.9292 };
+
+        const urlAuditavel = `${BNDES_DATASET_URL}?q=${encodeURIComponent(clienteNome)}`;
+
         signals.push({
           id: signalId,
           spark_type: 'CREDITO_BNDES',
@@ -95,9 +102,9 @@ export class BndesCkanHarvester {
           nome_imovel: `Complexo / Operação Rural (${municipioClean}/${ufClean})`,
           municipio: municipioClean,
           uf: ufClean,
-          lat: -15.7801,
-          lng: -47.9292,
-          url_fonte: BNDES_DATASET_URL,
+          lat: coords.lat,
+          lng: coords.lng,
+          url_fonte: urlAuditavel,
           trigger_texto: `Crédito Agro Aprovado: ${valorFormatado} [${produtoLinha}] via ${bancoRepassador}`
         });
       }

@@ -28,7 +28,12 @@ const DISCARD_PROCUREMENT_TERMS = [
   'tomada de preços',
   'concorrência pública',
   'ata de registro de preços',
-  'registro de preços'
+  'registro de preços',
+  'prefeitura municipal',
+  'câmara municipal',
+  'universidade federal',
+  'instituto federal',
+  'secretaria municipal'
 ];
 
 const QUERY_BY_TYPE = {
@@ -119,10 +124,41 @@ export class DouRealHarvester {
     for (const hit of rawHits) {
       const titleLower = (hit.title || '').toLowerCase();
       const contentLower = (hit.content || '').toLowerCase();
+      const hierarchyStr = (hit.hierarchyList || []).join(' ').toLowerCase();
+      const fullInspect = `${titleLower} ${contentLower} ${hierarchyStr}`;
 
-      // FILTRO ANTI-LICITAÇÃO: descarta pregões, dispensas e concorrências públicas
-      const isProcurement = DISCARD_PROCUREMENT_TERMS.some(t => titleLower.includes(t) || contentLower.includes(t));
-      if (isProcurement) {
+      // FILTRO ANTI-LICITAÇÃO & ENTIDADES PÚBLICAS: descarta compras governamentais, UASG, editais e licitações
+      const isPublicProcurement = 
+        fullInspect.includes('licitaç') ||
+        fullInspect.includes('licitac') ||
+        fullInspect.includes('pregão') ||
+        fullInspect.includes('pregao') ||
+        fullInspect.includes('adjudicaç') ||
+        fullInspect.includes('homologaç') ||
+        fullInspect.includes('prefeitura') ||
+        fullInspect.includes('câmara municipal') ||
+        fullInspect.includes('camara municipal') ||
+        fullInspect.includes('universidade') ||
+        fullInspect.includes('instituto federal') ||
+        fullInspect.includes('escola superior') ||
+        fullInspect.includes('dispensa de lic') ||
+        fullInspect.includes('inexigibilidade') ||
+        fullInspect.includes('edital') ||
+        fullInspect.includes('apostilamento') ||
+        fullInspect.includes('uasg') ||
+        fullInspect.includes('acordo de cooperação') ||
+        fullInspect.includes('acordo de cooperacao') ||
+        fullInspect.includes('convênio') ||
+        fullInspect.includes('convenio') ||
+        fullInspect.includes('conselho regional') ||
+        fullInspect.includes('secretaria municipal') ||
+        fullInspect.includes('secretaria estadual') ||
+        fullInspect.includes('aviso de alteração') ||
+        fullInspect.includes('aviso de cancelamento') ||
+        fullInspect.includes('termo aditivo') ||
+        fullInspect.includes('ata de registro');
+
+      if (isPublicProcurement) {
         continue;
       }
 

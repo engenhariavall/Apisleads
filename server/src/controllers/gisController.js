@@ -3,6 +3,7 @@ import { GeoSpatialEngine, ECONOMIC_CLUSTERS, CITY_COORDINATES, UF_CENTROIDS } f
 import { resolveRealCategory, calculateVitalityIndex } from '../modules/intelligence/index.js';
 import { validatePhoneChannel } from '../modules/intent/phoneValidator.js';
 import { getTenantFromRequest } from '../middleware/authMiddleware.js';
+import { geocodeAddressOnline } from '../services/addressResolverService.js';
 
 /**
  * Retorna catálogo de pólos econômicos e agropecuários estratégicos
@@ -251,4 +252,78 @@ export function getGeoJsonLeads(req, res) {
     res.status(500).json({ error: 'Falha ao processar GeoJSON geoespacial' });
   }
 }
+
+/**
+ * Retorna coordenadas geográficas de qualquer município ou estado brasileiro
+ * GET /api/gis/city-coordinates?uf=RS&cidade=Almirante%20Tamandar%C3%A9%20do%20Sul
+ */
+export async function getCityCoordinates(req, res) {
+  try {
+    const uf = (req.query.uf || '').trim().toUpperCase();
+    const rawCity = (req.query.cidade || req.query.city || '').trim();
+    const cidade = rawCity.toUpperCase();
+
+    if (!uf && !cidade) {
+      return res.status(400).json({ error: 'Parâmetros uf e/ou cidade são obrigatórios.' });
+    }
+
+    const key = `${cidade}/${uf}`;
+    if (CITY_COORDINATES && CITY_COORDINATES[key]) {
+      return res.json({
+        success: true,
+        lat: CITY_COORDINATES[key].lat,
+        lng: CITY_COORDINATES[key].lng,
+        city: cidade,
+        uf: uf,
+        source: 'CITY_CATALOG'
+      });
+    }
+
+    if (!cidade && UF_CENTROIDS && UF_CENTROIDS[uf]) {
+      return res.json({
+        success: true,
+        lat: UF_CENTROIDS[uf].lat,
+        lng: UF_CENTROIDS[uf].lng,
+        city: null,
+        uf: uf,
+        source: 'UF_CENTROID'
+      });
+    }
+
+    // Geocodificação online via OpenStreetMap / Nominatim (com cache de alta performance)
+    const query = `${rawCity || cidade}, ${uf}, Brasil`;
+    const resolved = await geocodeAddressOnline(query);
+    if (resolved && !isNaN(resolved.lat) && !isNaN(resolved.lng)) {
+      if (CITY_COORDINATES) {
+        CITY_COORDINATES[key] = { lat: resolved.lat, lng: resolved.lng };
+      }
+      return res.json({
+        success: true,
+        lat: resolved.lat,
+        lng: resolved.lng,
+        city: cidade,
+        uf: uf,
+        source: 'NOMINATIM_OSM'
+      });
+    }
+
+    // Fallback: Centroide estadual se a cidade não for resolvida
+    if (UF_CENTROIDS && UF_CENTROIDS[uf]) {
+      return res.json({
+        success: true,
+        lat: UF_CENTROIDS[uf].lat,
+        lng: UF_CENTROIDS[uf].lng,
+        city: cidade,
+        uf: uf,
+        source: 'UF_FALLBACK'
+      });
+    }
+
+    return res.status(404).json({ error: 'Coordenadas não encontradas para a localidade.' });
+  } catch (error) {
+    console.error('Erro ao resolver coordenadas municipais:', error);
+    res.status(500).json({ error: 'Falha ao buscar coordenadas geográficas.' });
+  }
+}
+
 
