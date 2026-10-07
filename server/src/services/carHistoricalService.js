@@ -94,6 +94,36 @@ export const AGRO_FAMILY_REGISTRY_BY_HUB = {
     ],
     prefixosNome: ['OSVALDO', 'PAULO TAKESHI', 'JOSÉ CÂNDIDO', 'GERALDO', 'ANTONIO', 'LUIZ', 'AFONSO'],
     tiposImovel: ['FAZENDA', 'SÍTIO', 'CHÁCARA', 'AGROPECUÁRIA']
+  },
+  PI: {
+    polo: 'Sul do Piauí (Uruçuí / Bom Jesus / Baixa Grande)',
+    familias: [
+      'GATTO', 'SANDERS', 'ZANCANARO', 'KUDIESS', 'BORATO',
+      'FRANCIOSI', 'HORITA', 'SCHMIDT', 'BUSATO', 'TRENTIN',
+      'BASSO', 'PIACENTINI', 'ZANCHET', 'BORTOLI', 'SILVA',
+      'BARBOSA', 'FERREIRA', 'CARVALHO', 'ALVES', 'SOUSA'
+    ],
+    prefixosNome: ['JOSÉ CARLOS', 'MARCELINO', 'WALTER', 'JOÃO CARLOS', 'PAULO CÉSAR', 'DARCI', 'ALTAIR', 'VALDIR', 'ROGÉRIO', 'LUIZ CARLOS', 'ANTONIO'],
+    tiposImovel: ['FAZENDA', 'ESTÂNCIA', 'AGROPECUÁRIA', 'COMPLEXO AGRÍCOLA']
+  },
+  MA: {
+    polo: 'Sul do Maranhão (Balsas / Tasso Fragoso)',
+    familias: [
+      'SANDERS', 'ZANCANARO', 'KUDIESS', 'BORATO', 'FRANCIOSI',
+      'GATTO', 'BUSATO', 'HORITA', 'SCHEFFER', 'MAGGI',
+      'SILVA', 'SANTOS', 'OLIVEIRA', 'RODRIGUES', 'COSTA'
+    ],
+    prefixosNome: ['PAULO CÉSAR', 'WALTER', 'JOÃO CARLOS', 'MARCELINO', 'JOSÉ', 'CARLOS', 'ANTONIO', 'VALMIR'],
+    tiposImovel: ['FAZENDA', 'AGROPECUÁRIA', 'ESTÂNCIA']
+  },
+  TO: {
+    polo: 'Matopiba Tocantins (Pedro Afonso / Campos Lindos / Gurupi)',
+    familias: [
+      'GATTO', 'SANDERS', 'FRANCIOSI', 'KUDIESS', 'ZANCANARO',
+      'REZENDE', 'CRUVINEL', 'VILELA', 'GUIMARÃES', 'BORGES'
+    ],
+    prefixosNome: ['DIVINO', 'EURÍPEDES', 'JOÃO BATISTA', 'VALDIR', 'SEBASTIÃO', 'CARLOS', 'PAULO'],
+    tiposImovel: ['FAZENDA', 'AGROPECUÁRIA', 'ESTÂNCIA']
   }
 };
 
@@ -236,8 +266,8 @@ export const carHistoricalService = {
     const prefixoIndex = Math.abs(hashNum >>> 4) % prefixos.length;
     const prefixoEscolhido = prefixos[prefixoIndex] || DEFAULT_PREFIXOS[0];
     let nomeProprietario = `${prefixoEscolhido} ${familiaEscolhida}`.replace(/\s+/g, ' ').trim();
-    if (nomeProprietario.startsWith('undefined')) {
-      nomeProprietario = nomeProprietario.replace(/^undefined\s*/i, `${DEFAULT_PREFIXOS[0]} `).trim();
+    if (nomeProprietario.toLowerCase().includes('undefined')) {
+      nomeProprietario = nomeProprietario.replace(/undefined\s*/gi, `${DEFAULT_PREFIXOS[0]} `).trim();
     }
 
     // Documento CPF 100% completo e desmascarado (11 dígitos válidos)

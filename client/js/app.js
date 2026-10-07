@@ -762,23 +762,23 @@ function renderTable() {
       }
       const hasIe = ie && ie !== 'ISENTO' && !String(ie).includes('Pendente') && !String(ie).includes('--');
 
-      // 5. WhatsApp Direto
-      let rawWa = lead.whatsapp || lead.telefone || '';
+      // 5. WhatsApp Direto - Resolução Unificada (Rural e B2B)
+      let rawWa = lead.whatsapp_validado || lead.whatsapp || lead.whatsapp_produtor_pf || lead.bureau_whatsapp || lead.telefone || lead.telefone_validado || lead.contato_whatsapp || lead.produtor_pf_whatsapp || '';
       if (!rawWa && lead.dados_adicionais) {
         try {
           const da = typeof lead.dados_adicionais === 'string' ? JSON.parse(lead.dados_adicionais) : lead.dados_adicionais;
-          rawWa = da.whatsapp || da.telefone || da.whatsapp_validado || '';
+          rawWa = da.whatsapp_validado || da.whatsapp || da.whatsapp_produtor_pf || da.bureau_whatsapp || da.telefone || da.telefone_validado || '';
         } catch(e) {}
       }
       if (!rawWa && lead.vertical_data) {
         try {
           const vd = typeof lead.vertical_data === 'string' ? JSON.parse(lead.vertical_data) : lead.vertical_data;
-          rawWa = vd.whatsapp || vd.telefone || vd.whatsapp_validado || '';
+          rawWa = vd.whatsapp_validado || vd.whatsapp || vd.whatsapp_produtor_pf || vd.bureau_whatsapp || vd.telefone || vd.telefone_validado || '';
         } catch(e) {}
       }
-      const cleanPhone = rawWa.replace(/\D/g, '');
+      const cleanPhone = String(rawWa).replace(/\D/g, '');
       const hasValidPhone = cleanPhone.length >= 10;
-      const waDecisor = lead.decisor_nome || lead.nome_fantasia || 'Produtor';
+      const waDecisor = lead.decisor_nome || lead.nome_titular || lead.nome_fantasia || 'Produtor';
       const waText = encodeURIComponent(`Olá ${waDecisor}, tudo bem? Gostaria de conversar sobre implementos e soluções agrícolas para a sua propriedade.`);
 
       // 6. Status Comercial
@@ -919,7 +919,7 @@ function renderTable() {
           <td>
             <div class="cell-whatsapp-wrap" style="display:flex;align-items:center;gap:0.3rem;">
               ${hasValidPhone ? `
-                <a href="https://wa.me/55${cleanPhone}?text=${waText}" target="_blank" rel="noopener noreferrer" class="btn-table-wa-direct" onclick="window.handleWhatsAppContactClick('${lead.id}')" title="Abrir conversa no WhatsApp Web (Avança para Em Atendimento)">
+                <a href="https://wa.me/55${(cleanPhone.startsWith('55') && cleanPhone.length > 11) ? cleanPhone.slice(2) : cleanPhone}?text=${waText}" target="_blank" rel="noopener noreferrer" class="btn-table-wa-direct" onclick="window.handleWhatsAppContactClick('${lead.id}')" title="Abrir conversa no WhatsApp Web (Avança para Em Atendimento)">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
                     <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
                   </svg>
@@ -2259,7 +2259,8 @@ function initIcpAndQualificationControls() {
 
   const btnDirectB2b = document.getElementById('btnDirectB2bCsv');
   btnDirectB2b?.addEventListener('click', () => {
-    executeExport('standard', btnDirectB2b);
+    const isRural = state.filters.origem === 'RURAL_SIGEF' || state.filters.origem === 'RURAL_CAR' || state.filters.origem === 'RURAL_FUSAO' || state.currentTab === 'rural' || state.activeTab === 'rural';
+    executeExport(isRural ? 'comercial_b2b_maquinas' : 'standard', btnDirectB2b);
   });
 
   // FASE 21: Dossiê Executivo PDF — handler genérico reutilizável
@@ -2395,12 +2396,20 @@ async function executeExport(format, buttonEl = null, explicitLeadIds = null) {
       ? explicitLeadIds
       : (state.selectAllFiltered ? [] : Array.from(state.selectedLeadIds));
 
+    const isRuralActive = state.filters.origem === 'RURAL_SIGEF' || state.filters.origem === 'RURAL_CAR' || state.filters.origem === 'RURAL_FUSAO' || state.currentTab === 'rural' || state.activeTab === 'rural';
+
     const payload = {
       format,
       lead_ids: finalLeadIds,
+      select_all_filtered: Boolean(state.selectAllFiltered),
+      is_rural: isRuralActive,
       filters: explicitLeadIds !== null
         ? null
-        : (state.selectAllFiltered || state.selectedLeadIds.size === 0 ? state.filters : null)
+        : {
+            ...state.filters,
+            origem: isRuralActive ? (state.filters.origem || 'RURAL_SIGEF') : state.filters.origem,
+            is_rural: isRuralActive
+          }
     };
 
     if (finalLeadIds && finalLeadIds.length === 1 && inspected) {

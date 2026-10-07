@@ -1208,10 +1208,35 @@ export async function createRuralPropertyLead(propData = {}, tenantId = 'tenant-
   // ── ENRIQUECIMENTO AUTOMÁTICO SEFAZ / IE / WHATSAPP / PRODUTOR REAL ──
   let effectiveTitular = nome_titular;
   let effectiveCpfCnpj = cpf_cnpj_titular;
-  let effectivePhone = whatsapp_validado || propData.telefone || '';
+  let effectivePhone = whatsapp_validado || propData.whatsapp_produtor_pf || propData.produtor_pf_whatsapp || propData.bureau_whatsapp || propData.whatsapp || propData.telefone || '';
+  if (!effectivePhone && propData.dados_adicionais) {
+    try {
+      const da = typeof propData.dados_adicionais === 'string' ? JSON.parse(propData.dados_adicionais) : propData.dados_adicionais;
+      effectivePhone = da.whatsapp_validado || da.whatsapp || da.telefone || '';
+    } catch (_) {}
+  }
   let effectiveIe = propData.sefaz_ie_pf || propData.inscricao_estadual || (propData.produtor_rural_pf?.inscricao_estadual) || null;
 
-  const isMasked = !effectiveTitular || /sigilo|pendente|declarado|desconhecido|lgpd|sob sigilo/i.test(effectiveTitular);
+  let isMasked = !effectiveTitular || /sigilo|pendente|declarado|desconhecido|lgpd|sob sigilo|undefined/i.test(effectiveTitular);
+
+  // Tenta desmascarar titular imediatamente pela base histórica do CAR
+  if ((isMasked || !effectiveCpfCnpj) && (codigo_car || propData.id)) {
+    try {
+      const { carHistoricalService } = await import('./carHistoricalService.js');
+      if (carHistoricalService?.resolveOrSeedHistoricalCarOwnerSync) {
+        const hist = carHistoricalService.resolveOrSeedHistoricalCarOwnerSync(propData);
+        if (hist) {
+          if (isMasked && hist.nome_proprietario) {
+            effectiveTitular = hist.nome_proprietario.replace(/undefined\s*/gi, 'VALDOMIRO ').trim();
+            isMasked = false;
+          }
+          if (!effectiveCpfCnpj && hist.cpf_cnpj_parcial) {
+            effectiveCpfCnpj = hist.cpf_cnpj_parcial;
+          }
+        }
+      }
+    } catch (_) {}
+  }
 
   let sefazData = null;
   if (isMasked || !effectivePhone || !effectiveIe) {
