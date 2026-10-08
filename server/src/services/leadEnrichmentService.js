@@ -35,6 +35,7 @@ import { resolveTenantCredentials, ApiRouterError } from './apiRouterService.js'
 import { extractLocationFromProperty } from './ibgeService.js';
 import { resolveRuralProducerByIE, formatCpf } from './sefazIeService.js';
 import { runMachineryAndHydroPipeline } from './machineryFleetEngine.js';
+import { resolverEmpresaPorDenominacao, formatCnpj } from './empresaFundiariaResolver.js';
 
 /**
  * Fila Limitadora de Concorrência e Throttling Anti-Bloqueio (Token-Bucket / Leaky-Bucket)
@@ -558,32 +559,18 @@ export const leadEnrichmentService = {
       let email = null;
       let linkedin = null;
       let company = null;
+      let companyMatched = null;
       let qsaList = [];
       let razaoSocial = null;
       let capitalSocial = null;
 
       // 3.0. Vínculo Cartorial / Empresarial e Correlação Espacial Municipal (FASE 60 - DOMÍNIO TOTAL DE PJ):
+      let statusResolucao = null;
+      let finalL3Source = 'MARKET_BUREAU_LAYER3';
+
       if ((!cpfCnpj || isMaskedTitular(nomeTitular))) {
         try {
-          const rawNome = (propertyData.nome_imovel || '').trim();
-          // Limpa sufixos cartoriais para extrair o núcleo empresarial (ex: "AGROPECUARIA SANTA FÉ - GLEBA 1.4" -> "AGROPECUARIA SANTA FÉ")
-          const cleanCoreName = rawNome
-            .replace(/\s*-\s*(gleba|parte|mat|matr[íi]cula|lote|área|unica).*$/i, '')
-            .replace(/\s*–\s*.*$/i, '')
-            .trim();
-
-          let leadMatch = null;
-          if (cleanCoreName && !cleanCoreName.startsWith('Imóvel CAR') && !cleanCoreName.startsWith('Imóvel Rural') && cleanCoreName.length >= 4) {
-            leadMatch = db.prepare(`
-              SELECT * FROM leads 
-              WHERE (razao_social LIKE ? OR nome_fantasia LIKE ?)
-                AND (tenant_id = ? OR tenant_id = 'tenant-root-default')
-              ORDER BY capital_social DESC
-              LIMIT 1
-            `).get(`%${cleanCoreName}%`, `%${cleanCoreName}%`, tenantId);
-          }
-
-          // Se não encontrou por nome exato mas o imóvel é rural PJ e temos o município:
+          const rawNome = (propertyData.nome_imovel || titularData.nome_imovel || '').trim();
           let targetMun = (municipio || propertyData.municipio || titularData.municipio || '').trim().toUpperCase();
           let targetUf = (uf || propertyData.uf || titularData.uf || '').trim().toUpperCase();
 
@@ -597,47 +584,94 @@ export const leadEnrichmentService = {
             } catch (_) {}
           }
 
-          const areaNum = parseFloat(propertyData.area_hectares || titularData.area_hectares || 0);
-          // FASE 60 NACIONAL: Todo imóvel rural no módulo fundiário qualifica para inteligência agroempresarial (PJ)
-          const isAgroPJ = true;
+          // A) RESOLVEDOR AUTOMÁTICO DE CNPJ POR RADICAL DA DENOMINAÇÃO E MUNICÍPIO (RECEITA FEDERAL)
+          let matchEmpresa = null;
+          if (rawNome && rawNome.length >= 3) {
+            matchEmpresa = await resolverEmpresaPorDenominacao({
+              nome_imovel: rawNome,
+              municipio: targetMun,
+              uf: targetUf,
+              area_ha: parseFloat(propertyData.area_hectares || titularData.area_hectares || 0),
+              tenantId
+            });
+          }
 
-          // Se não encontrou por nome exato do imóvel, NÃO faz chute aleatório de empresas da cidade por hash.
-          // Mantém leadMatch como null para evitar falsas correspondências societárias.
+          if (matchEmpresa && matchEmpresa.matched) {
+            nomeTitular = matchEmpresa.razao_social;
+            cpfCnpj = matchEmpresa.cnpj;
+            razaoSocial = matchEmpresa.razao_social;
+            capitalSocial = matchEmpresa.capital_social;
+            qsaList = matchEmpresa.socios_qsa || [];
+            companyMatched = matchEmpresa.razao_social;
+            statusResolucao = '[EMPRESA LOCALIZADA (RECEITA FEDERAL)]';
+            finalL3Source = 'RECEITA_FEDERAL_RADICAL';
 
-          if (leadMatch) {
-            nomeTitular = leadMatch.razao_social;
-            cpfCnpj = cleanDocument(leadMatch.cnpj_raw || leadMatch.cnpj || '');
-            razaoSocial = leadMatch.razao_social;
-            capitalSocial = leadMatch.capital_social;
-            
-            // Busca QSA em leads_socios se não estiver preenchido
-            try {
-              const sociosRows = db.prepare(`
-                SELECT nome, qualificacao, telefone_presumido as telefone, email_validado as email
-                FROM leads_socios
-                WHERE lead_cnpj = ?
-              `).all(leadMatch.cnpj_raw || leadMatch.cnpj);
-              if (sociosRows && sociosRows.length > 0) {
-                qsaList = sociosRows;
-              } else if (leadMatch.qsa) {
-                qsaList = typeof leadMatch.qsa === 'string' ? JSON.parse(leadMatch.qsa) : leadMatch.qsa;
-              }
-            } catch (_) {}
-
-            if (leadMatch.email) email = leadMatch.email;
-            const ph = leadMatch.telefone_sanitized || leadMatch.telefone;
-            if (ph) {
-              const val = validatePhoneChannel(ph);
+            if (matchEmpresa.telefone) {
+              const val = validatePhoneChannel(matchEmpresa.telefone);
               if (val && val.is_valid) {
                 whatsapp = val.e164 || `+55${val.cleaned}`;
               } else {
-                whatsapp = ph;
+                whatsapp = matchEmpresa.telefone;
               }
             }
+            if (matchEmpresa.email) email = matchEmpresa.email;
 
-            // Se o sócio do QSA tem telefone e o titular ainda não tem WhatsApp, usa o sócio
             if (!whatsapp && Array.isArray(qsaList) && qsaList.length > 0 && qsaList[0].telefone) {
               whatsapp = qsaList[0].telefone;
+            }
+          } else {
+            // B) Limpa sufixos cartoriais para extrair o núcleo empresarial
+            const cleanCoreName = rawNome
+              .replace(/\s*-\s*(gleba|parte|mat|matr[íi]cula|lote|área|unica).*$/i, '')
+              .replace(/\s*–\s*.*$/i, '')
+              .trim();
+
+            let leadMatch = null;
+            if (cleanCoreName && !cleanCoreName.startsWith('Imóvel CAR') && !cleanCoreName.startsWith('Imóvel Rural') && cleanCoreName.length >= 4) {
+              leadMatch = db.prepare(`
+                SELECT * FROM leads 
+                WHERE (razao_social LIKE ? OR nome_fantasia LIKE ?)
+                  AND (tenant_id = ? OR tenant_id = 'tenant-root-default')
+                ORDER BY capital_social DESC
+                LIMIT 1
+              `).get(`%${cleanCoreName}%`, `%${cleanCoreName}%`, tenantId);
+            }
+
+            if (leadMatch) {
+              nomeTitular = leadMatch.razao_social;
+              cpfCnpj = cleanDocument(leadMatch.cnpj_raw || leadMatch.cnpj || '');
+              razaoSocial = leadMatch.razao_social;
+              capitalSocial = leadMatch.capital_social;
+              statusResolucao = '[EMPRESA LOCALIZADA (RECEITA FEDERAL)]';
+              
+              // Busca QSA em leads_socios se não estiver preenchido
+              try {
+                const sociosRows = db.prepare(`
+                  SELECT nome, qualificacao, telefone_presumido as telefone, email_validado as email
+                  FROM leads_socios
+                  WHERE lead_cnpj = ?
+                `).all(leadMatch.cnpj_raw || leadMatch.cnpj);
+                if (sociosRows && sociosRows.length > 0) {
+                  qsaList = sociosRows;
+                } else if (leadMatch.qsa) {
+                  qsaList = typeof leadMatch.qsa === 'string' ? JSON.parse(leadMatch.qsa) : leadMatch.qsa;
+                }
+              } catch (_) {}
+
+              if (leadMatch.email) email = leadMatch.email;
+              const ph = leadMatch.telefone_sanitized || leadMatch.telefone;
+              if (ph) {
+                const val = validatePhoneChannel(ph);
+                if (val && val.is_valid) {
+                  whatsapp = val.e164 || `+55${val.cleaned}`;
+                } else {
+                  whatsapp = ph;
+                }
+              }
+
+              if (!whatsapp && Array.isArray(qsaList) && qsaList.length > 0 && qsaList[0].telefone) {
+                whatsapp = qsaList[0].telefone;
+              }
             }
           }
         } catch (mErr) {
@@ -754,7 +788,8 @@ export const leadEnrichmentService = {
         success: isResolved,
         resolved: isResolved,
         layer: 3,
-        source: 'MARKET_BUREAU_LAYER3',
+        source: finalL3Source,
+        status_resolucao: statusResolucao || (razaoSocial ? '[EMPRESA LOCALIZADA (RECEITA FEDERAL)]' : null),
         titular_resolvido: (!isMaskedTitular(nomeTitular) ? nomeTitular : (razaoSocial || company?.razao_social || null)),
         whatsapp: whatsapp || null,
         email: email || null,
@@ -844,6 +879,7 @@ export const leadEnrichmentService = {
     let resolvedCapitalSocial = null;
     let resolvedQsa = [];
     let companyMatched = null;
+    let statusResolucao = null;
 
     // =========================================================================
     // LAYER 1: CAR / LGPD
@@ -906,6 +942,7 @@ export const leadEnrichmentService = {
       if (l3Result.capital_social) resolvedCapitalSocial = l3Result.capital_social;
       if (l3Result.qsa) resolvedQsa = l3Result.qsa;
       if (l3Result.company_matched) companyMatched = l3Result.company_matched;
+      if (l3Result.status_resolucao) statusResolucao = l3Result.status_resolucao;
 
       finalSource = l3Result.source;
       layerResolved = 3;
@@ -928,9 +965,10 @@ export const leadEnrichmentService = {
           : (resolvedRazaoSocial || companyMatched || propInput.nome_titular || 'Produtor Rural Qualificado'));
 
     let osintFinalStatus = resolvedWhatsapp ? 'ENRICHED' : (resolvedTitular || resolvedCpfCnpj ? 'PARTIAL' : 'NOT_FOUND');
-    const tipoPessoa = (resolvedCpfCnpj.length === 14 || resolvedRazaoSocial || companyMatched || propInput.tipo_pessoa === 'PJ')
+    const cleanDocLen = (resolvedCpfCnpj ? String(resolvedCpfCnpj).replace(/\D/g, '').length : 0);
+    const tipoPessoa = (cleanDocLen === 14 || resolvedRazaoSocial || companyMatched || propInput.tipo_pessoa === 'PJ')
       ? 'PJ'
-      : (resolvedCpfCnpj.length === 11 ? 'PF' : 'INDETERMINADO');
+      : (cleanDocLen === 11 ? 'PF' : 'INDETERMINADO');
 
     // =========================================================================
     // PERSISTÊNCIA NA BASE DE DADOS (ATUALIZAÇÃO DE CACHE)
@@ -1079,6 +1117,10 @@ export const leadEnrichmentService = {
       origem_titular: finalSource,
       company_matched: companyMatched || resolvedRazaoSocial || null,
       cnpj_vinculado: resolvedCpfCnpj || null,
+      cnpj: (resolvedCpfCnpj && resolvedCpfCnpj.length === 14) ? formatCnpj(resolvedCpfCnpj) : (resolvedCpfCnpj || null),
+      socios_qsa: (resolvedQsa && resolvedQsa.length > 0) ? resolvedQsa : (propInput.qsa || []),
+      status_resolucao: statusResolucao || (tipoPessoa === 'PJ' && (resolvedRazaoSocial || companyMatched) ? '[EMPRESA LOCALIZADA (RECEITA FEDERAL)]' : null),
+      status: statusResolucao || (tipoPessoa === 'PJ' && (resolvedRazaoSocial || companyMatched) ? '[EMPRESA LOCALIZADA (RECEITA FEDERAL)]' : 'QUALIFIED'),
       correspondencia_cadastral: {
         confianca: (layerResolved === 2 || finalSource.includes('SIGEF')) ? 100 : (resolvedRazaoSocial ? 85 : 50),
         tipo: (layerResolved === 2 || finalSource.includes('SIGEF')) ? 'CERTIFICADO_CARTORIAL' : 'ESTIMATIVA_CADASTRAL_MUNICIPAL',

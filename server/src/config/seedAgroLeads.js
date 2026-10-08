@@ -16,6 +16,31 @@ export const AGRO_REGIONAL_SEEDS = [
   ...PASSO_FUNDO_EXPANDED_SUPPLIERS,
   // ── PASSO FUNDO / PLANALTO MÉDIO (PRODUTORES & AGROEMPRESAS) ──────────────
   {
+    cnpj: '19.750.885/0001-74',
+    cnpj_raw: '19750885000174',
+    razao_social: 'CAMBARA AGROPECUARIA LTDA',
+    nome_fantasia: 'CAMBARÁ AGROPECUÁRIA',
+    cnae_principal_codigo: '01.11-3/01',
+    cnae_principal_descricao: 'Cultivo de Soja e Milho em Grãos',
+    capital_social: 12000000,
+    target_type: 'BUYER',
+    porte: 'DEMAIS',
+    municipio: 'PASSO FUNDO',
+    uf: 'RS',
+    logradouro: 'AVENIDA SETE DE SETEMBRO',
+    numero: '55',
+    bairro: 'CENTRO',
+    cep: '99010-120',
+    latitude: -28.2612,
+    longitude: -52.4083,
+    telefone: '(54) 3311-2000',
+    telefone_sanitized: '+555433112000',
+    email: 'contato@cambaraagro.com.br',
+    socios: [
+      { nome: 'JUSTIMIANO AUGUSTO DE ARAUJO TREIN', qualificacao: 'Sócio-Administrador', telefone: '+5554999814455', email: 'justimiano.trein@cambaraagro.com.br' }
+    ]
+  },
+  {
     cnpj: '08.319.452/0001-42',
     cnpj_raw: '08319452000142',
     razao_social: 'AGROPECUARIA SANTA FE LTDA',

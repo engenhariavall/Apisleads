@@ -283,17 +283,25 @@ export async function enrichRuralOsintHandler(req, res) {
     }
 
     const finalRazao = result.titular?.razao_social || result.company_matched || null;
-    const finalQsa = result.titular?.qsa && result.titular.qsa.length > 0 ? result.titular.qsa : (result.waterfall?.titular?.qsa || []);
-    const isCorpEntity = Boolean(finalRazao || (formattedDoc && formattedDoc.length > 14) || result.titular?.tipo_pessoa === 'PJ');
+    const finalQsa = (result.socios_qsa && result.socios_qsa.length > 0)
+      ? result.socios_qsa
+      : (result.titular?.qsa && result.titular.qsa.length > 0 ? result.titular.qsa : (result.waterfall?.titular?.qsa || []));
+    const isCorpEntity = Boolean(finalRazao || (formattedDoc && formattedDoc.length > 14) || result.titular?.tipo_pessoa === 'PJ' || result.status_resolucao);
+
+    const statusResolucaoFinal = result.status_resolucao || (isCorpEntity ? '[EMPRESA LOCALIZADA (RECEITA FEDERAL)]' : null);
 
     return res.json({
       success: true,
       nome_titular: result.titular?.nome_titular || 'Titularidade sob sigilo / Pendente',
       cpf_cnpj_titular: formattedDoc,
+      cnpj: formattedDoc,
       razao_social: finalRazao,
       capital_social: result.titular?.capital_social || null,
       qsa: finalQsa,
+      socios_qsa: finalQsa,
       tipo_pessoa: isCorpEntity ? 'PJ' : 'PF',
+      status_resolucao: statusResolucaoFinal,
+      status: statusResolucaoFinal || result.status || 'QUALIFIED',
       municipio: result.propriedade?.municipio || req.body?.municipio || 'Não informado',
       uf: result.propriedade?.uf || req.body?.uf || 'RS',
       crop_type: agro?.crop_type || 'Soja',

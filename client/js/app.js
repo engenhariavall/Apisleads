@@ -5291,9 +5291,9 @@ window.inspectRuralPropertyInDrawer = function(propData) {
   const btnBureau = document.getElementById('btnRevealBureauWhatsApp');
 
   // RENDERIZAÇÃO IMEDIATA: Exibe dados já conhecidos ou estado de carregamento
-  const rawKnownTitular = propData.nome_titular && !isMaskedTitular(propData.nome_titular) ? propData.nome_titular : null;
+  const rawKnownTitular = propData.razao_social || (propData.nome_titular && !isMaskedTitular(propData.nome_titular) ? propData.nome_titular : null);
   const knownTitular = rawKnownTitular ? String(rawKnownTitular).replace(/^undefined\s+/i, '').trim() : null;
-  const rawKnownDoc = propData.cpf_cnpj_titular && !String(propData.cpf_cnpj_titular).toLowerCase().includes('sigilo') && !String(propData.cpf_cnpj_titular).toLowerCase().includes('pendente') ? propData.cpf_cnpj_titular : null;
+  const rawKnownDoc = propData.cnpj || (propData.cpf_cnpj_titular && !String(propData.cpf_cnpj_titular).toLowerCase().includes('sigilo') && !String(propData.cpf_cnpj_titular).toLowerCase().includes('pendente') ? propData.cpf_cnpj_titular : null);
   const knownDoc = formatUnmaskedDocument(rawKnownDoc, propData.codigo_car || propData.id || propData.nome_titular);
   const knownPhone = propData.whatsapp_validado || propData.whatsapp || propData.telefone || null;
 
@@ -5449,14 +5449,19 @@ window.inspectRuralPropertyInDrawer = function(propData) {
         waText.style.color = '#94A3B8';
         waLink.style.display = 'none';
 
-        // FASE 51 & 60: Botão Sob Demanda para Pessoa Física e Agroempresas (PJ / CAR)
+        // FASE 51 & 60: Botão Sob Demanda para Pessoa Física e Agroempresas (PJ / CAR / Receita)
         if (btnBureau) {
-          if ((isCpf || isPj || propData.codigo_car) && !propData.whatsapp_validado) {
+          if ((isCpf || isPj || propData.codigo_car || propData.cnpj) && !propData.whatsapp_validado) {
             btnBureau.style.display = 'inline-flex';
             btnBureau.disabled = false;
-            btnBureau.innerHTML = bureauBtnDefaultHtml;
+            if (isPj || propData.cnpj || propData.razao_social) {
+              btnBureau.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span>Revelar Contatos CNPJ / Sócios (Assertiva)</span>';
+            } else {
+              btnBureau.innerHTML = bureauBtnDefaultHtml;
+            }
             btnBureau.onclick = async (e) => {
               e.preventDefault();
+              const docToConsult = propData.cnpj || propData.cpf_cnpj_titular || '';
               btnBureau.disabled = true;
               btnBureau.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" class="anim-spin" style="animation: spin 1s linear infinite;"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 10 10"/></svg><span>Consultando Bureau...</span>';
               try {
@@ -5465,8 +5470,10 @@ window.inspectRuralPropertyInDrawer = function(propData) {
                   method: 'POST',
                   headers,
                   body: JSON.stringify({
-                    nome_titular: propData.nome_titular,
-                    cpf_cnpj_titular: propData.cpf_cnpj_titular,
+                    nome_titular: propData.razao_social || propData.nome_titular,
+                    cpf_cnpj_titular: docToConsult,
+                    cnpj: (propData.cnpj || (String(docToConsult).replace(/\D/g, '').length === 14 ? docToConsult : undefined)),
+                    cpf: String(docToConsult).replace(/\D/g, '').length === 11 ? String(docToConsult).replace(/\D/g, '') : undefined,
                     id_propriedade: propData.id,
                     codigo_car: propData.codigo_car || fullCarCode,
                     uf: propData.uf,
@@ -5658,14 +5665,14 @@ window.inspectRuralPropertyInDrawer = function(propData) {
   const pjBlock = document.getElementById('ruralPjCorporateBlock');
   const renderPjCorporateUI = (pjData) => {
     if (!pjBlock) return;
-    const isCorp = isPj || (pjData && (pjData.tipo_pessoa === 'PJ' || pjData.razao_social || pjData.qsa));
+    const isCorp = isPj || (pjData && (pjData.tipo_pessoa === 'PJ' || pjData.razao_social || pjData.qsa || pjData.cnpj)) || propData.cnpj || propData.razao_social;
     if (!isCorp) {
       pjBlock.style.display = 'none';
       return;
     }
 
     // Se ainda está carregando o enriquecimento e não temos dados corporativos prévios
-    if (pjData === null && !propData.razao_social && (!propData.nome_titular || isMaskedTitular(propData.nome_titular))) {
+    if (pjData === null && !propData.razao_social && !propData.cnpj && (!propData.nome_titular || isMaskedTitular(propData.nome_titular))) {
       pjBlock.style.display = 'block';
       pjBlock.innerHTML = `
         <div style="display:flex;align-items:center;gap:0.45rem;color:#818CF8;font-size:0.68rem;padding:0.35rem 0.2rem;">
@@ -5678,17 +5685,19 @@ window.inspectRuralPropertyInDrawer = function(propData) {
 
     const rawRazao = pjData?.razao_social || propData.razao_social || (!isMaskedTitular(propData.nome_titular) ? propData.nome_titular : '');
     const isMasked = !rawRazao || /sigilo|pendente|declarado|desconhecido/i.test(rawRazao);
-    const qsaList = pjData?.qsa || propData.qsa || [];
+    const qsaList = pjData?.socios_qsa || pjData?.qsa || propData.socios_qsa || propData.qsa || [];
     const capital = pjData?.capital_social || propData.capital_social;
-    const cnpjFormatted = pjData?.cpf_cnpj_titular || propData.cpf_cnpj_titular || pjData?.cnpj_vinculado || '';
+    const cnpjFormatted = pjData?.cnpj || pjData?.cpf_cnpj_titular || propData.cnpj || propData.cpf_cnpj_titular || pjData?.cnpj_vinculado || '';
+    const statusResolucao = pjData?.status_resolucao || propData.status_resolucao || pjData?.status || propData.status || '';
+    const isReceitaMatch = statusResolucao.includes('RECEITA FEDERAL') || Boolean(pjData?.cnpj || propData.cnpj);
 
     // Confiança cadastral e status cartorial
     const corrCadastral = pjData?.correspondencia_cadastral || propData.correspondencia_cadastral || {
-      confianca: propData.cartorio_confirmado_100 ? 100 : 85,
-      tipo: propData.cartorio_confirmado_100 ? 'CERTIFICADO_CARTORIO' : 'ESTIMATIVA_CADASTRAL_MUNICIPAL',
-      descricao: propData.cartorio_confirmado_100 ? 'Certificado Oficial Cartório/SIGEF' : 'Estimativa cadastral por densidade agroempresarial municipal'
+      confianca: isReceitaMatch ? 100 : (propData.cartorio_confirmado_100 ? 100 : 85),
+      tipo: isReceitaMatch ? 'RECEITA_FEDERAL_HOMOLOGADA' : (propData.cartorio_confirmado_100 ? 'CERTIFICADO_CARTORIO' : 'ESTIMATIVA_CADASTRAL_MUNICIPAL'),
+      descricao: isReceitaMatch ? 'Empresa e CNPJ confirmados na base da Receita Federal' : (propData.cartorio_confirmado_100 ? 'Certificado Oficial Cartório/SIGEF' : 'Estimativa cadastral por densidade agroempresarial municipal')
     };
-    const isCertificado100 = propData.cartorio_confirmado_100 || corrCadastral.confianca === 100;
+    const isCertificado100 = isReceitaMatch || propData.cartorio_confirmado_100 || corrCadastral.confianca === 100;
 
     pjBlock.style.display = 'block';
 
@@ -5714,10 +5723,15 @@ window.inspectRuralPropertyInDrawer = function(propData) {
       pjBlock.innerHTML = `
         <div style="display:flex;align-items:center;justify-content:space-between;gap:0.4rem;margin-bottom:0.45rem;flex-wrap:wrap;">
           <div style="display:flex;align-items:center;gap:0.4rem;">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#A5B4FC" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="9" y1="22" x2="9" y2="18"></line><line x1="15" y1="22" x2="15" y2="18"></line></svg>
-            <span style="font-size:0.7rem;font-weight:800;color:#A5B4FC;letter-spacing:0.04em;text-transform:uppercase;">DADOS PÚBLICOS RECEITA FEDERAL</span>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="${isReceitaMatch ? '#10B981' : '#A5B4FC'}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="9" y1="22" x2="9" y2="18"></line><line x1="15" y1="22" x2="15" y2="18"></line></svg>
+            <span style="font-size:0.7rem;font-weight:800;color:${isReceitaMatch ? '#10B981' : '#A5B4FC'};letter-spacing:0.04em;text-transform:uppercase;">${isReceitaMatch ? '[EMPRESA LOCALIZADA (RECEITA FEDERAL)]' : 'DADOS PÚBLICOS RECEITA FEDERAL'}</span>
           </div>
-          ${isCertificado100 ? `
+          ${isReceitaMatch ? `
+            <span style="font-size:0.58rem;font-weight:800;color:#10B981;background:rgba(16,185,129,0.18);border:1px solid rgba(16,185,129,0.45);padding:0.12rem 0.4rem;border-radius:3px;display:inline-flex;align-items:center;gap:0.25rem;">
+              <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>MATCH RADICAL CNPJ: 100%</span>
+            </span>
+          ` : (isCertificado100 ? `
             <span style="font-size:0.58rem;font-weight:800;color:#34D399;background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.35);padding:0.12rem 0.4rem;border-radius:3px;display:inline-flex;align-items:center;gap:0.25rem;">
               <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
               <span>100% CERTIFICADO NO SIGEF / CRI</span>
@@ -5726,14 +5740,22 @@ window.inspectRuralPropertyInDrawer = function(propData) {
             <span style="font-size:0.58rem;font-weight:800;color:#FBBF24;background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.35);padding:0.12rem 0.4rem;border-radius:3px;" title="Vínculo probabilístico por escala territorial e CNAE agropecuário na Receita Federal">
               CORRESPONDÊNCIA CADASTRAL: 85% CONFIANÇA
             </span>
-          `}
+          `)}
         </div>
 
-        ${!isCertificado100 ? `
+        ${isReceitaMatch ? `
+          <div style="background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.25);padding:0.35rem 0.5rem;border-radius:4px;margin-bottom:0.45rem;display:flex;align-items:center;justify-content:space-between;gap:0.4rem;">
+            <span style="font-size:0.62rem;color:#34D399;font-weight:700;display:inline-flex;align-items:center;gap:0.3rem;">
+              <span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#10B981;"></span>
+              <span>STATUS: [EMPRESA LOCALIZADA (RECEITA FEDERAL)]</span>
+            </span>
+            <span style="font-size:0.56rem;color:#94A3B8;font-weight:600;">CNAE 01 AGROPECUÁRIA</span>
+          </div>
+        ` : (!isCertificado100 ? `
           <div style="font-size:0.60rem;color:#94A3B8;line-height:1.35;margin-bottom:0.45rem;background:rgba(255,255,255,0.02);padding:0.3rem 0.5rem;border-radius:4px;border-left:2px solid #F59E0B;">
             <em>Correspondência municipal aberta (85% de precisão probabilística). Para confirmação com fé pública registral, clique no botão de certidão abaixo:</em>
           </div>
-        ` : ''}
+        ` : '')}
 
         <!-- Seção de Confirmação Cartorial 100% Sob Demanda -->
         <div style="margin-bottom:0.55rem;" id="containerCartorioSection">
@@ -6503,6 +6525,20 @@ _Gerado por VERSUS INTELLIGENCE B2B_`;
         if (enrichData.cpf_cnpj_titular) {
           propData.cpf_cnpj_titular = enrichData.cpf_cnpj_titular;
         }
+        if (enrichData.cnpj) {
+          propData.cnpj = enrichData.cnpj;
+          propData.cpf_cnpj_titular = enrichData.cnpj;
+        }
+        if (enrichData.razao_social) {
+          propData.razao_social = enrichData.razao_social;
+        }
+        if (enrichData.socios_qsa) {
+          propData.socios_qsa = enrichData.socios_qsa;
+          propData.qsa = enrichData.socios_qsa;
+        }
+        if (enrichData.status_resolucao) {
+          propData.status_resolucao = enrichData.status_resolucao;
+        }
         if (enrichData.whatsapp_validado) {
           propData.whatsapp_validado = enrichData.whatsapp_validado;
         }
@@ -6515,10 +6551,7 @@ _Gerado por VERSUS INTELLIGENCE B2B_`;
         if (enrichData.linkedin_url_real) {
           propData.linkedin_url_real = enrichData.linkedin_url_real;
         }
-        if (enrichData.razao_social) {
-          propData.razao_social = enrichData.razao_social;
-        }
-        if (enrichData.qsa) {
+        if (enrichData.qsa && !propData.qsa) {
           propData.qsa = enrichData.qsa;
         }
         if (enrichData.capital_social) {
@@ -6550,13 +6583,13 @@ _Gerado por VERSUS INTELLIGENCE B2B_`;
 
         if (isSameProp || !window.currentInspectedRuralProperty) {
           if (titularEl) {
-            let finalNome = enrichData.razao_social || enrichData.nome_titular || propData.nome_titular || 'Titularidade sob sigilo (LGPD)';
+            let finalNome = enrichData.razao_social || enrichData.nome_titular || propData.razao_social || propData.nome_titular || 'Titularidade sob sigilo (LGPD)';
             finalNome = String(finalNome).replace(/^undefined\s+/i, '').trim();
             titularEl.textContent = finalNome || 'Titularidade sob sigilo (LGPD)';
             titularEl.style.color = (finalNome.includes('sigilo') || finalNome.includes('Pendente')) ? '#94A3B8' : '#FFFFFF';
           }
           if (cpfCnpjEl) {
-            let finalDoc = (enrichData.produtor_rural_pf?.produtor_pf_cpf) || enrichData.cpf_cnpj_titular || propData.cpf_cnpj_titular;
+            let finalDoc = enrichData.cnpj || propData.cnpj || (enrichData.produtor_rural_pf?.produtor_pf_cpf) || enrichData.cpf_cnpj_titular || propData.cpf_cnpj_titular;
             if (finalDoc) {
               finalDoc = formatUnmaskedDocument(finalDoc, propData.codigo_car || propData.id || propData.nome_titular);
             }
@@ -6567,10 +6600,14 @@ _Gerado por VERSUS INTELLIGENCE B2B_`;
 
           // Atualiza badge de fonte tática se resolvido
           const sourceBadge = document.getElementById('ruralSourceBadge');
-          if (sourceBadge && (enrichData.origem_titular || propData.tag_fonte)) {
+          if (sourceBadge && (enrichData.origem_titular || propData.tag_fonte || enrichData.status_resolucao)) {
             const orig = enrichData.origem_titular || propData.tag_fonte || '';
-            const srcLabel = orig.includes('SIGEF') ? 'SIGEF / INCRA' : (orig.includes('BUREAU') ? 'RECEITA / QSA' : 'SICAR / CAR');
+            const isReceita = orig.includes('RECEITA') || String(enrichData.status_resolucao || propData.status_resolucao || '').includes('RECEITA FEDERAL');
+            const srcLabel = isReceita ? 'RECEITA FEDERAL' : (orig.includes('SIGEF') ? 'SIGEF / INCRA' : (orig.includes('BUREAU') ? 'RECEITA / QSA' : 'SICAR / CAR'));
             sourceBadge.textContent = srcLabel;
+            if (isReceita) {
+              sourceBadge.style.cssText = 'background:rgba(16,185,129,0.18);color:#34D399;border:1px solid rgba(16,185,129,0.45);border-radius:4px;padding:0.15rem 0.55rem;font-size:0.62rem;font-weight:700;letter-spacing:0.04em;white-space:nowrap;';
+            }
           }
 
           // Atualiza visualmente o Motor de Intenção e Perfil Agronômico com os dados reais
@@ -6584,7 +6621,7 @@ _Gerado por VERSUS INTELLIGENCE B2B_`;
           renderPjCorporateUI(enrichData);
           renderMachineryFleetUI(enrichData);
           if (entityBadge) {
-            const finalIsPj = isPj || enrichData.tipo_pessoa === 'PJ' || enrichData.razao_social || (String(enrichData.cpf_cnpj_titular || '').replace(/\D/g, '').length === 14);
+            const finalIsPj = isPj || enrichData.tipo_pessoa === 'PJ' || enrichData.razao_social || propData.cnpj || (String(enrichData.cpf_cnpj_titular || '').replace(/\D/g, '').length === 14);
             if (finalIsPj) {
               entityBadge.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="9" y1="22" x2="9" y2="18"></line><line x1="15" y1="22" x2="15" y2="18"></line></svg><span>PESSOA JURÍDICA</span>`;
               entityBadge.style.cssText = 'display:inline-flex;align-items:center;background:rgba(99,102,241,0.18);color:#A5B4FC;border:1px solid rgba(129,140,248,0.45);border-radius:4px;padding:0.15rem 0.55rem;font-size:0.62rem;font-weight:800;letter-spacing:0.04em;';

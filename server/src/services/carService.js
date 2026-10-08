@@ -246,7 +246,7 @@ export function normalizarFeatureCar(rawFeature = {}, overrides = {}) {
 
   // ── Classificação de Entidade PJ vs PF ────────────────────────────────────
   const cleanDoc = String(cpfCnpj || '').replace(/\D/g, '');
-  const corporateRegex = /\b(S\/A|S\.A\.|SA|LTDA|ME|EPP|EIRELI|AGROPECUARIA|AGROPECUÁRIA|AGRICOLA|AGRÍCOLA|AGRO|COOPERATIVA|COOP|SEMENTES|GRAOS|GRÃOS|PARTICIPACOES|PARTICIPAÇÕES|COMERCIO|IND[UÚ]STRIA|USINA|PESQUISAS AGRON[OÔ]MICAS|CENTRO DE PESQUISAS)\b/i;
+  const corporateRegex = /\b(S\/A|S\.A\.|SA|LTDA|ME|EPP|EIRELI|AGROPECUARIA|AGROPECUÁRIA|AGRICOLA|AGRÍCOLA|AGRO|COOPERATIVA|COOP|SEMENTES|GRAOS|GRÃOS|PARTICIPACOES|PARTICIPAÇÕES|COMERCIO|IND[UÚ]STRIA|USINA|PESQUISAS AGRON[OÔ]MICAS|CENTRO DE PESQUISAS|CAMBARA|CAMBARÁ|SANTA FE|SANTA FÉ)\b/i;
   let tipoPessoa = props.tipo_pessoa || 'INDETERMINADO';
   if (cleanDoc.length === 14) {
     tipoPessoa = 'PJ';
