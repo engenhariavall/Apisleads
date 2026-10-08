@@ -235,7 +235,7 @@
 
         if (!response.ok || !resData.success) {
           const errMsg = resData.message || resData.error || 'Erro ao realizar consulta no Bureau.';
-          renderBureauError(errMsg);
+          renderBureauError(errMsg, resData.status);
           return;
         }
 
@@ -308,20 +308,46 @@
     };
   }
 
-  // Renderização de Mensagem de Erro
-  function renderBureauError(message) {
+  // Renderização de Mensagem de Erro ou Não Localizado
+  function renderBureauError(message, status = null) {
     const resultArea = document.getElementById('bureauResultArea');
     if (!resultArea) return;
+
+    const isNotFound = status === 'TITULAR_NAO_LOCALIZADO' || (message && message.toLowerCase().includes('não localizado'));
+    const isPermission = status === 'ASSERTIVA_PERMISSION_ERROR' || (message && message.toLowerCase().includes('permissão'));
+
+    const borderColor = isNotFound 
+      ? 'rgba(245, 158, 11, 0.35)' 
+      : (isPermission ? 'rgba(168, 85, 247, 0.35)' : 'rgba(239, 68, 68, 0.25)');
+    const bgColor = isNotFound 
+      ? 'rgba(245, 158, 11, 0.08)' 
+      : (isPermission ? 'rgba(168, 85, 247, 0.08)' : 'rgba(239, 68, 68, 0.08)');
+    const iconColor = isNotFound ? '#F59E0B' : (isPermission ? '#A855F7' : '#EF4444');
+    const textColor = isNotFound ? '#FDE68A' : (isPermission ? '#E9D5FF' : '#FCA5A5');
+    const titleText = isNotFound 
+      ? 'Status: Titular não localizado na base cadastral' 
+      : (isPermission ? 'Permissão de Acesso da Chave de API Assertiva' : 'Falha na Consulta de Bureau');
+
     resultArea.innerHTML = `
-      <div style="background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.25); border-radius: 8px; padding: 1.5rem; display: flex; align-items: flex-start; gap: 1rem; color: #FCA5A5;">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 2px;">
+      <div style="background: ${bgColor}; border: 1px solid ${borderColor}; border-radius: 8px; padding: 1.5rem; display: flex; align-items: flex-start; gap: 1rem; color: ${textColor};">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="${iconColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 2px;">
           <circle cx="12" cy="12" r="10"></circle>
           <line x1="12" y1="8" x2="12" y2="12"></line>
           <line x1="12" y1="16" x2="12.01" y2="16"></line>
         </svg>
-        <div>
-          <h4 style="font-size: 0.92rem; font-weight: 800; color: #FFFFFF; margin: 0 0 0.35rem 0; text-transform: uppercase;">Falha na Consulta de Bureau</h4>
-          <p style="font-size: 0.8rem; margin: 0; line-height: 1.45; color: #FCA5A5;">${message}</p>
+        <div style="flex: 1;">
+          <h4 style="font-size: 0.92rem; font-weight: 800; color: #FFFFFF; margin: 0 0 0.35rem 0; text-transform: uppercase;">${titleText}</h4>
+          <p style="font-size: 0.82rem; margin: 0 0 0.5rem 0; line-height: 1.5; color: ${textColor};">${message}</p>
+          ${isPermission ? `
+            <div style="margin-top: 0.75rem; padding: 0.65rem 0.85rem; background: rgba(0,0,0,0.25); border-radius: 6px; font-size: 0.75rem; color: #D8B4FE; line-height: 1.45;">
+              <strong>Dica de Configuração:</strong> No painel da Assertiva (<em>plataformaassertiva.com.br</em>), acesse <strong>Usuários / Grupos de Acesso</strong> ou <strong>Integrações / API</strong> e certifique-se de que a permissão de <strong>"Consulta CPF (Pessoa Física)"</strong> está marcada para o usuário vinculado ao seu <code>CLIENT_ID</code>.
+            </div>
+          ` : ''}
+          ${isNotFound ? `
+            <div style="margin-top: 0.75rem; padding: 0.65rem 0.85rem; background: rgba(0,0,0,0.25); border-radius: 6px; font-size: 0.75rem; color: #FCD34D; line-height: 1.45;">
+              <strong>Dica:</strong> Se você possui o número de CPF ou CNPJ oficial do produtor rural, digite diretamente no campo acima (11 ou 14 dígitos) para realizar a consulta pontual.
+            </div>
+          ` : ''}
         </div>
       </div>
     `;

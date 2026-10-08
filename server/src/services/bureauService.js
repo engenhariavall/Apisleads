@@ -81,8 +81,10 @@ function buildFullAssertivaModel({ cleanDoc, isCpf, existingLead = null, existin
   const nowIso = new Date().toISOString();
   const nowFormatted = new Date().toLocaleDateString('pt-BR') + ' ' + new Date().toLocaleTimeString('pt-BR');
 
-  // CASO A: Documento de Referência Exata dos PDFs de Exemplo Oficial (João Mário de Andradas)
-  if (cleanDoc === '12345678901' || (!apiData && !existingLead && !existingProp && !sefazProducer && isCpf && cleanDoc.startsWith('123'))) {
+  const isMock = process.env.USE_MOCK_BUREAU === 'true';
+
+  // CASO A: Documento de Referência Exata dos PDFs de Exemplo Oficial (apenas se mock explicitamente habilitado)
+  if (cleanDoc === '12345678901' && isMock) {
     return {
       protocolo: 'da758c2a-e689-4759-b7d1-009e15b1f302',
       data_hora: '01/03/2026 10:02:21',
@@ -231,8 +233,8 @@ function buildFullAssertivaModel({ cleanDoc, isCpf, existingLead = null, existin
   // CASO B: Entidade Real da Base de Leads, SEFAZ ou Propriedades Rurais (Cruzamento Nativo)
   let nomeTitular = null;
   let fantasia = null;
-  let cidade = 'SORRISO';
-  let uf = 'MT';
+  let cidade = options?.municipio || 'PASSO FUNDO';
+  let uf = options?.uf || 'RS';
   let ieTitular = null;
   let leadPhone = null;
 
@@ -270,8 +272,8 @@ function buildFullAssertivaModel({ cleanDoc, isCpf, existingLead = null, existin
     leadPhone = existingProp.whatsapp_produtor_pf || existingProp.whatsapp_validado;
   } else if (sefazProducer) {
     nomeTitular = sefazProducer.produtor_pf_nome;
-    cidade = sefazProducer.municipio || 'PASSO FUNDO';
-    uf = sefazProducer.uf || 'RS';
+    cidade = sefazProducer.municipio || options?.municipio || 'PASSO FUNDO';
+    uf = sefazProducer.uf || options?.uf || 'RS';
     ieTitular = sefazProducer.inscricao_estadual || 'ATIVA / SEFAZ';
     leadPhone = sefazProducer.whatsapp;
   }
@@ -285,10 +287,10 @@ function buildFullAssertivaModel({ cleanDoc, isCpf, existingLead = null, existin
   if (options?.municipio) cidade = options.municipio;
 
   if (!nomeTitular || /sigilo|pendente|titularidade/i.test(nomeTitular)) {
-    nomeTitular = isCnpj ? 'EMPRESA AGROPECUÁRIA LTDA' : 'PRODUTOR RURAL';
+    nomeTitular = isCnpj ? 'EMPRESA CONSULTADA' : 'TITULAR CONSULTADO';
   }
 
-  const situacao = existingLead?.situacao_cadastral || existingProp?.status_car || 'Regular';
+  let situacao = existingLead?.situacao_cadastral || existingProp?.status_car || 'Regular';
   const score = existingLead?.score_credito || (isCnpj ? 785 : 740);
 
   let faixaRisco = 'BAIXO';
@@ -375,29 +377,17 @@ function buildFullAssertivaModel({ cleanDoc, isCpf, existingLead = null, existin
     else fixos.push(item);
   }
 
-  const REGIONAL_DDD_MAP = {
-    MT: '66',
-    MS: '67',
-    GO: '64',
-    BA: '77',
-    PR: '45',
-    RS: '54',
-    MG: '34',
-    SP: '16',
-    MA: '99',
-    PA: '94',
-    TO: '63',
-    SC: '49'
-  };
-
-  const regDdd = REGIONAL_DDD_MAP[uf] || (uf === 'MT' ? '66' : (uf === 'RS' ? '54' : '66'));
-  const phoneSuf1 = cleanDoc.slice(-4, -2) || '81';
-  const phoneSuf2 = cleanDoc.slice(-2) || '19';
-  const regionalPhone = `(${regDdd}) 998${phoneSuf1}-${phoneSuf2}${cleanDoc.slice(2, 4) || '30'}`;
-  const regionalE164 = `+55${regDdd}${regionalPhone.replace(/\D/g, '').slice(2)}`;
-
-  // Se não tinha telefone na base oficial, gera o contato no DDD regional do Estado do produtor:
-  if (moveis.length === 0) {
+  // Se não tinha telefone na base oficial e estiver com MOCK explicitamente habilitado:
+  if (moveis.length === 0 && isMock) {
+    const REGIONAL_DDD_MAP = {
+      MT: '66', MS: '67', GO: '64', BA: '77', PR: '45', RS: '54',
+      MG: '34', SP: '16', MA: '99', PA: '94', TO: '63', SC: '49'
+    };
+    const regDdd = REGIONAL_DDD_MAP[uf] || (uf === 'MT' ? '66' : (uf === 'RS' ? '54' : '66'));
+    const phoneSuf1 = cleanDoc.slice(-4, -2) || '81';
+    const phoneSuf2 = cleanDoc.slice(-2) || '19';
+    const regionalPhone = `(${regDdd}) 998${phoneSuf1}-${phoneSuf2}${cleanDoc.slice(2, 4) || '30'}`;
+    const regionalE164 = `+55${regDdd}${regionalPhone.replace(/\D/g, '').slice(2)}`;
     moveis.push({
       numero: regionalPhone,
       chance_contato: 'Alta chance',
@@ -409,27 +399,83 @@ function buildFullAssertivaModel({ cleanDoc, isCpf, existingLead = null, existin
     });
   }
 
-  // Sócios do QSA
-  let rawQsa = [];
-  try {
-    rawQsa = typeof existingLead?.qsa === 'string' ? JSON.parse(existingLead.qsa) : (existingLead?.qsa || []);
-  } catch (_) {}
-
-  const socios = rawQsa.map(s => ({
-    nome: s.nome || s.nome_socio || 'SÓCIO COTISTA',
-    documento: s.cpf_cnpj_socio ? s.cpf_cnpj_socio.slice(0, 3) + '.***.***-' + s.cpf_cnpj_socio.slice(-2) : '123.***.***-01',
-    telefone: regionalPhone,
-    whatsapp_valido: true,
-    nao_me_ligue: false,
-    qualificacao: s.qual || s.qualificacao || 'Sócio-Administrador'
-  }));
+  // E-mails reais da Assertiva ou da base interna
+  let emailsList = [];
+  if (Array.isArray(apiData?.resposta?.emails) && apiData.resposta.emails.length > 0) {
+    emailsList = apiData.resposta.emails.map((em, idx) => ({
+      email: em.email,
+      mais_atual: idx === 0
+    }));
+  } else if (existingLead?.email) {
+    emailsList = [{ email: existingLead.email, mais_atual: true }];
+  } else if (isMock) {
+    emailsList = [{ email: `contato@${cleanDoc.slice(0, 8)}.agro.com.br`, mais_atual: true }];
+  }
 
   const lat = existingLead?.latitude || existingProp?.latitude || -28.2612;
   const lng = existingLead?.longitude || existingProp?.longitude || -52.4083;
 
+  // Endereços reais da Assertiva ou da base interna
+  let enderecosList = [];
+  if (Array.isArray(apiData?.resposta?.enderecos) && apiData.resposta.enderecos.length > 0) {
+    enderecosList = apiData.resposta.enderecos.map((end, idx) => ({
+      logradouro: end.logradouro || '',
+      numero: String(end.numero || 'S/N'),
+      complemento: end.complemento || '',
+      bairro: end.bairro || '',
+      cidade: end.cidade || cidade,
+      uf: end.uf || uf,
+      cep: end.cep || '',
+      confirmada: end.precisaoCep === 'CONFIRMADA' || true,
+      mais_atual: idx === 0,
+      latitude: end.latitude || lat,
+      longitude: end.longitude || lng
+    }));
+  } else if (existingLead?.logradouro || existingProp) {
+    enderecosList = [{
+      logradouro: existingLead?.logradouro || 'RODOVIA / ZONA RURAL',
+      numero: existingLead?.numero || 'S/N',
+      complemento: existingLead?.complemento || '',
+      bairro: existingLead?.bairro || 'ZONA RURAL',
+      cidade: cidade,
+      uf: uf,
+      cep: existingLead?.cep || '',
+      confirmada: true,
+      mais_atual: true,
+      latitude: lat,
+      longitude: lng
+    }];
+  }
+
+  // Sócios do QSA ou da Assertiva
+  let sociosList = [];
+  if (Array.isArray(apiData?.resposta?.socios) && apiData.resposta.socios.length > 0) {
+    sociosList = apiData.resposta.socios.map(s => ({
+      nome: s.nome || 'SÓCIO',
+      documento: s.cpf ? s.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4') : (s.cnpj ? s.cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5') : null),
+      telefone: null,
+      whatsapp_valido: false,
+      nao_me_ligue: false,
+      qualificacao: s.qualificacao || 'Sócio'
+    }));
+  } else {
+    let rawQsa = [];
+    try {
+      rawQsa = typeof existingLead?.qsa === 'string' ? JSON.parse(existingLead.qsa) : (existingLead?.qsa || []);
+    } catch (_) {}
+    sociosList = rawQsa.map(s => ({
+      nome: s.nome || s.nome_socio || 'SÓCIO COTISTA',
+      documento: s.cpf_cnpj_socio ? s.cpf_cnpj_socio.slice(0, 3) + '.***.***-' + s.cpf_cnpj_socio.slice(-2) : '123.***.***-01',
+      telefone: null,
+      whatsapp_valido: false,
+      nao_me_ligue: false,
+      qualificacao: s.qual || s.qualificacao || 'Sócio-Administrador'
+    }));
+  }
+
   return {
-    protocolo: protocolId,
-    data_hora: nowFormatted,
+    protocolo: apiData?.cabecalho?.protocolo || protocolId,
+    data_hora: apiData?.cabecalho?.dataHora || nowFormatted,
     finalidade_uso: 'Legítimo interesse (Art. 7º, IX da LGPD)',
     dados_cadastrais: {
       nome: nomeTitular,
@@ -437,53 +483,45 @@ function buildFullAssertivaModel({ cleanDoc, isCpf, existingLead = null, existin
       documento: docFormatted,
       documento_limpo: cleanDoc,
       tipo_documento: isCpf ? 'CPF' : 'CNPJ',
-      data_nascimento: dataNascAssertiva || (isCpf ? '18/06/1975' : null),
-      idade: isCpf ? '48 anos' : null,
-      mae: maeAssertiva || 'Disponível sob consulta da API Assertiva / RFB',
+      data_nascimento: dataNascAssertiva || (isMock && isCpf ? '18/06/1975' : null),
+      idade: dataNascAssertiva ? `${Math.floor((Date.now() - new Date(dataNascAssertiva).getTime()) / (365.25 * 24 * 3600 * 1000))} anos` : (isMock && isCpf ? '48 anos' : null),
+      mae: maeAssertiva || (isMock ? 'Disponível sob consulta da API Assertiva / RFB' : null),
       mae_documento: null,
       rg: rgAssertiva || null,
       situacao_receita: situacao,
-      sexo: sexoAssertiva || (isCpf ? 'Masculino' : null),
-      signo: isCpf ? 'Gêmeos' : null,
-      data_status_cpf: '15/01/2024',
+      sexo: sexoAssertiva || (isMock && isCpf ? 'Masculino' : null),
+      signo: isMock && isCpf ? 'Gêmeos' : null,
+      data_status_cpf: apiData?.cabecalho?.dataHora || (isMock ? '15/01/2024' : null),
       provavel_obito: 'Não',
       inscricao_estadual: ieTitular || (isCpf ? 'Produtor Rural Ativo (SEFAZ)' : null)
     },
     contatos: {
       telefones_moveis: moveis,
       telefones_fixos: fixos.length > 0 ? fixos : [],
-      emails: [
-        { email: existingLead?.email || `contato@${cleanDoc.slice(0, 8)}.agro.com.br`, mais_atual: true }
-      ],
-      redes_sociais: [
-        { rede: 'LinkedIn', url: 'https://br.linkedin.com/company/agronegocios-brasil', usuario: '/company/agronegocios-brasil' }
-      ]
+      emails: emailsList,
+      redes_sociais: Array.isArray(apiData?.resposta?.redesSociais) && apiData.resposta.redesSociais.length > 0
+        ? apiData.resposta.redesSociais.map(r => ({ rede: r.rede || 'Rede Social', url: r.url || '#', usuario: r.usuario || '' }))
+        : (isMock ? [{ rede: 'LinkedIn', url: 'https://br.linkedin.com/company/agronegocios-brasil', usuario: '/company/agronegocios-brasil' }] : [])
     },
     relacionamentos: {
       parentes: [],
       empregadores: [],
-      socios: socios,
-      empresas: (existingProp || existingLead) ? [
-        { razao_social: existingProp?.nome_imovel || existingLead?.nome_fantasia || 'Propriedade Rural Ativa no CAR', documento: existingProp?.codigo_car || existingLead?.cnpj || 'CAR-ATIVO', telefone: leadPhone || regionalPhone, whatsapp_valido: true, nao_me_ligue: false }
-      ] : [],
+      socios: sociosList,
+      empresas: (Array.isArray(apiData?.resposta?.participacoesEmpresas) && apiData.resposta.participacoesEmpresas.length > 0)
+        ? apiData.resposta.participacoesEmpresas.map(pe => ({
+            razao_social: pe.razaoSocial || pe.nomeEmpresa || 'EMPRESA VINCULADA',
+            documento: pe.cnpj ? pe.cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5') : (pe.cpf || null),
+            telefone: null,
+            whatsapp_valido: false,
+            nao_me_ligue: false
+          }))
+        : ((existingProp || existingLead) ? [
+            { razao_social: existingProp?.nome_imovel || existingLead?.nome_fantasia || 'Propriedade Rural Ativa no CAR', documento: existingProp?.codigo_car || existingLead?.cnpj || 'CAR-ATIVO', telefone: leadPhone || null, whatsapp_valido: Boolean(leadPhone), nao_me_ligue: false }
+          ] : []),
       convivio_familiar: []
     },
-    enderecos: [
-      {
-        logradouro: existingLead?.logradouro || 'RODOVIA BR-163 KM 755',
-        numero: existingLead?.numero || 'S/N',
-        complemento: 'DISTRITO INDUSTRIAL',
-        bairro: existingLead?.bairro || 'SETOR INDUSTRIAL',
-        cidade: cidade,
-        uf: uf,
-        cep: existingLead?.cep || '78890-000',
-        confirmada: true,
-        mais_atual: true,
-        latitude: lat,
-        longitude: lng
-      }
-    ],
-    historico_profissional: {
+    enderecos: enderecosList,
+    historico_profissional: isMock ? {
       vinculo_empregaticio: {
         razao_social: nomeTitular,
         cnpj: isCnpj ? docFormatted : '02.435.678/0001-90',
@@ -494,15 +532,15 @@ function buildFullAssertivaModel({ cleanDoc, isCpf, existingLead = null, existin
         renda_estimada: 28500.00
       },
       registro_profissional: {
-        orgao: 'CREA-MT',
-        uf: 'MT',
+        orgao: 'CREA-RS',
+        uf: uf,
         numero_registro: '14528-D',
         profissao: 'Engenheiro(a) Agrônomo(a)',
         data_inscricao: '14/02/2005',
         situacao: 'Regular'
       }
-    },
-    analise_credito: {
+    } : null,
+    analise_credito: isMock ? {
       score_credito: score,
       faixa_risco: faixaRisco,
       classificacao_score: classeScore,
@@ -546,10 +584,33 @@ function buildFullAssertivaModel({ cleanDoc, isCpf, existingLead = null, existin
           progresso_percentual: 5
         }
       }
+    } : {
+      score_credito: existingLead?.score_credito || null,
+      faixa_risco: existingLead?.faixa_risco || null,
+      classificacao_score: existingLead?.classificacao_score || null,
+      explicacao: 'Consulta cadastral e de localização realizada via Assertiva Localize v3.',
+      indice_negociacao: null,
+      renda_presumida: isCnpj ? (existingLead?.capital_social || null) : null,
+      protestos: {
+        quantidade: 0,
+        valor_total: 0,
+        itens: []
+      },
+      cheques: {
+        quantidade: 0,
+        itens: []
+      },
+      indicadores_comportamentais: null
     },
-    comentarios: [
-      { autor: 'sistema@agroleads.com.br', data: nowFormatted, texto: 'Registro auditado e sincronizado com a base de inteligência territorial.' }
-    ]
+    comentarios: (Array.isArray(apiData?.resposta?.comentarios) && apiData.resposta.comentarios.length > 0)
+      ? apiData.resposta.comentarios.map(c => ({
+          autor: c.usuario || c.autor || 'Assertiva',
+          data: c.dataHora || c.data || '',
+          texto: c.comentario || c.texto || ''
+        }))
+      : (isMock ? [
+          { autor: 'sistema@agroleads.com.br', data: nowFormatted, texto: 'Registro auditado e sincronizado com a base de inteligência territorial.' }
+        ] : [])
   };
 }
 
@@ -570,6 +631,85 @@ export const bureauService = {
     if (process.env.ASSERTIVA_API_URL) return process.env.ASSERTIVA_API_URL;
     if (process.env.BUREAU_API_URL) return process.env.BUREAU_API_URL;
     return 'https://api.assertivasolucoes.com.br';
+  },
+
+  isMockEnabled() {
+    return process.env.USE_MOCK_BUREAU === 'true';
+  },
+
+  /**
+   * Consulta oficial de localização de pessoas na Assertiva por Nome + UF + Município
+   */
+  async consultarAssertivaPorNome({ nome, uf = 'RS', municipio = 'PASSO FUNDO', tenantId = 'tenant-root-default' }) {
+    if (!nome) {
+      return {
+        success: false,
+        status: 'TITULAR_NAO_LOCALIZADO',
+        message: 'Status: Titular não localizado na base cadastral.'
+      };
+    }
+
+    let token = null;
+    try {
+      token = await assertivaAuthService.getAccessToken({ tenantId });
+    } catch (authErr) {
+      console.warn('[BUREAU ASSERTIVA OAUTH2 WARN]:', authErr.message);
+    }
+
+    if (!token) {
+      return {
+        success: false,
+        status: 'AUTH_ERROR',
+        message: 'Falha na autenticação com a Assertiva (verifique as credenciais no .env).'
+      };
+    }
+
+    const baseUrl = this.getBaseUrl();
+    try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 12000);
+
+      const endpoint = `${baseUrl}/localize/v3/cpf?nome=${encodeURIComponent(nome)}&uf=${encodeURIComponent(uf)}&municipio=${encodeURIComponent(municipio)}&idFinalidade=1`;
+
+      const response = await fetch(endpoint, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Accept': 'application/json'
+        },
+        signal: controller.signal
+      });
+
+      clearTimeout(timeout);
+
+      if (response && response.ok) {
+        const data = await response.json();
+        const foundCpf = data.resposta?.dadosCadastrais?.cpf || data.resposta?.dadosCadastrais?.documento || data.resposta?.cpf;
+        if (foundCpf) {
+          return {
+            success: true,
+            cpf: foundCpf,
+            apiData: data
+          };
+        }
+      } else if (response && response.status === 403) {
+        const errJson = await response.json().catch(() => null);
+        const errMsg = errJson?.resposta || errJson?.message || 'Seu usuário não tem permissão para realizar esta consulta no sistema.';
+        return {
+          success: false,
+          status: 'ASSERTIVA_PERMISSION_ERROR',
+          message: `${errMsg} Verifique se a permissão para consulta de CPF está habilitada nas credenciais de API no painel da Assertiva.`
+        };
+      }
+    } catch (err) {
+      console.warn('[ASSERTIVA PESQUISA NOME FAILED]:', err.message);
+    }
+
+    return {
+      success: false,
+      status: 'TITULAR_NAO_LOCALIZADO',
+      message: 'Status: Titular não localizado na base cadastral da Assertiva.'
+    };
   },
 
   /**
@@ -599,7 +739,7 @@ export const bureauService = {
 
         return {
           cached: true,
-          ageInDays: Math.floor(ageInDays),
+          ageInDays: Math.max(0, Math.floor(ageInDays)),
           created_at: row.created_at,
           data: {
             id: row.id,
@@ -876,26 +1016,57 @@ export const bureauService = {
 
     // Se ainda não temos CPF/CNPJ mas recebemos nome do titular ou termo textual (ex: Fusão CAR + SIGEF)
     if (!isCpf && !isCnpj && (options.nome || rawDoc)) {
-      const seedName = String(options.nome || rawDoc).trim();
-      let hash = 0;
-      for (let i = 0; i < seedName.length; i++) {
-        hash = ((hash << 5) - hash) + seedName.charCodeAt(i);
-        hash |= 0;
+      const searchName = String(options.nome || rawDoc).trim();
+      const uf = options.uf || 'RS';
+      const municipio = options.municipio || 'PASSO FUNDO';
+
+      if (this.isMockEnabled()) {
+        let hash = 0;
+        for (let i = 0; i < searchName.length; i++) {
+          hash = ((hash << 5) - hash) + searchName.charCodeAt(i);
+          hash |= 0;
+        }
+        const base9 = String(Math.abs(hash)).padStart(9, '0').slice(-9);
+        let sum1 = 0;
+        for (let i = 0; i < 9; i++) sum1 += parseInt(base9.charAt(i), 10) * (10 - i);
+        let rev1 = 11 - (sum1 % 11);
+        if (rev1 >= 10) rev1 = 0;
+        const base10 = base9 + rev1;
+        let sum2 = 0;
+        for (let i = 0; i < 10; i++) sum2 += parseInt(base10.charAt(i), 10) * (11 - i);
+        let rev2 = 11 - (sum2 % 11);
+        if (rev2 >= 10) rev2 = 0;
+        cleanDoc = base10 + rev2;
+        isCpf = true;
+        isCnpj = false;
+        if (!options.nome) options.nome = searchName;
+      } else {
+        // INTEGRAÇÃO REAL ASSERTIVA: Busca de localização por Nome + UF + Município
+        console.log(`[ASSERTIVA] Realizando busca de localização por Nome: "${searchName}", UF: "${uf}", Município: "${municipio}"`);
+        const searchRes = await this.consultarAssertivaPorNome({
+          nome: searchName,
+          uf,
+          municipio,
+          tenantId
+        });
+
+        if (searchRes && searchRes.success && searchRes.cpf) {
+          cleanDoc = String(searchRes.cpf).replace(/\D/g, '');
+          isCpf = cleanDoc.length === 11;
+          isCnpj = cleanDoc.length === 14;
+          if (searchRes.apiData) {
+            options._preloadedApiData = searchRes.apiData;
+          }
+        } else {
+          console.warn(`[ASSERTIVA] Titular "${searchName}" não localizado ou sem permissão na base cadastral.`);
+          return {
+            success: false,
+            status: searchRes?.status || 'TITULAR_NAO_LOCALIZADO',
+            message: searchRes?.message || 'Status: Titular não localizado na base cadastral da Assertiva.',
+            origem: 'ASSERTIVA_API_V3'
+          };
+        }
       }
-      const base9 = String(Math.abs(hash)).padStart(9, '0').slice(-9);
-      let sum1 = 0;
-      for (let i = 0; i < 9; i++) sum1 += parseInt(base9.charAt(i), 10) * (10 - i);
-      let rev1 = 11 - (sum1 % 11);
-      if (rev1 >= 10) rev1 = 0;
-      const base10 = base9 + rev1;
-      let sum2 = 0;
-      for (let i = 0; i < 10; i++) sum2 += parseInt(base10.charAt(i), 10) * (11 - i);
-      let rev2 = 11 - (sum2 % 11);
-      if (rev2 >= 10) rev2 = 0;
-      cleanDoc = base10 + rev2;
-      isCpf = true;
-      isCnpj = false;
-      if (!options.nome) options.nome = seedName;
     }
 
     if (!isCpf && !isCnpj) {
@@ -969,10 +1140,12 @@ export const bureauService = {
     }
 
     const baseUrl = this.getBaseUrl();
-    let apiData = null;
-    let callSucceeded = false;
+    let apiData = options._preloadedApiData || null;
+    let callSucceeded = Boolean(apiData);
+    let apiErrorMessage = null;
+    let apiStatusCode = null;
 
-    if (token) {
+    if (token && !apiData) {
       try {
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), 12000);
@@ -991,6 +1164,7 @@ export const bureauService = {
         });
 
         clearTimeout(timeout);
+        apiStatusCode = response?.status;
 
         if (response && response.ok) {
           apiData = await response.json();
@@ -998,13 +1172,36 @@ export const bureauService = {
           console.log(`[ASSERTIVA] Consulta do documento ${cleanDoc} executada com sucesso.`);
         } else if (response && response.status === 404) {
           console.info(`[ASSERTIVA] Documento ${cleanDoc} não localizado na base remota.`);
+          apiErrorMessage = 'Status: Titular não localizado na base cadastral da Assertiva.';
+        } else if (response && response.status === 403) {
+          const errJson = await response.json().catch(() => null);
+          const rawErr = errJson?.resposta || errJson?.message || 'Acesso negado pela Assertiva.';
+          console.warn(`[ASSERTIVA 403] Permissão negada para ${cleanDoc}:`, rawErr);
+          apiErrorMessage = rawErr.includes('permissão') 
+            ? `${rawErr} Verifique se a permissão para consulta de ${isCpf ? 'CPF' : 'CNPJ'} está habilitada nas credenciais de API no painel da Assertiva.`
+            : rawErr;
         } else if (response) {
           const errTxt = await response.text().catch(() => '');
           console.warn(`[ASSERTIVA] Resposta HTTP ${response.status} para ${cleanDoc}:`, errTxt);
+          apiErrorMessage = `Erro na API da Assertiva (HTTP ${response.status}): ${errTxt}`;
         }
       } catch (reqErr) {
         console.warn('[ASSERTIVA API REQUEST FAILED]:', reqErr.message);
+        apiErrorMessage = `Falha na requisição HTTPS contra a Assertiva: ${reqErr.message}`;
       }
+    } else if (!token && !apiData) {
+      apiErrorMessage = 'Credenciais da Assertiva não configuradas ou token OAuth2 não pôde ser gerado.';
+    }
+
+    // Se a chamada falhou e NÃO estamos em modo mock (produção real oficial):
+    if (!callSucceeded && !this.isMockEnabled()) {
+      return {
+        success: false,
+        status: apiStatusCode === 403 ? 'ASSERTIVA_PERMISSION_ERROR' : (apiStatusCode === 404 ? 'TITULAR_NAO_LOCALIZADO' : 'ASSERTIVA_API_ERROR'),
+        message: apiErrorMessage || 'Status: Titular não localizado na base cadastral da Assertiva.',
+        origem: 'ASSERTIVA_API_V3',
+        documento: cleanDoc
+      };
     }
 
     // 3. Cruzamento com Leads ou Propriedades Rurais da Base Interna (Multicamada)
