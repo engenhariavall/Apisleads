@@ -71,6 +71,7 @@ export function parseIncraGml(xml, targetMun = '', targetUf = '') {
       cpf_cnpj_titular: null,
       area_hectares: calculatedHa || 50.0,
       registro_matricula: registroMatricula ? `Matrícula ${registroMatricula} - CRI` : null,
+      codigo_municipio: codigoMunicipio || null,
       municipio: targetMun,
       uf: targetUf,
       status_geo: 'CERTIFICADO',

@@ -3105,15 +3105,60 @@ Carregando script de abordagem...
               <span class="badge-porte" id="ruralAreaHectaresBadge">0 ha</span>
               <!-- FASE 57: Badge de Proveniência (SIGEF / SICAR / FUSAÃO) -->
               <span id="ruralSourceBadge" style="display:none;">SIGEF</span>
+              <!-- NOVO: Badge SCORE 95% -->
+              <span id="ruralOverlayScoreBadge" style="display:none; font-size:0.62rem; font-weight:800; padding:0.15rem 0.55rem; border-radius:4px; letter-spacing:0.04em; background:rgba(16,185,129,0.18); color:#34D399; border:1px solid rgba(52,211,153,0.4);">SCORE 95%</span>
+              <!-- NOVO: Badge FUSÃO CAR + SIGEF -->
+              <span id="ruralFusionBadge" style="display:none; font-size:0.62rem; font-weight:800; padding:0.15rem 0.55rem; border-radius:4px; letter-spacing:0.04em; background:rgba(245,158,11,0.18); color:#FBBF24; border:1px solid rgba(245,158,11,0.45);">FUSÃO CAR + SIGEF</span>
               <!-- FASE 60: Badge de Entidade (PJ vs PF) -->
               <span id="ruralEntityBadge" style="display:none; font-size:0.62rem; font-weight:800; padding:0.15rem 0.55rem; border-radius:4px; letter-spacing:0.04em;">PJ</span>
             </div>
             <h3 class="sheet-title" id="ruralNomeImovel">Nome da Propriedade</h3>
             <p class="sheet-sub" id="ruralLocalizacao">Município / UF</p>
-            <div class="sheet-cnpj-row" id="ruralSigefCodeRow">
-              <span>Código SIGEF:</span>
-              <strong id="ruralCodigoSigef">--</strong>
+
+            <!-- Bloco de Dados Fundiários Validados (Fusão CAR + SIGEF + CRI + SNCR) -->
+            <div class="rural-fusion-details-grid" id="ruralFusionDetailsGrid" style="margin-top: 0.55rem; display: flex; flex-direction: column; gap: 0.4rem; background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 0.65rem 0.8rem;">
+              <!-- Código CAR -->
+              <div class="campo-dado" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.04); padding-bottom: 0.3rem;">
+                <span class="label" style="font-size: 0.68rem; color: #94A3B8; font-weight: 600;">Código CAR:</span>
+                <div style="display: flex; align-items: center; gap: 0.35rem;">
+                  <span class="valor font-mono text-xs" id="ruralCodigoCarDisplay" style="font-size: 0.68rem; font-family: monospace; color: #E2E8F0;">Não declarado</span>
+                  <button type="button" id="btnCopyCarClipboard" title="Copiar Código CAR" style="background: transparent; border: none; color: #38BDF8; cursor: pointer; padding: 2px; display: inline-flex; align-items: center;">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Matrícula Cartorial (CRI) -->
+              <div class="campo-dado" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.04); padding-bottom: 0.3rem;">
+                <span class="label" style="font-size: 0.68rem; color: #94A3B8; font-weight: 600;">Matrícula Cartorial:</span>
+                <span class="valor font-semibold text-emerald-400" id="ruralMatriculaDisplay" style="font-size: 0.72rem; font-weight: 700; color: #34D399;">Sem matrícula associada</span>
+              </div>
+
+              <!-- Código SNCR / INCRA -->
+              <div class="campo-dado" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.04); padding-bottom: 0.3rem;">
+                <span class="label" style="font-size: 0.68rem; color: #94A3B8; font-weight: 600;">Código SNCR (INCRA):</span>
+                <span class="valor font-mono" id="ruralSncrDisplay" style="font-size: 0.70rem; font-family: monospace; color: #38BDF8; font-weight: 700;">--</span>
+              </div>
+
+              <!-- Código SIGEF -->
+              <div class="campo-dado" id="ruralSigefCodeRow" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.04); padding-bottom: 0.3rem;">
+                <span class="label" style="font-size: 0.68rem; color: #94A3B8; font-weight: 600;">Código SIGEF:</span>
+                <strong id="ruralCodigoSigef" style="font-size: 0.68rem; font-family: monospace; color: #38BDF8;">--</strong>
+              </div>
+
+              <!-- Validação Espacial / Motivo Geodésico -->
+              <div class="campo-dado" id="ruralValidacaoEspacialRow" style="display: flex; justify-content: space-between; align-items: center;">
+                <span class="label" style="font-size: 0.68rem; color: #94A3B8; font-weight: 600;">Validação Espacial:</span>
+                <span class="valor text-xs text-slate-300" id="ruralValidacaoEspacialDisplay" style="font-size: 0.64rem; color: #CBD5E1; text-align: right;">--</span>
+              </div>
+
+              <!-- Titular Provável / Razão Social -->
+              <div class="campo-dado" id="ruralTitularProvavelRow" style="display: none; justify-content: space-between; align-items: center; padding-top: 0.2rem;">
+                <span class="label" style="font-size: 0.68rem; color: #94A3B8; font-weight: 600;">Titular Provável:</span>
+                <span class="valor font-semibold" id="ruralTitularProvavelDisplay" style="font-size: 0.70rem; color: #FDE68A; font-weight: 700;">--</span>
+              </div>
             </div>
+
             <div class="sheet-cnpj-row" id="ruralMatriculaRow" style="display: none; margin-top: 0.35rem;">
               <span>Matrícula CRI:</span>
               <strong id="ruralMatriculaCri" style="color: #38BDF8;">--</strong>
@@ -4598,6 +4643,66 @@ Carregando script de abordagem...
         </button>
       </div>
 
+    </div>
+  </div>
+
+  <!-- MODAL: REQUISIÇÃO CARTORIAL RÁPIDA (CRI & REGISTRO DE IMÓVEIS) -->
+  <div class="modal-backdrop" id="modalCartorioCriRequisicao" style="display: none; position: fixed; inset: 0; background: rgba(3, 7, 18, 0.85); backdrop-filter: blur(8px); z-index: 10000; align-items: center; justify-content: center; padding: 1rem;">
+    <div class="modal-card" style="max-width: 580px; width: 100%; background: #0A1128; border: 1px solid rgba(56, 189, 248, 0.35); border-radius: 10px; box-shadow: 0 20px 40px rgba(0,0,0,0.8); overflow: hidden; display: flex; flex-direction: column;">
+      <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.25rem; border-bottom: 1px solid rgba(255, 255, 255, 0.08); background: rgba(15, 23, 42, 0.6);">
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <div style="width: 28px; height: 28px; border-radius: 6px; background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.35); display: flex; align-items: center; justify-content: center;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+          </div>
+          <div>
+            <h3 style="font-size: 0.88rem; font-weight: 800; color: #FFFFFF; margin: 0; letter-spacing: 0.03em;">REQUISIÇÃO CARTORIAL RÁPIDA (CRI)</h3>
+            <span style="font-size: 0.65rem; color: #94A3B8;">Certidão de Inteiro Teor e Livro Registral Imobiliário</span>
+          </div>
+        </div>
+        <button type="button" class="modal-close" id="btnCloseModalCartorioCri" style="background: transparent; border: none; color: #94A3B8; font-size: 1.2rem; cursor: pointer;">&times;</button>
+      </div>
+
+      <div class="modal-body" style="padding: 1.2rem 1.25rem; display: flex; flex-direction: column; gap: 0.85rem;">
+        <div style="background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 6px; padding: 0.65rem 0.85rem; font-size: 0.70rem; color: #E2E8F0; line-height: 1.4;">
+          <span style="color: #38BDF8; font-weight: 700;">REGISTRO OFICIAL DO IMÓVEL:</span> Parcela identificada via fusão georreferenciada SIGEF/INCRA. Os dados abaixo foram pré-preenchidos automaticamente da malha territorial para consulta imediata no Ofício de Registro de Imóveis.
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+          <div>
+            <label style="display: block; font-size: 0.66rem; font-weight: 700; color: #94A3B8; margin-bottom: 0.3rem;">MATRÍCULA CARTORIAL (CRI):</label>
+            <input type="text" id="inputCartorioMatricula" readonly style="width: 100%; box-sizing: border-box; background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(52, 211, 153, 0.4); border-radius: 6px; padding: 0.5rem 0.65rem; font-size: 0.78rem; font-weight: 700; color: #34D399; font-family: monospace;">
+          </div>
+          <div>
+            <label style="display: block; font-size: 0.66rem; font-weight: 700; color: #94A3B8; margin-bottom: 0.3rem;">COMARCA / OFÍCIO:</label>
+            <input type="text" id="inputCartorioComarca" readonly style="width: 100%; box-sizing: border-box; background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 6px; padding: 0.5rem 0.65rem; font-size: 0.78rem; color: #FFFFFF;">
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+          <div>
+            <label style="display: block; font-size: 0.66rem; font-weight: 700; color: #94A3B8; margin-bottom: 0.3rem;">CÓDIGO SNCR (INCRA):</label>
+            <input type="text" id="inputCartorioSncr" readonly style="width: 100%; box-sizing: border-box; background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 6px; padding: 0.5rem 0.65rem; font-size: 0.74rem; font-family: monospace; color: #38BDF8;">
+          </div>
+          <div>
+            <label style="display: block; font-size: 0.66rem; font-weight: 700; color: #94A3B8; margin-bottom: 0.3rem;">DENOMINAÇÃO DO IMÓVEL:</label>
+            <input type="text" id="inputCartorioImovel" readonly style="width: 100%; box-sizing: border-box; background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 6px; padding: 0.5rem 0.65rem; font-size: 0.74rem; color: #CBD5E1;">
+          </div>
+        </div>
+
+        <!-- Box de Resultado ou Confirmação da Consulta Cartorial -->
+        <div id="modalCartorioResultBox" style="display: none; margin-top: 0.25rem;"></div>
+      </div>
+
+      <div class="modal-footer" style="padding: 0.85rem 1.25rem; border-top: 1px solid rgba(255, 255, 255, 0.08); background: rgba(15, 23, 42, 0.6); display: flex; justify-content: flex-end; gap: 0.5rem;">
+        <button type="button" id="btnCopiarDadosCartoriais" style="padding: 0.45rem 0.85rem; background: rgba(255, 255, 255, 0.08); color: #E2E8F0; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 6px; font-size: 0.72rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 0.35rem;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copiar Matrícula & Comarca</span>
+        </button>
+        <button type="button" id="btnExecutarRequisicaoCartorial" style="padding: 0.45rem 1rem; background: linear-gradient(135deg, #059669, #10B981); color: #FFFFFF; border: none; border-radius: 6px; font-size: 0.72rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 0.4rem; box-shadow: 0 2px 10px rgba(16, 185, 129, 0.3);">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+          <span>Confirmar Certidão Cartorial (CRI / SIGEF)</span>
+        </button>
+      </div>
     </div>
   </div>
 

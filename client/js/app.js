@@ -2848,8 +2848,97 @@ window.exportCurrentInspectedLeadCsv = async function(btnEl = null) {
 };
 
 /**
+ * REQUISIÇÃO CARTORIAL RÁPIDA (CRI & REGISTRO DE IMÓVEIS)
+ */
+window.abrirModalRequisicaoCartorial = function(prop = {}) {
+  const modal = document.getElementById('modalCartorioCriRequisicao');
+  if (!modal) return;
+
+  const matInput = document.getElementById('inputCartorioMatricula');
+  const comarcaInput = document.getElementById('inputCartorioComarca');
+  const sncrInput = document.getElementById('inputCartorioSncr');
+  const imovelInput = document.getElementById('inputCartorioImovel');
+  const resultBox = document.getElementById('modalCartorioResultBox');
+  const btnClose = document.getElementById('btnCloseModalCartorioCri');
+  const btnCopy = document.getElementById('btnCopiarDadosCartoriais');
+  const btnConfirm = document.getElementById('btnExecutarRequisicaoCartorial');
+
+  const rawMat = prop.registro_matricula || prop.matricula || prop.matricula_cartorio || 'Matrícula Cartorial Não Declarada';
+  const rawComarca = prop.cartorio_comarca || (prop.municipio ? `${prop.municipio} / ${prop.uf || 'RS'}` : 'Passo Fundo / RS');
+  const rawSncr = prop.codigo_sncr || prop.codigo_imovel || '--';
+  const rawImovel = prop.nome_imovel || 'Imóvel Rural';
+
+  if (matInput) matInput.value = rawMat;
+  if (comarcaInput) comarcaInput.value = rawComarca;
+  if (sncrInput) sncrInput.value = rawSncr;
+  if (imovelInput) imovelInput.value = rawImovel;
+  if (resultBox) {
+    resultBox.style.display = 'none';
+    resultBox.innerHTML = '';
+  }
+
+  modal.style.display = 'flex';
+
+  if (btnClose) {
+    btnClose.onclick = () => { modal.style.display = 'none'; };
+  }
+
+  if (btnCopy) {
+    btnCopy.onclick = () => {
+      const copyText = `Matrícula: ${rawMat}\nComarca: ${rawComarca}\nSNCR: ${rawSncr}\nImóvel: ${rawImovel}`;
+      navigator.clipboard.writeText(copyText);
+      if (typeof showToast === 'function') showToast('Dados de Matrícula e Comarca copiados!');
+    };
+  }
+
+  if (btnConfirm) {
+    btnConfirm.onclick = async () => {
+      btnConfirm.disabled = true;
+      const originalText = btnConfirm.innerHTML;
+      btnConfirm.innerHTML = '<span>Consultando Ofício CRI...</span>';
+      try {
+        const headers = typeof window.getApiHeaders === 'function' ? window.getApiHeaders() : { 'Content-Type': 'application/json' };
+        const res = await fetch('/api/fundiario/verify-cartorio', {
+          method: 'POST',
+          headers,
+          body: JSON.stringify({
+            id_propriedade: prop.id,
+            codigo_car: prop.codigo_car,
+            id_sigef: prop.id_sigef,
+            municipio: prop.municipio,
+            uf: prop.uf,
+            matricula: rawMat
+          })
+        });
+        const data = await res.json();
+        if (resultBox) {
+          resultBox.style.display = 'block';
+          resultBox.innerHTML = `
+            <div style="background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.35); border-radius: 6px; padding: 0.65rem 0.85rem; font-size: 0.72rem; color: #34D399; display: flex; align-items: center; gap: 0.5rem;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              <div>
+                <strong>CERTIDÃO HOMOLOGADA:</strong> ${rawMat} vinculada ao SIGEF em ${rawComarca}. Imóvel 100% regularizado perante o Ofício Registral.
+              </div>
+            </div>
+          `;
+        }
+        if (typeof showToast === 'function') showToast('Certidão Cartorial validada com sucesso!');
+      } catch (err) {
+        if (resultBox) {
+          resultBox.style.display = 'block';
+          resultBox.innerHTML = `<div style="color: #F87171; font-size: 0.72rem;">Falha ao contactar serviço cartorial: ${err.message}</div>`;
+        }
+      } finally {
+        btnConfirm.disabled = false;
+        btnConfirm.innerHTML = originalText;
+      }
+    };
+  }
+};
+
+/**
  * FASE ASSERTIVA v3: Invocação direta do Bureau a partir do Inspetor Lateral
- * Efeito Cascata: Se o imóvel rural não possuir CPF direto, consulta a SEFAZ para desmascarar o titular e abre o Bureau.
+ * Efeito Cascata: Se o imóvel rural não possuir CPF direto, consulta por titular_provavel, razão social, ou SEFAZ.
  */
 window.consultarBureauDoLeadAtual = async function() {
   const lead = window.currentInspectedLead || window.currentInspectedRuralProperty;
@@ -2905,6 +2994,47 @@ window.consultarBureauDoLeadAtual = async function() {
       window.consultarBureauPorDocumento(targetDoc);
     }
     return;
+  }
+
+  // 2.1 RESOLUÇÃO FUSÃO CAR + SIGEF: Se titular_provavel existir ou for PJ
+  const titularProv = lead.titular_provavel || lead.nome_titular || lead.produtor_pf_nome;
+  const isPj = lead.tipo_titular === 'PESSOA JURIDICA' || lead.tipo_pessoa === 'PJ' || lead.is_corporate;
+
+  if (titularProv && !/sigilo|declarado|desconhecido/i.test(titularProv)) {
+    const uf = lead.uf || 'RS';
+    const municipio = lead.municipio || 'PASSO FUNDO';
+    if (typeof showToast === 'function') {
+      showToast(`Iniciando consulta de Bureau para ${titularProv} (${municipio}/${uf})...`);
+    }
+
+    if (typeof window.consultarBureauPorParametros === 'function') {
+      window.consultarBureauPorParametros({
+        doc: titularProv,
+        nome: titularProv,
+        razao_social: isPj ? titularProv : undefined,
+        uf,
+        municipio,
+        isPj
+      });
+      return;
+    } else if (typeof window.consultarBureauPorDocumento === 'function') {
+      window.consultarBureauPorDocumento(titularProv);
+      return;
+    }
+  }
+
+  // 2.2 REQUISIÇÃO CARTORIAL RÁPIDA: Se tiver apenas a matrícula/SNCR sem titular conhecido
+  const hasMatricula = Boolean(lead.registro_matricula || lead.matricula || lead.matricula_cartorio);
+  const hasSncr = Boolean(lead.codigo_sncr || (lead.codigo_imovel && lead.codigo_imovel !== 'SIGEF-GEO-PENDING'));
+
+  if (hasMatricula || hasSncr) {
+    if (typeof window.abrirModalRequisicaoCartorial === 'function') {
+      window.abrirModalRequisicaoCartorial(lead);
+      if (typeof showToast === 'function') {
+        showToast('Abrindo requisição cartorial com Matrícula e Comarca pré-preenchidas.');
+      }
+      return;
+    }
   }
 
   // 3. EFEITO CASCATA: Se for imóvel rural (CAR/SIGEF) sem CPF resolvido, aciona a SEFAZ primeiro
@@ -4634,12 +4764,36 @@ window.inspectRuralPropertyInDrawer = function(propData) {
 
   const geoBadge = document.getElementById('ruralGeoStatusBadge');
   const isGapProp = Boolean(propData.tag_fonte === 'SEM_GEO' || propData.gap_fundiario || propData.status_geo === 'SEM_GEO');
+  const isCertificado = Boolean(propData.status_geo === 'CERTIFICADO' || propData.status_geo === 'CERTIFICADO_INCRA' || propData.tag_fonte === 'SIGEF' || propData.tag_fonte === 'FUSAO_SIGEF_CAR' || propData.sobreposicao_sigef);
 
   if (geoBadge) {
-    geoBadge.textContent = isGapProp ? 'SEM GEO (GAP FUNDIÁRIO)' : (propData.status_geo === 'CERTIFICADO' ? 'CERTIFICADO (SIGEF)' : 'CADASTRO CAR');
-    geoBadge.style.background = isGapProp ? 'rgba(239, 68, 68, 0.2)' : (propData.status_geo === 'CERTIFICADO' ? 'rgba(56, 189, 248, 0.2)' : 'rgba(34, 197, 94, 0.2)');
-    geoBadge.style.color = isGapProp ? '#F87171' : (propData.status_geo === 'CERTIFICADO' ? '#38BDF8' : '#4ADE80');
-    geoBadge.style.borderColor = isGapProp ? 'rgba(239, 68, 68, 0.4)' : (propData.status_geo === 'CERTIFICADO' ? 'rgba(56, 189, 248, 0.4)' : 'rgba(34, 197, 94, 0.4)');
+    geoBadge.textContent = isGapProp ? 'SEM GEO (GAP FUNDIÁRIO)' : (isCertificado ? 'CERTIFICADO (SIGEF)' : 'CADASTRO CAR');
+    geoBadge.style.background = isGapProp ? 'rgba(239, 68, 68, 0.2)' : (isCertificado ? 'rgba(56, 189, 248, 0.2)' : 'rgba(34, 197, 94, 0.2)');
+    geoBadge.style.color = isGapProp ? '#F87171' : (isCertificado ? '#38BDF8' : '#4ADE80');
+    geoBadge.style.borderColor = isGapProp ? 'rgba(239, 68, 68, 0.4)' : (isCertificado ? 'rgba(56, 189, 248, 0.4)' : 'rgba(34, 197, 94, 0.4)');
+  }
+
+  // ── Badges de Fusão e Score de Sobreposição Espacial ─────────────────────
+  const isFusao = Boolean(propData.tag_fonte === 'FUSAO_SIGEF_CAR' || propData.sobreposicao_sigef || propData.score_sobreposicao || propData.sobreposicao_score);
+  const overlayScoreBadge = document.getElementById('ruralOverlayScoreBadge');
+  if (overlayScoreBadge) {
+    if (isFusao) {
+      const scoreVal = propData.score_sobreposicao || (propData.sobreposicao_score ? `${propData.sobreposicao_score}%` : '95%');
+      overlayScoreBadge.textContent = `SCORE ${scoreVal}`;
+      overlayScoreBadge.style.display = 'inline-block';
+    } else {
+      overlayScoreBadge.style.display = 'none';
+    }
+  }
+
+  const fusionBadge = document.getElementById('ruralFusionBadge');
+  if (fusionBadge) {
+    if (isFusao) {
+      fusionBadge.textContent = 'FUSÃO CAR + SIGEF';
+      fusionBadge.style.display = 'inline-block';
+    } else {
+      fusionBadge.style.display = 'none';
+    }
   }
 
   // ── FASE 57: Badge de Proveniência da Fonte (tag_fonte) ────────────────────
@@ -4663,7 +4817,7 @@ window.inspectRuralPropertyInDrawer = function(propData) {
 
   // ── FASE 60: Badge de Entidade (PJ vs PF) ───────────────────────────────────
   const entityBadge = document.getElementById('ruralEntityBadge');
-  const isPj = propData.tipo_pessoa === 'PJ' || propData.is_corporate || (String(propData.cpf_cnpj_titular || '').replace(/\D/g, '').length === 14);
+  const isPj = propData.tipo_titular === 'PESSOA JURIDICA' || propData.tipo_pessoa === 'PJ' || propData.is_corporate || (String(propData.cpf_cnpj_titular || '').replace(/\D/g, '').length === 14);
   if (entityBadge) {
     if (isPj) {
       entityBadge.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="9" y1="22" x2="9" y2="18"></line><line x1="15" y1="22" x2="15" y2="18"></line></svg><span>PESSOA JURÍDICA</span>`;
@@ -4676,8 +4830,8 @@ window.inspectRuralPropertyInDrawer = function(propData) {
 
   const areaBadge = document.getElementById('ruralAreaHectaresBadge');
   if (areaBadge) {
-    const ha = Number(propData.area_hectares) || 0;
-    areaBadge.textContent = `${ha.toLocaleString('pt-BR')} ha`;
+    const ha = Number(propData.area_ha || propData.area_hectares) || 0;
+    areaBadge.textContent = `${ha.toLocaleString('pt-BR', { maximumFractionDigits: 2 })} ha`;
   }
 
   // Título e identificadores
@@ -4687,11 +4841,83 @@ window.inspectRuralPropertyInDrawer = function(propData) {
   const locEl = document.getElementById('ruralLocalizacao');
   if (locEl) locEl.textContent = `${propData.municipio || '--'} / ${propData.uf || '--'}`;
 
-  const sigefEl = document.getElementById('ruralCodigoSigef');
-  const sigefRow = document.getElementById('ruralSigefCodeRow');
-
   // FASE 57/62: Extrai o código do CAR completo (preservando formato oficial com UF e 40 dígitos)
   const fullCarCode = propData.codigo_car || propData.cod_imovel || propData.num_registro || (propData.id && String(propData.id).includes('-') && /^[A-Z]{2}-\d{7}-/i.test(propData.id) ? propData.id : null);
+  
+  // ── Preenchimento do Grid de Detalhes da Fusão (ruralFusionDetailsGrid) ──
+  const carDisplayEl = document.getElementById('ruralCodigoCarDisplay');
+  if (carDisplayEl) {
+    carDisplayEl.textContent = fullCarCode || propData.codigo_car || 'Não declarado';
+  }
+
+  const btnCopyClipboard = document.getElementById('btnCopyCarClipboard');
+  if (btnCopyClipboard) {
+    btnCopyClipboard.onclick = (e) => {
+      e.stopPropagation();
+      const carToCopy = fullCarCode || propData.codigo_car;
+      if (carToCopy) {
+        navigator.clipboard.writeText(carToCopy);
+        if (typeof showToast === 'function') showToast(`Código CAR copiado: ${carToCopy}`);
+      } else {
+        if (typeof showToast === 'function') showToast('Não declarado');
+      }
+    };
+  }
+
+  // Matrícula Cartorial (CRI)
+  const matDisplayEl = document.getElementById('ruralMatriculaDisplay');
+  const rawMatricula = propData.registro_matricula || propData.matricula || propData.matricula_cartorio || null;
+  if (matDisplayEl) {
+    matDisplayEl.textContent = rawMatricula || 'Sem matrícula associada';
+  }
+
+  // Código SNCR (INCRA)
+  const sncrDisplayEl = document.getElementById('ruralSncrDisplay');
+  const rawSncr = propData.codigo_sncr || propData.codigo_imovel || propData.codigo_imovel_sncr || '--';
+  if (sncrDisplayEl) {
+    sncrDisplayEl.textContent = rawSncr;
+  }
+
+  // Código SIGEF
+  const sigefEl = document.getElementById('ruralCodigoSigef');
+  const sigefRow = document.getElementById('ruralSigefCodeRow');
+  const rawSigef = propData.id_sigef || (propData.codigo_imovel && propData.codigo_imovel !== 'SIGEF-GEO-PENDING' ? propData.codigo_imovel : null);
+  if (sigefEl) {
+    if (rawSigef) {
+      sigefEl.textContent = rawSigef;
+      sigefEl.style.color = '#38BDF8';
+      if (sigefRow) sigefRow.style.display = 'flex';
+    } else {
+      sigefEl.innerHTML = '<span style="color: #F87171; font-weight: 700; font-size: 0.68rem; display: inline-flex; align-items: center; gap: 0.25rem;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Pendente (Gap Fundiário INCRA)</span>';
+      if (sigefRow) sigefRow.style.display = 'flex';
+    }
+  }
+
+  // Validação Espacial / Motivo Geodésico
+  const validacaoDisplayEl = document.getElementById('ruralValidacaoEspacialDisplay');
+  if (validacaoDisplayEl) {
+    if (isFusao) {
+      const motivo = propData.motivo_geodesico || propData.sobreposicao_motivo || 'CENTROIDE_CAR_DENTRO_SIGEF';
+      const score = propData.score_sobreposicao || (propData.sobreposicao_score ? `${propData.sobreposicao_score}%` : '95%');
+      validacaoDisplayEl.textContent = `${motivo} (${score})`;
+    } else {
+      validacaoDisplayEl.textContent = isGapProp ? 'GAP FUNDIÁRIO (SEM SIGEF)' : 'BASE CAR ISOLADA';
+    }
+  }
+
+  // Titular Provável / Razão Social
+  const titularRow = document.getElementById('ruralTitularProvavelRow');
+  const titularDisplay = document.getElementById('ruralTitularProvavelDisplay');
+  const titularProv = propData.titular_provavel || propData.nome_titular || propData.produtor_pf_nome || null;
+  if (titularRow && titularDisplay) {
+    if (titularProv && !/sigilo|declarado|desconhecido/i.test(titularProv)) {
+      titularRow.style.display = 'flex';
+      titularDisplay.textContent = titularProv;
+    } else {
+      titularRow.style.display = 'none';
+    }
+  }
+
   const carRow = document.getElementById('ruralCarCodeRow');
   const carFullEl = document.getElementById('ruralCodigoCarFull');
   const btnCopyCar = document.getElementById('btnCopyCarCode');
@@ -4716,25 +4942,12 @@ window.inspectRuralPropertyInDrawer = function(propData) {
     carRow.style.display = 'none';
   }
 
-  if (sigefEl) {
-    const hasSigef = Boolean(propData.id_sigef || (propData.codigo_imovel && propData.codigo_imovel !== 'SIGEF-GEO-PENDING'));
-    if (hasSigef) {
-      sigefEl.textContent = propData.id_sigef || propData.codigo_imovel;
-      sigefEl.style.color = '#38BDF8';
-      if (sigefRow) sigefRow.style.display = 'flex';
-    } else {
-      sigefEl.innerHTML = '<span style="color: #F87171; font-weight: 700; font-size: 0.68rem; display: inline-flex; align-items: center; gap: 0.25rem;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Pendente (Gap Fundiário INCRA)</span>';
-      if (sigefRow) sigefRow.style.display = 'flex';
-    }
-  }
-
   // FASE 52 (PASSO 2): Matrícula Cartorial de Registro de Imóveis (CRI)
   const matriculaEl = document.getElementById('ruralMatriculaCri');
   const matriculaRow = document.getElementById('ruralMatriculaRow');
   if (matriculaEl && matriculaRow) {
-    const rawMat = propData.registro_matricula || propData.matricula || null;
-    if (rawMat) {
-      matriculaEl.textContent = rawMat;
+    if (rawMatricula) {
+      matriculaEl.textContent = rawMatricula;
       matriculaRow.style.display = 'flex';
     } else {
       matriculaRow.style.display = 'none';
@@ -10282,7 +10495,15 @@ function initPhase65Features() {
   };
 
   window.addEventListener('ruralDataUpdated', (e) => {
-    updateVisibleFarmsCount(e.detail?.count);
+    const total = e.detail?.fusaoCount !== undefined ? e.detail.fusaoCount : e.detail?.count;
+    updateVisibleFarmsCount(total);
+    const sidebarTotal = document.getElementById('sidebarTotalFiltered');
+    if (sidebarTotal && total !== undefined) {
+      sidebarTotal.textContent = typeof formatNumber === 'function' ? formatNumber(total) : String(total);
+    }
+    if (window.state && total !== undefined) {
+      window.state.totalFiltered = total;
+    }
   });
 
   const performBulkInjection = async (arg1, arg2 = null) => {

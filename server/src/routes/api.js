@@ -335,6 +335,20 @@ router.get('/fundiario/car/geojson', optionalAuth, async (req, res) => {
       return res.json({ success: true, source: 'SIGEF', ...sigefResult });
     }
 
+    // ── Modo: apenas FUSÃO (sobreposição espacial validada CAR + SIGEF) ─────
+    if (origemNorm === 'FUSAO') {
+      const carResult = await carService.buscarMalhaCarPorMunicipio({ uf, municipio });
+      const fusedOnly = (carResult.features || []).filter(f => f.properties?.sobreposicao_sigef || f.properties?.tag_fonte === 'FUSAO_SIGEF_CAR');
+      return res.json({
+        success: true,
+        type: 'FeatureCollection',
+        source: 'FUSAO_SIGEF_CAR',
+        total_features: fusedOnly.length,
+        total_fusao: fusedOnly.length,
+        features: fusedOnly
+      });
+    }
+
     // ── Modo padrão: TODOS (fusão assíncrona SIGEF + CAR via Promise.all) ──
     const { getRuralGeoJson } = await import('../services/geoFundiarioService.js');
 
@@ -474,20 +488,24 @@ router.post('/bureau/lookup', optionalAuth, async (req, res) => {
 router.post('/bureau/credit-lookup', optionalAuth, async (req, res) => {
   try {
     const { bureauService } = await import('../services/bureauService.js');
-    const { doc, cpf, cnpj, cpf_cnpj, forceRefresh, maxAgeDays } = req.body || {};
-    const targetDoc = doc || cpf || cnpj || cpf_cnpj;
+    const { doc, cpf, cnpj, cpf_cnpj, nome, razao_social, uf, municipio, forceRefresh, maxAgeDays } = req.body || {};
+    const targetDoc = doc || cpf || cnpj || cpf_cnpj || nome || razao_social;
     const tenantId = getTenantFromRequest(req);
 
     if (!targetDoc) {
       return res.status(400).json({
         success: false,
         error: 'DOCUMENT_REQUIRED',
-        message: 'Informe o CPF (11 dígitos) ou CNPJ (14 dígitos) para consulta.'
+        message: 'Informe o CPF (11 dígitos), CNPJ (14 dígitos), titular ou denominação para consulta.'
       });
     }
 
     const result = await bureauService.consultarBureauCompleto(targetDoc, {
       tenantId,
+      nome: nome || (!String(targetDoc).match(/^\d+$/) ? targetDoc : undefined),
+      razao_social,
+      uf: uf || 'RS',
+      municipio: municipio || 'PASSO FUNDO',
       forceRefresh: Boolean(forceRefresh),
       maxAgeDays: maxAgeDays ? Number(maxAgeDays) : 30
     });

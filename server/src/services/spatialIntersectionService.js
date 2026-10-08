@@ -302,23 +302,60 @@ export function executeSpatialOverlayCarSigef(carFeatures = [], sigefFeatures = 
       const titularIncra     = sp.nome_titular && !sp.nome_titular.includes('sigilo') ? sp.nome_titular : null;
       const cpfCnpjIncra     = sp.cpf_cnpj_titular || sp.cnpj_raw || null;
 
+      // Detecção de titular provável a partir da denominação ou dados do cartório
+      const rawNome = nomeImovelIncra || cp.nome_imovel || '';
+      let titularProvavel = titularIncra || null;
+      if (!titularProvavel && rawNome) {
+        const cleaned = rawNome
+          .replace(/[-–—]\s*(Parte\s*\d+|Gleba\s*[\d\.]+|Parcela\s*\d+|Área\s*[\d\.]+|Lote\s*\d+|Matr\.\s*\d+)/gi, '')
+          .replace(/\b(FAZENDA|ESTÂNCIA|GRANJA|SÍTIO|CHÁCARA|RECANTO|GLEBA|PARCELA)\b/gi, '')
+          .replace(/[-_]/g, ' ')
+          .replace(/\s+/g, ' ')
+          .trim();
+        if (cleaned.length >= 3 && !/^\d+$/.test(cleaned) && !/^(MATRICULA|LIVRO|SNCR)/i.test(cleaned)) {
+          titularProvavel = cleaned;
+        }
+      }
+
+      // Classificação de tipo_titular: PESSOA JURIDICA vs PESSOA FISICA
+      const isCorporateCheck = /\b(S\/A|S\.A\.|SA|LTDA|ME|EPP|EIRELI|AGROPECUARIA|AGROPECUÁRIA|AGRICOLA|AGRÍCOLA|AGRO|COOPERATIVA|COOP|SEMENTES|GRAOS|GRÃOS|PARTICIPACOES|PARTICIPAÇÕES|COMERCIO|IND[UÚ]STRIA|USINA|PESQUISAS AGRON[OÔ]MICAS|CENTRO DE PESQUISAS)\b/i;
+      const docClean = String(cpfCnpjIncra || cp.cpf_cnpj_titular || '').replace(/\D/g, '');
+      let tipoTitular = 'PESSOA FISICA';
+      if (docClean.length === 14 || isCorporateCheck.test(rawNome) || isCorporateCheck.test(titularProvavel || '') || isCorporateCheck.test(cp.nome_titular || '')) {
+        tipoTitular = 'PESSOA JURIDICA';
+      }
+
+      const scorePct = Math.round(bestMatch.score * 100);
+
       return {
         ...carFeat,
         properties: {
           ...cp,
           // Metadados Oficiais Herdados do SIGEF / Cartório:
-          registro_matricula: registroMatricula || cp.registro_matricula || null,
+          id_sigef: sp.id_sigef || sp.id || cp.id_sigef || null,
+          codigo_car: cp.codigo_car || cp.cod_imovel || null,
+          codigo_sncr: codigoImovelSncr || cp.codigo_sncr || cp.codigo_imovel || null,
+          codigo_imovel: codigoImovelSncr || cp.codigo_imovel || null,
           codigo_imovel_sncr: codigoImovelSncr || cp.codigo_imovel_sncr || null,
+          registro_matricula: registroMatricula || cp.registro_matricula || null,
+          nome_imovel: nomeImovelIncra || cp.nome_imovel || null,
           nome_imovel_cartorio: nomeImovelIncra || cp.nome_imovel_cartorio || null,
-          nome_titular: titularIncra || cp.nome_titular,
-          cpf_cnpj_titular: cpfCnpjIncra || cp.cpf_cnpj_titular,
+          municipio: cp.municipio || sp.municipio || null,
+          uf: cp.uf || sp.uf || null,
+          area_ha: parseFloat(cp.area_hectares || cp.num_area || sp.area_hectares || 0) || 0,
+          area_hectares: parseFloat(cp.area_hectares || cp.num_area || sp.area_hectares || 0) || 0,
+          nome_titular: titularProvavel || titularIncra || cp.nome_titular || 'Titularidade sob sigilo (CAR Declaratório)',
+          cpf_cnpj_titular: cpfCnpjIncra || cp.cpf_cnpj_titular || null,
+          tipo_titular: tipoTitular,
+          titular_provavel: titularProvavel,
           // Tags de Paridade e Fé Pública:
           status_geo: 'CERTIFICADO_INCRA',
           tag_fonte: 'FUSAO_SIGEF_CAR',
           sobreposicao_sigef: true,
-          sobreposicao_score: Math.round(bestMatch.score * 100),
-          sobreposicao_motivo: bestMatch.reason,
-          id_sigef: sp.id_sigef || sp.id || cp.id_sigef || null
+          score_sobreposicao: `${scorePct}%`,
+          sobreposicao_score: scorePct,
+          motivo_geodesico: bestMatch.reason,
+          sobreposicao_motivo: bestMatch.reason
         }
       };
     }

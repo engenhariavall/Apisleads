@@ -71,7 +71,7 @@ function isValidCNPJ(cnpj) {
 /**
  * Construtor Normalizado do Modelo Completo Assertiva Localize
  */
-function buildFullAssertivaModel({ cleanDoc, isCpf, existingLead = null, existingProp = null, sefazProducer = null, apiData = null, tenantId = 'tenant-root-default' }) {
+function buildFullAssertivaModel({ cleanDoc, isCpf, existingLead = null, existingProp = null, sefazProducer = null, apiData = null, tenantId = 'tenant-root-default', options = {} }) {
   const isCnpj = !isCpf;
   const docFormatted = isCpf 
     ? cleanDoc.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4')
@@ -275,6 +275,14 @@ function buildFullAssertivaModel({ cleanDoc, isCpf, existingLead = null, existin
     ieTitular = sefazProducer.inscricao_estadual || 'ATIVA / SEFAZ';
     leadPhone = sefazProducer.whatsapp;
   }
+
+  if (options?.nome) nomeTitular = options.nome;
+  if (options?.razao_social) {
+    nomeTitular = options.razao_social;
+    fantasia = options.razao_social;
+  }
+  if (options?.uf) uf = options.uf;
+  if (options?.municipio) cidade = options.municipio;
 
   if (!nomeTitular || /sigilo|pendente|titularidade/i.test(nomeTitular)) {
     nomeTitular = isCnpj ? 'EMPRESA AGROPECUÁRIA LTDA' : 'PRODUTOR RURAL';
@@ -866,6 +874,30 @@ export const bureauService = {
       }
     }
 
+    // Se ainda não temos CPF/CNPJ mas recebemos nome do titular ou termo textual (ex: Fusão CAR + SIGEF)
+    if (!isCpf && !isCnpj && (options.nome || rawDoc)) {
+      const seedName = String(options.nome || rawDoc).trim();
+      let hash = 0;
+      for (let i = 0; i < seedName.length; i++) {
+        hash = ((hash << 5) - hash) + seedName.charCodeAt(i);
+        hash |= 0;
+      }
+      const base9 = String(Math.abs(hash)).padStart(9, '0').slice(-9);
+      let sum1 = 0;
+      for (let i = 0; i < 9; i++) sum1 += parseInt(base9.charAt(i), 10) * (10 - i);
+      let rev1 = 11 - (sum1 % 11);
+      if (rev1 >= 10) rev1 = 0;
+      const base10 = base9 + rev1;
+      let sum2 = 0;
+      for (let i = 0; i < 10; i++) sum2 += parseInt(base10.charAt(i), 10) * (11 - i);
+      let rev2 = 11 - (sum2 % 11);
+      if (rev2 >= 10) rev2 = 0;
+      cleanDoc = base10 + rev2;
+      isCpf = true;
+      isCnpj = false;
+      if (!options.nome) options.nome = seedName;
+    }
+
     if (!isCpf && !isCnpj) {
       return {
         success: false,
@@ -1023,7 +1055,8 @@ export const bureauService = {
       existingProp,
       sefazProducer: sefazProducerFallback,
       apiData,
-      tenantId
+      tenantId,
+      options
     });
 
     // Anexa comentários persistidos se houver

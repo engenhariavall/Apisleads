@@ -3848,15 +3848,29 @@ window.MapEngine = (function() {
       isRegionalGridLocked = true;
 
       // FASE 2: Sincroniza dados com o barramento de propriedades rurais global
-      window.ruralPropertiesData = (geojson.features || []).map(f => {
+      const featuresList = geojson.features || [];
+      window.ruralPropertiesData = featuresList.map(f => {
         const p = { ...(f.properties || {}) };
         if (!p.id && f.id) p.id = f.id;
         if (!p.geometry && f.geometry) p.geometry = f.geometry;
         return p;
       });
+
+      const fusaoCount = featuresList.filter(f => f.properties?.sobreposicao_sigef || f.properties?.tag_fonte === 'FUSAO_SIGEF_CAR').length;
+      const displayTotal = fusaoCount > 0 ? fusaoCount : (geojson.total_features ?? featuresList.length);
+
       window.dispatchEvent(new CustomEvent('ruralDataUpdated', {
-        detail: { count: window.ruralPropertiesData.length }
+        detail: { count: window.ruralPropertiesData.length, fusaoCount: displayTotal }
       }));
+
+      // Atualiza o contador TOTAL FILTRADO no Right Drawer / Sidebar
+      const sidebarTotalEl = document.getElementById('sidebarTotalFiltered');
+      if (sidebarTotalEl) {
+        sidebarTotalEl.textContent = typeof formatNumber === 'function' ? formatNumber(displayTotal) : String(displayTotal);
+      }
+      if (window.state) {
+        window.state.totalFiltered = displayTotal;
+      }
 
       console.log(`[MAP ENGINE] GeoJSON fundiário recebido:`, geojson);
 
@@ -3902,7 +3916,10 @@ window.MapEngine = (function() {
       // Atualiza badge de contagem de fazendas
       const countEl = document.getElementById('mapFundiarioCountBadge');
       if (countEl) {
-        countEl.textContent = `${featureCount} fazendas (${targetCity || targetUf})`;
+        const badgeLabel = fusaoCount > 0
+          ? `${fusaoCount} parcelas certificadas (${targetCity || targetUf})`
+          : `${featureCount} fazendas (${targetCity || targetUf})`;
+        countEl.textContent = badgeLabel;
         countEl.style.display = 'inline-flex';
       }
 
@@ -3944,7 +3961,11 @@ window.MapEngine = (function() {
         }
       }
 
-      updateMeshStatusBar(`✅ ${featureCount} parcelas fundiárias carregadas para ${targetCity ? targetCity + ' / ' : ''}${targetUf}.`);
+      const statusMsg = fusaoCount > 0
+        ? `✅ ${fusaoCount} parcelas fundiárias com fusão CAR + SIGEF validadas para ${targetCity ? targetCity + ' / ' : ''}${targetUf}.`
+        : `✅ ${featureCount} parcelas fundiárias carregadas para ${targetCity ? targetCity + ' / ' : ''}${targetUf}.`;
+      updateMeshStatusBar(statusMsg);
+      showToast(`🛰️ Malha fundiária: ${fusaoCount > 0 ? fusaoCount : featureCount} fazendas localizadas.`);
       showToast(`🛰️ Malha fundiária carregada: ${featureCount} fazendas localizadas.`);
       return geojson;
     } catch (err) {

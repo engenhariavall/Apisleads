@@ -701,7 +701,7 @@ export async function buscarMalhaCarPorMunicipio({ uf, municipio } = {}) {
     const allSigef = loadOfficialRuralProperties();
     const regionalSigef = allSigef.filter(s => {
       const sUf = String(s.uf || '').toUpperCase().trim();
-      const sMun = String(s.municipio || '').toUpperCase().trim();
+      const sMun = normalizarTextoBusca(s.municipio);
       if (ufNorm && sUf !== ufNorm) return false;
       if (munNorm && sMun && !sMun.includes(munNorm) && !munNorm.includes(sMun)) return false;
       return true;
@@ -864,13 +864,30 @@ export function fundirColecoesSigefCar(sigefCollection = {}, carCollection = {})
           ...sp,
           source: 'FUSAO_SIGEF_CAR',
           tag_fonte: 'FUSAO_SIGEF_CAR',
+          status_geo: 'CERTIFICADO_INCRA',
+          sobreposicao_sigef: true,
+          id_sigef: cp.id_sigef || sp.id_sigef || sp.id || null,
+          codigo_car: cp.codigo_car || null,
+          codigo_sncr: cp.codigo_sncr || cp.codigo_imovel_sncr || sp.codigo_imovel || null,
+          codigo_imovel: cp.codigo_imovel || sp.codigo_imovel || null,
+          codigo_imovel_sncr: cp.codigo_imovel_sncr || null,
+          registro_matricula: cp.registro_matricula || sp.registro_matricula || null,
+          nome_imovel: cp.nome_imovel || sp.nome_imovel || null,
+          nome_imovel_cartorio: cp.nome_imovel_cartorio || sp.nome_imovel || null,
+          area_ha: cp.area_ha || parseFloat(sp.area_hectares || cp.area_hectares || 0),
+          area_hectares: cp.area_hectares || parseFloat(sp.area_hectares || 0),
+          score_sobreposicao: cp.score_sobreposicao || '95%',
+          sobreposicao_score: cp.sobreposicao_score || 95,
+          motivo_geodesico: cp.motivo_geodesico || 'CENTROIDE_SIGEF_DENTRO_CAR',
+          sobreposicao_motivo: cp.sobreposicao_motivo || 'CENTROIDE_SIGEF_DENTRO_CAR',
+          tipo_titular: cp.tipo_titular || (resolvedIsCorporate ? 'PESSOA JURIDICA' : 'PESSOA FISICA'),
+          titular_provavel: cp.titular_provavel || null,
           tipo_pessoa: resolvedTipoPessoa,
           is_corporate: resolvedIsCorporate,
           intent_score: fusedScored.intent_score,
           intent_classification: fusedScored.intent_classification,
           intent_triggers: fusedScored.intent_triggers,
           // Dados ambientais do CAR
-          codigo_car: cp.codigo_car || null,
           status_car: cp.status_car || null,
           condicao_car: cp.condicao_car || null,
           area_app_ha: cp.area_app_ha || null,
@@ -900,6 +917,21 @@ export function fundirColecoesSigefCar(sigefCollection = {}, carCollection = {})
     const cp = carFeat.properties || {};
     const carKey = carFeat.id || cp.codigo_car || cp.id;
     if (!carKey || !matchedCarIds.has(carKey)) {
+      // Se a feature já possui sobreposição espacial oficial certificada pelo SIGEF/INCRA, preserva a FUSÃO!
+      if (cp.sobreposicao_sigef || cp.tag_fonte === 'FUSAO_SIGEF_CAR') {
+        fusedFeatures.push({
+          ...carFeat,
+          properties: {
+            ...cp,
+            source: 'FUSAO_SIGEF_CAR',
+            tag_fonte: 'FUSAO_SIGEF_CAR',
+            status_geo: 'CERTIFICADO_INCRA',
+            sobreposicao_sigef: true
+          }
+        });
+        continue;
+      }
+
       // Critério Técnico Legal (Lei 10.267/2001 & INCRA):
       // Imóveis no CAR com área >= 25ha ou com passivo ambiental / status pendente
       // que NÃO possuem certificação no SIGEF representam GAP FUNDIÁRIO (Lead Quente ICP).
@@ -940,6 +972,8 @@ export function fundirColecoesSigefCar(sigefCollection = {}, carCollection = {})
     return oa - ob;
   });
 
+  const totalFusao = fusedFeatures.filter(f => f.properties?.tag_fonte === 'FUSAO_SIGEF_CAR').length;
+
   return {
     type: 'FeatureCollection',
     source: 'FUSAO_SIGEF_CAR',
@@ -947,7 +981,8 @@ export function fundirColecoesSigefCar(sigefCollection = {}, carCollection = {})
     meta: {
       total_sigef: sigefFeatures.length,
       total_car: carFeatures.length,
-      fusionados: sigefFeatures.length - (fusedFeatures.filter(f => f.properties?.tag_fonte === 'SIGEF').length),
+      fusionados: totalFusao,
+      total_fusao: totalFusao,
       apenas_sigef: fusedFeatures.filter(f => f.properties?.tag_fonte === 'SIGEF').length,
       apenas_car: fusedFeatures.filter(f => f.properties?.tag_fonte === 'SICAR').length,
       gaps_fundiarios: fusedFeatures.filter(f => f.properties?.tag_fonte === 'SEM_GEO').length

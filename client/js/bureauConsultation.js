@@ -196,7 +196,7 @@
     });
 
     // 5. Execução Oficial da Consulta ao Bureau
-    async function executeBureauLookup(targetDoc = null, isForce = false) {
+    async function executeBureauLookup(targetDoc = null, isForce = false, extraParams = {}) {
       const rawVal = targetDoc || inputDoc?.value || '';
       if (!rawVal.trim()) {
         alert('Por favor, informe CPF, CNPJ, nome, telefone ou e-mail.');
@@ -216,13 +216,19 @@
       if (btnLookup) btnLookup.disabled = true;
 
       try {
+        const payload = {
+          doc: rawVal.trim(),
+          nome: extraParams.nome || (!/^\d+$/.test(rawVal.trim()) ? rawVal.trim() : undefined),
+          razao_social: extraParams.razao_social,
+          uf: extraParams.uf || 'RS',
+          municipio: extraParams.municipio || 'PASSO FUNDO',
+          forceRefresh: forceRefresh
+        };
+
         const response = await fetch('/api/bureau/credit-lookup', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            doc: rawVal.trim(),
-            forceRefresh: forceRefresh
-          })
+          body: JSON.stringify(payload)
         });
 
         const resData = await response.json();
@@ -285,15 +291,20 @@
       window.print();
     });
 
-    // Expõe globalmente a função para invocar a consulta a partir de qualquer ponto do sistema (ex: Tabela Analítica)
-    window.consultarBureauPorDocumento = function(doc) {
+    // Expõe globalmente a função para invocar a consulta a partir de qualquer ponto do sistema (ex: Tabela Analítica ou Inspetor Fundiário)
+    window.consultarBureauPorDocumento = function(doc, extraParams = {}) {
       if (!doc) return;
       // Garante que o painel de concorrência e a sub-aba de bureau estejam visíveis
       const tabCompetitorsBtn = document.getElementById('tabViewCompetitors');
       if (tabCompetitorsBtn) tabCompetitorsBtn.click();
       window.switchBureauSubtab('bureau');
       if (inputDoc) inputDoc.value = doc;
-      executeBureauLookup(doc, false);
+      executeBureauLookup(doc, false, extraParams);
+    };
+
+    window.consultarBureauPorParametros = function(params = {}) {
+      const term = params.doc || params.nome || params.razao_social || '';
+      window.consultarBureauPorDocumento(term, params);
     };
   }
 
